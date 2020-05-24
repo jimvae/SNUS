@@ -1,3 +1,7 @@
 <resources>
     <string name="app_name">SNUS</string>
+    <string name="SNUS_logo_S">S</string>
+    <string name="SNUS_logo_NUS">NUS</string>
+    <string name="sing_up">Sign Up</string>
+    <string name="log_in">Log In</string>
 </resources>
