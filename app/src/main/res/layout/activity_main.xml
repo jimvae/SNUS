@@ -10,8 +10,8 @@
         android:id="@+id/SNUS_logo_NUS"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_marginEnd="78dp"
-        android:layout_marginBottom="76dp"
+        android:layout_marginEnd="77dp"
+        android:layout_marginBottom="60dp"
         android:text="@string/SNUS_logo_NUS"
         android:textColor="@color/color_NUS"
         android:textSize="100sp"
@@ -22,7 +22,7 @@
         android:id="@+id/SNUS_logo_S1"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_marginStart="78dp"
+        android:layout_marginStart="77dp"
         android:text="@string/SNUS_logo_S"
 
         android:textColor="@color/color_S"
@@ -33,7 +33,7 @@
 
     <Button
         android:id="@+id/button_signup"
-        android:layout_width="wrap_content"
+        android:layout_width="155dp"
         android:layout_height="wrap_content"
         android:layout_marginStart="32dp"
         android:background="@color/color_NUS"
@@ -46,10 +46,10 @@
 
     <Button
         android:id="@+id/button_login"
-        android:layout_width="wrap_content"
+        android:layout_width="155dp"
         android:layout_height="wrap_content"
         android:layout_marginEnd="32dp"
-        android:layout_marginBottom="224dp"
+        android:layout_marginBottom="308dp"
         android:background="@color/color_NUS"
         android:text="@string/log_in"
         android:textColor="@android:color/white"

@@ -7,28 +7,42 @@
     tools:context=".LoginActivity">
 
     <TextView
-        android:id="@+id/appName_text"
+        android:id="@+id/SNUS_logo_NUS"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:text="@string/app_name"
-        android:textColor="#00BCD4"
-        android:textSize="64sp"
-        app:layout_constraintBottom_toBottomOf="parent"
+        android:layout_marginTop="60dp"
+        android:layout_marginEnd="77dp"
+        android:layout_marginBottom="76dp"
+        android:text="@string/SNUS_logo_NUS"
+        android:textColor="@color/color_NUS"
+        android:textSize="100sp"
+        app:layout_constraintBottom_toTopOf="@+id/button_login"
         app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="parent"
-        app:layout_constraintVertical_bias="0.19" />
+        app:layout_constraintTop_toTopOf="parent" />
+
+    <TextView
+        android:id="@+id/SNUS_logo_S1"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="77dp"
+        android:text="@string/SNUS_logo_S"
+
+        android:textColor="@color/color_S"
+        android:textSize="100sp"
+        app:layout_constraintBaseline_toBaselineOf="@+id/SNUS_logo_NUS"
+        app:layout_constraintEnd_toStartOf="@+id/SNUS_logo_NUS"
+        app:layout_constraintStart_toStartOf="parent" />
 
     <TextView
         android:id="@+id/login_sub_text"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_marginTop="8dp"
+        android:layout_marginTop="12dp"
         android:text="@string/Login"
         android:textSize="32sp"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/appName_text" />
+        app:layout_constraintTop_toBottomOf="@+id/SNUS_logo_NUS" />
 
     <EditText
         android:id="@+id/email_text"
@@ -41,9 +55,10 @@
         android:inputType="textEmailAddress"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.0"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/login_sub_text"
-        app:layout_constraintVertical_bias="0.13999999" />
+        app:layout_constraintVertical_bias="0.03" />
 
     <EditText
         android:id="@+id/password_text"
@@ -66,7 +81,9 @@
         android:layout_marginStart="16dp"
         android:layout_marginTop="32dp"
         android:layout_marginEnd="16dp"
+        android:background="@color/color_NUS"
         android:text="@string/Login"
+        android:textColor="@android:color/white"
         android:textSize="16sp"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
@@ -77,7 +94,9 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_marginTop="16dp"
+        android:background="@color/color_NUS"
         android:text="@string/LogToReg"
+        android:textColor="@android:color/white"
         android:textSize="16sp"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
