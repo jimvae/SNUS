@@ -1,0 +1,40 @@
+{
+  "project_info": {
+    "project_number": "270562455172",
+    "firebase_url": "https://snus-5d50c.firebaseio.com",
+    "project_id": "snus-5d50c",
+    "storage_bucket": "snus-5d50c.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:270562455172:android:4846cd03b014fb3ab41cd1",
+        "android_client_info": {
+          "package_name": "com.orbital.snus"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "270562455172-f45rnvnhhg1m62bfplakmih0bibfgj9o.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyAZG-_CzyIfhnX-lPvr6byOTQ5gV5XlLc8"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": [
+            {
+              "client_id": "270562455172-f45rnvnhhg1m62bfplakmih0bibfgj9o.apps.googleusercontent.com",
+              "client_type": 3
+            }
+          ]
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}
