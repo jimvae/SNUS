@@ -12,5 +12,6 @@
     <string name="FullName">Full Name</string>
     <string name="Register">Register</string>
     <string name="RegToLog">Already Created? Login Here</string>
->>>>>>> 21e837d1d2e560ff233aaaa70b6db47425289c99
+    <string name="Logout">Logout</string>
+    >>>>>>> 21e837d1d2e560ff233aaaa70b6db47425289c99
 </resources>
