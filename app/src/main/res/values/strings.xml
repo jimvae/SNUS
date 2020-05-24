@@ -4,4 +4,13 @@
     <string name="SNUS_logo_NUS">NUS</string>
     <string name="sing_up">Sign Up</string>
     <string name="log_in">Log In</string>
+    <string name="CreateNewAccount">Create New Account</string>
+    <string name="Email">Email</string>
+    <string name="Password">Password</string>
+    <string name="Login">Login</string>
+    <string name="LogToReg">New Here? Create New Account</string>
+    <string name="FullName">Full Name</string>
+    <string name="Register">Register</string>
+    <string name="RegToLog">Already Created? Login Here</string>
+>>>>>>> 21e837d1d2e560ff233aaaa70b6db47425289c99
 </resources>
