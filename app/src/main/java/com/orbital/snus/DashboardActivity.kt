@@ -29,24 +29,9 @@ class DashboardActivity : AppCompatActivity() {
 
 
         logout_button.setOnClickListener {
-            firebaseAuth.addAuthStateListener{
-                    firebaseAuth.run {
-                        if (firebaseAuth.currentUser == null) {
-                            Toast.makeText(
-                                this@DashboardActivity,
-                                "Sign out successful",
-                                Toast.LENGTH_SHORT
-                            ).show()
-                            startActivity(Intent(applicationContext, MainActivity::class.java))
-                            finish()
-                        } else {
-                            Toast.makeText(this@DashboardActivity, "Something's wrong", Toast.LENGTH_SHORT).show()
-                        }
-                    }
-            }
-
             firebaseAuth.signOut()
+            startActivity(Intent(applicationContext, MainActivity::class.java))
+            finish()
         }
-
     }
 }
