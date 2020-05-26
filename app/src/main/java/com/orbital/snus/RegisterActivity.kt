@@ -9,31 +9,34 @@ import android.widget.EditText
 import android.widget.ProgressBar
 import android.widget.Toast
 import androidx.appcompat.app.AppCompatActivity
+import androidx.databinding.DataBindingUtil
 import com.google.firebase.auth.FirebaseAuth
+import com.orbital.snus.databinding.ActivityRegisterBinding
 
 class RegisterActivity : AppCompatActivity() {
+
+    private lateinit var binding: ActivityRegisterBinding
+    private lateinit var firebaseAuth: FirebaseAuth
 
     private lateinit var fullNameText: EditText
     private lateinit var emailText: EditText
     private lateinit var passwordText: EditText
     private lateinit var registerButton: Button
     private lateinit var loginButton: Button
-    private lateinit var firebaseAuth: FirebaseAuth
     private lateinit var progressBar: ProgressBar
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
-        setContentView(R.layout.activity_register)
-
-        fullNameText = findViewById(R.id.fullName_text)
-        emailText = findViewById(R.id.email_text)
-        passwordText = findViewById(R.id.password_text)
-        registerButton = findViewById(R.id.register_button)
-        loginButton = findViewById(R.id.regToLogButton)
-
+        binding = DataBindingUtil.setContentView(this, R.layout.activity_register)
         firebaseAuth = FirebaseAuth.getInstance()
-        progressBar = findViewById(R.id.register_progressBar)
 
+        fullNameText = binding.fullNameText
+        emailText = binding.emailText
+        passwordText = binding.passwordText
+        registerButton = binding.registerButton
+        loginButton = binding.regToLogButton
+
+        progressBar = binding.registerProgressBar
         progressBar.visibility = View.GONE
 
         // if logged in, transfer to dashboard

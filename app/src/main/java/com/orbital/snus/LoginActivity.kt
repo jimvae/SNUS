@@ -9,30 +9,38 @@ import android.widget.Button
 import android.widget.EditText
 import android.widget.ProgressBar
 import android.widget.Toast
+import androidx.databinding.DataBindingUtil
 import com.google.firebase.auth.FirebaseAuth
+import com.orbital.snus.databinding.ActivityLoginBinding
 
 class LoginActivity : AppCompatActivity() {
 
+    private lateinit var binding: ActivityLoginBinding
+    private lateinit var firebaseAuth: FirebaseAuth
+
+    //Buttons
     private lateinit var emailText: EditText
     private lateinit var passwordText: EditText
     private lateinit var loginButton: Button
     private lateinit var registerButton: Button
-    private lateinit var firebaseAuth: FirebaseAuth
     private lateinit var progressBar: ProgressBar
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
-        setContentView(R.layout.activity_login)
-
-        emailText = findViewById(R.id.email_text)
-        passwordText = findViewById(R.id.password_text)
-        loginButton = findViewById(R.id.login_button)
-        registerButton = findViewById(R.id.logToReg_button)
-
+//        setContentView(R.layout.activity_login)
+        binding = DataBindingUtil.setContentView(this, R.layout.activity_login)
         firebaseAuth = FirebaseAuth.getInstance()
-        progressBar = findViewById(R.id.login_progressBar)
+
+        //Buttons
+        emailText = binding.emailText
+        passwordText = binding.passwordText
+        loginButton = binding.loginButton
+        registerButton = binding.logToRegButton
+        progressBar = binding.loginProgressBar
 
         progressBar.visibility = View.GONE
+
+
 
         // If logged in, connect to dashboard
         if (firebaseAuth.currentUser != null) {

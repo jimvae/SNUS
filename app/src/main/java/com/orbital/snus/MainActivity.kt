@@ -4,25 +4,22 @@ import android.content.Intent
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
 import android.widget.Button
+import androidx.databinding.DataBindingUtil
+import com.orbital.snus.databinding.ActivityMainBinding
 
 class MainActivity : AppCompatActivity() {
 
-    private lateinit var signUp: Button
-    private lateinit var logIn: Button
+
+    private lateinit var binding: ActivityMainBinding
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
-        setContentView(R.layout.activity_main)
-
-        signUp = findViewById(R.id.button_signup)
-        logIn = findViewById(R.id.button_login)
-
-        logIn.setOnClickListener {
+        binding = DataBindingUtil.setContentView(this, R.layout.activity_main)
+        binding.buttonLogin.setOnClickListener {
             startActivity(Intent(applicationContext, LoginActivity::class.java))
             finish()
         }
-
-        signUp.setOnClickListener {
+        binding.buttonSignup.setOnClickListener {
             startActivity(Intent(applicationContext, RegisterActivity::class.java))
             finish()
         }
