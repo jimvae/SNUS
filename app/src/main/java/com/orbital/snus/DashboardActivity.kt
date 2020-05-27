@@ -19,6 +19,7 @@ class DashboardActivity : AppCompatActivity() {
 
         firebaseAuth = FirebaseAuth.getInstance()
 
+        // If no user logged in, transfer to opening screen
         if (firebaseAuth.currentUser == null) {
             startActivity(Intent(applicationContext, MainActivity::class.java))
         }
@@ -26,7 +27,6 @@ class DashboardActivity : AppCompatActivity() {
         setContentView(R.layout.activity_dashboard)
 
         logout_button = findViewById(R.id.logout_button)
-
 
         logout_button.setOnClickListener {
             firebaseAuth.signOut()

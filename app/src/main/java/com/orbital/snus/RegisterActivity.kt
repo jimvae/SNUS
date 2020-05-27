@@ -1,9 +1,11 @@
 package com.orbital.snus
 
+import android.content.Context
 import android.content.Intent
 import android.os.Bundle
 import android.text.TextUtils
 import android.view.View
+import android.view.inputmethod.InputMethodManager
 import android.widget.Button
 import android.widget.EditText
 import android.widget.ProgressBar
@@ -30,6 +32,7 @@ class RegisterActivity : AppCompatActivity() {
         binding = DataBindingUtil.setContentView(this, R.layout.activity_register)
         firebaseAuth = FirebaseAuth.getInstance()
 
+        // Buttons
         fullNameText = binding.fullNameText
         emailText = binding.emailText
         passwordText = binding.passwordText
@@ -67,6 +70,13 @@ class RegisterActivity : AppCompatActivity() {
 
             progressBar.visibility = View.VISIBLE
 
+            // Set editable fields to be non-editable
+            fullNameText.isEnabled = false
+            emailText.isEnabled = false
+            passwordText.isEnabled = false
+            loginButton.isEnabled = false
+            registerButton.isEnabled = false
+
             firebaseAuth.createUserWithEmailAndPassword(email, password)
                 .addOnCompleteListener {
                         task ->
@@ -77,9 +87,19 @@ class RegisterActivity : AppCompatActivity() {
                             finish()
                         } else {
                             Toast.makeText(this, "Error: " + (task.exception?.message ?: "Unknown"), Toast.LENGTH_SHORT).show()
+
+                            fullNameText.isEnabled = true
+                            emailText.isEnabled = true
+                            passwordText.isEnabled = true
+                            loginButton.isEnabled = true
+                            registerButton.isEnabled = true
                         }
                     }
                 }
+
+            // hide the keyboard
+            val imm = getSystemService(Context.INPUT_METHOD_SERVICE) as InputMethodManager
+            imm.hideSoftInputFromWindow(it.windowToken, 0)
         }
 
         loginButton.setOnClickListener {
@@ -88,6 +108,7 @@ class RegisterActivity : AppCompatActivity() {
         }
     }
 
+    // On back, go to opening screen
     override fun onBackPressed() {
         startActivity(Intent(applicationContext, MainActivity::class.java))
         finish()
