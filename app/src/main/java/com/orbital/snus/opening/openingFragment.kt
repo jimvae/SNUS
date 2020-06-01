@@ -22,10 +22,15 @@ class openingFragment : Fragment() {
     override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?, savedInstanceState: Bundle?): View? {
         val binding: FragmentOpeningBinding = DataBindingUtil.inflate(
             inflater, R.layout.fragment_opening, container, false)
-        binding.buttonLogin.setOnClickListener {
 
+        binding.buttonLogin.setOnClickListener {
+            view: View -> view.findNavController().navigate(R.id.action_openingFragment_to_loginFragment)
+            //Navigation.createNavigateOnClickListener(R.id.action_openingFragment_to_loginFragment)
+        }
+
+        binding.buttonSignup.setOnClickListener {
+            view: View -> view.findNavController().navigate(R.id.action_openingFragment_to_registerFragment)
         }
         return binding.root
     }
-
 }

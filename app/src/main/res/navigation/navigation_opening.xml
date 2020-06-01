@@ -3,7 +3,8 @@
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:id="@+id/navigation_opening"
-    app:startDestination="@id/openingFragment">
+    app:startDestination="@id/openingFragment"
+    tools:context="com.orbital.snus.opening.MainActivity">
 
     <fragment
         android:id="@+id/openingFragment"
@@ -25,8 +26,11 @@
         tools:layout="@layout/fragment_register" >
         <action
             android:id="@+id/action_registerFragment_to_loginFragment"
-            app:destination="@id/loginFragment" />
+            app:destination="@id/loginFragment"
+            app:popUpTo="@id/openingFragment"
+            app:popUpToInclusive="false" />
     </fragment>
+
     <fragment
         android:id="@+id/loginFragment"
         android:name="com.orbital.snus.opening.loginFragment"
@@ -34,7 +38,8 @@
         tools:layout="@layout/fragment_login">
         <action
             android:id="@+id/action_loginFragment_to_registerFragment"
-            app:destination="@id/registerFragment" />
+            app:destination="@id/registerFragment"
+            app:popUpTo="@id/openingFragment" />
     </fragment>
 
 </navigation>

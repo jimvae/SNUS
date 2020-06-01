@@ -20,8 +20,6 @@
             </intent-filter>
         </activity>
         <activity android:name=".DashboardActivity"></activity>
-        <activity android:name=".opening.RegisterActivity" />
-        <activity android:name=".opening.LoginActivity" />
     </application>
 
 </manifest>
