@@ -13,5 +13,8 @@
     <string name="Register">Register</string>
     <string name="RegToLog">Already Created? Login Here</string>
     <string name="Logout">Logout</string>
+
+    <!-- TODO: Remove or change this placeholder text -->
+    <string name="hello_blank_fragment">Hello blank fragment</string>
     >>>>>>> 21e837d1d2e560ff233aaaa70b6db47425289c99
 </resources>

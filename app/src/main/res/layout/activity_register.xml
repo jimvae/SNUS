@@ -6,7 +6,7 @@
     <androidx.constraintlayout.widget.ConstraintLayout
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-        tools:context=".RegisterActivity">
+        tools:context=".opening.RegisterActivity">
 
 
         <TextView
@@ -19,7 +19,6 @@
             android:text="@string/SNUS_logo_NUS"
             android:textColor="@color/color_NUS"
             android:textSize="80sp"
-            app:layout_constraintBottom_toTopOf="@+id/button_login"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintTop_toTopOf="parent" />
 

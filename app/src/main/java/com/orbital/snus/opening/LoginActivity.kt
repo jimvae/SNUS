@@ -1,7 +1,8 @@
-package com.orbital.snus
+package com.orbital.snus.opening
 
 import android.content.Context
 import android.content.Intent
+import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
 import android.text.TextUtils
 import android.view.View
@@ -10,49 +11,51 @@ import android.widget.Button
 import android.widget.EditText
 import android.widget.ProgressBar
 import android.widget.Toast
-import androidx.appcompat.app.AppCompatActivity
 import androidx.databinding.DataBindingUtil
 import com.google.firebase.auth.FirebaseAuth
-import com.orbital.snus.databinding.ActivityRegisterBinding
+import com.orbital.snus.DashboardActivity
+import com.orbital.snus.R
+import com.orbital.snus.databinding.ActivityLoginBinding
 
-class RegisterActivity : AppCompatActivity() {
+class LoginActivity : AppCompatActivity() {
 
-    private lateinit var binding: ActivityRegisterBinding
+    private lateinit var binding: ActivityLoginBinding
     private lateinit var firebaseAuth: FirebaseAuth
 
-    private lateinit var fullNameText: EditText
+    //Buttons
     private lateinit var emailText: EditText
     private lateinit var passwordText: EditText
-    private lateinit var registerButton: Button
     private lateinit var loginButton: Button
+    private lateinit var registerButton: Button
     private lateinit var progressBar: ProgressBar
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
-        binding = DataBindingUtil.setContentView(this, R.layout.activity_register)
+        binding = DataBindingUtil.setContentView(this,
+            R.layout.activity_login
+        )
         firebaseAuth = FirebaseAuth.getInstance()
 
-        // Buttons
-        fullNameText = binding.fullNameText
+        //Buttons
         emailText = binding.emailText
         passwordText = binding.passwordText
-        registerButton = binding.registerButton
-        loginButton = binding.regToLogButton
+        loginButton = binding.loginButton
+        registerButton = binding.logToRegButton
 
-        progressBar = binding.registerProgressBar
+        progressBar = binding.loginProgressBar
         progressBar.visibility = View.GONE
 
-        // if logged in, transfer to dashboard
+        // If logged in, connect to dashboard
         if (firebaseAuth.currentUser != null) {
             startActivity(Intent(applicationContext, DashboardActivity::class.java))
             finish()
         }
 
-        // Creating a new account
-        registerButton.setOnClickListener {
+        loginButton.setOnClickListener {
             val email = emailText.text.toString().trim()
             val password = passwordText.text.toString().trim()
 
+            // User authentication
             if (TextUtils.isEmpty(email)) {
                 emailText.setError("Email is required")
                 return@setOnClickListener
@@ -71,24 +74,23 @@ class RegisterActivity : AppCompatActivity() {
             progressBar.visibility = View.VISIBLE
 
             // Set editable fields to be non-editable
-            fullNameText.isEnabled = false
             emailText.isEnabled = false
             passwordText.isEnabled = false
             loginButton.isEnabled = false
             registerButton.isEnabled = false
 
-            firebaseAuth.createUserWithEmailAndPassword(email, password)
-                .addOnCompleteListener {
-                        task ->
-                    run {
+            // Sign in with firebase
+            firebaseAuth.signInWithEmailAndPassword(email, password)
+                .addOnCompleteListener { task ->
+                    kotlin.run {
                         if (task.isSuccessful) {
-                            Toast.makeText(this, "User Created", Toast.LENGTH_SHORT).show()
+                            Toast.makeText(this, "Login Successful", Toast.LENGTH_SHORT).show()
                             startActivity(Intent(applicationContext, DashboardActivity::class.java))
                             finish()
                         } else {
                             Toast.makeText(this, "Error: " + (task.exception?.message ?: "Unknown"), Toast.LENGTH_SHORT).show()
+                            progressBar.visibility = View.GONE
 
-                            fullNameText.isEnabled = true
                             emailText.isEnabled = true
                             passwordText.isEnabled = true
                             loginButton.isEnabled = true
@@ -102,15 +104,18 @@ class RegisterActivity : AppCompatActivity() {
             imm.hideSoftInputFromWindow(it.windowToken, 0)
         }
 
-        loginButton.setOnClickListener {
-            startActivity(Intent(applicationContext, LoginActivity::class.java))
+        // Switch to RegisterActivity
+        registerButton.setOnClickListener{
+            startActivity(Intent(applicationContext, RegisterActivity::class.java))
             finish()
         }
     }
 
-    // On back, go to opening screen
+    // On Back, go back to opening screen
     override fun onBackPressed() {
         startActivity(Intent(applicationContext, MainActivity::class.java))
         finish()
     }
+
+
 }
