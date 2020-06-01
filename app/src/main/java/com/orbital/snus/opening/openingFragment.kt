@@ -8,6 +8,7 @@ import android.view.View
 import android.view.ViewGroup
 import androidx.databinding.DataBindingUtil
 import androidx.navigation.NavDirections
+import androidx.navigation.Navigation
 import androidx.navigation.findNavController
 import androidx.navigation.fragment.FragmentNavigator
 
@@ -22,7 +23,7 @@ class openingFragment : Fragment() {
         val binding: FragmentOpeningBinding = DataBindingUtil.inflate(
             inflater, R.layout.fragment_opening, container, false)
         binding.buttonLogin.setOnClickListener {
-                //view: View -> view.findNavController().navigate
+
         }
         return binding.root
     }
