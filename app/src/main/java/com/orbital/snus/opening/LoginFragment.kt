@@ -25,7 +25,7 @@ import com.orbital.snus.databinding.FragmentRegisterBinding
 /**
  * A simple [Fragment] subclass.
  */
-class loginFragment : Fragment() {
+class LoginFragment : Fragment() {
 
     private lateinit var firebaseAuth: FirebaseAuth
 
@@ -39,6 +39,7 @@ class loginFragment : Fragment() {
     override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?, savedInstanceState: Bundle?): View? {
         val binding: FragmentLoginBinding = DataBindingUtil.inflate(
             inflater, R.layout.fragment_login, container, false)
+
         firebaseAuth = FirebaseAuth.getInstance()
 
         //Buttons
@@ -50,12 +51,6 @@ class loginFragment : Fragment() {
         progressBar = binding.loginProgressBar
         progressBar.visibility = View.GONE
 
-        // If logged in, connect to dashboard
-        if (firebaseAuth.currentUser != null) {
-            //TODO("Navigate from RegisterFragment to DashboardActivity if user is logged in")
-//            startActivity(Intent(this.context, DashboardActivity::class.java))
-//            finish()
-        }
 
         loginButton.setOnClickListener {
             val email = emailText.text.toString().trim()
@@ -91,9 +86,8 @@ class loginFragment : Fragment() {
                     kotlin.run {
                         if (task.isSuccessful) {
                             Toast.makeText(this.context, "Login Successful", Toast.LENGTH_SHORT).show()
-                            //TODO("Navigate from LoginFragment to DashboardActivity if user is logged in")
-//                            startActivity(Intent(applicationContext, DashboardActivity::class.java))
-//                            finish()
+                            startActivity(Intent(activity?.applicationContext, DashboardActivity::class.java))
+                            activity?.finish()
                         } else {
                             Toast.makeText(this.context, "Error: " + (task.exception?.message ?: "Unknown"), Toast.LENGTH_SHORT).show()
 
@@ -106,10 +100,8 @@ class loginFragment : Fragment() {
                     }
                 }
 
-            //TODO("Hide the keyboard")
-            // hide the keyboard
-//            val imm = getSystemService(Context.INPUT_METHOD_SERVICE) as InputMethodManager
-//            imm.hideSoftInputFromWindow(it.windowToken, 0)
+            val imm = activity?.getSystemService(Context.INPUT_METHOD_SERVICE) as InputMethodManager
+            imm.hideSoftInputFromWindow(it.windowToken, 0)
         }
 
         // Switch to RegisterActivity
@@ -118,11 +110,4 @@ class loginFragment : Fragment() {
         }
         return binding.root
     }
-
-    //    // On back, go to opening screen
-//    override fun onBackPressed() {
-//        startActivity(Intent(applicationContext, MainActivity::class.java))
-//        finish()
-//    }
-
 }

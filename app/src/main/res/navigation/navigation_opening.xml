@@ -8,7 +8,7 @@
 
     <fragment
         android:id="@+id/openingFragment"
-        android:name="com.orbital.snus.opening.openingFragment"
+        android:name="com.orbital.snus.opening.OpeningFragment"
         android:label="opening_Fragment"
         tools:layout="@layout/fragment_opening">
         <action
@@ -21,7 +21,7 @@
 
     <fragment
         android:id="@+id/registerFragment"
-        android:name="com.orbital.snus.opening.registerFragment"
+        android:name="com.orbital.snus.opening.RegisterFragment"
         android:label="register_Fragment"
         tools:layout="@layout/fragment_register" >
         <action
@@ -33,7 +33,7 @@
 
     <fragment
         android:id="@+id/loginFragment"
-        android:name="com.orbital.snus.opening.loginFragment"
+        android:name="com.orbital.snus.opening.LoginFragment"
         android:label="login_Fragment"
         tools:layout="@layout/fragment_login">
         <action

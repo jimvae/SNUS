@@ -27,7 +27,7 @@ import com.orbital.snus.databinding.FragmentRegisterBinding
 /**
  * A simple [Fragment] subclass.
  */
-class registerFragment : Fragment() {
+class RegisterFragment : Fragment() {
 
     private lateinit var firebaseAuth: FirebaseAuth
 
@@ -53,12 +53,6 @@ class registerFragment : Fragment() {
 
         progressBar = binding.registerProgressBar
         progressBar.visibility = View.GONE
-
-        if (firebaseAuth.currentUser != null) {
-            //TODO("Navigate from RegisterFragment to DashboardActivity if user is logged in")
-//            startActivity(Intent(this.context, DashboardActivity::class.java))
-//            finish()
-        }
 
         // Creating a new account
         registerButton.setOnClickListener {
@@ -95,9 +89,8 @@ class registerFragment : Fragment() {
                     run {
                         if (task.isSuccessful) {
                             Toast.makeText(this.context, "User Created", Toast.LENGTH_SHORT).show()
-                            //TODO("Navigate from RegisterFragment to DashboardActivity if user is logged in")
-//                            startActivity(Intent(applicationContext, DashboardActivity::class.java))
-//                            finish()
+                            startActivity(Intent(activity?.applicationContext, DashboardActivity::class.java))
+                            activity?.finish()
                         } else {
                             Toast.makeText(this.context, "Error: " + (task.exception?.message ?: "Unknown"), Toast.LENGTH_SHORT).show()
 
@@ -110,11 +103,8 @@ class registerFragment : Fragment() {
                         }
                     }
                 }
-
-            //TODO("Hide the keyboard")
-            // hide the keyboard
-//            val imm = getSystemService(Context.INPUT_METHOD_SERVICE) as InputMethodManager
-//            imm.hideSoftInputFromWindow(it.windowToken, 0)
+            val imm = activity?.getSystemService(Context.INPUT_METHOD_SERVICE) as InputMethodManager
+            imm.hideSoftInputFromWindow(it.windowToken, 0)
         }
 
         loginButton.setOnClickListener {
@@ -123,11 +113,4 @@ class registerFragment : Fragment() {
 
         return binding.root
     }
-
-
-//    // On back, go to opening screen
-//    override fun onBackPressed() {
-//        startActivity(Intent(applicationContext, MainActivity::class.java))
-//        finish()
-//    }
 }
