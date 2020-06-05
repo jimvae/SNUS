@@ -22,6 +22,7 @@
                 android:layout_height="match_parent"
                 app:navGraph="@navigation/navigation_opening"
                 app:defaultNavHost="true"/>
+
         </LinearLayout>
 
     </androidx.drawerlayout.widget.DrawerLayout>

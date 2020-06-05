@@ -3,13 +3,19 @@ package com.orbital.snus.dashboard
 import android.content.Intent
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
+import android.view.MenuItem
 import android.widget.Button
 import androidx.databinding.DataBindingUtil
+import com.google.android.material.bottomnavigation.BottomNavigationView
 import com.google.firebase.auth.FirebaseAuth
 import com.google.firebase.auth.FirebaseAuth.AuthStateListener
 import com.orbital.snus.R
 import com.orbital.snus.databinding.ActivityDashboardBinding
+import com.orbital.snus.groups.GroupsActivity
+import com.orbital.snus.messages.MessagesActivity
+import com.orbital.snus.modules.ModulesActivity
 import com.orbital.snus.opening.MainActivity
+import com.orbital.snus.profile.ProfileActivity
 
 class DashboardActivity : AppCompatActivity() {
 
@@ -26,5 +32,35 @@ class DashboardActivity : AppCompatActivity() {
             startActivity(Intent(applicationContext, MainActivity::class.java))
         }
         binding = DataBindingUtil.setContentView<ActivityDashboardBinding>(this, R.layout.activity_dashboard)
+
+        binding.bottomNavigationMenu.menu.findItem(R.id.ic_action_home).setChecked(true)
+        binding.bottomNavigationMenu.setOnNavigationItemSelectedListener {
+            menuItem: MenuItem ->
+            when (menuItem.itemId) {
+                R.id.ic_action_home -> {}
+                R.id.ic_action_profile -> {
+                    startActivity(Intent(applicationContext, ProfileActivity::class.java))
+                    finish()
+                }
+                R.id.ic_action_messages -> {
+                    startActivity(Intent(applicationContext, MessagesActivity::class.java))
+                    finish()
+                }
+                R.id.ic_action_groups -> {
+                    startActivity(Intent(applicationContext, GroupsActivity::class.java))
+                    finish()
+                }
+                R.id.ic_action_modules -> {
+                    startActivity(Intent(applicationContext, ModulesActivity::class.java))
+                    finish()
+                }
+            }
+            true
+        }
+    }
+
+    override fun finish() {
+        super.finish()
+        overridePendingTransition(R.anim.slide_in_right, R.anim.slide_out_left)
     }
 }
