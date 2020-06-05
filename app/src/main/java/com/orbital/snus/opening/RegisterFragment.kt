@@ -13,16 +13,12 @@ import android.widget.Button
 import android.widget.EditText
 import android.widget.ProgressBar
 import android.widget.Toast
-import androidx.core.content.ContextCompat.getSystemService
 import androidx.databinding.DataBindingUtil
-import androidx.navigation.Navigation
 import androidx.navigation.findNavController
 import com.google.firebase.auth.FirebaseAuth
-import com.orbital.snus.DashboardActivity
-
+import com.orbital.snus.dashboard.DashboardActivity
 import com.orbital.snus.R
-import com.orbital.snus.databinding.FragmentOpeningBinding
-import com.orbital.snus.databinding.FragmentRegisterBinding
+import com.orbital.snus.databinding.FragmentOpeningRegisterBinding
 
 /**
  * A simple [Fragment] subclass.
@@ -39,8 +35,8 @@ class RegisterFragment : Fragment() {
     private lateinit var progressBar: ProgressBar
 
     override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?, savedInstanceState: Bundle?): View? {
-        val binding: FragmentRegisterBinding = DataBindingUtil.inflate(
-            inflater, R.layout.fragment_register, container, false)
+        val binding: FragmentOpeningRegisterBinding = DataBindingUtil.inflate(
+            inflater, R.layout.fragment_opening_register, container, false)
 
         firebaseAuth = FirebaseAuth.getInstance()
 

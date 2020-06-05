@@ -1,0 +1,52 @@
+<?xml version="1.0" encoding="utf-8"?>
+<navigation xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:id="@+id/navigation_opening"
+    tools:context="com.orbital.snus.dashboard.DashboardActivity"
+    app:startDestination="@id/todayFragment">
+
+
+    <fragment
+        android:id="@+id/todayFragment"
+        android:name="com.orbital.snus.dashboard.TodayFragment"
+        android:label="fragment_today"
+        tools:layout="@layout/fragment_dashboard_today" >
+        <action
+            android:id="@+id/action_todayFragment_to_calendarFragment"
+            app:destination="@id/calendarFragment"
+            app:popUpTo="@id/calendarFragment" />
+        <action
+            android:id="@+id/action_todayFragment_to_upcomingFragment"
+            app:destination="@id/upcomingFragment"
+            app:popUpTo="@id/upcomingFragment" />
+    </fragment>
+    <fragment
+        android:id="@+id/calendarFragment"
+        android:name="com.orbital.snus.dashboard.CalendarFragment"
+        android:label="fragment_calendar"
+        tools:layout="@layout/fragment_dashboard_calendar" >
+        <action
+            android:id="@+id/action_calendarFragment_to_todayFragment"
+            app:destination="@id/todayFragment"
+            app:popUpTo="@id/todayFragment" />
+        <action
+            android:id="@+id/action_calendarFragment_to_upcomingFragment"
+            app:destination="@id/upcomingFragment"
+            app:popUpTo="@id/upcomingFragment" />
+    </fragment>
+    <fragment
+        android:id="@+id/upcomingFragment"
+        android:name="com.orbital.snus.dashboard.UpcomingFragment"
+        android:label="fragment_upcoming"
+        tools:layout="@layout/fragment_dashboard_upcoming" >
+        <action
+            android:id="@+id/action_upcomingFragment_to_calendarFragment"
+            app:destination="@id/calendarFragment"
+            app:popUpTo="@id/calendarFragment" />
+        <action
+            android:id="@+id/action_upcomingFragment_to_todayFragment"
+            app:destination="@id/todayFragment"
+            app:popUpTo="@id/todayFragment" />
+    </fragment>
+</navigation>

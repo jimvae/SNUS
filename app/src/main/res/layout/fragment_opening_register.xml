@@ -1,5 +1,6 @@
 <?xml version="1.0" encoding="utf-8"?>
-<layout xmlns:android="http://schemas.android.com/apk/res/android"
+<layout
+    xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     tools:context="com.orbital.snus.opening.RegisterFragment">
@@ -104,7 +105,7 @@
             android:layout_marginStart="16dp"
             android:layout_marginTop="32dp"
             android:layout_marginEnd="16dp"
-            android:background="@color/color_NUS"
+            android:background="@drawable/blue_button"
             android:text="@string/Register"
             android:textColor="@android:color/white"
             app:layout_constraintEnd_toEndOf="parent"
@@ -113,10 +114,12 @@
 
         <Button
             android:id="@+id/regToLogButton"
-            android:layout_width="226dp"
+            android:layout_width="0dp"
             android:layout_height="48dp"
+            android:layout_marginStart="16dp"
             android:layout_marginTop="16dp"
-            android:background="@color/color_NUS"
+            android:layout_marginEnd="16dp"
+            android:background="@drawable/blue_button"
             android:text="@string/RegToLog"
             android:textColor="@android:color/white"
             app:layout_constraintEnd_toEndOf="parent"

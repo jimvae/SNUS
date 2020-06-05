@@ -10,7 +10,7 @@
         android:id="@+id/openingFragment"
         android:name="com.orbital.snus.opening.OpeningFragment"
         android:label="opening_Fragment"
-        tools:layout="@layout/fragment_opening">
+        tools:layout="@layout/fragment_opening_opening">
         <action
             android:id="@+id/action_openingFragment_to_registerFragment"
             app:destination="@id/registerFragment" />
@@ -23,7 +23,7 @@
         android:id="@+id/registerFragment"
         android:name="com.orbital.snus.opening.RegisterFragment"
         android:label="register_Fragment"
-        tools:layout="@layout/fragment_register" >
+        tools:layout="@layout/fragment_opening_register" >
         <action
             android:id="@+id/action_registerFragment_to_loginFragment"
             app:destination="@id/loginFragment"
@@ -35,7 +35,7 @@
         android:id="@+id/loginFragment"
         android:name="com.orbital.snus.opening.LoginFragment"
         android:label="login_Fragment"
-        tools:layout="@layout/fragment_login">
+        tools:layout="@layout/fragment_opening_login">
         <action
             android:id="@+id/action_loginFragment_to_registerFragment"
             app:destination="@id/registerFragment"

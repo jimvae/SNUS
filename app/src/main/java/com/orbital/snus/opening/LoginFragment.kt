@@ -16,11 +16,10 @@ import android.widget.Toast
 import androidx.databinding.DataBindingUtil
 import androidx.navigation.findNavController
 import com.google.firebase.auth.FirebaseAuth
-import com.orbital.snus.DashboardActivity
+import com.orbital.snus.dashboard.DashboardActivity
 
 import com.orbital.snus.R
-import com.orbital.snus.databinding.FragmentLoginBinding
-import com.orbital.snus.databinding.FragmentRegisterBinding
+import com.orbital.snus.databinding.FragmentOpeningLoginBinding
 
 /**
  * A simple [Fragment] subclass.
@@ -37,8 +36,8 @@ class LoginFragment : Fragment() {
     private lateinit var progressBar: ProgressBar
 
     override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?, savedInstanceState: Bundle?): View? {
-        val binding: FragmentLoginBinding = DataBindingUtil.inflate(
-            inflater, R.layout.fragment_login, container, false)
+        val binding: FragmentOpeningLoginBinding = DataBindingUtil.inflate(
+            inflater, R.layout.fragment_opening_login, container, false)
 
         firebaseAuth = FirebaseAuth.getInstance()
 
