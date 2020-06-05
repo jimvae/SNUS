@@ -11,7 +11,8 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent">
 
-    <Button
+
+    <TextView
         android:id="@+id/button_back"
         android:layout_width="310dp"
         android:layout_height="43dp"
@@ -22,6 +23,7 @@
         app:layout_constraintEnd_toStartOf="@+id/floating_button_add"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent" />
+
 
     <Button
         android:id="@+id/button_upcoming"
@@ -81,8 +83,10 @@
         android:layout_marginTop="16dp"
         android:layout_marginEnd="16dp"
         app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.482"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/button_back" />
+        app:layout_constraintTop_toBottomOf="@+id/floating_button_add" />
+
 
 </androidx.constraintlayout.widget.ConstraintLayout>
 </layout>

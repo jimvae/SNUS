@@ -10,17 +10,18 @@
         android:layout_height="match_parent">
 
 
-    <Button
-        android:id="@+id/button_back"
-        android:layout_width="310dp"
-        android:layout_height="43dp"
-        android:layout_marginStart="8dp"
-        android:layout_marginTop="18dp"
-        android:layout_marginEnd="8dp"
-        android:background="@drawable/blue_button"
-        app:layout_constraintEnd_toStartOf="@+id/floating_button_add"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="parent" />
+
+        <TextView
+            android:id="@+id/button_back"
+            android:layout_width="310dp"
+            android:layout_height="43dp"
+            android:layout_marginStart="8dp"
+            android:layout_marginTop="18dp"
+            android:layout_marginEnd="8dp"
+            android:background="@drawable/blue_button"
+            app:layout_constraintEnd_toStartOf="@+id/floating_button_add"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="parent" />
 
         <Button
             android:id="@+id/button_upcoming"
