@@ -37,6 +37,7 @@ class DashboardActivity : AppCompatActivity() {
         }
         binding = DataBindingUtil.setContentView<ActivityDashboardBinding>(this, R.layout.activity_dashboard)
 
+        // Bottom Navigation Menu Handler
         binding.bottomNavigationMenu.menu.findItem(R.id.ic_action_home).setChecked(true)
         binding.bottomNavigationMenu.setOnNavigationItemSelectedListener {
             menuItem: MenuItem ->
@@ -62,6 +63,7 @@ class DashboardActivity : AppCompatActivity() {
             true
         }
     }
+
 
 //    fun setDate(v: EditText) {
 //        val c = Calendar.getInstance()
@@ -94,6 +96,9 @@ class DashboardActivity : AppCompatActivity() {
 //        timePickerDialog.show()
 //
 //    }
+
+
+    // For Bottom Navigation Menu
 
     override fun finish() {
         super.finish()

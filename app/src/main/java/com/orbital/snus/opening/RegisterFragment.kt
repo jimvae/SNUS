@@ -4,6 +4,7 @@ import android.content.Context
 import android.content.Intent
 import android.os.Bundle
 import android.text.TextUtils
+import android.util.Log
 import androidx.fragment.app.Fragment
 import android.view.LayoutInflater
 import android.view.View
@@ -16,9 +17,12 @@ import android.widget.Toast
 import androidx.databinding.DataBindingUtil
 import androidx.navigation.findNavController
 import com.google.firebase.auth.FirebaseAuth
+import com.google.firebase.firestore.FirebaseFirestore
 import com.orbital.snus.dashboard.DashboardActivity
 import com.orbital.snus.R
+import com.orbital.snus.data.UserEvent
 import com.orbital.snus.databinding.FragmentOpeningRegisterBinding
+import java.util.*
 
 /**
  * A simple [Fragment] subclass.
@@ -26,6 +30,7 @@ import com.orbital.snus.databinding.FragmentOpeningRegisterBinding
 class RegisterFragment : Fragment() {
 
     private lateinit var firebaseAuth: FirebaseAuth
+    private lateinit var firestore: FirebaseFirestore
 
     private lateinit var fullNameText: EditText
     private lateinit var emailText: EditText
@@ -84,6 +89,8 @@ class RegisterFragment : Fragment() {
                         task ->
                     run {
                         if (task.isSuccessful) {
+                            firestore = FirebaseFirestore.getInstance()
+                            //createUserData()
                             Toast.makeText(this.context, "User Created", Toast.LENGTH_SHORT).show()
                             startActivity(Intent(activity?.applicationContext, DashboardActivity::class.java))
                             activity?.finish()
@@ -108,5 +115,24 @@ class RegisterFragment : Fragment() {
         }
 
         return binding.root
+    }
+
+    // create documents for user data and store inside Firestore
+    fun createUserData() {
+        val userId: String = firebaseAuth.uid!!.toString()
+        val USER_CALS : String = "UserCalendars"
+        val USER_EVENT : String = "UserEvents"
+        // UserCalendars holds ALL user calendars
+        // First part, set up a document with userID as key.
+        // Sets a dummy value in the document
+        firestore.collection(USER_CALS)
+            .document(userId)
+            .collection(USER_EVENT)
+            .add(UserEvent("h", "g", Date(), Date(), "l", false))
+            .addOnFailureListener {
+                exception ->
+                Log.d("RegisterFragment", exception.toString())
+            }
+
     }
 }

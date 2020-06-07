@@ -15,6 +15,14 @@
       },
       "oauth_client": [
         {
+          "client_id": "270562455172-rph3i6nmovlqovkefuvedcgl6vf5l7cg.apps.googleusercontent.com",
+          "client_type": 1,
+          "android_info": {
+            "package_name": "com.orbital.snus",
+            "certificate_hash": "9ff665e8c515865f33252f696585911c186f4d5b"
+          }
+        },
+        {
           "client_id": "270562455172-f45rnvnhhg1m62bfplakmih0bibfgj9o.apps.googleusercontent.com",
           "client_type": 3
         }
