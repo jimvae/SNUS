@@ -1,20 +1,15 @@
 package com.orbital.snus.dashboard
 
-import android.app.Activity
 import android.app.DatePickerDialog
 import android.app.TimePickerDialog
-import android.content.Context
 import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
-import android.widget.Button
-import android.widget.EditText
 import android.widget.TextView
 import androidx.databinding.DataBindingUtil
 import androidx.fragment.app.Fragment
 import com.orbital.snus.R
-import com.orbital.snus.databinding.ActivityDashboardBinding
 import com.orbital.snus.databinding.FragmentDashboardAddEventBinding
 import java.util.*
 
@@ -25,12 +20,13 @@ class AddEventFragment() : Fragment() {
         container: ViewGroup?, savedInstanceState: Bundle?
     ): View? {
 
+        (activity as DashboardActivity).hideNavBar()
+
         val binding: FragmentDashboardAddEventBinding = DataBindingUtil.inflate(
             inflater, R.layout.fragment_dashboard_add_event, container, false
         )
 
         binding.textStartDate.setOnClickListener {
-            val c = Calendar.getInstance()
             setDate(it as TextView)
         }
         binding.textEndDate.setOnClickListener {
@@ -45,9 +41,11 @@ class AddEventFragment() : Fragment() {
             setTime(it as TextView)
         }
 
+
         binding.buttonConfirm
         return binding.root
     }
+
 
     private fun setDate(v: TextView) {
         val c = Calendar.getInstance()
@@ -65,6 +63,7 @@ class AddEventFragment() : Fragment() {
         datePickerDialog.show()
     }
 
+
     private fun setTime(v: TextView) {
         // Get Current Time
         val c = Calendar.getInstance()
@@ -79,6 +78,11 @@ class AddEventFragment() : Fragment() {
         )
         timePickerDialog.show()
 
+    }
+
+    override fun onDestroyView() {
+        super.onDestroyView()
+        (activity as DashboardActivity).showNavBar()
     }
 
 }

@@ -6,6 +6,7 @@ import android.content.Intent
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
 import android.view.MenuItem
+import android.view.View
 import android.widget.Button
 import android.widget.EditText
 import androidx.databinding.DataBindingUtil
@@ -64,44 +65,18 @@ class DashboardActivity : AppCompatActivity() {
         }
     }
 
-
-//    fun setDate(v: EditText) {
-//        val c = Calendar.getInstance()
-//        val mYear = c[Calendar.YEAR]
-//        val mMonth = c[Calendar.MONTH]
-//        val mDay = c[Calendar.DAY_OF_MONTH]
-//        val datePickerDialog = DatePickerDialog(
-//            this,
-//            DatePickerDialog.OnDateSetListener { view, year, monthOfYear, dayOfMonth ->
-//                v.setText(
-//                    dayOfMonth.toString() + "-" + (monthOfYear + 1) + "-" + year
-//                )
-//            }, mYear, mMonth, mDay
-//        )
-//        datePickerDialog.show()
-//    }
-//
-//    fun setTime(v: EditText) {
-//        // Get Current Time
-//        val c = Calendar.getInstance()
-//        val mHour = c[Calendar.HOUR_OF_DAY]
-//        val mMinute = c[Calendar.MINUTE]
-//        val timePickerDialog = TimePickerDialog(
-//            this,
-//            TimePickerDialog.OnTimeSetListener { view, hourOfDay, minute -> v.setText("$hourOfDay:$minute") },
-//            mHour,
-//            mMinute,
-//            false
-//        )
-//        timePickerDialog.show()
-//
-//    }
-
-
     // For Bottom Navigation Menu
 
     override fun finish() {
         super.finish()
         overridePendingTransition(R.anim.slide_in_right, R.anim.slide_out_left)
+    }
+
+    fun hideNavBar() {
+        binding.bottomNavigationMenu.visibility = View.GONE
+    }
+
+    fun showNavBar() {
+        binding.bottomNavigationMenu.visibility = View.VISIBLE
     }
 }
