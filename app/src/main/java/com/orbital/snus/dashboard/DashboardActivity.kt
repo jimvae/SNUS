@@ -33,6 +33,7 @@ class DashboardActivity : AppCompatActivity() {
         }
         binding = DataBindingUtil.setContentView<ActivityDashboardBinding>(this, R.layout.activity_dashboard)
 
+        // Bottom Navigation Menu Handler
         binding.bottomNavigationMenu.menu.findItem(R.id.ic_action_home).setChecked(true)
         binding.bottomNavigationMenu.setOnNavigationItemSelectedListener {
             menuItem: MenuItem ->
@@ -59,6 +60,7 @@ class DashboardActivity : AppCompatActivity() {
         }
     }
 
+    // For Bottom Navigation Menu
     override fun finish() {
         super.finish()
         overridePendingTransition(R.anim.slide_in_right, R.anim.slide_out_left)
