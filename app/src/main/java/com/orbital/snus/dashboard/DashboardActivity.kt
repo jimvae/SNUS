@@ -6,6 +6,7 @@ import android.content.Intent
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
 import android.view.MenuItem
+import android.view.View
 import android.widget.Button
 import android.widget.EditText
 import androidx.databinding.DataBindingUtil
@@ -103,5 +104,13 @@ class DashboardActivity : AppCompatActivity() {
     override fun finish() {
         super.finish()
         overridePendingTransition(R.anim.slide_in_right, R.anim.slide_out_left)
+    }
+
+    fun hideNavBar() {
+        binding.bottomNavigationMenu.visibility = View.GONE
+    }
+
+    fun showNavBar() {
+        binding.bottomNavigationMenu.visibility = View.VISIBLE
     }
 }

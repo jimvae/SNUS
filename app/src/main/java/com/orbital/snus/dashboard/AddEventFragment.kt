@@ -23,64 +23,69 @@ class AddEventFragment() : Fragment() {
         container: ViewGroup?, savedInstanceState: Bundle?
     ): View? {
 
+        (activity as DashboardActivity).hideNavBar()
+
         val binding: FragmentDashboardAddEventBinding = DataBindingUtil.inflate(
             inflater, R.layout.fragment_dashboard_add_event, container, false
         )
 
 
         binding.textStartDate.setOnClickListener {
-            val c = Calendar.getInstance()
-//            DashboardActivity().setDate(it as EditText)
+            setDate(it as EditText)
 
         }
         binding.textEndDate.setOnClickListener {
-            val c = Calendar.getInstance()
-//            DashboardActivity().setDate(it as EditText)
+            setDate(it as EditText)
         }
 
         binding.textStartTime.setOnClickListener {
-//            DashboardActivity().setTime(it as EditText)
+            setTime(it as EditText)
         }
 
         binding.textEndTime.setOnClickListener {
-//            DashboardActivity().setTime(it as EditText)
+            setTime(it as EditText)
         }
 
         binding.buttonConfirm
         return binding.root
     }
 
-//    private fun setDate(v: EditText) {
-//        val c = Calendar.getInstance()
-//        val mYear = c[Calendar.YEAR]
-//        val mMonth = c[Calendar.MONTH]
-//        val mDay = c[Calendar.DAY_OF_MONTH]
-//        val datePickerDialog = DatePickerDialog(
-//            targetFragment,
-//            DatePickerDialog.OnDateSetListener { view, year, monthOfYear, dayOfMonth ->
-//                v.setText(
-//                    dayOfMonth.toString() + "-" + (monthOfYear + 1) + "-" + year
-//                )
-//            }, mYear, mMonth, mDay
-//        )
-//        datePickerDialog.show()
-//    }
-//
-//    private fun setTime(v: EditText) {
-//        // Get Current Time
-//        val c = Calendar.getInstance()
-//        val mHour = c[Calendar.HOUR_OF_DAY]
-//        val mMinute = c[Calendar.MINUTE]
-//        val timePickerDialog = TimePickerDialog(
-//            DashboardActivity(),
-//            TimePickerDialog.OnTimeSetListener { view, hourOfDay, minute -> v.setText("$hourOfDay:$minute") },
-//            mHour,
-//            mMinute,
-//            false
-//        )
-//        timePickerDialog.show()
-//
-//    }
+    private fun setDate(v: EditText) {
+        val c = Calendar.getInstance()
+        val mYear = c[Calendar.YEAR]
+        val mMonth = c[Calendar.MONTH]
+        val mDay = c[Calendar.DAY_OF_MONTH]
+        val datePickerDialog = DatePickerDialog(
+            this.requireContext(),
+            DatePickerDialog.OnDateSetListener { view, year, monthOfYear, dayOfMonth ->
+                v.setText(
+                    dayOfMonth.toString() + "-" + (monthOfYear + 1) + "-" + year
+                )
+            }, mYear, mMonth, mDay
+        )
+        datePickerDialog.show()
+    }
+
+    private fun setTime(v: EditText) {
+        // Get Current Time
+        val c = Calendar.getInstance()
+        val mHour = c[Calendar.HOUR_OF_DAY]
+        val mMinute = c[Calendar.MINUTE]
+        val timePickerDialog = TimePickerDialog(
+            this.requireContext(),
+            TimePickerDialog.OnTimeSetListener { view, hourOfDay, minute -> v.setText("$hourOfDay:$minute") },
+            mHour,
+            mMinute,
+            false
+        )
+        timePickerDialog.show()
+
+    }
+
+    override fun onDestroyView() {
+        super.onDestroyView()
+        (activity as DashboardActivity).showNavBar()
+    }
 
 }
 
