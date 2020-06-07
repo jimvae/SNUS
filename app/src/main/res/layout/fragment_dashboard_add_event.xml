@@ -18,51 +18,51 @@
         android:paddingRight="8dp"
         android:paddingBottom="8dp">
 
-        <EditText
+        <TextView
             android:id="@+id/text_start_date"
             android:layout_width="0dp"
             android:layout_height="wrap_content"
             android:layout_marginStart="8dp"
             android:layout_marginTop="24dp"
             android:layout_marginEnd="8dp"
-            android:hint="Start Date"
+            android:text="Start Date"
             app:layout_constraintEnd_toStartOf="@+id/text_end_date"
             app:layout_constraintHorizontal_bias="0.5"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toBottomOf="@+id/text_edit_event_name" />
 
-        <EditText
+        <TextView
             android:id="@+id/text_start_time"
             android:layout_width="0dp"
             android:layout_height="wrap_content"
             android:layout_marginStart="8dp"
             android:layout_marginTop="24dp"
             android:layout_marginEnd="8dp"
-            android:hint="Start Time"
+            android:text="Start Time"
             app:layout_constraintEnd_toStartOf="@+id/text_end_time"
             app:layout_constraintHorizontal_bias="0.5"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toBottomOf="@+id/text_start_date" />
 
-        <EditText
+        <TextView
             android:id="@+id/text_end_date"
             android:layout_width="0dp"
             android:layout_height="wrap_content"
             android:layout_marginStart="8dp"
             android:layout_marginEnd="8dp"
-            android:hint="End Date"
+            android:text="End Date"
             app:layout_constraintBaseline_toBaselineOf="@+id/text_start_date"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintHorizontal_bias="0.5"
             app:layout_constraintStart_toEndOf="@+id/text_start_date" />
 
-        <EditText
+        <TextView
             android:id="@+id/text_end_time"
             android:layout_width="0dp"
             android:layout_height="wrap_content"
             android:layout_marginStart="8dp"
             android:layout_marginEnd="8dp"
-            android:hint="End Time"
+            android:text="End Time"
             app:layout_constraintBaseline_toBaselineOf="@+id/text_start_time"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintHorizontal_bias="0.5"
