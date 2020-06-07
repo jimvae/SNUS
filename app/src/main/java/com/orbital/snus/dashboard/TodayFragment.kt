@@ -38,6 +38,9 @@ class TodayFragment : Fragment() {
         binding.buttonCalendar.setOnClickListener {
                 view: View -> view.findNavController().navigate(R.id.action_todayFragment_to_calendarFragment)
         }
+        binding.floatingButtonAdd.setOnClickListener {
+            view: View -> view.findNavController().navigate(R.id.action_todayFragment_to_addEventFragment)
+        }
 
         return binding.root
     }
