@@ -15,6 +15,7 @@ import android.widget.Toast
 import androidx.annotation.RequiresApi
 import androidx.databinding.DataBindingUtil
 import androidx.fragment.app.Fragment
+import androidx.lifecycle.ViewModelProvider
 import androidx.navigation.fragment.findNavController
 import com.google.firebase.auth.FirebaseAuth
 import com.google.firebase.firestore.FirebaseFirestore
@@ -25,6 +26,8 @@ import java.text.SimpleDateFormat
 import java.util.*
 
 class AddEventFragment() : Fragment() {
+
+    private lateinit var viewModel : EventViewModel
 
     // Calendar and Date variables
     val c = Calendar.getInstance()
@@ -42,10 +45,6 @@ class AddEventFragment() : Fragment() {
     val START = "start"
     val END = "end"
 
-    // Firestore
-    val db: FirebaseFirestore = FirebaseFirestore.getInstance()
-    val firebaseAuth : FirebaseAuth = FirebaseAuth.getInstance()
-
     override fun onCreateView(
         inflater: LayoutInflater,
         container: ViewGroup?, savedInstanceState: Bundle?
@@ -56,6 +55,8 @@ class AddEventFragment() : Fragment() {
         val binding: FragmentDashboardAddEventBinding = DataBindingUtil.inflate(
             inflater, R.layout.fragment_dashboard_add_event, container, false
         )
+
+        viewModel = ViewModelProvider(this).get(EventViewModel::class.java)
 
         // SET ON CLICK LISTENERS
         // Set start and end date/time
@@ -95,23 +96,15 @@ class AddEventFragment() : Fragment() {
             binding.textStartDate.isEnabled = false
             binding.textEndDate.isEnabled = false
 
-            // start to add inside database
-            val eventId: String = db.collection("users") // users collection
-                .document(firebaseAuth.currentUser!!.uid) // current userId
-                .collection("events") // user events collection
-                .document().id // event document with auto-generated key
+            val event = UserEvent(name, description, startDate!!, endDate!!, location, false)
+            viewModel.addEvent(event)
 
-            val event = UserEvent(name, description, startDate!!, endDate!!, location, false, eventId)
 
-            db.collection("users") // users collection
-                .document(firebaseAuth.currentUser!!.uid) // current userId
-                .collection("events") // user events collection
-                .document(eventId).set(event) // event document with auto-generated key
-                .addOnSuccessListener {
-                    Toast.makeText(requireContext(), "Event successfully added", Toast.LENGTH_SHORT).show()
-                    findNavController()
-                }.addOnFailureListener { exception ->
-                    Toast.makeText(requireContext(), exception.toString(), Toast.LENGTH_SHORT).show()
+
+            // Failure to add into database
+            viewModel.result.observe(viewLifecycleOwner, androidx.lifecycle.Observer {
+                if (it != null) {
+                    Toast.makeText(requireContext(), it.toString(), Toast.LENGTH_SHORT).show()
                     binding.textEditEventName.isEnabled = true
                     binding.textEditEventLocation.isEnabled = true
                     binding.textEditEventDescription.isEnabled = true
@@ -119,7 +112,12 @@ class AddEventFragment() : Fragment() {
                     binding.buttonConfirm.isEnabled = true
                     binding.textStartDate.isEnabled = true
                     binding.textEndDate.isEnabled = true
+                    viewModel.exceptionChecked()
+                } else {
+                    Toast.makeText(requireContext(), "Event successfully added", Toast.LENGTH_SHORT).show()
+                    findNavController().navigate(R.id.action_addEventFragment_to_todayFragment)
                 }
+            })
         }
 
         binding.textEditEventLocation.setOnFocusChangeListener { v, hasFocus ->

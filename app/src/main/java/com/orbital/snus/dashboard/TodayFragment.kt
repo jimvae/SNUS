@@ -26,11 +26,6 @@ class TodayFragment : Fragment() {
         )
         firebaseAuth = FirebaseAuth.getInstance()
 
-        binding.logoutButton.setOnClickListener {
-            firebaseAuth.signOut()
-            startActivity(Intent(activity?.applicationContext, MainActivity::class.java))
-            activity?.finish()
-        }
 
         binding.buttonUpcoming.setOnClickListener {
             view: View -> view.findNavController().navigate(R.id.action_todayFragment_to_upcomingFragment)

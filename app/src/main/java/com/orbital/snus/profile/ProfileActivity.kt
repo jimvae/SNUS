@@ -6,6 +6,7 @@ import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
 import android.view.MenuItem
 import androidx.databinding.DataBindingUtil
+import com.google.firebase.auth.FirebaseAuth
 import com.orbital.snus.R
 import com.orbital.snus.dashboard.DashboardActivity
 import com.orbital.snus.databinding.ActivityGroupsBinding
@@ -13,10 +14,12 @@ import com.orbital.snus.databinding.ActivityProfileBinding
 import com.orbital.snus.groups.GroupsActivity
 import com.orbital.snus.messages.MessagesActivity
 import com.orbital.snus.modules.ModulesActivity
+import com.orbital.snus.opening.MainActivity
 
 class ProfileActivity : AppCompatActivity() {
 
     private lateinit var binding: ActivityProfileBinding
+    private var firebaseAuth: FirebaseAuth = FirebaseAuth.getInstance()
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -51,6 +54,12 @@ class ProfileActivity : AppCompatActivity() {
                 }
             }
             true
+        }
+
+        binding.logoutButton.setOnClickListener {
+            firebaseAuth.signOut()
+            startActivity(Intent(this.applicationContext, MainActivity::class.java))
+            finish()
         }
     }
 
