@@ -128,7 +128,7 @@ class RegisterFragment : Fragment() {
         firestore.collection(USER_CALS)
             .document(userId)
             .collection(USER_EVENT)
-            .add(UserEvent("h", "g", Date(), Date(), "l", false))
+            .add(UserEvent("h", "g", "", "", "l", false))
             .addOnFailureListener {
                 exception ->
                 Log.d("RegisterFragment", exception.toString())
