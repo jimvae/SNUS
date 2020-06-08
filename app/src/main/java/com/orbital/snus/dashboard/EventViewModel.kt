@@ -1,5 +1,6 @@
 package com.orbital.snus.dashboard
 
+import android.util.Log
 import android.widget.Toast
 import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
@@ -7,6 +8,7 @@ import androidx.lifecycle.ViewModel
 import androidx.navigation.fragment.findNavController
 import com.google.firebase.auth.FirebaseAuth
 import com.google.firebase.firestore.FirebaseFirestore
+import com.google.firebase.firestore.auth.User
 import com.orbital.snus.R
 import com.orbital.snus.data.UserEvent
 import java.lang.Exception
@@ -32,15 +34,17 @@ class EventViewModel : ViewModel() {
 
     fun addEvent(event: UserEvent) {
         // start to add inside database
-        event.id = db.collection("users") // users collection
+        val id = db.collection("users") // users collection
             .document(firebaseAuth.currentUser!!.uid) // current userId
             .collection("events") // user events collection
             .document().id // event document with auto-generated key
 
+        event.id = id
+
         db.collection("users") // users collection
             .document(firebaseAuth.currentUser!!.uid) // current userId
             .collection("events") // user events collection
-            .document(event.id).set(event) // event document with auto-generated key
+            .document(id).set(event) // event document with auto-generated key
             .addOnSuccessListener {
                 _result.value = null
             }.addOnFailureListener { exception ->
@@ -50,5 +54,31 @@ class EventViewModel : ViewModel() {
 
     fun exceptionChecked() {
         _result.value = null
+    }
+
+    // fetch data from database
+    fun fetchEvents() : List<UserEvent> {
+        val eventList = ArrayList<UserEvent>()
+        db.collection("users")
+            .document(firebaseAuth.currentUser!!.uid)
+            .collection("events")
+            .addSnapshotListener { querySnapshot, firebaseFirestoreException ->
+                if (firebaseFirestoreException != null) {
+                    Log.w("EventViewModel", firebaseFirestoreException.toString())
+                    return@addSnapshotListener
+                }
+
+                if (querySnapshot != null) {
+                    val documents = querySnapshot.documents
+                    documents.forEach {
+                        val event = it.toObject(UserEvent::class.java)
+                        if (event != null) {
+                            eventList.add(event)
+                        }
+                    }
+                }
+            }
+
+        return eventList
     }
 }
