@@ -32,7 +32,7 @@ class TodayFragment : Fragment() {
         firebaseAuth = FirebaseAuth.getInstance()
 
         viewManager = LinearLayoutManager(activity)
-        viewAdapter = EventAdapter(EventViewModel().fetchEvents()) // eventAdapter takes in the data and convert to views for RecyclerView
+        viewAdapter = EventAdapter(AddEventFragment().fetchEvents()) // eventAdapter takes in the data and convert to views for RecyclerView
         recyclerView = binding.todayRecyclerView.apply {
             // use a linear layout manager
             layoutManager = viewManager
