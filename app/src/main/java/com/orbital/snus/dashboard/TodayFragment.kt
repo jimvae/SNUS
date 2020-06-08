@@ -40,6 +40,7 @@ class TodayFragment : Fragment() {
             // specify an viewAdapter (see also next example)
             adapter = viewAdapter
         }
+        
         binding.buttonUpcoming.setOnClickListener {
             view: View -> view.findNavController().navigate(R.id.action_todayFragment_to_upcomingFragment)
         }

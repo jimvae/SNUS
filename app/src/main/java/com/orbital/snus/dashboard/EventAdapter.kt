@@ -43,8 +43,8 @@ class EventAdapter(eventList : List<UserEvent>) :
 
         holder.textView.event_name.text = eventList[position].eventName
         holder.textView.event_description.text = eventList[position].eventDescription
-        holder.textView.start_date.text = dateFormatter.format(eventList[position].startDate).toPattern().toString()
-        holder.textView.end_date.text = dateFormatter.format(eventList[position].endDate).toPattern().toString()
+        holder.textView.start_date.text = dateFormatter.format(eventList[position].startDate!!).toPattern().toString()
+        holder.textView.end_date.text = dateFormatter.format(eventList[position].endDate!!).toPattern().toString()
         holder.textView.event_location.text = eventList[position].location
         // - get element from your dataset at this position
         // - replace the contents of the view with that element

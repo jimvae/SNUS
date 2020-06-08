@@ -99,8 +99,6 @@ class AddEventFragment() : Fragment() {
             val event = UserEvent(name, description, startDate!!, endDate!!, location, false)
             viewModel.addEvent(event)
 
-
-
             // Failure to add into database
             viewModel.result.observe(viewLifecycleOwner, androidx.lifecycle.Observer {
                 if (it != null) {

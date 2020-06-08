@@ -8,8 +8,6 @@ data class UserEvent(
     var location: String? = null, var addToTimeline: Boolean? = null,
     var id: String? = null) {
 
-
-
     fun updateEvent(eventName: String,
                     eventDescription: String,
                     startDate: Date, endDate: Date,

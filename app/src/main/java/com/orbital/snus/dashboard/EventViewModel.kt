@@ -79,6 +79,9 @@ class EventViewModel : ViewModel() {
                 }
             }
 
+        if (eventList.size == 0) {
+            println("got problem")
+        }
         return eventList
     }
 }
