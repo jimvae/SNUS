@@ -79,4 +79,5 @@ class DashboardActivity : AppCompatActivity() {
     fun showNavBar() {
         binding.bottomNavigationMenu.visibility = View.VISIBLE
     }
+
 }

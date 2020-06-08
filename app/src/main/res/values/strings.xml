@@ -16,6 +16,8 @@
     <string name="Today">Today</string>
     <string name="Upcoming">Upcoming</string>
     <string name="Calendar">Calendar</string>
+    <string name="StartDate">Start Date</string>
+    <string name="EndDate">End Date</string>
 
 
     <!-- TODO: Remove or change this placeholder text -->
