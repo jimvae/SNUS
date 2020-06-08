@@ -101,18 +101,16 @@ class AddEventFragment() : Fragment() {
                 .collection("events") // user events collection
                 .document().id // event document with auto-generated key
 
-            val event = UserEvent(name, description, startDate!!, endDate!!, location, false,eventId)
+            val event = UserEvent(name, description, startDate!!, endDate!!, location, false, eventId)
 
             db.collection("users") // users collection
-
                 .document(firebaseAuth.currentUser!!.uid) // current userId
                 .collection("events") // user events collection
                 .document(eventId).set(event) // event document with auto-generated key
                 .addOnSuccessListener {
                     Toast.makeText(requireContext(), "Event successfully added", Toast.LENGTH_SHORT).show()
                     findNavController()
-                }.addOnFailureListener {
-                        exception ->
+                }.addOnFailureListener { exception ->
                     Toast.makeText(requireContext(), exception.toString(), Toast.LENGTH_SHORT).show()
                     binding.textEditEventName.isEnabled = true
                     binding.textEditEventLocation.isEnabled = true
@@ -178,8 +176,6 @@ class AddEventFragment() : Fragment() {
                         v.text = dateFormatter.format(endDate).toPattern().toString()
                     }
                 }
-
-
             }, mYear, mMonth, mDay
         )
 
@@ -196,5 +192,4 @@ class AddEventFragment() : Fragment() {
         val imm = activity?.getSystemService(Context.INPUT_METHOD_SERVICE) as InputMethodManager
         imm.hideSoftInputFromWindow(view.windowToken, 0)
     }
-
 }

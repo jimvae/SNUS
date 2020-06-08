@@ -5,7 +5,8 @@ import java.util.*
 data class UserEvent(
     var eventName: String, var eventDescription: String,
     var startDate: Date, var endDate: Date,
-    var location: String, var addToTimeline: Boolean) {
+    var location: String, var addToTimeline: Boolean,
+    var id: String = "") {
 
     fun updateEvent(eventName: String,
                     eventDescription: String,
@@ -26,12 +27,12 @@ data class UserEvent(
             if (other == this) {
                 return true
             } else if (other is UserEvent) {
-                return this.eventName == other.eventName &&
-                        this.eventDescription == other.eventDescription &&
-                        this.startDate == other.startDate &&
-                        this.endDate == other.endDate &&
-                        this.location == other.location &&
-                        this.addToTimeline == other.addToTimeline
+                return this.eventName.equals(other.eventName) &&
+                        this.eventDescription.equals(other.eventDescription) &&
+                        this.startDate.equals(other.startDate) &&
+                        this.endDate.equals(other.endDate) &&
+                        this.location.equals(other.location) &&
+                        this.addToTimeline.equals(other.addToTimeline)
             } else {
                 return false
             }

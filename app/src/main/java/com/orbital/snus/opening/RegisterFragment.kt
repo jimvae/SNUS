@@ -118,21 +118,21 @@ class RegisterFragment : Fragment() {
     }
 
     // create documents for user data and store inside Firestore
-    fun createUserData() {
-        val userId: String = firebaseAuth.uid!!.toString()
-        val USER_CALS : String = "UserCalendars"
-        val USER_EVENT : String = "UserEvents"
-        // UserCalendars holds ALL user calendars
-        // First part, set up a document with userID as key.
-        // Sets a dummy value in the document
-        firestore.collection(USER_CALS)
-            .document(userId)
-            .collection(USER_EVENT)
-            .add(UserEvent("h", "g", "", "", "l", false))
-            .addOnFailureListener {
-                exception ->
-                Log.d("RegisterFragment", exception.toString())
-            }
-
-    }
+//    fun createUserData() {
+//        val userId: String = firebaseAuth.uid!!.toString()
+//        val USER_CALS : String = "UserCalendars"
+//        val USER_EVENT : String = "UserEvents"
+//        // UserCalendars holds ALL user calendars
+//        // First part, set up a document with userID as key.
+//        // Sets a dummy value in the document
+//        firestore.collection(USER_CALS)
+//            .document(userId)
+//            .collection(USER_EVENT)
+//            .add(UserEvent("h", "g", "", "", "l", false))
+//            .addOnFailureListener {
+//                exception ->
+//                Log.d("RegisterFragment", exception.toString())
+//            }
+//
+//    }
 }
