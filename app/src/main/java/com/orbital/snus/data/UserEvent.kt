@@ -4,12 +4,12 @@ import java.util.*
 
 data class UserEvent(
     var eventName: String, var eventDescription: String,
-    var startDate: String, var endDate: String,
+    var startDate: Date, var endDate: Date,
     var location: String, var addToTimeline: Boolean) {
 
     fun updateEvent(eventName: String,
                     eventDescription: String,
-                    startDate: String, endDate: String,
+                    startDate: Date, endDate: Date,
                     location: String, addToTimeline: Boolean) {
         this.eventName = eventName
         this.eventDescription = eventDescription

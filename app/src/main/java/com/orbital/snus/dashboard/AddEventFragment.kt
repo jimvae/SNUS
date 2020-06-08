@@ -1,14 +1,23 @@
 package com.orbital.snus.dashboard
 
 import android.app.DatePickerDialog
+import android.app.Dialog
 import android.app.TimePickerDialog
+import android.content.Context
+import android.os.Build
 import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import android.view.inputmethod.InputMethodManager
 import android.widget.TextView
+import android.widget.Toast
+import androidx.annotation.RequiresApi
 import androidx.databinding.DataBindingUtil
 import androidx.fragment.app.Fragment
+import androidx.navigation.fragment.findNavController
+import com.google.firebase.auth.FirebaseAuth
+import com.google.firebase.firestore.FirebaseFirestore
 import com.orbital.snus.R
 import com.orbital.snus.databinding.FragmentDashboardAddEventBinding
 import com.orbital.snus.data.UserEvent
@@ -16,6 +25,26 @@ import java.text.SimpleDateFormat
 import java.util.*
 
 class AddEventFragment() : Fragment() {
+
+    // Calendar and Date variables
+    val c = Calendar.getInstance()
+    var mYear = c[Calendar.YEAR]
+    var mMonth = c[Calendar.MONTH]
+    var mDay = c[Calendar.DAY_OF_MONTH]
+    var mHour = c[Calendar.HOUR_OF_DAY]
+    var mMinute = c[Calendar.MINUTE]
+
+    var dateFormatter: SimpleDateFormat = SimpleDateFormat("dd MMM YYYY'\n'hh:mm a")
+
+    var startDate: Date? = null
+    var endDate: Date? = null
+
+    val START = "start"
+    val END = "end"
+
+    // Firestore
+    val db: FirebaseFirestore = FirebaseFirestore.getInstance()
+    val firebaseAuth : FirebaseAuth = FirebaseAuth.getInstance()
 
     override fun onCreateView(
         inflater: LayoutInflater,
@@ -28,103 +57,144 @@ class AddEventFragment() : Fragment() {
             inflater, R.layout.fragment_dashboard_add_event, container, false
         )
 
+        // SET ON CLICK LISTENERS
+        // Set start and end date/time
         binding.textStartDate.setOnClickListener {
-
-            setDate(it as TextView)
+            hideKeyboard(it)
+            setDateAndTime(it as TextView, START)
         }
         binding.textEndDate.setOnClickListener {
-            setDate(it as TextView)
+            hideKeyboard(it)
+            setDateAndTime(it as TextView, END)
         }
 
-
-
+        // Confirm button
         binding.buttonConfirm.setOnClickListener {
-            val eventName = binding.textEditEventName.toString()
-            val eventDescription = binding.textEditEventDescription.toString()
-            val startDate = binding.textStartDate.toString()
-            val endDate = binding.textEndDate.toString()
-//            val startTime = binding.textStartTime.toString()
-//            val endTime = binding.textEndTime.toString()
+            val name = binding.textEditEventName.text.toString()
+            val description = binding.textEditEventDescription.text.toString()
+            val location = binding.textEditEventLocation.text.toString()
 
+            // Checking if data is legit
+            if (name == "") {
+                Toast.makeText(requireContext(), "Please enter event name", Toast.LENGTH_SHORT).show()
+                return@setOnClickListener
+            } else if (startDate == null) {
+                Toast.makeText(requireContext(), "Please enter start date", Toast.LENGTH_SHORT).show()
+                return@setOnClickListener
+            } else if (endDate == null) {
+                Toast.makeText(requireContext(), "Please enter end date", Toast.LENGTH_SHORT).show()
+                return@setOnClickListener
+            }
 
-//                    this.eventName = eventName
-//            this.eventDescription = eventDescription
-//            this.startDate = startDate
-//            this.endDate = endDate
-//            this.location = location
-//            this.addToTimeline = addToTimeline
-//            val event = UserEvent()
+            // disabling page
+            binding.textEditEventName.isEnabled = false
+            binding.textEditEventLocation.isEnabled = false
+            binding.textEditEventDescription.isEnabled = false
+            binding.buttonAddToTimeline.isEnabled = false
+            binding.buttonConfirm.isEnabled = false
+            binding.textStartDate.isEnabled = false
+            binding.textEndDate.isEnabled = false
+
+            // start to add inside database
+            val eventId: String = db.collection("users") // users collection
+                .document(firebaseAuth.currentUser!!.uid) // current userId
+                .collection("events") // user events collection
+                .document().id // event document with auto-generated key
+
+            val event = UserEvent(name, description, startDate!!, endDate!!, location, false,eventId)
+
+            db.collection("users") // users collection
+
+                .document(firebaseAuth.currentUser!!.uid) // current userId
+                .collection("events") // user events collection
+                .document(eventId).set(event) // event document with auto-generated key
+                .addOnSuccessListener {
+                    Toast.makeText(requireContext(), "Event successfully added", Toast.LENGTH_SHORT).show()
+                    findNavController()
+                }.addOnFailureListener {
+                        exception ->
+                    Toast.makeText(requireContext(), exception.toString(), Toast.LENGTH_SHORT).show()
+                    binding.textEditEventName.isEnabled = true
+                    binding.textEditEventLocation.isEnabled = true
+                    binding.textEditEventDescription.isEnabled = true
+                    binding.buttonAddToTimeline.isEnabled = true
+                    binding.buttonConfirm.isEnabled = true
+                    binding.textStartDate.isEnabled = true
+                    binding.textEndDate.isEnabled = true
+                }
         }
+
+        binding.textEditEventLocation.setOnFocusChangeListener { v, hasFocus ->
+            if (!hasFocus) {
+                hideKeyboard(v)
+            }
+        }
+
         return binding.root
     }
 
-
-    private fun setDate(v: TextView) : String {
-        var dateString: String = ""
-        val c = Calendar.getInstance()
-        var mHour = c[Calendar.HOUR_OF_DAY]
-        var mMinute = c[Calendar.MINUTE]
-        var timePickerDialog = TimePickerDialog(
+    // Sets date and time in textView, and save the data in correct Date object following the indicator
+    fun setDateAndTime (v: TextView, indicator: String) {
+        // TIMEPICKER
+        val timePickerDialog = TimePickerDialog(
             this.requireContext(),
-            TimePickerDialog.OnTimeSetListener { view, hourOfDay, minute ->
+            TimePickerDialog.OnTimeSetListener { _, hourOfDay, minute ->
                 mHour = hourOfDay
                 mMinute = minute
-                v.text =  "$mHour:$mMinute"
+                c.set(mYear, mMonth, mDay, mHour, mMinute)
+
+                when (indicator) {
+                    START -> {
+                        startDate = c.time
+                        v.text = dateFormatter.format(startDate).toPattern().toString()
+                    }
+                    END -> {
+                        endDate = c.time
+                        v.text = dateFormatter.format(endDate).toPattern().toString()
+                    }
+                }
             },
             mHour,
             mMinute,
-            false
+            true
         )
-        timePickerDialog.show()
 
-        var mYear = c[Calendar.YEAR]
-        var mMonth = c[Calendar.MONTH]
-        var mDay = c[Calendar.DAY_OF_MONTH]
+        // DATEPICKER
         val datePickerDialog = DatePickerDialog(
             this.requireContext(),
             DatePickerDialog.OnDateSetListener { view, year, monthOfYear, dayOfMonth ->
                 mYear = year
                 mMonth = monthOfYear
                 mDay = dayOfMonth
-                dateString = "$mDay ${mMonth + 1} - $mYear"
-                v.text =  "${v.text} ${dateString}"
+                c.set(mYear, mMonth, mDay, mHour, mMinute)
+
+                when (indicator) {
+                    START -> {
+                        startDate = c.time
+                        v.text = dateFormatter.format(startDate).toPattern().toString()
+                    }
+                    END -> {
+                        endDate = c.time
+                        v.text = dateFormatter.format(endDate).toPattern().toString()
+                    }
+                }
+
+
             }, mYear, mMonth, mDay
         )
+
+        timePickerDialog.show()
         datePickerDialog.show()
-
-
-
-//        val date: SimpleDateFormat = SimpleDateFormat()
-//        val dateString: String = date.format(c.getTime())
-
-        System.out.println(dateString)
-        return dateString
-
     }
-
-
-//    private fun setTime(v: TextView) {
-//        // Get Current Time
-//        val c = Calendar.getInstance()
-//        val mHour = c[Calendar.HOUR_OF_DAY]
-//        val mMinute = c[Calendar.MINUTE]
-//        val timePickerDialog = TimePickerDialog(
-//            this.requireContext(),
-//            TimePickerDialog.OnTimeSetListener { view, hourOfDay, minute -> v.setText("$hourOfDay:$minute") },
-//            mHour,
-//            mMinute,
-//            false
-//        )
-//        timePickerDialog.show()
-//
-//    }
 
     override fun onDestroyView() {
         super.onDestroyView()
         (activity as DashboardActivity).showNavBar()
     }
 
+    fun hideKeyboard(view: View) {
+        val imm = activity?.getSystemService(Context.INPUT_METHOD_SERVICE) as InputMethodManager
+        imm.hideSoftInputFromWindow(view.windowToken, 0)
+    }
+
 }
-
-
-
