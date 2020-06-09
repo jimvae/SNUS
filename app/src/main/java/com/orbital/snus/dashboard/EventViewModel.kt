@@ -1,19 +1,15 @@
 package com.orbital.snus.dashboard
 
 import android.util.Log
-import android.widget.Toast
 import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
 import com.google.firebase.auth.FirebaseAuth
 import com.google.firebase.firestore.FirebaseFirestore
-import com.google.firebase.firestore.FirebaseFirestoreException
-import com.google.firebase.firestore.QuerySnapshot
-import com.google.firebase.firestore.auth.User
 import com.orbital.snus.data.UserEvent
-import kotlinx.coroutines.Job
-import kotlin.coroutines.coroutineContext
-import kotlin.reflect.KProperty
+import java.text.SimpleDateFormat
+import java.util.*
+import kotlin.collections.ArrayList
 
 class EventViewModel : ViewModel() {
     private val firebaseAuth = FirebaseAuth.getInstance()
@@ -22,6 +18,42 @@ class EventViewModel : ViewModel() {
     private val _events = MutableLiveData<List<UserEvent>>()
     val events : LiveData<List<UserEvent>>
         get() = _events
+
+    private val _addSuccess = MutableLiveData<Boolean?>()
+    val addSuccess : LiveData<Boolean?>
+        get() = _addSuccess
+
+    private val _addFailure = MutableLiveData<Exception?>()
+    val addFailure : LiveData<Exception?>
+        get() = _addFailure
+
+    fun addEvent(event: UserEvent) {
+        // start to add inside database
+        val id = db.collection("users") // users collection
+            .document(firebaseAuth.currentUser!!.uid) // current userId
+            .collection("events") // user events collection
+            .document().id // event document with auto-generated key
+
+        event.id = id
+
+        db.collection("users") // users collection
+            .document(firebaseAuth.currentUser!!.uid) // current userId
+            .collection("events") // user events collection
+            .document(id).set(event)
+            .addOnSuccessListener {
+                _addSuccess.value = true
+            }.addOnFailureListener {
+                _addFailure.value = it
+            }
+    }
+
+    fun addEventSuccessCompleted() {
+        _addSuccess.value = null
+    }
+
+    fun addEventFailureCompleted() {
+        _addFailure.value = null
+    }
 
     // fetching events from database
     fun loadUsers() {
@@ -39,83 +71,26 @@ class EventViewModel : ViewModel() {
                     documents.forEach {
                         val event = it.toObject(UserEvent::class.java)
                         if (event != null) {
-                            eventList.add(event)
+                            if (checkIfToday(event)) {
+                                eventList.add(event)
+                            }
                         }
                     }
+
+                    // assuming the sorting is stable
+                    eventList.sortWith(compareBy { it.endDate })
+                    eventList.sortWith(compareBy { it.startDate })
                 }
                 _events.value = eventList
             }
     }
+
+    // Will exclude events that has finished before current instance in time
+    fun checkIfToday(event: UserEvent) : Boolean {
+        // need to check if event.StartDate <= Today <= event.End
+        val todayDate = Calendar.getInstance().time
+        val startDate = event.startDate!!
+        val endDate = event.endDate!!
+        return startDate.compareTo(todayDate) <= 0 && todayDate.compareTo(endDate) <= 0
+    }
 }
-
-
-//    private val dbEvents =
-//        db.collection("users").document(firebaseAuth.currentUser!!.uid)
-//            .collection("events")
-//
-
-//
-//    private val _event = MutableLiveData<UserEvent>()
-//    val event : LiveData<UserEvent>
-//        get() = _event
-//
-////    private val _result = MutableLiveData<Exception?>()
-////    val result : LiveData<Exception?>
-////        get() = _result
-//
-//    private val _result = MutableLiveData<Boolean?>(null)
-//    val result : LiveData<Boolean?>
-//        get() = _result
-//
-//    fun addEvent(event: UserEvent) {
-//        // start to add inside database
-//        val id = db.collection("users") // users collection
-//            .document(firebaseAuth.currentUser!!.uid) // current userId
-//            .collection("events") // user events collection
-//            .document().id // event document with auto-generated key
-//
-//        event.id = id
-//
-//        db.collection("users") // users collection
-//            .document(firebaseAuth.currentUser!!.uid) // current userId
-//            .collection("events") // user events collection
-//            .document(id).set(event) // event document with auto-generated key
-//            .addOnCompleteListener {
-//                if (it.isSuccessful) {
-//                    _result.value = false
-//                } else {
-//                    _result.value = true
-//                }
-//            }
-//    }
-//
-//    fun exceptionChecked() {
-//        _result.value = null
-//    }
-//
-//    // fetch data from database
-//    fun fetchEvents() : List<UserEvent> {
-//        val eventList = ArrayList<UserEvent>()
-//        db.collection("users")
-//            .document(firebaseAuth.currentUser!!.uid)
-//            .collection("events")
-//            .addSnapshotListener { querySnapshot, firebaseFirestoreException ->
-//                if (firebaseFirestoreException != null) {
-//                    Log.w("EventViewModel", firebaseFirestoreException.toString())
-//                    return@addSnapshotListener
-//                }
-//
-//                if (querySnapshot != null) {
-//                    val documents = querySnapshot.documents
-//                    documents.forEach {
-//                        val event = it.toObject(UserEvent::class.java)
-//                        if (event != null) {
-//                            eventList.add(event)
-//                        }
-//                    }
-//                }
-//            }
-//
-//        return eventList
-//    }
-//}

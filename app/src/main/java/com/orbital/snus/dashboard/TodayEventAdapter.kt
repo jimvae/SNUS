@@ -3,7 +3,6 @@ package com.orbital.snus.dashboard
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
-import android.widget.TextView
 import androidx.recyclerview.widget.RecyclerView
 import com.orbital.snus.R
 import com.orbital.snus.data.UserEvent
@@ -12,8 +11,8 @@ import java.text.SimpleDateFormat
 
 // EventAdapter takes in the data, converts into the view that is to be displayed by the RecyclerView
 
-class EventAdapter(eventList : List<UserEvent>) :
-    RecyclerView.Adapter<EventAdapter.EventViewHolder>() {
+class TodayEventAdapter(eventList : List<UserEvent>) :
+    RecyclerView.Adapter<TodayEventAdapter.EventViewHolder>() {
 
     val eventList = eventList
 
@@ -26,7 +25,7 @@ class EventAdapter(eventList : List<UserEvent>) :
 
     // Create new views (invoked by the layout manager)
     override fun onCreateViewHolder(parent: ViewGroup,
-                                    viewType: Int): EventAdapter.EventViewHolder {
+                                    viewType: Int): TodayEventAdapter.EventViewHolder {
         // create a new view
         // EventDailyView shows the layout of each view
         val textView = LayoutInflater.from(parent.context)
@@ -39,7 +38,9 @@ class EventAdapter(eventList : List<UserEvent>) :
     // Replace the contents of a view (invoked by the layout manager)
     // Connect the data to the view
     override fun onBindViewHolder(holder: EventViewHolder, position: Int) {
-        val dateFormatter: SimpleDateFormat = SimpleDateFormat("hh:mm a")
+
+        val dateFormatter: SimpleDateFormat = SimpleDateFormat("dd MMM yyyy hh:mm a")
+
 
         holder.textView.event_name.text = eventList[position].eventName
         holder.textView.event_description.text = eventList[position].eventDescription

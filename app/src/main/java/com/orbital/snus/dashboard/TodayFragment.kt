@@ -1,17 +1,12 @@
 package com.orbital.snus.dashboard
 
-import android.content.ClipData
-import android.content.Intent
 import android.os.Bundle
-import android.util.EventLog
-import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import android.widget.Toast
 import androidx.databinding.DataBindingUtil
 import androidx.fragment.app.Fragment
-import androidx.fragment.app.activityViewModels
 import androidx.lifecycle.Observer
 import androidx.lifecycle.ViewModelProvider
 import androidx.navigation.findNavController
@@ -19,14 +14,12 @@ import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
 import com.orbital.snus.R
 import com.orbital.snus.databinding.FragmentDashboardTodayBinding
-import com.orbital.snus.opening.MainActivity
 import com.google.firebase.auth.FirebaseAuth
 import com.google.firebase.firestore.FirebaseFirestore
-import com.google.firebase.firestore.auth.User
 import com.orbital.snus.data.UserEvent
-import java.text.SimpleDateFormat
 import java.util.*
-import androidx.fragment.app.viewModels as viewModels
+import java.util.ArrayList
+
 
 
 class TodayFragment : Fragment() {
@@ -57,7 +50,7 @@ class TodayFragment : Fragment() {
         firebaseAuth = FirebaseAuth.getInstance()
 
         viewManager = LinearLayoutManager(activity)
-        viewAdapter = EventAdapter(events)
+        viewAdapter = TodayEventAdapter(events)
 
         // set up the recyclerView
         recyclerView = binding.todayRecyclerView.apply {
