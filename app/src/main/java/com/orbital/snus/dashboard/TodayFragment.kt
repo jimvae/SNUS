@@ -24,7 +24,8 @@ import com.google.firebase.auth.FirebaseAuth
 import com.google.firebase.firestore.FirebaseFirestore
 import com.google.firebase.firestore.auth.User
 import com.orbital.snus.data.UserEvent
-import java.util.ArrayList
+import java.text.SimpleDateFormat
+import java.util.*
 import androidx.fragment.app.viewModels as viewModels
 
 
@@ -46,6 +47,13 @@ class TodayFragment : Fragment() {
         val binding: FragmentDashboardTodayBinding = DataBindingUtil.inflate(
             inflater, R.layout.fragment_dashboard_today, container, false
         )
+
+//        val dateFormatter: SimpleDateFormat = SimpleDateFormat("dd MMM")
+//        binding.dateToday.text = dateFormatter.format(Calendar.getInstance())
+        val dateToday = Calendar.getInstance()
+        binding.dateToday.text =  dateToday.getDisplayName(Calendar.DAY_OF_WEEK, Calendar.LONG, Locale.getDefault())
+
+
         firebaseAuth = FirebaseAuth.getInstance()
 
         viewManager = LinearLayoutManager(activity)

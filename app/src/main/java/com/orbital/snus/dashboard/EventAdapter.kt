@@ -39,7 +39,7 @@ class EventAdapter(eventList : List<UserEvent>) :
     // Replace the contents of a view (invoked by the layout manager)
     // Connect the data to the view
     override fun onBindViewHolder(holder: EventViewHolder, position: Int) {
-        val dateFormatter: SimpleDateFormat = SimpleDateFormat("dd MMM YYYY'\n'hh:mm a")
+        val dateFormatter: SimpleDateFormat = SimpleDateFormat("hh:mm a")
 
         holder.textView.event_name.text = eventList[position].eventName
         holder.textView.event_description.text = eventList[position].eventDescription
