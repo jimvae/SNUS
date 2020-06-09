@@ -55,9 +55,9 @@ class TodayEventAdapter(eventList : List<UserEvent>) :
 
         if (!allDay(event)) {
             holder.textView.start_date.text =
-                dateFormatter2.format(event.startDate!!).toPattern().toString()
+                dateFormatter3.format(event.startDate!!).toPattern().toString()
             holder.textView.end_date.text =
-                dateFormatter2.format(event.endDate!!).toPattern().toString()
+                dateFormatter3.format(event.endDate!!).toPattern().toString()
         } else {
 
             holder.textView.start_date.text = "ends on ${dateFormatter1.format(event.endDate!!).toPattern().toString()}"
