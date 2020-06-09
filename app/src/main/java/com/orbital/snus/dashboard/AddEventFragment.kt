@@ -6,6 +6,7 @@ import android.app.TimePickerDialog
 import android.content.Context
 import android.os.Build
 import android.os.Bundle
+import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
@@ -27,7 +28,10 @@ import java.util.*
 
 class AddEventFragment() : Fragment() {
 
-    private lateinit var viewModel : EventViewModel
+//    private lateinit var viewModel : EventViewModel
+    private lateinit var binding: FragmentDashboardAddEventBinding
+    private val firebaseAuth = FirebaseAuth.getInstance()
+    private val db = FirebaseFirestore.getInstance()
 
     // Calendar and Date variables
     val c = Calendar.getInstance()
@@ -52,11 +56,12 @@ class AddEventFragment() : Fragment() {
 
         (activity as DashboardActivity).hideNavBar()
 
-        val binding: FragmentDashboardAddEventBinding = DataBindingUtil.inflate(
+
+        binding = DataBindingUtil.inflate(
             inflater, R.layout.fragment_dashboard_add_event, container, false
         )
 
-        viewModel = ViewModelProvider(this).get(EventViewModel::class.java)
+//        viewModel = ViewModelProvider(this).get(EventViewModel::class.java)
 
         // SET ON CLICK LISTENERS
         // Set start and end date/time
@@ -69,6 +74,12 @@ class AddEventFragment() : Fragment() {
             setDateAndTime(it as TextView, END)
         }
 
+        binding.textEditEventLocation.setOnFocusChangeListener { v, hasFocus ->
+            if (!hasFocus) {
+                hideKeyboard(v)
+            }
+        }
+
         // Confirm button
         binding.buttonConfirm.setOnClickListener {
             val name = binding.textEditEventName.text.toString()
@@ -77,10 +88,12 @@ class AddEventFragment() : Fragment() {
 
             // Checking if data is legit
             if (name == "") {
-                Toast.makeText(requireContext(), "Please enter event name", Toast.LENGTH_SHORT).show()
+                Toast.makeText(requireContext(), "Please enter event name", Toast.LENGTH_SHORT)
+                    .show()
                 return@setOnClickListener
             } else if (startDate == null) {
-                Toast.makeText(requireContext(), "Please enter start date", Toast.LENGTH_SHORT).show()
+                Toast.makeText(requireContext(), "Please enter start date", Toast.LENGTH_SHORT)
+                    .show()
                 return@setOnClickListener
             } else if (endDate == null) {
                 Toast.makeText(requireContext(), "Please enter end date", Toast.LENGTH_SHORT).show()
@@ -97,35 +110,13 @@ class AddEventFragment() : Fragment() {
             binding.textEndDate.isEnabled = false
 
             val event = UserEvent(name, description, startDate!!, endDate!!, location, false)
-            viewModel.addEvent(event)
-
-            // Failure to add into database
-            viewModel.result.observe(viewLifecycleOwner, androidx.lifecycle.Observer {
-                if (it != null) {
-                    Toast.makeText(requireContext(), it.toString(), Toast.LENGTH_SHORT).show()
-                    binding.textEditEventName.isEnabled = true
-                    binding.textEditEventLocation.isEnabled = true
-                    binding.textEditEventDescription.isEnabled = true
-                    binding.buttonAddToTimeline.isEnabled = true
-                    binding.buttonConfirm.isEnabled = true
-                    binding.textStartDate.isEnabled = true
-                    binding.textEndDate.isEnabled = true
-                    viewModel.exceptionChecked()
-                } else {
-                    Toast.makeText(requireContext(), "Event successfully added", Toast.LENGTH_SHORT).show()
-                    findNavController().navigate(R.id.action_addEventFragment_to_todayFragment)
-                }
-            })
-        }
-
-        binding.textEditEventLocation.setOnFocusChangeListener { v, hasFocus ->
-            if (!hasFocus) {
-                hideKeyboard(v)
-            }
+            addEvent(event)
         }
 
         return binding.root
     }
+
+
 
     // Sets date and time in textView, and save the data in correct Date object following the indicator
     fun setDateAndTime (v: TextView, indicator: String) {
@@ -178,6 +169,35 @@ class AddEventFragment() : Fragment() {
         timePickerDialog.show()
         datePickerDialog.show()
     }
+
+    fun addEvent(event: UserEvent) {
+        // start to add inside database
+        val id = db.collection("users") // users collection
+            .document(firebaseAuth.currentUser!!.uid) // current userId
+            .collection("events") // user events collection
+            .document().id // event document with auto-generated key
+
+        event.id = id
+
+        db.collection("users") // users collection
+            .document(firebaseAuth.currentUser!!.uid) // current userId
+            .collection("events") // user events collection
+            .document(id).set(event)
+            .addOnSuccessListener {
+                Toast.makeText(requireContext(), "Event successfully added", Toast.LENGTH_SHORT).show()
+                findNavController().navigate(R.id.action_addEventFragment_to_todayFragment)
+            }.addOnFailureListener {
+                Toast.makeText(requireContext(), it.toString(), Toast.LENGTH_SHORT).show()
+                binding.textEditEventName.isEnabled = true
+                binding.textEditEventLocation.isEnabled = true
+                binding.textEditEventDescription.isEnabled = true
+                binding.buttonAddToTimeline.isEnabled = true
+                binding.buttonConfirm.isEnabled = true
+                binding.textStartDate.isEnabled = true
+                binding.textEndDate.isEnabled = true
+            }
+    }
+
 
     override fun onDestroyView() {
         super.onDestroyView()

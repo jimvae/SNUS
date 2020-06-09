@@ -9,11 +9,17 @@ import android.view.MenuItem
 import android.view.View
 import android.widget.Button
 import android.widget.EditText
+import android.widget.Toast
+import androidx.activity.viewModels
 import androidx.databinding.DataBindingUtil
+import androidx.fragment.app.viewModels
+import androidx.lifecycle.ViewModelProvider
 import com.google.android.material.bottomnavigation.BottomNavigationView
 import com.google.firebase.auth.FirebaseAuth
 import com.google.firebase.auth.FirebaseAuth.AuthStateListener
+import com.google.firebase.firestore.auth.User
 import com.orbital.snus.R
+import com.orbital.snus.data.UserEvent
 import com.orbital.snus.databinding.ActivityDashboardBinding
 import com.orbital.snus.groups.GroupsActivity
 import com.orbital.snus.messages.MessagesActivity
@@ -27,6 +33,7 @@ class DashboardActivity : AppCompatActivity() {
     private lateinit var firebaseAuth: FirebaseAuth
     private lateinit var binding: ActivityDashboardBinding
 
+    val viewModel: EventViewModel by this.viewModels()
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -37,6 +44,15 @@ class DashboardActivity : AppCompatActivity() {
             startActivity(Intent(applicationContext, MainActivity::class.java))
         }
         binding = DataBindingUtil.setContentView<ActivityDashboardBinding>(this, R.layout.activity_dashboard)
+
+        viewModel.loadUsers()
+        viewModel.getUsers().observe(this, androidx.lifecycle.Observer<List<UserEvent>> { events ->
+            if (events.size != 0) {
+                Toast.makeText(this.applicationContext, "Success retrieval", Toast.LENGTH_SHORT).show()
+            } else {
+                Toast.makeText(this.applicationContext, "Failed retrieval", Toast.LENGTH_SHORT).show()
+            }
+        })
 
         // Bottom Navigation Menu Handler
         binding.bottomNavigationMenu.menu.findItem(R.id.ic_action_home).setChecked(true)
