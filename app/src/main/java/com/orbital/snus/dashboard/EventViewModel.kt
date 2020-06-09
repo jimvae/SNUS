@@ -7,24 +7,17 @@ import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
 import com.google.firebase.auth.FirebaseAuth
 import com.google.firebase.firestore.FirebaseFirestore
+import com.google.firebase.firestore.FirebaseFirestoreException
+import com.google.firebase.firestore.QuerySnapshot
 import com.google.firebase.firestore.auth.User
 import com.orbital.snus.data.UserEvent
+import kotlinx.coroutines.Job
 import kotlin.coroutines.coroutineContext
 import kotlin.reflect.KProperty
-
 
 class EventViewModel : ViewModel() {
     private val firebaseAuth = FirebaseAuth.getInstance()
     private val db = FirebaseFirestore.getInstance()
-
-    private val users: MutableLiveData<List<UserEvent>> by lazy {
-        loadUsers()
-        return@lazy _events
-    }
-
-    fun getUsers(): LiveData<List<UserEvent>> {
-        return users
-    }
 
     private val _events = MutableLiveData<List<UserEvent>>()
     val events : LiveData<List<UserEvent>>
@@ -32,28 +25,26 @@ class EventViewModel : ViewModel() {
 
     // fetching events from database
     fun loadUsers() {
-        val eventList = ArrayList<UserEvent>()
+        var eventList = ArrayList<UserEvent>()
         db.collection("users")
             .document(firebaseAuth.currentUser!!.uid)
             .collection("events")
-            .get()
-            .addOnCompleteListener() {
-                if (it.isSuccessful) {
-                    val documents = it.result
-                    if (documents != null) {
-                        println("Success")
-                        documents.forEach {
-                            val event = it.toObject(UserEvent::class.java)
+            .addSnapshotListener { querySnapshot, firebaseFirestoreException ->
+                if (firebaseFirestoreException != null) {
+                    Log.w("EventViewModel", firebaseFirestoreException.toString())
+                    return@addSnapshotListener
+                }
+                if (querySnapshot != null) {
+                    val documents = querySnapshot.documents
+                    documents.forEach {
+                        val event = it.toObject(UserEvent::class.java)
+                        if (event != null) {
                             eventList.add(event)
                         }
-                        _events.value = eventList
                     }
-                } else { // not successful
-                    Log.w("EventViewModel", "Error " + it.exception.toString())
-                    println("Error")
                 }
+                _events.value = eventList
             }
-        _events.value = eventList
     }
 }
 

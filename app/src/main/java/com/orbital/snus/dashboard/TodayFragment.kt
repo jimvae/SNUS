@@ -13,6 +13,7 @@ import androidx.databinding.DataBindingUtil
 import androidx.fragment.app.Fragment
 import androidx.fragment.app.activityViewModels
 import androidx.lifecycle.Observer
+import androidx.lifecycle.ViewModelProvider
 import androidx.navigation.findNavController
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
@@ -35,7 +36,9 @@ class TodayFragment : Fragment() {
     private lateinit var viewAdapter: RecyclerView.Adapter<*>
     private lateinit var viewManager: RecyclerView.LayoutManager
 
-    private val viewModel: EventViewModel by activityViewModels<EventViewModel>()
+    val factory = EventViewModelFactory()
+    private lateinit var viewModel: EventViewModel
+    private val events = ArrayList<UserEvent>() // holder to store events and for RecyclerViewAdapter to observe
 
     override fun onCreateView(inflater: LayoutInflater,
                               container: ViewGroup?, savedInstanceState: Bundle?): View? {
@@ -46,12 +49,9 @@ class TodayFragment : Fragment() {
         firebaseAuth = FirebaseAuth.getInstance()
 
         viewManager = LinearLayoutManager(activity)
-        viewAdapter = EventAdapter(viewModel.events.value!!)
+        viewAdapter = EventAdapter(events)
 
-        viewModel.events.observe(viewLifecycleOwner, Observer<List<UserEvent>> { events ->
-            viewAdapter = EventAdapter(events) // eventAdapter takes in the data and convert to views for RecyclerView
-        })
-
+        // set up the recyclerView
         recyclerView = binding.todayRecyclerView.apply {
             // use a linear layout manager
             layoutManager = viewManager
@@ -60,6 +60,14 @@ class TodayFragment : Fragment() {
             adapter = viewAdapter
 
         }
+        viewModel = ViewModelProvider(this, factory).get(EventViewModel::class.java)
+
+        viewModel.events.observe(viewLifecycleOwner, Observer<List<UserEvent>> { dbEvents ->
+            events.removeAll(events)
+            events.addAll(dbEvents)
+            recyclerView.adapter!!.notifyDataSetChanged()
+        })
+
 
         binding.buttonUpcoming.setOnClickListener {
             view: View -> view.findNavController().navigate(R.id.action_todayFragment_to_upcomingFragment)
@@ -72,5 +80,19 @@ class TodayFragment : Fragment() {
         }
 
         return binding.root
+    }
+
+    override fun onActivityCreated(savedInstanceState: Bundle?) {
+        super.onActivityCreated(savedInstanceState)
+        viewModel = ViewModelProvider(this, factory).get(EventViewModel::class.java)
+        // On start of activity, we load the user data to be display on dashboard later
+        viewModel.loadUsers()
+        viewModel.events.observe(viewLifecycleOwner, androidx.lifecycle.Observer<List<UserEvent>> { events ->
+            if (events.size != 0) {
+                Toast.makeText(requireContext(), "Success retrieval", Toast.LENGTH_SHORT).show()
+            } else {
+                Toast.makeText(requireContext(), "Failed retrieval", Toast.LENGTH_SHORT).show()
+            }
+        })
     }
 }
