@@ -1,5 +1,6 @@
 package com.orbital.snus.dashboard
 
+import android.app.usage.UsageEvents
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
@@ -8,6 +9,8 @@ import com.orbital.snus.R
 import com.orbital.snus.data.UserEvent
 import kotlinx.android.synthetic.main.event_daily_view.view.*
 import java.text.SimpleDateFormat
+import java.util.*
+
 
 // EventAdapter takes in the data, converts into the view that is to be displayed by the RecyclerView
 
@@ -39,18 +42,52 @@ class TodayEventAdapter(eventList : List<UserEvent>) :
     // Connect the data to the view
     override fun onBindViewHolder(holder: EventViewHolder, position: Int) {
 
-        val dateFormatter: SimpleDateFormat = SimpleDateFormat("dd MMM yyyy hh:mm a")
+        val dateFormatter1: SimpleDateFormat = SimpleDateFormat("dd MMM")
+        val dateFormatter2: SimpleDateFormat = SimpleDateFormat("hh:mm a E")
+        val dateFormatter3: SimpleDateFormat = SimpleDateFormat("hh:mm a ")
+
+        val event = eventList[position]
 
 
-        holder.textView.event_name.text = eventList[position].eventName
-        holder.textView.event_description.text = eventList[position].eventDescription
-        holder.textView.start_date.text = dateFormatter.format(eventList[position].startDate!!).toPattern().toString()
-        holder.textView.end_date.text = dateFormatter.format(eventList[position].endDate!!).toPattern().toString()
-        holder.textView.event_location.text = eventList[position].location
+        holder.textView.event_name.text = event.eventName
+        holder.textView.event_description.text = event.eventDescription
+        holder.textView.event_location.text = event.location
+
+        if (!allDay(event)) {
+            holder.textView.start_date.text =
+                dateFormatter2.format(event.startDate!!).toPattern().toString()
+            holder.textView.end_date.text =
+                dateFormatter2.format(event.endDate!!).toPattern().toString()
+        } else {
+
+            holder.textView.start_date.text = "ends on ${dateFormatter1.format(event.endDate!!).toPattern().toString()}"
+                        holder.textView.end_date.text = dateFormatter3.format(event.endDate!!).toPattern().toString()
+        }
+
+
+
+
         // - get element from your dataset at this position
         // - replace the contents of the view with that element
     }
 
     // Return the size of your dataset (invoked by the layout manager)
     override fun getItemCount() = eventList.size
+
+//    fun checkIfOnlyToday(event: UserEvent) : Boolean {
+//        // need to check if event.StartDate <= Today <= event.End
+//        val todayDate = Calendar.getInstance()
+//        val startDate = event.startDate!!
+//        val endDate = event.endDate!!
+//        return (startDate.day - todayDate.) == 0 && (endDate.day - todayDate.day) == 0
+//    }
+
+    fun allDay(event: UserEvent): Boolean {
+
+        val today: Date = Calendar.getInstance().time
+        val endDate: Date = event.endDate!!
+        val fmt = SimpleDateFormat("yyyyMMdd")
+        return fmt.format(today) != fmt.format(endDate)
+    }
+
 }

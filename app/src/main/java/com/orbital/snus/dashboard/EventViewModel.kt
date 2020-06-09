@@ -88,9 +88,14 @@ class EventViewModel : ViewModel() {
     // Will exclude events that has finished before current instance in time
     fun checkIfToday(event: UserEvent) : Boolean {
         // need to check if event.StartDate <= Today <= event.End
+        val fmt = SimpleDateFormat("yyyyMMdd")
         val todayDate = Calendar.getInstance().time
         val startDate = event.startDate!!
         val endDate = event.endDate!!
-        return startDate.compareTo(todayDate) <= 0 && todayDate.compareTo(endDate) <= 0
+
+        //either todaydate is in between current
+        // the today date = start date or  today date = end date
+        return (startDate.compareTo(todayDate) <= 0 && todayDate.compareTo(endDate) <= 0) || fmt.format(todayDate) == fmt.format(startDate) || fmt.format(todayDate) == fmt.format(endDate)
     }
 }
+

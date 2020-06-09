@@ -17,7 +17,9 @@ import com.orbital.snus.databinding.FragmentDashboardTodayBinding
 import com.google.firebase.auth.FirebaseAuth
 import com.google.firebase.firestore.FirebaseFirestore
 import com.orbital.snus.data.UserEvent
+import java.text.SimpleDateFormat
 import java.util.*
+
 import java.util.ArrayList
 
 
@@ -41,10 +43,9 @@ class TodayFragment : Fragment() {
             inflater, R.layout.fragment_dashboard_today, container, false
         )
 
-//        val dateFormatter: SimpleDateFormat = SimpleDateFormat("dd MMM")
-//        binding.dateToday.text = dateFormatter.format(Calendar.getInstance())
-        val dateToday = Calendar.getInstance()
-        binding.dateToday.text =  dateToday.getDisplayName(Calendar.DAY_OF_WEEK, Calendar.LONG, Locale.getDefault())
+
+
+        binding.dateToday.text = getCurrentDate()
 
 
         firebaseAuth = FirebaseAuth.getInstance()
@@ -95,5 +96,11 @@ class TodayFragment : Fragment() {
                 Toast.makeText(requireContext(), "Failed retrieval", Toast.LENGTH_SHORT).show()
             }
         })
+    }
+
+    private fun getCurrentDate() : String {
+        val dateFormatter = SimpleDateFormat("EEEE, MMMM dd")
+        val dateToday = Calendar.getInstance().time
+        return dateFormatter.format(dateToday).toPattern().toString()
     }
 }
