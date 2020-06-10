@@ -50,9 +50,10 @@
 
         <Button
             android:id="@+id/button_today"
-            android:layout_width="100dp"
+            android:layout_width="0dp"
             android:layout_height="40dp"
             android:layout_marginStart="8dp"
+            android:layout_marginEnd="16dp"
             android:background="@drawable/white_button"
             android:text="@string/Today"
             android:textColor="@color/color_NUS"
@@ -97,8 +98,8 @@
             android:layout_marginStart="16dp"
             android:layout_marginTop="16dp"
             android:background="@drawable/common_google_signin_btn_text_light_normal_background"
-            android:paddingStart="2sp"
-            android:paddingEnd="2sp"
+            android:paddingStart="4dp"
+            android:paddingEnd="4dp"
             android:text=""
             android:textColor="@color/color_NUS"
             android:textSize="20sp"

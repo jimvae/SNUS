@@ -99,8 +99,8 @@ class TodayFragment : Fragment() {
     }
 
     private fun getCurrentDate() : String {
-        val dateFormatter = SimpleDateFormat("EEEE, MMMM dd")
+        val dateFormatter = SimpleDateFormat("EEEE, MMMM dd ")
         val dateToday = Calendar.getInstance().time
-        return dateFormatter.format(dateToday).toPattern().toString()
+        return " ${dateFormatter.format(dateToday).toPattern().toString()} "
     }
 }
