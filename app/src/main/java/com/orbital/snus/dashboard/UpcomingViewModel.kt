@@ -71,7 +71,7 @@ class UpcomingViewModel : ViewModel() {
                     documents.forEach {
                         val event = it.toObject(UserEvent::class.java)
                         if (event != null) {
-                            if (isInsidetheWeek(event)) {
+                            if (isDateInCurrentWeek(event)) {
                                 eventList.add(event)
                             }
                         }
@@ -102,28 +102,24 @@ class UpcomingViewModel : ViewModel() {
         val startDate = event.startDate!!
         val endDate = event.endDate!!
 
-        val currentCalendar1 = Calendar.getInstance()
-        val week1 = currentCalendar1[Calendar.WEEK_OF_YEAR]
-        val year1 = currentCalendar1[Calendar.YEAR]
-        val targetCalendar1 = Calendar.getInstance()
-        targetCalendar1.time = startDate
+        val currentCalendar = Calendar.getInstance()
+        val week = currentCalendar[Calendar.WEEK_OF_YEAR]
+        val year = currentCalendar[Calendar.YEAR]
+        val targetCalendarStartDate = Calendar.getInstance()
+        val targetCalendarEndDate = Calendar.getInstance()
 
-        val currentCalendar2 = Calendar.getInstance()
-        val week2 = currentCalendar2[Calendar.WEEK_OF_YEAR]
-        val year2 = currentCalendar2[Calendar.YEAR]
-        val targetCalendar2 = Calendar.getInstance()
-        targetCalendar2.time = endDate
+        targetCalendarStartDate.time = startDate
+        targetCalendarEndDate.time = endDate
 
-        val targetWeek = targetCalendar[Calendar.WEEK_OF_YEAR]
-        val targetYear = targetCalendar[Calendar.YEAR]
-        return week == targetWeek && year == targetYear
+        val targetWeekStart = targetCalendarStartDate[Calendar.WEEK_OF_YEAR]
+        val targetYearStart = targetCalendarStartDate[Calendar.YEAR]
+
+        val targetWeekEnd = targetCalendarEndDate[Calendar.WEEK_OF_YEAR]
+        val targetYearEnd = targetCalendarEndDate[Calendar.YEAR]
+
+        // check if it is inside
+        return (week >= targetWeekStart && year >= targetYearStart) && (week <= targetWeekEnd && year <= targetYearEnd)
     }
 
-//    fun isInsidetheWeek(event: UserEvent): Boolean {
-//        val startDate = event.startDate!!
-//        val endDate = event.endDate!!
-//        return isDateInCurrentWeek(startDate) || isDateInCurrentWeek(endDate) || checkIfToday(event)
-//
-//    }
 }
 
