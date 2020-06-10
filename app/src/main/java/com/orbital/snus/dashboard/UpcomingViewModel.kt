@@ -6,8 +6,10 @@ import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
 import com.google.firebase.auth.FirebaseAuth
 import com.google.firebase.firestore.FirebaseFirestore
+import com.google.firebase.firestore.auth.User
 import com.orbital.snus.data.UserEvent
 import java.text.SimpleDateFormat
+import java.time.DayOfWeek
 import java.util.*
 import kotlin.collections.ArrayList
 
@@ -15,7 +17,7 @@ class UpcomingViewModel : ViewModel() {
     private val firebaseAuth = FirebaseAuth.getInstance()
     private val db = FirebaseFirestore.getInstance()
 
-    private val _events = MutableLiveData<List<UserEvent>>()
+    private val _events = MutableLiveData<List<UserEvent>>(ArrayList())
     val events : LiveData<List<UserEvent>>
         get() = _events
 
@@ -26,6 +28,34 @@ class UpcomingViewModel : ViewModel() {
     private val _addFailure = MutableLiveData<Exception?>()
     val addFailure : LiveData<Exception?>
         get() = _addFailure
+
+    private val _eventSunday = MutableLiveData<List<UserEvent>>(ArrayList())
+    val eventSunday : LiveData<List<UserEvent>>
+        get() = _eventSunday
+
+    private val _eventMonday = MutableLiveData<List<UserEvent>>(ArrayList())
+    val eventMonday : LiveData<List<UserEvent>>
+        get() = _eventMonday
+
+    private val _eventTuesday = MutableLiveData<List<UserEvent>>(ArrayList())
+    val eventTuesday : LiveData<List<UserEvent>>
+        get() = _eventTuesday
+
+    private val _eventWednesday = MutableLiveData<List<UserEvent>>(ArrayList())
+    val eventWednesday : LiveData<List<UserEvent>>
+        get() = _eventWednesday
+
+    private val _eventThursday = MutableLiveData<List<UserEvent>>(ArrayList())
+    val eventThursday : LiveData<List<UserEvent>>
+        get() = _eventThursday
+
+    private val _eventFriday = MutableLiveData<List<UserEvent>>(ArrayList())
+    val eventFriday : LiveData<List<UserEvent>>
+        get() = _eventFriday
+
+    private val _eventSaturday = MutableLiveData<List<UserEvent>>(ArrayList())
+    val eventSaturday : LiveData<List<UserEvent>>
+        get() = _eventSaturday
 
     fun addEvent(event: UserEvent) {
         // start to add inside database
@@ -121,5 +151,60 @@ class UpcomingViewModel : ViewModel() {
         return (week >= targetWeekStart && year >= targetYearStart) && (week <= targetWeekEnd && year <= targetYearEnd)
     }
 
+    fun isDateInCurrentDay(dayOfWeek: Int, event: UserEvent): Boolean {
+        val startDate = event.startDate!!
+        val endDate = event.endDate!!
+
+        val currentCalendar = Calendar.getInstance()
+
+        val targetCalendarStartDate = Calendar.getInstance()
+        val targetCalendarEndDate = Calendar.getInstance()
+
+        targetCalendarStartDate.time = startDate
+        targetCalendarEndDate.time = endDate
+
+        val targetDayStart = targetCalendarStartDate[Calendar.DAY_OF_WEEK]
+
+        val targetDayEnd = targetCalendarEndDate[Calendar.DAY_OF_WEEK]
+
+        // check if it is inside
+        return dayOfWeek in targetDayStart..targetDayEnd
+    }
+
+    fun filterEvents() {
+        val eventList: List<UserEvent> = _events.value!!
+
+        val sunday = ArrayList<UserEvent>()
+        val monday = ArrayList<UserEvent>()
+        val tuesday = ArrayList<UserEvent>()
+        val wednesday = ArrayList<UserEvent>()
+        val thursday = ArrayList<UserEvent>()
+        val friday = ArrayList<UserEvent>()
+        val saturday = ArrayList<UserEvent>()
+
+        eventList.forEach {
+            for (day in 0 until 7) {
+                if (isDateInCurrentDay(day, it)) {
+                    when (day) {
+                        0 -> sunday.add(it)
+                        1 -> monday.add(it)
+                        2 -> tuesday.add(it)
+                        3 -> wednesday.add(it)
+                        4 -> thursday.add(it)
+                        5 -> friday.add(it)
+                        else -> saturday.add(it)
+                    }
+                }
+            }
+        }
+
+        _eventSunday.value = sunday
+        _eventMonday.value = monday
+        _eventTuesday.value = tuesday
+        _eventWednesday.value = wednesday
+        _eventThursday.value = thursday
+        _eventFriday.value = friday
+        _eventSaturday.value = saturday
+    }
 }
 

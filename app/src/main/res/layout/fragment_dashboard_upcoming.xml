@@ -92,6 +92,7 @@
                 app:layout_constraintEnd_toEndOf="parent"
                 app:layout_constraintStart_toEndOf="@+id/Sunday"
                 app:layout_constraintTop_toTopOf="parent"
+                android:scrollbars="horizontal"
                 tools:layoutManager="androidx.recyclerview.widget.LinearLayoutManager"
                 tools:listitem="@layout/event_upcoming_individual_view"
                 tools:orientation="horizontal">
@@ -125,6 +126,7 @@
                 app:layout_constraintEnd_toEndOf="parent"
                 app:layout_constraintStart_toEndOf="@+id/Monday"
                 app:layout_constraintTop_toTopOf="parent"
+                android:scrollbars="horizontal"
                 tools:layoutManager="androidx.recyclerview.widget.LinearLayoutManager"
                 tools:listitem="@layout/event_upcoming_individual_view"
                 tools:orientation="horizontal">
@@ -158,6 +160,7 @@
                 app:layout_constraintEnd_toEndOf="parent"
                 app:layout_constraintStart_toEndOf="@+id/Tuesday"
                 app:layout_constraintTop_toTopOf="parent"
+                android:scrollbars="horizontal"
                 tools:layoutManager="androidx.recyclerview.widget.LinearLayoutManager"
                 tools:listitem="@layout/event_upcoming_individual_view"
                 tools:orientation="horizontal">
@@ -191,6 +194,7 @@
                 app:layout_constraintEnd_toEndOf="parent"
                 app:layout_constraintStart_toEndOf="@+id/Wednesday"
                 app:layout_constraintTop_toTopOf="parent"
+                android:scrollbars="horizontal"
                 tools:layoutManager="androidx.recyclerview.widget.LinearLayoutManager"
                 tools:listitem="@layout/event_upcoming_individual_view"
                 tools:orientation="horizontal">
@@ -224,6 +228,7 @@
                 app:layout_constraintEnd_toEndOf="parent"
                 app:layout_constraintStart_toEndOf="@+id/Thursday"
                 app:layout_constraintTop_toTopOf="parent"
+                android:scrollbars="horizontal"
                 tools:layoutManager="androidx.recyclerview.widget.LinearLayoutManager"
                 tools:listitem="@layout/event_upcoming_individual_view"
                 tools:orientation="horizontal">
@@ -257,6 +262,7 @@
                 app:layout_constraintEnd_toEndOf="parent"
                 app:layout_constraintStart_toEndOf="@+id/Friday"
                 app:layout_constraintTop_toTopOf="parent"
+                android:scrollbars="horizontal"
                 tools:layoutManager="androidx.recyclerview.widget.LinearLayoutManager"
                 tools:listitem="@layout/event_upcoming_individual_view"
                 tools:orientation="horizontal">
@@ -290,6 +296,7 @@
                 app:layout_constraintEnd_toEndOf="parent"
                 app:layout_constraintStart_toEndOf="@+id/Saturday"
                 app:layout_constraintTop_toTopOf="parent"
+                android:scrollbars="horizontal"
                 tools:layoutManager="androidx.recyclerview.widget.LinearLayoutManager"
                 tools:listitem="@layout/event_upcoming_individual_view"
                 tools:orientation="horizontal">

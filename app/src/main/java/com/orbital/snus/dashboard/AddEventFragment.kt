@@ -40,7 +40,7 @@ class AddEventFragment() : Fragment() {
     val START = "start"
     val END = "end"
 
-    val factory = EventViewModelFactory()
+    val factory = TodayViewModelFactory()
     private lateinit var viewModel: TodayViewModel
 
     override fun onCreateView(

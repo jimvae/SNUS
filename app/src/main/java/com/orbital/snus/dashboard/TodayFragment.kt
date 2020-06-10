@@ -32,7 +32,7 @@ class TodayFragment : Fragment() {
     private lateinit var viewAdapter: RecyclerView.Adapter<*>
     private lateinit var viewManager: RecyclerView.LayoutManager
 
-    val factory = EventViewModelFactory()
+    val factory = TodayViewModelFactory()
     private lateinit var viewModel: TodayViewModel
     private val events = ArrayList<UserEvent>() // holder to store events and for RecyclerViewAdapter to observe
 
@@ -42,8 +42,6 @@ class TodayFragment : Fragment() {
         val binding: FragmentDashboardTodayBinding = DataBindingUtil.inflate(
             inflater, R.layout.fragment_dashboard_today, container, false
         )
-
-
 
         binding.dateToday.text = getCurrentDate()
 
