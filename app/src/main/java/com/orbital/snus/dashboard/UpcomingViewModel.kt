@@ -6,10 +6,9 @@ import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
 import com.google.firebase.auth.FirebaseAuth
 import com.google.firebase.firestore.FirebaseFirestore
-import com.google.firebase.firestore.auth.User
 import com.orbital.snus.data.UserEvent
+import java.text.DateFormat
 import java.text.SimpleDateFormat
-import java.time.DayOfWeek
 import java.util.*
 import kotlin.collections.ArrayList
 
@@ -117,12 +116,21 @@ class UpcomingViewModel : ViewModel() {
     }
 
     // Will exclude events that has finished before current instance in time
-    fun checkIfToday(event: UserEvent) : Boolean {
+    fun checkIfToday(day:Int, event: UserEvent) : Boolean {
         // need to check if event.StartDate <= Today <= event.End
         val fmt = SimpleDateFormat("yyyyMMdd")
-        val todayDate = Calendar.getInstance().time
         val startDate = event.startDate!!
         val endDate = event.endDate!!
+
+        val calendar = Calendar.getInstance()
+
+        // Sets the calendar to the sunday of current week
+        calendar.set(Calendar.DAY_OF_WEEK, Calendar.SUNDAY);
+
+        // adds (day-1) number of days to get particular date of the week
+        calendar.add(Calendar.DATE, day-1)
+
+        val todayDate = calendar.time
 
         //either todaydate is in between current
         // the today date = start date or  today date = end date
@@ -152,26 +160,6 @@ class UpcomingViewModel : ViewModel() {
         return (week >= targetWeekStart && year >= targetYearStart) && (week <= targetWeekEnd && year <= targetYearEnd)
     }
 
-    fun isDateInCurrentDay(dayOfWeek: Int, event: UserEvent): Boolean {
-        val startDate = event.startDate!!
-        val endDate = event.endDate!!
-
-        val currentCalendar = Calendar.getInstance()
-
-        val targetCalendarStartDate = Calendar.getInstance()
-        val targetCalendarEndDate = Calendar.getInstance()
-
-        targetCalendarStartDate.time = startDate
-        targetCalendarEndDate.time = endDate
-
-        val targetDayStart = targetCalendarStartDate[Calendar.DAY_OF_WEEK]
-
-        val targetDayEnd = targetCalendarEndDate[Calendar.DAY_OF_WEEK]
-
-        // check if it is inside
-        return targetDayStart <= dayOfWeek && dayOfWeek <= targetDayEnd
-    }
-
     fun filterEvents() {
         if (_events.value == null) {
             _events.value = ArrayList()
@@ -188,7 +176,7 @@ class UpcomingViewModel : ViewModel() {
 
         eventList.forEach {
             for (day in 1 until 8) {
-                if (isDateInCurrentDay(day, it)) {
+                if (checkIfToday(day, it)) {
                     when (day) {
                         1 -> sunday.add(it)
                         2 -> monday.add(it)

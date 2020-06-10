@@ -15,10 +15,11 @@ import java.util.*
 
 // EventAdapter takes in the data, converts into the view that is to be displayed by the RecyclerView
 
-class UpcomingEventAdapter(eventList : List<UserEvent>) :
+class UpcomingEventAdapter(eventList : List<UserEvent>, dateOfWeek: Date) :
     RecyclerView.Adapter<UpcomingEventAdapter.EventViewHolder>() {
 
     val eventList = eventList
+    val dateOfWeek = dateOfWeek
 
     // Provide a reference to the views for each data item
     // Complex data items may need more than one view per item, and
@@ -43,29 +44,22 @@ class UpcomingEventAdapter(eventList : List<UserEvent>) :
     // Connect the data to the view
     override fun onBindViewHolder(holder: EventViewHolder, position: Int) {
 
-        val dateFormatter1: SimpleDateFormat = SimpleDateFormat("dd MMM")
+        val dateFormatter1: SimpleDateFormat = SimpleDateFormat("dd MMM YYYY")
         val dateFormatter2: SimpleDateFormat = SimpleDateFormat("hh:mm a E")
         val dateFormatter3: SimpleDateFormat = SimpleDateFormat("hh:mm a ")
 
         val event = eventList[position]
 
         holder.textView.upcoming_event_title.text = event.eventName
-        holder.textView.upcoming_event_time.text = dateFormatter3.format(event.startDate!!).toPattern().toString()
 
-//        holder.textView.event_name.text = event.eventName
-//        holder.textView.event_description.text = event.eventDescription
-//        holder.textView.event_location.text = event.location
-//
-//        if (!allDay(event)) {
-//            holder.textView.start_date.text =
-//                dateFormatter3.format(event.startDate!!).toPattern().toString()
-//            holder.textView.end_date.text =
-//                dateFormatter3.format(event.endDate!!).toPattern().toString()
-//        } else {
-//
-//            holder.textView.start_date.text = "ends on ${dateFormatter1.format(event.endDate!!).toPattern().toString()}"
-//            holder.textView.end_date.text = dateFormatter3.format(event.endDate!!).toPattern().toString()
-//        }
+        if (!allDay(event)) {
+            holder.textView.upcoming_event_time.text =
+                "${dateFormatter3.format(event.startDate!!).toPattern().toString()}\n${dateFormatter3.format(event.endDate!!).toPattern().toString()}"
+        } else if (dateFormatter1.format(dateOfWeek).equals(dateFormatter1.format(event.endDate!!))) {
+                holder.textView.upcoming_event_time.text = "End: ${dateFormatter3.format(event.endDate!!).toPattern().toString()}"
+        } else {
+                holder.textView.upcoming_event_time.text = "All Day"
+        }
 
         // - get element from your dataset at this position
         // - replace the contents of the view with that element
@@ -89,5 +83,4 @@ class UpcomingEventAdapter(eventList : List<UserEvent>) :
         val fmt = SimpleDateFormat("yyyyMMdd")
         return fmt.format(today) != fmt.format(endDate)
     }
-
 }

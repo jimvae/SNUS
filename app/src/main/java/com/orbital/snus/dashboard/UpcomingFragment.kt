@@ -17,7 +17,7 @@ import com.orbital.snus.R
 import com.orbital.snus.data.UserEvent
 import com.orbital.snus.databinding.FragmentDashboardUpcomingBinding
 import kotlinx.android.synthetic.main.fragment_dashboard_upcoming.*
-import java.util.ArrayList
+import java.util.*
 
 class UpcomingFragment : Fragment() {
 
@@ -48,27 +48,36 @@ class UpcomingFragment : Fragment() {
         val eventThursday = ArrayList<UserEvent>()
         val eventFriday = ArrayList<UserEvent>()
         val eventSaturday = ArrayList<UserEvent>()
+
+        val calendar = Calendar.getInstance()
+
         // set up the recyclerView
         recyclerViewSunday = binding.recyclerViewSunday.apply {
             // use a linear layout manager
             layoutManager = LinearLayoutManager(activity, LinearLayoutManager.HORIZONTAL, false)
 
             // specify an viewAdapter (see also next example)
-            adapter = UpcomingEventAdapter(eventSunday)
+            calendar.set(Calendar.DAY_OF_WEEK, Calendar.SUNDAY);
+            var todayDate = calendar.time
+            adapter = UpcomingEventAdapter(eventSunday, todayDate)
         }
         recyclerViewMonday = binding.recyclerViewMonday.apply {
             // use a linear layout manager
             layoutManager = LinearLayoutManager(activity, LinearLayoutManager.HORIZONTAL, false)
 
             // specify an viewAdapter (see also next example)
-            adapter = UpcomingEventAdapter(eventMonday)
+            calendar.set(Calendar.DAY_OF_WEEK, Calendar.MONDAY);
+            var todayDate = calendar.time
+            adapter = UpcomingEventAdapter(eventMonday, todayDate)
         }
         recyclerViewTuesday = binding.recyclerViewTuesday.apply {
             // use a linear layout manager
             layoutManager = LinearLayoutManager(activity, LinearLayoutManager.HORIZONTAL, false)
 
             // specify an viewAdapter (see also next example)
-            adapter = UpcomingEventAdapter(eventTuesday)
+            calendar.set(Calendar.DAY_OF_WEEK, Calendar.TUESDAY);
+            var todayDate = calendar.time
+            adapter = UpcomingEventAdapter(eventTuesday, todayDate)
 
         }
         recyclerViewWednesday = binding.recyclerViewWednesday.apply {
@@ -76,7 +85,9 @@ class UpcomingFragment : Fragment() {
             layoutManager = LinearLayoutManager(activity, LinearLayoutManager.HORIZONTAL, false)
 
             // specify an viewAdapter (see also next example)
-            adapter = UpcomingEventAdapter(eventWednesday)
+            calendar.set(Calendar.DAY_OF_WEEK, Calendar.WEDNESDAY);
+            var todayDate = calendar.time
+            adapter = UpcomingEventAdapter(eventWednesday, todayDate)
 
         }
         recyclerViewThursday = binding.recyclerViewThursday.apply {
@@ -84,7 +95,9 @@ class UpcomingFragment : Fragment() {
             layoutManager = LinearLayoutManager(activity, LinearLayoutManager.HORIZONTAL, false)
 
             // specify an viewAdapter (see also next example)
-            adapter = UpcomingEventAdapter(eventThursday)
+            calendar.set(Calendar.DAY_OF_WEEK, Calendar.THURSDAY);
+            var todayDate = calendar.time
+            adapter = UpcomingEventAdapter(eventThursday, todayDate)
 
         }
         recyclerViewFriday = binding.recyclerViewFriday.apply {
@@ -92,7 +105,9 @@ class UpcomingFragment : Fragment() {
             layoutManager = LinearLayoutManager(activity, LinearLayoutManager.HORIZONTAL, false)
 
             // specify an viewAdapter (see also next example)
-            adapter = UpcomingEventAdapter(eventFriday)
+            calendar.set(Calendar.DAY_OF_WEEK, Calendar.FRIDAY);
+            var todayDate = calendar.time
+            adapter = UpcomingEventAdapter(eventFriday, todayDate)
 
         }
         recyclerViewSaturday = binding.recyclerViewSaturday.apply {
@@ -100,7 +115,9 @@ class UpcomingFragment : Fragment() {
             layoutManager = LinearLayoutManager(activity, LinearLayoutManager.HORIZONTAL, false)
 
             // specify an viewAdapter (see also next example)
-            adapter = UpcomingEventAdapter(eventSaturday)
+            calendar.set(Calendar.DAY_OF_WEEK, Calendar.SATURDAY);
+            var todayDate = calendar.time
+            adapter = UpcomingEventAdapter(eventSaturday, todayDate)
 
         }
 
