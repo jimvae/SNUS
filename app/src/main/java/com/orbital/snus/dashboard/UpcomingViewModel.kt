@@ -17,7 +17,7 @@ class UpcomingViewModel : ViewModel() {
     private val firebaseAuth = FirebaseAuth.getInstance()
     private val db = FirebaseFirestore.getInstance()
 
-    private val _events = MutableLiveData<List<UserEvent>>(ArrayList())
+    private val _events = MutableLiveData<List<UserEvent>>()
     val events : LiveData<List<UserEvent>>
         get() = _events
 
@@ -29,31 +29,31 @@ class UpcomingViewModel : ViewModel() {
     val addFailure : LiveData<Exception?>
         get() = _addFailure
 
-    private val _eventSunday = MutableLiveData<List<UserEvent>>(ArrayList())
+    private val _eventSunday = MutableLiveData<List<UserEvent>>()
     val eventSunday : LiveData<List<UserEvent>>
         get() = _eventSunday
 
-    private val _eventMonday = MutableLiveData<List<UserEvent>>(ArrayList())
+    private val _eventMonday = MutableLiveData<List<UserEvent>>()
     val eventMonday : LiveData<List<UserEvent>>
         get() = _eventMonday
 
-    private val _eventTuesday = MutableLiveData<List<UserEvent>>(ArrayList())
+    private val _eventTuesday = MutableLiveData<List<UserEvent>>()
     val eventTuesday : LiveData<List<UserEvent>>
         get() = _eventTuesday
 
-    private val _eventWednesday = MutableLiveData<List<UserEvent>>(ArrayList())
+    private val _eventWednesday = MutableLiveData<List<UserEvent>>()
     val eventWednesday : LiveData<List<UserEvent>>
         get() = _eventWednesday
 
-    private val _eventThursday = MutableLiveData<List<UserEvent>>(ArrayList())
+    private val _eventThursday = MutableLiveData<List<UserEvent>>()
     val eventThursday : LiveData<List<UserEvent>>
         get() = _eventThursday
 
-    private val _eventFriday = MutableLiveData<List<UserEvent>>(ArrayList())
+    private val _eventFriday = MutableLiveData<List<UserEvent>>()
     val eventFriday : LiveData<List<UserEvent>>
         get() = _eventFriday
 
-    private val _eventSaturday = MutableLiveData<List<UserEvent>>(ArrayList())
+    private val _eventSaturday = MutableLiveData<List<UserEvent>>()
     val eventSaturday : LiveData<List<UserEvent>>
         get() = _eventSaturday
 
@@ -112,6 +112,7 @@ class UpcomingViewModel : ViewModel() {
                     eventList.sortWith(compareBy { it.startDate })
                 }
                 _events.value = eventList
+                filterEvents()
             }
     }
 
@@ -168,10 +169,13 @@ class UpcomingViewModel : ViewModel() {
         val targetDayEnd = targetCalendarEndDate[Calendar.DAY_OF_WEEK]
 
         // check if it is inside
-        return dayOfWeek in targetDayStart..targetDayEnd
+        return targetDayStart <= dayOfWeek && dayOfWeek <= targetDayEnd
     }
 
     fun filterEvents() {
+        if (_events.value == null) {
+            _events.value = ArrayList()
+        }
         val eventList: List<UserEvent> = _events.value!!
 
         val sunday = ArrayList<UserEvent>()
@@ -183,15 +187,15 @@ class UpcomingViewModel : ViewModel() {
         val saturday = ArrayList<UserEvent>()
 
         eventList.forEach {
-            for (day in 0 until 7) {
+            for (day in 1 until 8) {
                 if (isDateInCurrentDay(day, it)) {
                     when (day) {
-                        0 -> sunday.add(it)
-                        1 -> monday.add(it)
-                        2 -> tuesday.add(it)
-                        3 -> wednesday.add(it)
-                        4 -> thursday.add(it)
-                        5 -> friday.add(it)
+                        1 -> sunday.add(it)
+                        2 -> monday.add(it)
+                        3 -> tuesday.add(it)
+                        4 -> wednesday.add(it)
+                        5 -> thursday.add(it)
+                        6 -> friday.add(it)
                         else -> saturday.add(it)
                     }
                 }

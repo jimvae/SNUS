@@ -41,79 +41,108 @@ class UpcomingFragment : Fragment() {
 
         viewModel = ViewModelProvider(this, factory).get(UpcomingViewModel::class.java)
 
-        val events = ArrayList<UserEvent>()
+        val eventSunday = ArrayList<UserEvent>()
+        val eventMonday = ArrayList<UserEvent>()
+        val eventTuesday = ArrayList<UserEvent>()
+        val eventWednesday = ArrayList<UserEvent>()
+        val eventThursday = ArrayList<UserEvent>()
+        val eventFriday = ArrayList<UserEvent>()
+        val eventSaturday = ArrayList<UserEvent>()
         // set up the recyclerView
         recyclerViewSunday = binding.recyclerViewSunday.apply {
             // use a linear layout manager
             layoutManager = LinearLayoutManager(activity, LinearLayoutManager.HORIZONTAL, false)
 
             // specify an viewAdapter (see also next example)
-            adapter = UpcomingEventAdapter(events)
+            adapter = UpcomingEventAdapter(eventSunday)
         }
-//        recyclerViewMonday = binding.recyclerViewMonday.apply {
-//            // use a linear layout manager
-//            layoutManager = LinearLayoutManager(activity, LinearLayoutManager.HORIZONTAL, false)
-//
-//            // specify an viewAdapter (see also next example)
-//            adapter = UpcomingEventAdapter(viewModel.eventMonday.value!!)
-//        }
-//        recyclerViewTuesday = binding.recyclerViewTuesday.apply {
-//            // use a linear layout manager
-//            layoutManager = LinearLayoutManager(activity, LinearLayoutManager.HORIZONTAL, false)
-//
-//            // specify an viewAdapter (see also next example)
-//            adapter = UpcomingEventAdapter(viewModel.eventTuesday.value!!)
-//
-//        }
-//        recyclerViewWednesday = binding.recyclerViewWednesday.apply {
-//            // use a linear layout manager
-//            layoutManager = LinearLayoutManager(activity, LinearLayoutManager.HORIZONTAL, false)
-//
-//            // specify an viewAdapter (see also next example)
-//            adapter = UpcomingEventAdapter(viewModel.eventWednesday.value!!)
-//
-//        }
-//        recyclerViewThursday = binding.recyclerViewThursday.apply {
-//            // use a linear layout manager
-//            layoutManager = LinearLayoutManager(activity, LinearLayoutManager.HORIZONTAL, false)
-//
-//            // specify an viewAdapter (see also next example)
-//            adapter = UpcomingEventAdapter(viewModel.eventThursday.value!!)
-//
-//        }
-//        recyclerViewFriday = binding.recyclerViewFriday.apply {
-//            // use a linear layout manager
-//            layoutManager = LinearLayoutManager(activity, LinearLayoutManager.HORIZONTAL, false)
-//
-//            // specify an viewAdapter (see also next example)
-//            adapter = UpcomingEventAdapter(viewModel.eventFriday.value!!)
-//
-//        }
-//        recyclerViewSaturday = binding.recyclerViewSaturday.apply {
-//            // use a linear layout manager
-//            layoutManager = LinearLayoutManager(activity, LinearLayoutManager.HORIZONTAL, false)
-//
-//            // specify an viewAdapter (see also next example)
-//            adapter = UpcomingEventAdapter(viewModel.eventSaturday.value!!)
-//
-//        }
+        recyclerViewMonday = binding.recyclerViewMonday.apply {
+            // use a linear layout manager
+            layoutManager = LinearLayoutManager(activity, LinearLayoutManager.HORIZONTAL, false)
+
+            // specify an viewAdapter (see also next example)
+            adapter = UpcomingEventAdapter(eventMonday)
+        }
+        recyclerViewTuesday = binding.recyclerViewTuesday.apply {
+            // use a linear layout manager
+            layoutManager = LinearLayoutManager(activity, LinearLayoutManager.HORIZONTAL, false)
+
+            // specify an viewAdapter (see also next example)
+            adapter = UpcomingEventAdapter(eventTuesday)
+
+        }
+        recyclerViewWednesday = binding.recyclerViewWednesday.apply {
+            // use a linear layout manager
+            layoutManager = LinearLayoutManager(activity, LinearLayoutManager.HORIZONTAL, false)
+
+            // specify an viewAdapter (see also next example)
+            adapter = UpcomingEventAdapter(eventWednesday)
+
+        }
+        recyclerViewThursday = binding.recyclerViewThursday.apply {
+            // use a linear layout manager
+            layoutManager = LinearLayoutManager(activity, LinearLayoutManager.HORIZONTAL, false)
+
+            // specify an viewAdapter (see also next example)
+            adapter = UpcomingEventAdapter(eventThursday)
+
+        }
+        recyclerViewFriday = binding.recyclerViewFriday.apply {
+            // use a linear layout manager
+            layoutManager = LinearLayoutManager(activity, LinearLayoutManager.HORIZONTAL, false)
+
+            // specify an viewAdapter (see also next example)
+            adapter = UpcomingEventAdapter(eventFriday)
+
+        }
+        recyclerViewSaturday = binding.recyclerViewSaturday.apply {
+            // use a linear layout manager
+            layoutManager = LinearLayoutManager(activity, LinearLayoutManager.HORIZONTAL, false)
+
+            // specify an viewAdapter (see also next example)
+            adapter = UpcomingEventAdapter(eventSaturday)
+
+        }
 
         viewModel.events.observe(viewLifecycleOwner, Observer<List<UserEvent>> { dbEvents ->
             viewModel.filterEvents()
-//            recyclerViewSunday.adapter!!.notifyDataSetChanged()
-//            recyclerViewSunday.adapter!!.notifyDataSetChanged()
-//            recyclerViewMonday.adapter!!.notifyDataSetChanged()
-//            recyclerViewTuesday.adapter!!.notifyDataSetChanged()
-//            recyclerViewWednesday.adapter!!.notifyDataSetChanged()
-//            recyclerViewThursday.adapter!!.notifyDataSetChanged()
-//            recyclerViewFriday.adapter!!.notifyDataSetChanged()
-//            recyclerViewSaturday.adapter!!.notifyDataSetChanged()
         })
 
         viewModel.eventSunday.observe(viewLifecycleOwner, Observer<List<UserEvent>> {
-            events.removeAll(events)
-            events.addAll(it)
+            eventSunday.removeAll(eventSunday)
+            eventSunday.addAll(it)
             recyclerViewSunday.adapter!!.notifyDataSetChanged()
+        })
+
+        viewModel.eventMonday.observe(viewLifecycleOwner, Observer<List<UserEvent>> {
+            eventMonday.removeAll(eventMonday)
+            eventMonday.addAll(it)
+            recyclerViewMonday.adapter!!.notifyDataSetChanged()
+        })
+        viewModel.eventTuesday.observe(viewLifecycleOwner, Observer<List<UserEvent>> {
+            eventTuesday.removeAll(eventTuesday)
+            eventTuesday.addAll(it)
+            recyclerViewTuesday.adapter!!.notifyDataSetChanged()
+        })
+        viewModel.eventWednesday.observe(viewLifecycleOwner, Observer<List<UserEvent>> {
+            eventWednesday.removeAll(eventWednesday)
+            eventWednesday.addAll(it)
+            recyclerViewWednesday.adapter!!.notifyDataSetChanged()
+        })
+        viewModel.eventThursday.observe(viewLifecycleOwner, Observer<List<UserEvent>> {
+            eventThursday.removeAll(eventThursday)
+            eventThursday.addAll(it)
+            recyclerViewThursday.adapter!!.notifyDataSetChanged()
+        })
+        viewModel.eventFriday.observe(viewLifecycleOwner, Observer<List<UserEvent>> {
+            eventFriday.removeAll(eventFriday)
+            eventFriday.addAll(it)
+            recyclerViewFriday.adapter!!.notifyDataSetChanged()
+        })
+        viewModel.eventSaturday.observe(viewLifecycleOwner, Observer<List<UserEvent>> {
+            eventSaturday.removeAll(eventSaturday)
+            eventSaturday.addAll(it)
+            recyclerViewSaturday.adapter!!.notifyDataSetChanged()
         })
 
         binding.buttonToday.setOnClickListener {
@@ -137,6 +166,5 @@ class UpcomingFragment : Fragment() {
                 Toast.makeText(requireContext(), "Failed retrieval", Toast.LENGTH_SHORT).show()
             }
         })
-        viewModel.filterEvents()
     }
 }
