@@ -1,25 +1,19 @@
 package com.orbital.snus.dashboard
 
 import android.app.DatePickerDialog
-import android.app.Dialog
 import android.app.TimePickerDialog
 import android.content.Context
-import android.os.Build
 import android.os.Bundle
-import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import android.view.inputmethod.InputMethodManager
 import android.widget.TextView
 import android.widget.Toast
-import androidx.annotation.RequiresApi
 import androidx.databinding.DataBindingUtil
 import androidx.fragment.app.Fragment
 import androidx.lifecycle.ViewModelProvider
 import androidx.navigation.fragment.findNavController
-import com.google.firebase.auth.FirebaseAuth
-import com.google.firebase.firestore.FirebaseFirestore
 import com.orbital.snus.R
 import com.orbital.snus.databinding.FragmentDashboardAddEventBinding
 import com.orbital.snus.data.UserEvent
@@ -47,7 +41,7 @@ class AddEventFragment() : Fragment() {
     val END = "end"
 
     val factory = EventViewModelFactory()
-    private lateinit var viewModel: EventViewModel
+    private lateinit var viewModel: TodayViewModel
 
     override fun onCreateView(
         inflater: LayoutInflater,
@@ -61,7 +55,7 @@ class AddEventFragment() : Fragment() {
             inflater, R.layout.fragment_dashboard_add_event, container, false
         )
 
-        viewModel = ViewModelProvider(this, factory).get(EventViewModel::class.java)
+        viewModel = ViewModelProvider(this, factory).get(TodayViewModel::class.java)
 
         // SET ON CLICK LISTENERS
         // Set start and end date/time

@@ -33,7 +33,7 @@ class TodayFragment : Fragment() {
     private lateinit var viewManager: RecyclerView.LayoutManager
 
     val factory = EventViewModelFactory()
-    private lateinit var viewModel: EventViewModel
+    private lateinit var viewModel: TodayViewModel
     private val events = ArrayList<UserEvent>() // holder to store events and for RecyclerViewAdapter to observe
 
     override fun onCreateView(inflater: LayoutInflater,
@@ -62,7 +62,7 @@ class TodayFragment : Fragment() {
             adapter = viewAdapter
 
         }
-        viewModel = ViewModelProvider(this, factory).get(EventViewModel::class.java)
+        viewModel = ViewModelProvider(this, factory).get(TodayViewModel::class.java)
 
         viewModel.events.observe(viewLifecycleOwner, Observer<List<UserEvent>> { dbEvents ->
             events.removeAll(events)
@@ -86,7 +86,7 @@ class TodayFragment : Fragment() {
 
     override fun onActivityCreated(savedInstanceState: Bundle?) {
         super.onActivityCreated(savedInstanceState)
-        viewModel = ViewModelProvider(this, factory).get(EventViewModel::class.java)
+        viewModel = ViewModelProvider(this, factory).get(TodayViewModel::class.java)
         // On start of activity, we load the user data to be display on dashboard later
         viewModel.loadUsers()
         viewModel.events.observe(viewLifecycleOwner, androidx.lifecycle.Observer<List<UserEvent>> { events ->
