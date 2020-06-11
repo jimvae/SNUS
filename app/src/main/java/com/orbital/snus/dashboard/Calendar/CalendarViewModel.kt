@@ -72,9 +72,7 @@ class CalendarViewModel : ViewModel() {
                     documents.forEach {
                         val event = it.toObject(UserEvent::class.java)
                         if (event != null) {
-                            if (checkIfToday(event)) {
-                                eventList.add(event)
-                            }
+                            eventList.add(event)
                         }
                     }
 

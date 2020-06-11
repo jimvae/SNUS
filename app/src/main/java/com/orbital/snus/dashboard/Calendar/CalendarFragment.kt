@@ -24,9 +24,8 @@ import kotlin.collections.ArrayList
 
 class CalendarFragment : Fragment() {
     private lateinit var viewModel: CalendarViewModel
+    private var factory = CalendarViewModelFactory()
     private var events = ArrayList<UserEvent>()
-
-
 
     override fun onCreateView(inflater: LayoutInflater,
                               container: ViewGroup?, savedInstanceState: Bundle?): View? {
@@ -35,26 +34,16 @@ class CalendarFragment : Fragment() {
             inflater, R.layout.fragment_dashboard_calendar, container, false
         )
 
-        var viewAdapter = TodayEventAdapter(events)
-        var factory = CalendarViewModelFactory()
-
         // set up the recyclerView
-        var recyclerView = binding.calendarRecyclerView.apply{
+        val recyclerView = binding.calendarRecyclerView.apply{
             // use a linear layout manager
             layoutManager = LinearLayoutManager(activity)
 
             // specify an viewAdapter (see also next example)
-            adapter = viewAdapter
-
+            adapter = CalendarEventAdapter(events)
         }
 
         viewModel = ViewModelProvider(this, factory).get(CalendarViewModel::class.java)
-
-//        viewModel.events.observe(viewLifecycleOwner, Observer<List<UserEvent>> { dbEvents ->
-//            events.removeAll(events)
-//            events.addAll(dbEvents)
-//            recyclerView.adapter!!.notifyDataSetChanged()
-//        })
 
 
         binding.buttonToday.setOnClickListener {
@@ -64,21 +53,16 @@ class CalendarFragment : Fragment() {
                 view: View -> view.findNavController().navigate(R.id.action_calendarFragment_to_upcomingFragment)
         }
 
-
-
-
-        binding.calendarView.setOnDateChangeListener(CalendarView.OnDateChangeListener {
+        binding.calendarView.setOnDateChangeListener {
             //calendarview, year , month , date
                 _, i, il, i2 ->
             val currentDate = Calendar.getInstance()
             currentDate.set(i, il, i2)
-            print(currentDate.time)
-            events.removeAll(events)
             val todayEvents = viewModel.checkIfThisDate(currentDate.time)
+            events.removeAll(events)
             events.addAll(todayEvents)
             recyclerView.adapter!!.notifyDataSetChanged()
-
-        })
+        }
 
         return binding.root
     }
@@ -86,7 +70,6 @@ class CalendarFragment : Fragment() {
     override fun onActivityCreated(savedInstanceState: Bundle?) {
         super.onActivityCreated(savedInstanceState)
 
-        var factory = CalendarViewModelFactory()
         viewModel = ViewModelProvider(this, factory).get(CalendarViewModel::class.java)
         // On start of activity, we load the user data to be display on dashboard later
         viewModel.loadUsers()
