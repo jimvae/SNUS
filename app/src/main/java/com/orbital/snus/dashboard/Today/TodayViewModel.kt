@@ -1,4 +1,4 @@
-package com.orbital.snus.dashboard
+package com.orbital.snus.dashboard.Today
 
 import android.util.Log
 import androidx.lifecycle.LiveData

@@ -1,4 +1,4 @@
-package com.orbital.snus.dashboard
+package com.orbital.snus.dashboard.Upcoming
 
 import android.os.Bundle
 import android.view.LayoutInflater
@@ -12,11 +12,9 @@ import androidx.lifecycle.ViewModelProvider
 import androidx.navigation.findNavController
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
-import com.google.firebase.firestore.auth.User
 import com.orbital.snus.R
 import com.orbital.snus.data.UserEvent
 import com.orbital.snus.databinding.FragmentDashboardUpcomingBinding
-import kotlinx.android.synthetic.main.fragment_dashboard_upcoming.*
 import java.util.*
 
 class UpcomingFragment : Fragment() {
@@ -59,7 +57,10 @@ class UpcomingFragment : Fragment() {
             // specify an viewAdapter (see also next example)
             calendar.set(Calendar.DAY_OF_WEEK, Calendar.SUNDAY);
             var todayDate = calendar.time
-            adapter = UpcomingEventAdapter(eventSunday, todayDate)
+            adapter = UpcomingEventAdapter(
+                eventSunday,
+                todayDate
+            )
         }
         recyclerViewMonday = binding.recyclerViewMonday.apply {
             // use a linear layout manager
@@ -68,7 +69,10 @@ class UpcomingFragment : Fragment() {
             // specify an viewAdapter (see also next example)
             calendar.set(Calendar.DAY_OF_WEEK, Calendar.MONDAY);
             var todayDate = calendar.time
-            adapter = UpcomingEventAdapter(eventMonday, todayDate)
+            adapter = UpcomingEventAdapter(
+                eventMonday,
+                todayDate
+            )
         }
         recyclerViewTuesday = binding.recyclerViewTuesday.apply {
             // use a linear layout manager
@@ -77,7 +81,10 @@ class UpcomingFragment : Fragment() {
             // specify an viewAdapter (see also next example)
             calendar.set(Calendar.DAY_OF_WEEK, Calendar.TUESDAY);
             var todayDate = calendar.time
-            adapter = UpcomingEventAdapter(eventTuesday, todayDate)
+            adapter = UpcomingEventAdapter(
+                eventTuesday,
+                todayDate
+            )
 
         }
         recyclerViewWednesday = binding.recyclerViewWednesday.apply {
@@ -87,7 +94,10 @@ class UpcomingFragment : Fragment() {
             // specify an viewAdapter (see also next example)
             calendar.set(Calendar.DAY_OF_WEEK, Calendar.WEDNESDAY);
             var todayDate = calendar.time
-            adapter = UpcomingEventAdapter(eventWednesday, todayDate)
+            adapter = UpcomingEventAdapter(
+                eventWednesday,
+                todayDate
+            )
 
         }
         recyclerViewThursday = binding.recyclerViewThursday.apply {
@@ -97,7 +107,10 @@ class UpcomingFragment : Fragment() {
             // specify an viewAdapter (see also next example)
             calendar.set(Calendar.DAY_OF_WEEK, Calendar.THURSDAY);
             var todayDate = calendar.time
-            adapter = UpcomingEventAdapter(eventThursday, todayDate)
+            adapter = UpcomingEventAdapter(
+                eventThursday,
+                todayDate
+            )
 
         }
         recyclerViewFriday = binding.recyclerViewFriday.apply {
@@ -107,7 +120,10 @@ class UpcomingFragment : Fragment() {
             // specify an viewAdapter (see also next example)
             calendar.set(Calendar.DAY_OF_WEEK, Calendar.FRIDAY);
             var todayDate = calendar.time
-            adapter = UpcomingEventAdapter(eventFriday, todayDate)
+            adapter = UpcomingEventAdapter(
+                eventFriday,
+                todayDate
+            )
 
         }
         recyclerViewSaturday = binding.recyclerViewSaturday.apply {
@@ -117,7 +133,10 @@ class UpcomingFragment : Fragment() {
             // specify an viewAdapter (see also next example)
             calendar.set(Calendar.DAY_OF_WEEK, Calendar.SATURDAY);
             var todayDate = calendar.time
-            adapter = UpcomingEventAdapter(eventSaturday, todayDate)
+            adapter = UpcomingEventAdapter(
+                eventSaturday,
+                todayDate
+            )
 
         }
 

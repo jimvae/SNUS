@@ -1,4 +1,4 @@
-package com.orbital.snus.dashboard
+package com.orbital.snus.dashboard.Today
 
 import android.os.Bundle
 import android.view.LayoutInflater
@@ -47,7 +47,6 @@ class TodayFragment : Fragment() {
 
 
         firebaseAuth = FirebaseAuth.getInstance()
-
         viewManager = LinearLayoutManager(activity)
         viewAdapter = TodayEventAdapter(events)
 

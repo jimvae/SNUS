@@ -1,11 +1,11 @@
-package com.orbital.snus.dashboard
+package com.orbital.snus.dashboard.Upcoming
 
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.ViewModelProvider
 
 @Suppress("UNCHECKED_CAST")
-class TodayViewModelFactory() : ViewModelProvider.NewInstanceFactory() {
+class UpcomingViewModelFactory  : ViewModelProvider.NewInstanceFactory() {
     override fun <T : ViewModel?> create(modelClass: Class<T>): T {
-        return TodayViewModel() as T
+        return UpcomingViewModel() as T
     }
 }

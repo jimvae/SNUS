@@ -1,6 +1,5 @@
-package com.orbital.snus.dashboard
+package com.orbital.snus.dashboard.Today
 
-import android.app.usage.UsageEvents
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
@@ -8,18 +7,16 @@ import androidx.recyclerview.widget.RecyclerView
 import com.orbital.snus.R
 import com.orbital.snus.data.UserEvent
 import kotlinx.android.synthetic.main.event_daily_view.view.*
-import kotlinx.android.synthetic.main.event_upcoming_individual_view.view.*
 import java.text.SimpleDateFormat
 import java.util.*
 
 
 // EventAdapter takes in the data, converts into the view that is to be displayed by the RecyclerView
 
-class UpcomingEventAdapter(eventList : List<UserEvent>, dateOfWeek: Date) :
-    RecyclerView.Adapter<UpcomingEventAdapter.EventViewHolder>() {
+class TodayEventAdapter(eventList : List<UserEvent>) :
+    RecyclerView.Adapter<TodayEventAdapter.EventViewHolder>() {
 
     val eventList = eventList
-    val dateOfWeek = dateOfWeek
 
     // Provide a reference to the views for each data item
     // Complex data items may need more than one view per item, and
@@ -30,36 +27,46 @@ class UpcomingEventAdapter(eventList : List<UserEvent>, dateOfWeek: Date) :
 
     // Create new views (invoked by the layout manager)
     override fun onCreateViewHolder(parent: ViewGroup,
-                                    viewType: Int): UpcomingEventAdapter.EventViewHolder {
+                                    viewType: Int): EventViewHolder {
         // create a new view
         // EventDailyView shows the layout of each view
         val textView = LayoutInflater.from(parent.context)
-            .inflate(R.layout.event_upcoming_individual_view, parent, false)
+            .inflate(R.layout.event_daily_view, parent, false)
         // set the view's size, margins, paddings and layout parameters
 
-        return EventViewHolder(textView)
+        return EventViewHolder(
+            textView
+        )
     }
 
     // Replace the contents of a view (invoked by the layout manager)
     // Connect the data to the view
     override fun onBindViewHolder(holder: EventViewHolder, position: Int) {
 
-        val dateFormatter1: SimpleDateFormat = SimpleDateFormat("dd MMM YYYY")
+        val dateFormatter1: SimpleDateFormat = SimpleDateFormat("dd MMM")
         val dateFormatter2: SimpleDateFormat = SimpleDateFormat("hh:mm a E")
         val dateFormatter3: SimpleDateFormat = SimpleDateFormat("hh:mm a ")
 
         val event = eventList[position]
 
-        holder.textView.upcoming_event_title.text = event.eventName
+
+        holder.textView.event_name.text = event.eventName
+        holder.textView.event_description.text = event.eventDescription
+        holder.textView.event_location.text = event.location
 
         if (!allDay(event)) {
-            holder.textView.upcoming_event_time.text =
-                "${dateFormatter3.format(event.startDate!!).toPattern().toString()}\n${dateFormatter3.format(event.endDate!!).toPattern().toString()}"
-        } else if (dateFormatter1.format(dateOfWeek).equals(dateFormatter1.format(event.endDate!!))) {
-                holder.textView.upcoming_event_time.text = "End: ${dateFormatter3.format(event.endDate!!).toPattern().toString()}"
+            holder.textView.start_date.text =
+                dateFormatter3.format(event.startDate!!).toPattern().toString()
+            holder.textView.end_date.text =
+                dateFormatter3.format(event.endDate!!).toPattern().toString()
         } else {
-                holder.textView.upcoming_event_time.text = "All Day"
+
+            holder.textView.start_date.text = "ends on ${dateFormatter1.format(event.endDate!!).toPattern().toString()}"
+                        holder.textView.end_date.text = dateFormatter3.format(event.endDate!!).toPattern().toString()
         }
+
+
+
 
         // - get element from your dataset at this position
         // - replace the contents of the view with that element
@@ -83,4 +90,5 @@ class UpcomingEventAdapter(eventList : List<UserEvent>, dateOfWeek: Date) :
         val fmt = SimpleDateFormat("yyyyMMdd")
         return fmt.format(today) != fmt.format(endDate)
     }
+
 }

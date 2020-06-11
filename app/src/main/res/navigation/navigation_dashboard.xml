@@ -9,7 +9,7 @@
 
     <fragment
         android:id="@+id/todayFragment"
-        android:name="com.orbital.snus.dashboard.TodayFragment"
+        android:name="com.orbital.snus.dashboard.Today.TodayFragment"
         android:label="fragment_today"
         tools:layout="@layout/fragment_dashboard_today" >
         <action
@@ -30,7 +30,7 @@
     </fragment>
     <fragment
         android:id="@+id/calendarFragment"
-        android:name="com.orbital.snus.dashboard.CalendarFragment"
+        android:name="com.orbital.snus.dashboard.Calendar.CalendarFragment"
         android:label="fragment_calendar"
         tools:layout="@layout/fragment_dashboard_calendar" >
         <action
@@ -48,7 +48,7 @@
     </fragment>
     <fragment
         android:id="@+id/upcomingFragment"
-        android:name="com.orbital.snus.dashboard.UpcomingFragment"
+        android:name="com.orbital.snus.dashboard.Upcoming.UpcomingFragment"
         android:label="fragment_upcoming"
         tools:layout="@layout/fragment_dashboard_upcoming" >
         <action

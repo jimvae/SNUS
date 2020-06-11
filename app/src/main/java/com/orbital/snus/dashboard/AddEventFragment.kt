@@ -15,6 +15,8 @@ import androidx.fragment.app.Fragment
 import androidx.lifecycle.ViewModelProvider
 import androidx.navigation.fragment.findNavController
 import com.orbital.snus.R
+import com.orbital.snus.dashboard.Today.TodayViewModel
+import com.orbital.snus.dashboard.Today.TodayViewModelFactory
 import com.orbital.snus.databinding.FragmentDashboardAddEventBinding
 import com.orbital.snus.data.UserEvent
 import java.text.SimpleDateFormat
