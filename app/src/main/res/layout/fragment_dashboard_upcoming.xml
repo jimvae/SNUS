@@ -4,26 +4,27 @@
     xmlns:tools="http://schemas.android.com/tools"
     tools:context=".dashboard.Upcoming.UpcomingFragment">
 
-    <LinearLayout
+    <androidx.constraintlayout.widget.ConstraintLayout
         android:layout_width="match_parent"
-        android:orientation="vertical"
-        android:layout_height="match_parent">
+        android:layout_height="match_parent"
+        android:orientation="vertical">
+
+        <TextView
+            android:id="@+id/button_back"
+            android:layout_width="0dp"
+            android:layout_height="200dp"
+            android:background="@drawable/blue_gradient"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintHorizontal_bias="0.0"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="parent" />
 
         <androidx.constraintlayout.widget.ConstraintLayout
+            android:id="@+id/TopBar"
             android:layout_width="match_parent"
-            android:layout_height="wrap_content">
+            android:layout_height="wrap_content"
+            app:layout_constraintTop_toTopOf="parent">
 
-            <TextView
-                android:id="@+id/button_back"
-                android:layout_width="310dp"
-                android:layout_height="43dp"
-                android:layout_marginStart="8dp"
-                android:layout_marginTop="18dp"
-                android:layout_marginEnd="8dp"
-                android:background="@drawable/blue_button"
-                app:layout_constraintEnd_toStartOf="@+id/floating_button_add"
-                app:layout_constraintStart_toStartOf="parent"
-                app:layout_constraintTop_toTopOf="parent" />
 
             <Button
                 android:id="@+id/button_upcoming"
@@ -81,18 +82,26 @@
             android:id="@+id/constraint_Sunday"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            app:layout_constraintStart_toStartOf="parent">
+            android:layout_marginStart="16dp"
+            android:layout_marginTop="24dp"
+            android:layout_marginEnd="16dp"
+            android:background="@drawable/white_button2"
+            android:foregroundGravity="center"
+            android:paddingBottom="8dp"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@+id/TopBar">
 
             <androidx.recyclerview.widget.RecyclerView
                 android:id="@+id/recyclerViewSunday"
                 android:layout_width="0dp"
                 android:layout_height="wrap_content"
-                android:layout_marginTop="24dp"
+                android:layout_marginTop="8dp"
                 android:layout_marginEnd="8dp"
+                android:scrollbars="horizontal"
                 app:layout_constraintEnd_toEndOf="parent"
                 app:layout_constraintStart_toEndOf="@+id/Sunday"
                 app:layout_constraintTop_toTopOf="parent"
-                android:scrollbars="horizontal"
                 tools:layoutManager="androidx.recyclerview.widget.LinearLayoutManager"
                 tools:listitem="@layout/event_upcoming_individual_view"
                 tools:orientation="horizontal">
@@ -105,29 +114,48 @@
                 android:layout_width="70dp"
                 android:layout_height="wrap_content"
                 android:layout_marginStart="8dp"
-                android:layout_marginTop="32dp"
+                android:layout_marginTop="16dp"
                 android:text="Sunday"
+                android:textAlignment="center"
+                android:textAllCaps="false"
+                android:textColor="@color/color_NUS"
                 android:textSize="12sp"
                 app:layout_constraintStart_toStartOf="parent"
                 app:layout_constraintTop_toTopOf="parent" />
+
+            <TextView
+                android:id="@+id/Sunday_day_of_week"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="3dp"
+                android:text="1"
+                android:textColor="@color/colorPrimaryDark"
+                app:layout_constraintEnd_toStartOf="@+id/recyclerViewSunday"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toBottomOf="@+id/Sunday" />
         </androidx.constraintlayout.widget.ConstraintLayout>
 
         <androidx.constraintlayout.widget.ConstraintLayout
             android:id="@+id/constraint_Monday"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            app:layout_constraintStart_toStartOf="parent">
+            android:layout_marginStart="16dp"
+            android:background="@drawable/white_button2"
+            android:foregroundGravity="center"
+            android:paddingBottom="8dp"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@+id/constraint_Sunday">
 
             <androidx.recyclerview.widget.RecyclerView
                 android:id="@+id/recyclerViewMonday"
                 android:layout_width="0dp"
                 android:layout_height="wrap_content"
-                android:layout_marginTop="24dp"
+                android:layout_marginTop="8dp"
                 android:layout_marginEnd="8dp"
+                android:scrollbars="horizontal"
                 app:layout_constraintEnd_toEndOf="parent"
                 app:layout_constraintStart_toEndOf="@+id/Monday"
                 app:layout_constraintTop_toTopOf="parent"
-                android:scrollbars="horizontal"
                 tools:layoutManager="androidx.recyclerview.widget.LinearLayoutManager"
                 tools:listitem="@layout/event_upcoming_individual_view"
                 tools:orientation="horizontal">
@@ -140,29 +168,47 @@
                 android:layout_width="70dp"
                 android:layout_height="wrap_content"
                 android:layout_marginStart="8dp"
-                android:layout_marginTop="32dp"
+                android:layout_marginTop="16dp"
                 android:text="Monday"
+                android:textAlignment="center"
+                android:textColor="@color/color_NUS"
                 android:textSize="12sp"
                 app:layout_constraintStart_toStartOf="parent"
                 app:layout_constraintTop_toTopOf="parent" />
+
+            <TextView
+                android:id="@+id/Monday_day_of_week"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="3dp"
+                android:text="2"
+                android:textColor="@color/colorPrimaryDark"
+                app:layout_constraintEnd_toStartOf="@+id/recyclerViewMonday"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toBottomOf="@+id/Monday" />
         </androidx.constraintlayout.widget.ConstraintLayout>
 
         <androidx.constraintlayout.widget.ConstraintLayout
             android:id="@+id/constraint_Tuesday"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            app:layout_constraintStart_toStartOf="parent">
+            android:layout_marginStart="16dp"
+            android:background="@drawable/white_button2"
+            android:foregroundGravity="center"
+            android:paddingBottom="8dp"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@+id/constraint_Monday">
 
             <androidx.recyclerview.widget.RecyclerView
                 android:id="@+id/recyclerViewTuesday"
                 android:layout_width="0dp"
                 android:layout_height="wrap_content"
-                android:layout_marginTop="24dp"
+                android:layout_marginTop="8dp"
                 android:layout_marginEnd="8dp"
+                android:scrollbars="horizontal"
                 app:layout_constraintEnd_toEndOf="parent"
                 app:layout_constraintStart_toEndOf="@+id/Tuesday"
                 app:layout_constraintTop_toTopOf="parent"
-                android:scrollbars="horizontal"
                 tools:layoutManager="androidx.recyclerview.widget.LinearLayoutManager"
                 tools:listitem="@layout/event_upcoming_individual_view"
                 tools:orientation="horizontal">
@@ -175,29 +221,47 @@
                 android:layout_width="70dp"
                 android:layout_height="wrap_content"
                 android:layout_marginStart="8dp"
-                android:layout_marginTop="32dp"
+                android:layout_marginTop="16dp"
                 android:text="Tuesday"
+                android:textAlignment="center"
+                android:textColor="@color/color_NUS"
                 android:textSize="12sp"
                 app:layout_constraintStart_toStartOf="parent"
                 app:layout_constraintTop_toTopOf="parent" />
+
+            <TextView
+                android:id="@+id/Tuesday_day_of_week"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="3dp"
+                android:text="3"
+                android:textColor="@color/colorPrimaryDark"
+                app:layout_constraintEnd_toStartOf="@+id/recyclerViewTuesday"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toBottomOf="@+id/Tuesday" />
         </androidx.constraintlayout.widget.ConstraintLayout>
 
         <androidx.constraintlayout.widget.ConstraintLayout
             android:id="@+id/constraint_Wednesday"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            app:layout_constraintStart_toStartOf="parent">
+            android:layout_marginStart="16dp"
+            android:background="@drawable/white_button2"
+            android:foregroundGravity="center"
+            android:paddingBottom="8dp"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@+id/constraint_Tuesday">
 
             <androidx.recyclerview.widget.RecyclerView
                 android:id="@+id/recyclerViewWednesday"
                 android:layout_width="0dp"
                 android:layout_height="wrap_content"
-                android:layout_marginTop="24dp"
+                android:layout_marginTop="8dp"
                 android:layout_marginEnd="8dp"
+                android:scrollbars="horizontal"
                 app:layout_constraintEnd_toEndOf="parent"
                 app:layout_constraintStart_toEndOf="@+id/Wednesday"
                 app:layout_constraintTop_toTopOf="parent"
-                android:scrollbars="horizontal"
                 tools:layoutManager="androidx.recyclerview.widget.LinearLayoutManager"
                 tools:listitem="@layout/event_upcoming_individual_view"
                 tools:orientation="horizontal">
@@ -210,29 +274,46 @@
                 android:layout_width="70dp"
                 android:layout_height="wrap_content"
                 android:layout_marginStart="8dp"
-                android:layout_marginTop="32dp"
+                android:layout_marginTop="16dp"
                 android:text="Wednesday"
+                android:textAlignment="center"
+                android:textColor="@color/color_NUS"
                 android:textSize="12sp"
                 app:layout_constraintStart_toStartOf="parent"
                 app:layout_constraintTop_toTopOf="parent" />
+
+            <TextView
+                android:id="@+id/Wednesday_day_of_week2"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="4"
+                android:textColor="@color/colorPrimaryDark"
+                app:layout_constraintEnd_toStartOf="@+id/recyclerViewWednesday"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toBottomOf="@+id/Wednesday" />
         </androidx.constraintlayout.widget.ConstraintLayout>
 
         <androidx.constraintlayout.widget.ConstraintLayout
             android:id="@+id/constraint_Thursday"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            app:layout_constraintStart_toStartOf="parent">
+            android:layout_marginStart="16dp"
+            android:background="@drawable/white_button2"
+            android:foregroundGravity="center"
+            android:paddingBottom="8dp"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@+id/constraint_Wednesday">
 
             <androidx.recyclerview.widget.RecyclerView
                 android:id="@+id/recyclerViewThursday"
                 android:layout_width="0dp"
                 android:layout_height="wrap_content"
-                android:layout_marginTop="24dp"
+                android:layout_marginTop="8dp"
                 android:layout_marginEnd="8dp"
+                android:scrollbars="horizontal"
                 app:layout_constraintEnd_toEndOf="parent"
                 app:layout_constraintStart_toEndOf="@+id/Thursday"
                 app:layout_constraintTop_toTopOf="parent"
-                android:scrollbars="horizontal"
                 tools:layoutManager="androidx.recyclerview.widget.LinearLayoutManager"
                 tools:listitem="@layout/event_upcoming_individual_view"
                 tools:orientation="horizontal">
@@ -245,29 +326,47 @@
                 android:layout_width="70dp"
                 android:layout_height="wrap_content"
                 android:layout_marginStart="8dp"
-                android:layout_marginTop="32dp"
+                android:layout_marginTop="16dp"
                 android:text="Thursday"
+                android:textAlignment="center"
+                android:textColor="@color/color_NUS"
                 android:textSize="12sp"
                 app:layout_constraintStart_toStartOf="parent"
                 app:layout_constraintTop_toTopOf="parent" />
+
+            <TextView
+                android:id="@+id/Thursday_day_of_week3"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="3dp"
+                android:text="5"
+                android:textColor="@color/colorPrimaryDark"
+                app:layout_constraintEnd_toEndOf="@+id/Thursday"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toBottomOf="@+id/Thursday" />
         </androidx.constraintlayout.widget.ConstraintLayout>
 
         <androidx.constraintlayout.widget.ConstraintLayout
             android:id="@+id/constraint_Friday"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            app:layout_constraintStart_toStartOf="parent">
+            android:layout_marginStart="16dp"
+            android:background="@drawable/white_button2"
+            android:foregroundGravity="center"
+            android:paddingBottom="8dp"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@+id/constraint_Thursday">
 
             <androidx.recyclerview.widget.RecyclerView
                 android:id="@+id/recyclerViewFriday"
                 android:layout_width="0dp"
                 android:layout_height="wrap_content"
-                android:layout_marginTop="24dp"
+                android:layout_marginTop="8dp"
                 android:layout_marginEnd="8dp"
+                android:scrollbars="horizontal"
                 app:layout_constraintEnd_toEndOf="parent"
                 app:layout_constraintStart_toEndOf="@+id/Friday"
                 app:layout_constraintTop_toTopOf="parent"
-                android:scrollbars="horizontal"
                 tools:layoutManager="androidx.recyclerview.widget.LinearLayoutManager"
                 tools:listitem="@layout/event_upcoming_individual_view"
                 tools:orientation="horizontal">
@@ -280,29 +379,47 @@
                 android:layout_width="70dp"
                 android:layout_height="wrap_content"
                 android:layout_marginStart="8dp"
-                android:layout_marginTop="32dp"
+                android:layout_marginTop="16dp"
                 android:text="Friday"
+                android:textAlignment="center"
+                android:textColor="@color/color_NUS"
                 android:textSize="12sp"
                 app:layout_constraintStart_toStartOf="parent"
                 app:layout_constraintTop_toTopOf="parent" />
+
+            <TextView
+                android:id="@+id/Friday_day_of_week4"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="3dp"
+                android:text="6"
+                android:textColor="@color/colorPrimaryDark"
+                app:layout_constraintEnd_toStartOf="@+id/recyclerViewFriday"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toBottomOf="@+id/Friday" />
         </androidx.constraintlayout.widget.ConstraintLayout>
 
         <androidx.constraintlayout.widget.ConstraintLayout
             android:id="@+id/constraint_Saturday"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            app:layout_constraintStart_toStartOf="parent">
+            android:layout_marginStart="16dp"
+            android:background="@drawable/white_button2"
+            android:foregroundGravity="center"
+            android:paddingBottom="8dp"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@+id/constraint_Friday">
 
             <androidx.recyclerview.widget.RecyclerView
                 android:id="@+id/recyclerViewSaturday"
                 android:layout_width="0dp"
                 android:layout_height="wrap_content"
-                android:layout_marginTop="24dp"
+                android:layout_marginTop="8dp"
                 android:layout_marginEnd="8dp"
+                android:scrollbars="horizontal"
                 app:layout_constraintEnd_toEndOf="parent"
                 app:layout_constraintStart_toEndOf="@+id/Saturday"
                 app:layout_constraintTop_toTopOf="parent"
-                android:scrollbars="horizontal"
                 tools:layoutManager="androidx.recyclerview.widget.LinearLayoutManager"
                 tools:listitem="@layout/event_upcoming_individual_view"
                 tools:orientation="horizontal">
@@ -315,16 +432,27 @@
                 android:layout_width="70dp"
                 android:layout_height="wrap_content"
                 android:layout_marginStart="8dp"
-                android:layout_marginTop="32dp"
+                android:layout_marginTop="16dp"
                 android:text="Saturday"
+                android:textAlignment="center"
+                android:textColor="@color/color_NUS"
                 android:textSize="12sp"
                 app:layout_constraintStart_toStartOf="parent"
                 app:layout_constraintTop_toTopOf="parent" />
+
+            <TextView
+                android:id="@+id/Saturday_day_of_week5"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="7"
+                android:textColor="@color/colorPrimaryDark"
+                app:layout_constraintEnd_toEndOf="@+id/Saturday"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toBottomOf="@+id/Saturday" />
         </androidx.constraintlayout.widget.ConstraintLayout>
 
 
-
-    </LinearLayout>
+    </androidx.constraintlayout.widget.ConstraintLayout>
 
 
 </layout>

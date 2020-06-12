@@ -1,8 +1,10 @@
 <?xml version="1.0" encoding="utf-8"?>
-<androidx.appcompat.widget.LinearLayoutCompat xmlns:android="http://schemas.android.com/apk/res/android"
+<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="wrap_content"
     android:layout_height="wrap_content"
+    android:background="@drawable/white_button2"
     android:orientation="vertical"
     android:paddingStart="3dp"
     android:paddingLeft="3dp"
@@ -15,15 +17,22 @@
         android:id="@+id/upcoming_event_title"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
+        android:layout_marginBottom="8dp"
         android:text="Title"
-        tools:layout_editor_absoluteX="16dp"
-        tools:layout_editor_absoluteY="16dp" />
+        android:textColor="@color/color_NUS"
+        app:layout_constraintBottom_toTopOf="@+id/upcoming_event_time"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent" />
 
     <TextView
         android:id="@+id/upcoming_event_time"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:text="Time"
-        tools:layout_editor_absoluteX="16dp"
-        tools:layout_editor_absoluteY="44dp" />
-</androidx.appcompat.widget.LinearLayoutCompat>
+        android:textColor="@color/color_S"
+        android:textSize="10sp"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent" />
+</androidx.constraintlayout.widget.ConstraintLayout>
