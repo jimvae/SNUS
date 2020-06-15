@@ -1,0 +1,77 @@
+<?xml version="1.0" encoding="utf-8"?>
+<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="350dp"
+    android:layout_height="350dp"
+    android:background="@drawable/background_for_recycler_view"
+    android:orientation="vertical"
+    android:padding="5dp">
+
+
+    <TextView
+        android:id="@+id/pop_up_event_name"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="Name"
+        app:layout_constraintEnd_toStartOf="@+id/pop_up_close"
+        app:layout_constraintStart_toStartOf="parent"
+        tools:layout_editor_absoluteY="16dp" />
+
+    <TextView
+        android:id="@+id/pop_up_event_description"
+        android:layout_width="87dp"
+        android:layout_height="28dp"
+        android:text="Description"
+        app:layout_constraintTop_toBottomOf="@+id/pop_up_event_name"
+        tools:layout_editor_absoluteX="28dp" />
+
+    <TextView
+        android:id="@+id/pop_up_event_start_date"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="Start Date"
+        app:layout_constraintBottom_toTopOf="@+id/pop_up_event_end_date"
+        app:layout_constraintTop_toBottomOf="@+id/pop_up_event_description"
+        tools:layout_editor_absoluteX="16dp" />
+
+    <TextView
+        android:id="@+id/pop_up_event_end_date"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="End Date"
+        app:layout_constraintBottom_toTopOf="@+id/pop_up_event_location"
+        app:layout_constraintEnd_toStartOf="@+id/pop_up_edit" />
+
+    <TextView
+        android:id="@+id/pop_up_event_location"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="Location"
+        app:layout_constraintBottom_toBottomOf="parent"
+        tools:layout_editor_absoluteX="21dp" />
+
+    <Button
+        android:id="@+id/pop_up_delete_button"
+        android:layout_width="85dp"
+        android:layout_height="79dp"
+        android:background="@drawable/delete_button"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/pop_up_close" />
+
+    <Button
+        android:id="@+id/pop_up_close"
+        android:layout_width="85dp"
+        android:layout_height="79dp"
+        android:background="@drawable/pop_up_close"
+        app:layout_constraintEnd_toEndOf="parent"
+        tools:layout_editor_absoluteY="-1dp" />
+
+    <Button
+        android:id="@+id/pop_up_edit"
+        android:layout_width="85dp"
+        android:layout_height="79dp"
+        android:background="@drawable/pop_up_edit"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toStartOf="@+id/pop_up_delete_button" />
+</androidx.constraintlayout.widget.ConstraintLayout>

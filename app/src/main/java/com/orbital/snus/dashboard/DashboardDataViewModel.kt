@@ -1,5 +1,7 @@
 package com.orbital.snus.dashboard
 
+import android.util.Log
+import android.widget.Toast
 import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
@@ -45,5 +47,17 @@ class DashboardDataViewModel : ViewModel() {
 
     fun addEventFailureCompleted() {
         _addFailure.value = null
+    }
+
+    fun deleteEvent(ID: String) {
+        db.collection("users") // users collection
+            .document(firebaseAuth.currentUser!!.uid) // current userId
+            .collection("events") // user events collection
+            .document(ID).delete()
+            .addOnSuccessListener {
+                Log.d("Delete Event", "DocumentSnapshot successfully deleted!")
+            }.addOnFailureListener {
+                    e -> Log.w("Delete Event", "Error deleting document", e)
+            }
     }
 }

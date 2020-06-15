@@ -1,9 +1,14 @@
 package com.orbital.snus.dashboard.Today
 
+import android.app.Dialog
+import android.graphics.Color
+import android.graphics.drawable.ColorDrawable
 import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import android.widget.Button
+import android.widget.TextView
 import android.widget.Toast
 import androidx.databinding.DataBindingUtil
 import androidx.fragment.app.Fragment
@@ -19,12 +24,14 @@ import com.orbital.snus.databinding.FragmentDashboardTodayBinding
 import java.text.SimpleDateFormat
 import java.util.*
 
+
 class TodayFragment : Fragment() {
     private lateinit var firebaseAuth: FirebaseAuth
 
     private lateinit var recyclerView: RecyclerView
     private lateinit var viewAdapter: RecyclerView.Adapter<*>
     private lateinit var viewManager: RecyclerView.LayoutManager
+    private lateinit var myDialog: Dialog
 
     val factory = TodayViewModelFactory()
     private lateinit var viewModel: TodayViewModel
@@ -42,7 +49,7 @@ class TodayFragment : Fragment() {
 
         firebaseAuth = FirebaseAuth.getInstance()
         viewManager = LinearLayoutManager(activity)
-        viewAdapter = TodayEventAdapter(events)
+        viewAdapter = TodayEventAdapter(events, requireActivity())
 
         // set up the recyclerView
         recyclerView = binding.todayRecyclerView.apply {
@@ -72,6 +79,12 @@ class TodayFragment : Fragment() {
             view: View -> view.findNavController().navigate(R.id.action_todayFragment_to_addEventFragment)
         }
 
+
+
+
+        myDialog = Dialog(requireContext())
+
+
         return binding.root
     }
 
@@ -94,4 +107,9 @@ class TodayFragment : Fragment() {
         val dateToday = Calendar.getInstance().time
         return " ${dateFormatter.format(dateToday).toPattern().toString()} "
     }
+
+//    override fun onResume() {
+//        super.onResume()
+//        viewModel.loadUsers()
+//    }
 }
