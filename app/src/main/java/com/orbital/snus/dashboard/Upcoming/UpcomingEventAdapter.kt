@@ -45,7 +45,6 @@ class UpcomingEventAdapter(eventList : List<UserEvent>, dateOfWeek: Date) :
     override fun onBindViewHolder(holder: EventViewHolder, position: Int) {
 
         val dateFormatter1: SimpleDateFormat = SimpleDateFormat("dd MMM YYYY")
-        val dateFormatter2: SimpleDateFormat = SimpleDateFormat("hh:mm a E")
         val dateFormatter3: SimpleDateFormat = SimpleDateFormat("hh:mm a ")
 
         val event = eventList[position]
@@ -67,14 +66,6 @@ class UpcomingEventAdapter(eventList : List<UserEvent>, dateOfWeek: Date) :
 
     // Return the size of your dataset (invoked by the layout manager)
     override fun getItemCount() = eventList.size
-
-//    fun checkIfOnlyToday(event: UserEvent) : Boolean {
-//        // need to check if event.StartDate <= Today <= event.End
-//        val todayDate = Calendar.getInstance()
-//        val startDate = event.startDate!!
-//        val endDate = event.endDate!!
-//        return (startDate.day - todayDate.) == 0 && (endDate.day - todayDate.day) == 0
-//    }
 
     fun allDay(event: UserEvent): Boolean {
 

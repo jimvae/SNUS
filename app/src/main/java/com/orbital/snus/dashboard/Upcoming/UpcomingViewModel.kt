@@ -55,34 +55,6 @@ class UpcomingViewModel : ViewModel() {
     val eventSaturday : LiveData<List<UserEvent>>
         get() = _eventSaturday
 
-    fun addEvent(event: UserEvent) {
-        // start to add inside database
-        val id = db.collection("users") // users collection
-            .document(firebaseAuth.currentUser!!.uid) // current userId
-            .collection("events") // user events collection
-            .document().id // event document with auto-generated key
-
-        event.id = id
-
-        db.collection("users") // users collection
-            .document(firebaseAuth.currentUser!!.uid) // current userId
-            .collection("events") // user events collection
-            .document(id).set(event)
-            .addOnSuccessListener {
-                _addSuccess.value = true
-            }.addOnFailureListener {
-                _addFailure.value = it
-            }
-    }
-
-    fun addEventSuccessCompleted() {
-        _addSuccess.value = null
-    }
-
-    fun addEventFailureCompleted() {
-        _addFailure.value = null
-    }
-
     // fetching events from database
     fun loadUsers() {
         var eventList = ArrayList<UserEvent>()

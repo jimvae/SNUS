@@ -20,42 +20,6 @@ class CalendarViewModel : ViewModel() {
     val events : LiveData<List<UserEvent>>
         get() = _events
 
-    private val _addSuccess = MutableLiveData<Boolean?>()
-    val addSuccess : LiveData<Boolean?>
-        get() = _addSuccess
-
-    private val _addFailure = MutableLiveData<Exception?>()
-    val addFailure : LiveData<Exception?>
-        get() = _addFailure
-
-    fun addEvent(event: UserEvent) {
-        // start to add inside database
-        val id = db.collection("users") // users collection
-            .document(firebaseAuth.currentUser!!.uid) // current userId
-            .collection("events") // user events collection
-            .document().id // event document with auto-generated key
-
-        event.id = id
-
-        db.collection("users") // users collection
-            .document(firebaseAuth.currentUser!!.uid) // current userId
-            .collection("events") // user events collection
-            .document(id).set(event)
-            .addOnSuccessListener {
-                _addSuccess.value = true
-            }.addOnFailureListener {
-                _addFailure.value = it
-            }
-    }
-
-    fun addEventSuccessCompleted() {
-        _addSuccess.value = null
-    }
-
-    fun addEventFailureCompleted() {
-        _addFailure.value = null
-    }
-
     // fetching events from database
     fun loadUsers() {
         var eventList = ArrayList<UserEvent>()
@@ -85,18 +49,6 @@ class CalendarViewModel : ViewModel() {
     }
 
     // Will exclude events that has finished before current instance in time
-    fun checkIfToday(event: UserEvent) : Boolean {
-        // need to check if event.StartDate <= Today <= event.End
-        val fmt = SimpleDateFormat("yyyyMMdd")
-        val todayDate = Calendar.getInstance().time
-        val startDate = event.startDate!!
-        val endDate = event.endDate!!
-
-        //either todaydate is in between current
-        // the today date = start date or  today date = end date
-        return (startDate.compareTo(todayDate) <= 0 && todayDate.compareTo(endDate) <= 0) || fmt.format(todayDate) == fmt.format(startDate) || fmt.format(todayDate) == fmt.format(endDate)
-    }
-
     fun checkIfThisDate(date: Date): ArrayList<UserEvent> {
         val fmt = SimpleDateFormat("yyyyMMdd")
         val todayDate = date

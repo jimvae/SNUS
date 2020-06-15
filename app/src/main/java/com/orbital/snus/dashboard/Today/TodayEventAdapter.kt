@@ -44,7 +44,6 @@ class TodayEventAdapter(eventList : List<UserEvent>) :
     override fun onBindViewHolder(holder: EventViewHolder, position: Int) {
 
         val dateFormatter1: SimpleDateFormat = SimpleDateFormat("dd MMM")
-        val dateFormatter2: SimpleDateFormat = SimpleDateFormat("hh:mm a E")
         val dateFormatter3: SimpleDateFormat = SimpleDateFormat("hh:mm a ")
 
         val event = eventList[position]
@@ -64,26 +63,12 @@ class TodayEventAdapter(eventList : List<UserEvent>) :
             holder.textView.start_date.text = "ends on ${dateFormatter1.format(event.endDate!!).toPattern().toString()}"
                         holder.textView.end_date.text = dateFormatter3.format(event.endDate!!).toPattern().toString()
         }
-
-
-
-
-        // - get element from your dataset at this position
-        // - replace the contents of the view with that element
     }
 
     // Return the size of your dataset (invoked by the layout manager)
     override fun getItemCount() = eventList.size
 
-//    fun checkIfOnlyToday(event: UserEvent) : Boolean {
-//        // need to check if event.StartDate <= Today <= event.End
-//        val todayDate = Calendar.getInstance()
-//        val startDate = event.startDate!!
-//        val endDate = event.endDate!!
-//        return (startDate.day - todayDate.) == 0 && (endDate.day - todayDate.day) == 0
-//    }
-
-    fun allDay(event: UserEvent): Boolean {
+    private fun allDay(event: UserEvent): Boolean {
 
         val today: Date = Calendar.getInstance().time
         val endDate: Date = event.endDate!!
