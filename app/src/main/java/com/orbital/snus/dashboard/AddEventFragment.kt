@@ -26,24 +26,11 @@ class AddEventFragment() : Fragment() {
 
     private lateinit var binding: FragmentDashboardAddEventBinding
 
-    // Calendar and Date variables
-    val c = Calendar.getInstance()
-    var mYear = c[Calendar.YEAR]
-    var mMonth = c[Calendar.MONTH]
-    var mDay = c[Calendar.DAY_OF_MONTH]
-    var mHour = c[Calendar.HOUR_OF_DAY]
-    var mMinute = c[Calendar.MINUTE]
+    private var startDate: Date? = null
+    private var endDate: Date? = null
 
-    var dateFormatter: SimpleDateFormat = SimpleDateFormat("dd MMM YYYY'\n'hh:mm a")
-
-    var startDate: Date? = null
-    var endDate: Date? = null
-
-    val START = "start"
-    val END = "end"
-
-    val factory = TodayViewModelFactory()
-    private lateinit var viewModel: TodayViewModel
+    private val START = "start"
+    private val END = "end"
 
     override fun onCreateView(
         inflater: LayoutInflater,
@@ -57,8 +44,6 @@ class AddEventFragment() : Fragment() {
             inflater, R.layout.fragment_dashboard_add_event, container, false
         )
 
-        viewModel = ViewModelProvider(this, factory).get(TodayViewModel::class.java)
-
         // SET ON CLICK LISTENERS
         // Set start and end date/time
         binding.textStartDate.setOnClickListener {
@@ -70,6 +55,7 @@ class AddEventFragment() : Fragment() {
             setDateAndTime(it as TextView, END)
         }
 
+        // just to hide the keyboard after setting event location
         binding.textEditEventLocation.setOnFocusChangeListener { v, hasFocus ->
             if (!hasFocus) {
                 hideKeyboard(v)
@@ -103,20 +89,20 @@ class AddEventFragment() : Fragment() {
             configurePage(false)
 
             val event = UserEvent(name, description, startDate!!, endDate!!, location, false)
-            viewModel.addEvent(event)
-            viewModel.addSuccess.observe(viewLifecycleOwner, androidx.lifecycle.Observer {
+            DashboardViewModel.addEvent(event)
+            DashboardViewModel.addSuccess.observe(viewLifecycleOwner, androidx.lifecycle.Observer {
                 if (it != null) {
                     Toast.makeText(requireContext(), "Event successfully added", Toast.LENGTH_SHORT)
                         .show()
                     findNavController().navigate(R.id.action_addEventFragment_to_todayFragment)
-                    viewModel.addEventSuccessCompleted()
+                    DashboardViewModel.addEventSuccessCompleted()
                 }
             })
-            viewModel.addFailure.observe(viewLifecycleOwner, androidx.lifecycle.Observer {
+            DashboardViewModel.addFailure.observe(viewLifecycleOwner, androidx.lifecycle.Observer {
                 if (it != null) {
                     Toast.makeText(requireContext(), it.toString(), Toast.LENGTH_SHORT).show()
                     configurePage(true)
-                    viewModel.addEventFailureCompleted()
+                    DashboardViewModel.addEventFailureCompleted()
                 }
             })
         }
@@ -125,7 +111,18 @@ class AddEventFragment() : Fragment() {
     }
 
     // Sets date and time in textView, and save the data in correct Date object following the indicator
-    fun setDateAndTime (v: TextView, indicator: String) {
+    private fun setDateAndTime (v: TextView, indicator: String) {
+
+        // Calendar and Date variables
+        val c = Calendar.getInstance()
+        var mYear = c[Calendar.YEAR]
+        var mMonth = c[Calendar.MONTH]
+        var mDay = c[Calendar.DAY_OF_MONTH]
+        var mHour = c[Calendar.HOUR_OF_DAY]
+        var mMinute = c[Calendar.MINUTE]
+
+        var dateFormatter: SimpleDateFormat = SimpleDateFormat("dd MMM YYYY'\n'hh:mm a")
+
         // TIMEPICKER
         val timePickerDialog = TimePickerDialog(
             this.requireContext(),
@@ -147,7 +144,7 @@ class AddEventFragment() : Fragment() {
             },
             mHour,
             mMinute,
-            true
+            false
         )
 
         // DATEPICKER
@@ -182,12 +179,12 @@ class AddEventFragment() : Fragment() {
         (activity as DashboardActivity).showNavBar()
     }
 
-    fun hideKeyboard(view: View) {
+    private fun hideKeyboard(view: View) {
         val imm = activity?.getSystemService(Context.INPUT_METHOD_SERVICE) as InputMethodManager
         imm.hideSoftInputFromWindow(view.windowToken, 0)
     }
 
-    fun configurePage(boolean: Boolean) {
+    private fun configurePage(boolean: Boolean) {
         binding.textEditEventName.isEnabled = boolean
         binding.textEditEventLocation.isEnabled = boolean
         binding.textEditEventDescription.isEnabled = boolean
