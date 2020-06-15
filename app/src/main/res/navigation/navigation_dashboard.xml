@@ -27,6 +27,9 @@
         <action
             android:id="@+id/action_todayFragment_to_addEventFragment"
             app:destination="@id/addEventFragment" />
+        <action
+            android:id="@+id/action_todayFragment_to_eventFragment"
+            app:destination="@id/eventFragment" />
     </fragment>
     <fragment
         android:id="@+id/calendarFragment"
@@ -80,5 +83,14 @@
             app:destination="@id/todayFragment"
             app:popUpTo="@id/todayFragment"
             app:popUpToInclusive="false" />
+    </fragment>
+    <fragment
+        android:id="@+id/eventFragment"
+        android:name="com.orbital.snus.dashboard.EventFragment"
+        android:label="EventFragment"
+        tools:layout="@layout/fragment_dashboard_event">
+        <action
+            android:id="@+id/action_eventFragment_to_todayFragment"
+            app:destination="@id/todayFragment" />
     </fragment>
 </navigation>

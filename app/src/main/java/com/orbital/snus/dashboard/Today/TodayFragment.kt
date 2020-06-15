@@ -1,14 +1,9 @@
 package com.orbital.snus.dashboard.Today
 
-import android.app.Dialog
-import android.graphics.Color
-import android.graphics.drawable.ColorDrawable
 import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
-import android.widget.Button
-import android.widget.TextView
 import android.widget.Toast
 import androidx.databinding.DataBindingUtil
 import androidx.fragment.app.Fragment
@@ -31,7 +26,6 @@ class TodayFragment : Fragment() {
     private lateinit var recyclerView: RecyclerView
     private lateinit var viewAdapter: RecyclerView.Adapter<*>
     private lateinit var viewManager: RecyclerView.LayoutManager
-    private lateinit var myDialog: Dialog
 
     val factory = TodayViewModelFactory()
     private lateinit var viewModel: TodayViewModel
@@ -49,7 +43,7 @@ class TodayFragment : Fragment() {
 
         firebaseAuth = FirebaseAuth.getInstance()
         viewManager = LinearLayoutManager(activity)
-        viewAdapter = TodayEventAdapter(events, requireActivity())
+        viewAdapter = TodayEventAdapter(events)
 
         // set up the recyclerView
         recyclerView = binding.todayRecyclerView.apply {
@@ -60,6 +54,7 @@ class TodayFragment : Fragment() {
             adapter = viewAdapter
 
         }
+
         viewModel = ViewModelProvider(this, factory).get(TodayViewModel::class.java)
 
         viewModel.events.observe(viewLifecycleOwner, Observer<List<UserEvent>> { dbEvents ->
@@ -67,7 +62,6 @@ class TodayFragment : Fragment() {
             events.addAll(dbEvents)
             recyclerView.adapter!!.notifyDataSetChanged()
         })
-
 
         binding.buttonUpcoming.setOnClickListener {
             view: View -> view.findNavController().navigate(R.id.action_todayFragment_to_upcomingFragment)
@@ -78,12 +72,6 @@ class TodayFragment : Fragment() {
         binding.floatingButtonAdd.setOnClickListener {
             view: View -> view.findNavController().navigate(R.id.action_todayFragment_to_addEventFragment)
         }
-
-
-
-
-        myDialog = Dialog(requireContext())
-
 
         return binding.root
     }
@@ -108,8 +96,5 @@ class TodayFragment : Fragment() {
         return " ${dateFormatter.format(dateToday).toPattern().toString()} "
     }
 
-//    override fun onResume() {
-//        super.onResume()
-//        viewModel.loadUsers()
-//    }
 }
+

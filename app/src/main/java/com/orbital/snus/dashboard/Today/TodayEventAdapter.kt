@@ -4,24 +4,28 @@ import android.app.Activity
 import android.app.Dialog
 import android.graphics.Color
 import android.graphics.drawable.ColorDrawable
+import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import android.widget.Button
 import android.widget.TextView
+import androidx.core.os.bundleOf
+import androidx.navigation.findNavController
+import androidx.navigation.fragment.findNavController
 import androidx.recyclerview.widget.RecyclerView
 import com.orbital.snus.R
+import com.orbital.snus.dashboard.DashboardActivity
 import com.orbital.snus.dashboard.DashboardDataViewModel
 import com.orbital.snus.data.UserEvent
 import kotlinx.android.synthetic.main.event_daily_view.view.*
-import java.nio.file.Files.delete
 import java.text.SimpleDateFormat
 import java.util.*
 
 
 // EventAdapter takes in the data, converts into the view that is to be displayed by the RecyclerView
 
-class TodayEventAdapter(val eventList: List<UserEvent>, val activity: Activity) :
+class TodayEventAdapter(val eventList: List<UserEvent>) :
     RecyclerView.Adapter<TodayEventAdapter.EventViewHolder>() {
     val dataViewModel = DashboardDataViewModel()
 
@@ -75,51 +79,14 @@ class TodayEventAdapter(val eventList: List<UserEvent>, val activity: Activity) 
         holder.textView.setOnClickListener(onClickListener(position));
     }
 
+    // Onclick of item, navigate to appropriate event fragment, passing in the event in the bundle
     private fun onClickListener(position: Int): View.OnClickListener? {
         return View.OnClickListener {
-
-            val myDialog = Dialog(activity)
-            myDialog.setContentView(R.layout.event_pop_up)
-            val dateFormatter: SimpleDateFormat = SimpleDateFormat("dd MMM, hh:mm a ")
-
-            val close: Button = myDialog.findViewById(R.id.pop_up_close)
-            val delete: Button = myDialog.findViewById(R.id.pop_up_delete_button)
-            val edit: Button = myDialog.findViewById(R.id.pop_up_edit)
-            val name: TextView = myDialog.findViewById(R.id.pop_up_event_name)
-            val description: TextView = myDialog.findViewById(R.id.pop_up_event_description)
-            val startDate: TextView = myDialog.findViewById(R.id.pop_up_event_start_date)
-            val endDate: TextView = myDialog.findViewById(R.id.pop_up_event_end_date)
-            val location: TextView = myDialog.findViewById(R.id.pop_up_event_location)
-
-            val event = eventList[position]
-            val iD = event.id
-
-            name.text = event.eventName
-            description.text = event.eventDescription
-            startDate.text = dateFormatter.format(event.startDate).toPattern().toString()
-            endDate.text = dateFormatter.format(event.endDate).toPattern().toString()
-            location.text = event.location
-
-            delete.setOnClickListener {
-                dataViewModel.deleteEvent(iD!!)
-                notifyItemRemoved(position)
-                myDialog.dismiss()
-
-            }
-
-
-
-
-
-
-
-
-            close.setOnClickListener { myDialog.dismiss() }
-            myDialog.getWindow()?.setBackgroundDrawable(ColorDrawable(Color.TRANSPARENT))
-            myDialog.show()
+            val bundle = Bundle()
+            bundle.putParcelable("event", eventList[position])
+            it.findNavController().navigate(R.id.action_todayFragment_to_eventFragment, bundle)
         }
     }
-
 
     // Return the size of your dataset (invoked by the layout manager)
     override fun getItemCount() = eventList.size

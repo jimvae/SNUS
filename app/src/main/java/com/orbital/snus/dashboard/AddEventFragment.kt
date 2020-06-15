@@ -176,7 +176,6 @@ class AddEventFragment() : Fragment() {
         datePickerDialog.show()
     }
 
-
     override fun onDestroyView() {
         super.onDestroyView()
         (activity as DashboardActivity).showNavBar()
