@@ -147,7 +147,7 @@ class AddEventFragment() : Fragment() {
             },
             mHour,
             mMinute,
-            true
+            false
         )
 
         // DATEPICKER
