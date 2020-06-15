@@ -46,13 +46,16 @@ class EventFragment() : Fragment() {
         viewModel = ViewModelProvider(this, factory).get(DashboardDataViewModel::class.java)
 
         binding.popUpDeleteButton.setOnClickListener {
-
+            // delete from database
+            // check on success or failure
+            // if success, navigate back to today fragment
+            // if failure, display toast?
         }
         binding.popUpClose.setOnClickListener {
-
+            // navigate back to today fragment
         }
         binding.popUpEdit.setOnClickListener {
-
+            // edit something
         }
 
         return binding.root

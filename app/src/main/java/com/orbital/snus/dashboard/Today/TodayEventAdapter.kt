@@ -27,8 +27,6 @@ import java.util.*
 
 class TodayEventAdapter(val eventList: List<UserEvent>) :
     RecyclerView.Adapter<TodayEventAdapter.EventViewHolder>() {
-    val dataViewModel = DashboardDataViewModel()
-
 
     // Provide a reference to the views for each data item
     // Complex data items may need more than one view per item, and

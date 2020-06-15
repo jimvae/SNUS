@@ -49,6 +49,14 @@ class DashboardDataViewModel : ViewModel() {
         _addFailure.value = null
     }
 
+    private val _delSuccess = MutableLiveData<Boolean?>()
+    val delSuccess : LiveData<Boolean?>
+        get() = _delSuccess
+
+    private val _delFailure = MutableLiveData<Exception?>()
+    val delFailure : LiveData<Exception?>
+        get() = _delFailure
+
     fun deleteEvent(ID: String) {
         db.collection("users") // users collection
             .document(firebaseAuth.currentUser!!.uid) // current userId
@@ -59,5 +67,13 @@ class DashboardDataViewModel : ViewModel() {
             }.addOnFailureListener {
                     e -> Log.w("Delete Event", "Error deleting document", e)
             }
+    }
+
+    fun delEventSuccessCompleted() {
+        _delSuccess.value = null
+    }
+
+    fun delEventFailureCompleted() {
+        _delFailure.value = null
     }
 }
