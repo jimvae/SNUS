@@ -15,7 +15,6 @@ import androidx.navigation.findNavController
 import androidx.recyclerview.widget.LinearLayoutManager
 import com.google.firebase.auth.FirebaseAuth
 import com.orbital.snus.R
-import com.orbital.snus.dashboard.DashboardViewModel
 import com.orbital.snus.dashboard.Today.TodayEventAdapter
 import com.orbital.snus.dashboard.Today.TodayViewModel
 import com.orbital.snus.data.UserEvent
@@ -27,6 +26,7 @@ class CalendarFragment : Fragment() {
     private lateinit var viewModel: CalendarViewModel
     private var factory = CalendarViewModelFactory()
     private var events = ArrayList<UserEvent>()
+    private lateinit var adapter: CalendarEventAdapter
 
     override fun onCreateView(inflater: LayoutInflater,
                               container: ViewGroup?, savedInstanceState: Bundle?): View? {
@@ -53,21 +53,13 @@ class CalendarFragment : Fragment() {
         binding.buttonUpcoming.setOnClickListener {
                 view: View -> view.findNavController().navigate(R.id.action_calendarFragment_to_upcomingFragment)
         }
-        binding.floatingButtonAdd.setOnClickListener {
-                view: View -> view.findNavController().navigate(R.id.action_calendarFragment_to_addEventFragment)
-        }
-
-        val currentDate = Calendar.getInstance()
-        var todayEvents = viewModel.checkIfThisDate(DashboardViewModel.events.value, currentDate.time)
-        events.removeAll(events)
-        events.addAll(todayEvents)
-        recyclerView.adapter!!.notifyDataSetChanged()
 
         binding.calendarView.setOnDateChangeListener {
             //calendarview, year , month , date
                 _, i, il, i2 ->
+            val currentDate = Calendar.getInstance()
             currentDate.set(i, il, i2)
-            todayEvents = viewModel.checkIfThisDate(DashboardViewModel.events.value, currentDate.time)
+            val todayEvents = viewModel.checkIfThisDate(currentDate.time)
             events.removeAll(events)
             events.addAll(todayEvents)
             recyclerView.adapter!!.notifyDataSetChanged()
@@ -76,18 +68,18 @@ class CalendarFragment : Fragment() {
         return binding.root
     }
 
-//    override fun onActivityCreated(savedInstanceState: Bundle?) {
-//        super.onActivityCreated(savedInstanceState)
-//
-//        viewModel = ViewModelProvider(this, factory).get(CalendarViewModel::class.java)
-//        // On start of activity, we load the user data to be display on dashboard later
-//        viewModel.loadUsers()
-//        viewModel.events.observe(viewLifecycleOwner, androidx.lifecycle.Observer<List<UserEvent>> { events ->
-//            if (events.size != 0) {
-//                Toast.makeText(requireContext(), "Success retrieval", Toast.LENGTH_SHORT).show()
-//            } else {
-//                Toast.makeText(requireContext(), "Failed retrieval", Toast.LENGTH_SHORT).show()
-//            }
-//        })
-//    }
+    override fun onActivityCreated(savedInstanceState: Bundle?) {
+        super.onActivityCreated(savedInstanceState)
+
+        viewModel = ViewModelProvider(this, factory).get(CalendarViewModel::class.java)
+        // On start of activity, we load the user data to be display on dashboard later
+        viewModel.loadUsers()
+        viewModel.events.observe(viewLifecycleOwner, androidx.lifecycle.Observer<List<UserEvent>> { events ->
+            if (events.size != 0) {
+                Toast.makeText(requireContext(), "Success retrieval", Toast.LENGTH_SHORT).show()
+            } else {
+                Toast.makeText(requireContext(), "Failed retrieval", Toast.LENGTH_SHORT).show()
+            }
+        })
+    }
 }

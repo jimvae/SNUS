@@ -154,7 +154,6 @@ class UpcomingFragment : Fragment() {
 
         }
 
-        // filter events sort the events from database into the 7 days, which are observed below
         viewModel.events.observe(viewLifecycleOwner, Observer<List<UserEvent>> { dbEvents ->
             viewModel.filterEvents()
         })
@@ -201,9 +200,6 @@ class UpcomingFragment : Fragment() {
         }
         binding.buttonCalendar.setOnClickListener {
                 view: View -> view.findNavController().navigate(R.id.action_upcomingFragment_to_calendarFragment)
-        }
-        binding.floatingButtonAdd.setOnClickListener {
-                view: View -> view.findNavController().navigate(R.id.action_upcomingFragment_to_addEventFragment)
         }
         return binding.root
     }

@@ -4,6 +4,7 @@ import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import android.widget.Toast
 import androidx.databinding.DataBindingUtil
 import androidx.fragment.app.Fragment
 import androidx.lifecycle.Observer
@@ -11,16 +12,21 @@ import androidx.lifecycle.ViewModelProvider
 import androidx.navigation.findNavController
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
-import com.google.firebase.auth.FirebaseAuth
 import com.orbital.snus.R
-import com.orbital.snus.dashboard.DashboardViewModel
-import com.orbital.snus.data.UserEvent
 import com.orbital.snus.databinding.FragmentDashboardTodayBinding
+import com.google.firebase.auth.FirebaseAuth
+import com.google.firebase.firestore.FirebaseFirestore
+import com.orbital.snus.data.UserEvent
 import java.text.SimpleDateFormat
 import java.util.*
 
+import java.util.ArrayList
+
+
+
 class TodayFragment : Fragment() {
     private lateinit var firebaseAuth: FirebaseAuth
+    private val db: FirebaseFirestore = FirebaseFirestore.getInstance()
 
     private lateinit var recyclerView: RecyclerView
     private lateinit var viewAdapter: RecyclerView.Adapter<*>
@@ -39,6 +45,7 @@ class TodayFragment : Fragment() {
 
         binding.dateToday.text = getCurrentDate()
 
+
         firebaseAuth = FirebaseAuth.getInstance()
         viewManager = LinearLayoutManager(activity)
         viewAdapter = TodayEventAdapter(events)
@@ -54,10 +61,9 @@ class TodayFragment : Fragment() {
         }
         viewModel = ViewModelProvider(this, factory).get(TodayViewModel::class.java)
 
-        DashboardViewModel.events.observe(viewLifecycleOwner, Observer<List<UserEvent>> { dbEvents ->
-            val output: List<UserEvent> = viewModel.filter(dbEvents)
+        viewModel.events.observe(viewLifecycleOwner, Observer<List<UserEvent>> { dbEvents ->
             events.removeAll(events)
-            events.addAll(output)
+            events.addAll(dbEvents)
             recyclerView.adapter!!.notifyDataSetChanged()
         })
 
@@ -73,6 +79,20 @@ class TodayFragment : Fragment() {
         }
 
         return binding.root
+    }
+
+    override fun onActivityCreated(savedInstanceState: Bundle?) {
+        super.onActivityCreated(savedInstanceState)
+        viewModel = ViewModelProvider(this, factory).get(TodayViewModel::class.java)
+        // On start of activity, we load the user data to be display on dashboard later
+        viewModel.loadUsers()
+        viewModel.events.observe(viewLifecycleOwner, androidx.lifecycle.Observer<List<UserEvent>> { events ->
+            if (events.size != 0) {
+                Toast.makeText(requireContext(), "Success retrieval", Toast.LENGTH_SHORT).show()
+            } else {
+                Toast.makeText(requireContext(), "Failed retrieval", Toast.LENGTH_SHORT).show()
+            }
+        })
     }
 
     private fun getCurrentDate() : String {
