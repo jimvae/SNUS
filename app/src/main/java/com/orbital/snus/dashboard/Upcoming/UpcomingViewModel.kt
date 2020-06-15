@@ -57,7 +57,7 @@ class UpcomingViewModel : ViewModel() {
 
     // fetching events from database
     fun loadUsers() {
-        var eventList = ArrayList<UserEvent>()
+        val eventList = ArrayList<UserEvent>()
         db.collection("users")
             .document(firebaseAuth.currentUser!!.uid)
             .collection("events")

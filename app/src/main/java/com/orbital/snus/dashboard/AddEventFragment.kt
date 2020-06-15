@@ -42,8 +42,8 @@ class AddEventFragment() : Fragment() {
     val START = "start"
     val END = "end"
 
-    val factory = TodayViewModelFactory()
-    private lateinit var viewModel: TodayViewModel
+    val factory = DashboardDataViewModelFactory()
+    private lateinit var viewModel: DashboardDataViewModel
 
     override fun onCreateView(
         inflater: LayoutInflater,
@@ -57,7 +57,7 @@ class AddEventFragment() : Fragment() {
             inflater, R.layout.fragment_dashboard_add_event, container, false
         )
 
-        viewModel = ViewModelProvider(this, factory).get(TodayViewModel::class.java)
+        viewModel = ViewModelProvider(this, factory).get(DashboardDataViewModel::class.java)
 
         // SET ON CLICK LISTENERS
         // Set start and end date/time

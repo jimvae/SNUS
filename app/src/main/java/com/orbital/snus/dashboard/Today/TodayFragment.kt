@@ -12,21 +12,15 @@ import androidx.lifecycle.ViewModelProvider
 import androidx.navigation.findNavController
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
-import com.orbital.snus.R
-import com.orbital.snus.databinding.FragmentDashboardTodayBinding
 import com.google.firebase.auth.FirebaseAuth
-import com.google.firebase.firestore.FirebaseFirestore
+import com.orbital.snus.R
 import com.orbital.snus.data.UserEvent
+import com.orbital.snus.databinding.FragmentDashboardTodayBinding
 import java.text.SimpleDateFormat
 import java.util.*
 
-import java.util.ArrayList
-
-
-
 class TodayFragment : Fragment() {
     private lateinit var firebaseAuth: FirebaseAuth
-    private val db: FirebaseFirestore = FirebaseFirestore.getInstance()
 
     private lateinit var recyclerView: RecyclerView
     private lateinit var viewAdapter: RecyclerView.Adapter<*>

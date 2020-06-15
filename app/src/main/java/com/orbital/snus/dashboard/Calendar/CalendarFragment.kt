@@ -4,19 +4,13 @@ import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
-import android.widget.CalendarView
 import android.widget.Toast
-import androidx.annotation.NonNull
 import androidx.databinding.DataBindingUtil
 import androidx.fragment.app.Fragment
-import androidx.lifecycle.Observer
 import androidx.lifecycle.ViewModelProvider
 import androidx.navigation.findNavController
 import androidx.recyclerview.widget.LinearLayoutManager
-import com.google.firebase.auth.FirebaseAuth
 import com.orbital.snus.R
-import com.orbital.snus.dashboard.Today.TodayEventAdapter
-import com.orbital.snus.dashboard.Today.TodayViewModel
 import com.orbital.snus.data.UserEvent
 import com.orbital.snus.databinding.FragmentDashboardCalendarBinding
 import java.util.*
@@ -46,12 +40,14 @@ class CalendarFragment : Fragment() {
 
         viewModel = ViewModelProvider(this, factory).get(CalendarViewModel::class.java)
 
-
         binding.buttonToday.setOnClickListener {
                 view: View -> view.findNavController().navigate(R.id.action_calendarFragment_to_todayFragment)
         }
         binding.buttonUpcoming.setOnClickListener {
                 view: View -> view.findNavController().navigate(R.id.action_calendarFragment_to_upcomingFragment)
+        }
+        binding.floatingButtonAdd.setOnClickListener {
+                view: View -> view.findNavController().navigate(R.id.action_calendarFragment_to_addEventFragment)
         }
 
         binding.calendarView.setOnDateChangeListener {

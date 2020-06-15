@@ -6,7 +6,6 @@ import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
 import com.google.firebase.auth.FirebaseAuth
 import com.google.firebase.firestore.FirebaseFirestore
-import com.google.firebase.firestore.auth.User
 import com.orbital.snus.data.UserEvent
 import java.text.SimpleDateFormat
 import java.util.*
@@ -22,7 +21,7 @@ class CalendarViewModel : ViewModel() {
 
     // fetching events from database
     fun loadUsers() {
-        var eventList = ArrayList<UserEvent>()
+        val eventList = ArrayList<UserEvent>()
         db.collection("users")
             .document(firebaseAuth.currentUser!!.uid)
             .collection("events")
@@ -53,7 +52,7 @@ class CalendarViewModel : ViewModel() {
         val fmt = SimpleDateFormat("yyyyMMdd")
         val todayDate = date
 
-        var todayEvents = ArrayList<UserEvent>()
+        val todayEvents = ArrayList<UserEvent>()
         for (event in _events.value!!) {
             val startDate = event.startDate!!
             val endDate = event.endDate!!
@@ -62,7 +61,5 @@ class CalendarViewModel : ViewModel() {
         }
         return todayEvents
     }
-
-
 }
 

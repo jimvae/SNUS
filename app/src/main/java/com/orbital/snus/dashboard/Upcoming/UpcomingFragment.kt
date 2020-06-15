@@ -58,7 +58,7 @@ class UpcomingFragment : Fragment() {
 
             // specify an viewAdapter (see also next example)
             calendar.set(Calendar.DAY_OF_WEEK, Calendar.SUNDAY);
-            var todayDate = calendar.time
+            val todayDate = calendar.time
             binding.SundayDayOfWeek.text = dateFormatter.format(todayDate).toPattern().toString()
             adapter = UpcomingEventAdapter(
                 eventSunday,
@@ -71,7 +71,7 @@ class UpcomingFragment : Fragment() {
 
             // specify an viewAdapter (see also next example)
             calendar.set(Calendar.DAY_OF_WEEK, Calendar.MONDAY);
-            var todayDate = calendar.time
+            val todayDate = calendar.time
             binding.MondayDayOfWeek.text = dateFormatter.format(todayDate).toPattern().toString()
 
             adapter = UpcomingEventAdapter(
@@ -85,7 +85,7 @@ class UpcomingFragment : Fragment() {
 
             // specify an viewAdapter (see also next example)
             calendar.set(Calendar.DAY_OF_WEEK, Calendar.TUESDAY);
-            var todayDate = calendar.time
+            val todayDate = calendar.time
             binding.TuesdayDayOfWeek.text = dateFormatter.format(todayDate).toPattern().toString()
             adapter = UpcomingEventAdapter(
                 eventTuesday,
@@ -99,7 +99,7 @@ class UpcomingFragment : Fragment() {
 
             // specify an viewAdapter (see also next example)
             calendar.set(Calendar.DAY_OF_WEEK, Calendar.WEDNESDAY);
-            var todayDate = calendar.time
+            val todayDate = calendar.time
             binding.WednesdayDayOfWeek2.text = dateFormatter.format(todayDate).toPattern().toString()
 
             adapter = UpcomingEventAdapter(
@@ -114,7 +114,7 @@ class UpcomingFragment : Fragment() {
 
             // specify an viewAdapter (see also next example)
             calendar.set(Calendar.DAY_OF_WEEK, Calendar.THURSDAY);
-            var todayDate = calendar.time
+            val todayDate = calendar.time
             binding.ThursdayDayOfWeek3.text = dateFormatter.format(todayDate).toPattern().toString()
 
             adapter = UpcomingEventAdapter(
@@ -129,7 +129,7 @@ class UpcomingFragment : Fragment() {
 
             // specify an viewAdapter (see also next example)
             calendar.set(Calendar.DAY_OF_WEEK, Calendar.FRIDAY);
-            var todayDate = calendar.time
+            val todayDate = calendar.time
             binding.FridayDayOfWeek4.text = dateFormatter.format(todayDate).toPattern().toString()
 
             adapter = UpcomingEventAdapter(
@@ -144,7 +144,7 @@ class UpcomingFragment : Fragment() {
 
             // specify an viewAdapter (see also next example)
             calendar.set(Calendar.DAY_OF_WEEK, Calendar.SATURDAY);
-            var todayDate = calendar.time
+            val todayDate = calendar.time
             binding.SaturdayDayOfWeek5.text = dateFormatter.format(todayDate).toPattern().toString()
 
             adapter = UpcomingEventAdapter(
@@ -200,6 +200,9 @@ class UpcomingFragment : Fragment() {
         }
         binding.buttonCalendar.setOnClickListener {
                 view: View -> view.findNavController().navigate(R.id.action_upcomingFragment_to_calendarFragment)
+        }
+        binding.floatingButtonAdd.setOnClickListener {
+                view: View -> view.findNavController().navigate(R.id.action_upcomingFragment_to_addEventFragment)
         }
         return binding.root
     }

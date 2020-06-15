@@ -13,17 +13,14 @@ import java.util.*
 
 // EventAdapter takes in the data, converts into the view that is to be displayed by the RecyclerView
 
-class TodayEventAdapter(eventList : List<UserEvent>) :
+class TodayEventAdapter(val eventList: List<UserEvent>) :
     RecyclerView.Adapter<TodayEventAdapter.EventViewHolder>() {
-
-    val eventList = eventList
 
     // Provide a reference to the views for each data item
     // Complex data items may need more than one view per item, and
     // you provide access to all the views for a data item in a view holder.
     // Each data item is just a string in this case that is shown in a TextView.
     class EventViewHolder(val textView: View) : RecyclerView.ViewHolder(textView)
-
 
     // Create new views (invoked by the layout manager)
     override fun onCreateViewHolder(parent: ViewGroup,

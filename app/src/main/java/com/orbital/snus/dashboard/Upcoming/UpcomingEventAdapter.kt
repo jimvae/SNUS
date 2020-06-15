@@ -10,14 +10,10 @@ import kotlinx.android.synthetic.main.event_upcoming_individual_view.view.*
 import java.text.SimpleDateFormat
 import java.util.*
 
-
 // EventAdapter takes in the data, converts into the view that is to be displayed by the RecyclerView
 
-class UpcomingEventAdapter(eventList : List<UserEvent>, dateOfWeek: Date) :
+class UpcomingEventAdapter(val eventList: List<UserEvent>, val dateOfWeek: Date) :
     RecyclerView.Adapter<UpcomingEventAdapter.EventViewHolder>() {
-
-    val eventList = eventList
-    val dateOfWeek = dateOfWeek
 
     // Provide a reference to the views for each data item
     // Complex data items may need more than one view per item, and
