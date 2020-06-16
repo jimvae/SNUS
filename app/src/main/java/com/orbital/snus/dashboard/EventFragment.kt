@@ -18,12 +18,18 @@ import com.orbital.snus.R
 import com.orbital.snus.data.UserEvent
 import com.orbital.snus.databinding.FragmentDashboardEventBinding
 import java.text.SimpleDateFormat
+import java.util.*
 
 class EventFragment() : Fragment() {
     private lateinit var binding: FragmentDashboardEventBinding
 
     val factory = DashboardDataViewModelFactory()
     private lateinit var viewModel: DashboardDataViewModel
+
+    val event = requireArguments().get("event") as UserEvent
+
+    val START = "start"
+    val END = "end"
 
     override fun onCreateView(
         inflater: LayoutInflater,
@@ -36,8 +42,6 @@ class EventFragment() : Fragment() {
             inflater, R.layout.fragment_dashboard_event, container, false
         )
 
-        val event = requireArguments().get("event") as UserEvent
-
         val dateFormatter: SimpleDateFormat = SimpleDateFormat("dd MMM, hh:mm a ")
         binding.popUpEventName.text = event.eventName
         binding.popUpEventDescription.text = event.eventDescription
@@ -49,9 +53,8 @@ class EventFragment() : Fragment() {
 
         binding.popUpDeleteButton.setOnClickListener {
             // delete from database
-            viewModel.deleteEvent(event.id!!)
-
             configurePage(false)
+            viewModel.deleteEvent(event.id!!)
             viewModel.delSuccess.observe(viewLifecycleOwner, Observer {
                 if (it != null) {
                     Toast.makeText(requireContext(), "Event successfully deleted", Toast.LENGTH_SHORT)
@@ -69,10 +72,28 @@ class EventFragment() : Fragment() {
                 })
         }
         binding.popUpClose.setOnClickListener {
-            // navigate back to today fragment
+
         }
         binding.popUpEdit.setOnClickListener {
-            // edit something
+            // edit event from dialog
+            // update the event
+
+            configurePage(false)
+            viewModel.updateEvent(event)
+            viewModel.updateSuccess.observe(viewLifecycleOwner, Observer {
+                if (it != null) {
+                    Toast.makeText(requireContext(), "Event successfully updated", Toast.LENGTH_SHORT)
+                        .show()
+                    viewModel.updateEventSuccessCompleted()
+                }
+            })
+            viewModel.updateFailure.observe(viewLifecycleOwner, androidx.lifecycle.Observer {
+                if (it != null) {
+                    Toast.makeText(requireContext(), it.toString(), Toast.LENGTH_SHORT).show()
+                    viewModel.updateEventFailureCompleted()
+                }
+            })
+            configurePage(true)
         }
 
         return binding.root
@@ -92,5 +113,69 @@ class EventFragment() : Fragment() {
         binding.popUpEdit.isEnabled = boolean
         binding.popUpClose.isEnabled = boolean
         binding.popUpDeleteButton.isEnabled = boolean
+    }
+
+
+    // Sets date and time in textView, and save the data in correct Date object following the indicator
+    fun setDateAndTime (v: TextView, indicator: String) {
+
+        // Calendar and Date variables
+        val c = Calendar.getInstance()
+        var mYear = c[Calendar.YEAR]
+        var mMonth = c[Calendar.MONTH]
+        var mDay = c[Calendar.DAY_OF_MONTH]
+        var mHour = c[Calendar.HOUR_OF_DAY]
+        var mMinute = c[Calendar.MINUTE]
+
+        var dateFormatter: SimpleDateFormat = SimpleDateFormat("dd MMM YYYY'\n'hh:mm a")
+
+        // TIMEPICKER
+        val timePickerDialog = TimePickerDialog(
+            this.requireContext(),
+            TimePickerDialog.OnTimeSetListener { _, hourOfDay, minute ->
+                mHour = hourOfDay
+                mMinute = minute
+                c.set(mYear, mMonth, mDay, mHour, mMinute)
+
+                when (indicator) {
+                    START -> {
+                        event.startDate = c.time
+                        v.text = dateFormatter.format(event.startDate!!).toPattern().toString()
+                    }
+                    END -> {
+                        event.endDate = c.time
+                        v.text = dateFormatter.format(event.endDate!!).toPattern().toString()
+                    }
+                }
+            },
+            mHour,
+            mMinute,
+            false
+        )
+
+        // DATEPICKER
+        val datePickerDialog = DatePickerDialog(
+            this.requireContext(),
+            DatePickerDialog.OnDateSetListener { _, year, monthOfYear, dayOfMonth ->
+                mYear = year
+                mMonth = monthOfYear
+                mDay = dayOfMonth
+                c.set(mYear, mMonth, mDay, mHour, mMinute)
+
+                when (indicator) {
+                    START -> {
+                        event.startDate = c.time
+                        v.text = dateFormatter.format(event.startDate!!).toPattern().toString()
+                    }
+                    END -> {
+                        event.endDate = c.time
+                        v.text = dateFormatter.format(event.endDate!!).toPattern().toString()
+                    }
+                }
+            }, mYear, mMonth, mDay
+        )
+
+        timePickerDialog.show()
+        datePickerDialog.show()
     }
 }
