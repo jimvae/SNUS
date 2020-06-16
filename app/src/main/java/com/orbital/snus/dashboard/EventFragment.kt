@@ -32,7 +32,6 @@ class EventFragment() : Fragment() {
     private lateinit var dialog: Dialog
     private lateinit var event: UserEvent
 
-
     var startDate: Date? = null
     var endDate: Date? = null
     val START = "start"
@@ -48,8 +47,9 @@ class EventFragment() : Fragment() {
             inflater, R.layout.fragment_dashboard_event, container, false
         )
         event = requireArguments().get("event") as UserEvent
+        viewModel = ViewModelProvider(this, factory).get(DashboardDataViewModel::class.java)
 
-        initateViews()
+        initiateViews()
 
         binding.popUpDeleteButton.setOnClickListener {
             // delete from database
@@ -71,26 +71,10 @@ class EventFragment() : Fragment() {
                     }
                 })
         }
+
         binding.popUpEdit.setOnClickListener {
             dialog = Dialog(requireContext())
             showPopup(it)
-
-            configurePage(false)
-
-            viewModel.updateSuccess.observe(viewLifecycleOwner, Observer {
-                if (it != null) {
-                    Toast.makeText(requireContext(), "Event successfully updated", Toast.LENGTH_SHORT)
-                        .show()
-                    viewModel.updateEventSuccessCompleted()
-                }
-            })
-            viewModel.updateFailure.observe(viewLifecycleOwner, androidx.lifecycle.Observer {
-                if (it != null) {
-                    Toast.makeText(requireContext(), it.toString(), Toast.LENGTH_SHORT).show()
-                    viewModel.updateEventFailureCompleted()
-                }
-            })
-            configurePage(true)
         }
 
         return binding.root
@@ -102,15 +86,9 @@ class EventFragment() : Fragment() {
     }
 
     fun configurePage(boolean: Boolean) {
-        binding.popUpEventName.isEnabled = boolean
-        binding.popUpEventDescription.isEnabled = boolean
-        binding.popUpEventLocation.isEnabled = boolean
-        binding.popUpEventStartDate.isEnabled = boolean
-        binding.popUpEventEndDate.isEnabled = boolean
         binding.popUpEdit.isEnabled = boolean
         binding.popUpDeleteButton.isEnabled = boolean
     }
-
 
     // Sets date and time in textView, and save the data in correct Date object following the indicator
     fun setDateAndTime (v: TextView, indicator: String) {
@@ -178,6 +156,7 @@ class EventFragment() : Fragment() {
     fun showPopup(v: View?) {
         dialog.setContentView(R.layout.event_dialog_edit)
 
+        // set up views
         val eventName = dialog.edit_event_name
         eventName.setText(binding.popUpEventName.text)
 
@@ -193,14 +172,15 @@ class EventFragment() : Fragment() {
         val editLocation = dialog.edit_event_location
         editLocation.setText(binding.popUpEventLocation.text)
 
-
-
-        dialog.edit_close.setOnClickListener { dialog.dismiss() }
+        // by default, the start and end date will take from event
+        // override when clicked
+        startDate = event.startDate
+        endDate = event.endDate
 
         dialog.getWindow()?.setBackgroundDrawable(ColorDrawable(Color.TRANSPARENT))
-
         dialog.show()
 
+        dialog.edit_close.setOnClickListener { dialog.dismiss() }
         dialog.edit_confirm_button.setOnClickListener {
             if (eventName.text.toString() == "") {
                 Toast.makeText(requireContext(), "Please enter event name", Toast.LENGTH_SHORT)
@@ -218,25 +198,42 @@ class EventFragment() : Fragment() {
                 return@setOnClickListener
             }
 
-            //updates event
-            event.updateEvent(eventName.text.toString(),
-                editDescription.text.toString(),
-                startDate!!,
-                endDate!!,
-                editLocation.text.toString())
+            // lock dialog
+            configureDialog(false)
+            configurePage(false)
 
-            //updates the field of eventsfragment
-            binding.popUpEventName.text = eventName.text.toString()
-            binding.popUpEventDescription.text = editDescription.text.toString()
-            binding.popUpEventLocation.text = editLocation.text.toString()
-            binding.popUpEventStartDate.text = editStartDate.text.toString()
-            binding.popUpEventEndDate.text = editEndDate.text.toString()
-
+            //updates event object
+            event.updateEvent(eventName.text.toString(), editDescription.text.toString(),
+                startDate!!, endDate!!, editLocation.text.toString())
 
             //updates backend
             viewModel.updateEvent(event)
 
-            dialog.dismiss()
+            viewModel.updateSuccess.observe(viewLifecycleOwner, Observer {
+                if (it != null) {
+                    Toast.makeText(requireContext(), "Event successfully updated", Toast.LENGTH_SHORT)
+                        .show()
+                    viewModel.updateEventSuccessCompleted()
+
+                    // unlock page
+                    configureDialog(true)
+                    configurePage(true)
+
+                    //updates the field of events fragment
+                    initiateViews()
+                    dialog.dismiss()
+                }
+            })
+            viewModel.updateFailure.observe(viewLifecycleOwner, androidx.lifecycle.Observer {
+                if (it != null) {
+                    Toast.makeText(requireContext(), it.toString(), Toast.LENGTH_SHORT).show()
+                    viewModel.updateEventFailureCompleted()
+
+                    // unlock page
+                    configureDialog(true)
+                    configurePage(true)
+                }
+            })
         }
 
         dialog.edit_event_start_date.setOnClickListener {
@@ -246,18 +243,26 @@ class EventFragment() : Fragment() {
         dialog.edit_event_end_date.setOnClickListener {
             setDateAndTime(it as TextView, END)
         }
-
-
-
     }
 
-    fun initateViews() {
+    fun initiateViews() {
         val dateFormatter: SimpleDateFormat = SimpleDateFormat("dd MMM, hh:mm a ")
         binding.popUpEventName.text = event.eventName
         binding.popUpEventDescription.text = event.eventDescription
         binding.popUpEventStartDate.text = dateFormatter.format(event.startDate).toPattern().toString()
         binding.popUpEventEndDate.text = dateFormatter.format(event.endDate).toPattern().toString()
         binding.popUpEventLocation.text = event.location
-        viewModel = ViewModelProvider(this, factory).get(DashboardDataViewModel::class.java)
+    }
+
+    fun configureDialog(boolean: Boolean) {
+        // prevent edits when confirmed
+        dialog.edit_event_name.isEnabled = boolean
+        dialog.edit_event_start_date.isEnabled = boolean
+        dialog.edit_event_end_date.isEnabled = boolean
+        dialog.edit_event_description.isEnabled = boolean
+        dialog.edit_event_location.isEnabled = boolean
+
+        dialog.edit_close.isEnabled = boolean
+        dialog.edit_confirm_button.isEnabled = boolean
     }
 }
