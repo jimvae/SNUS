@@ -13,6 +13,7 @@ class DashboardDataViewModel : ViewModel() {
     private val firebaseAuth = FirebaseAuth.getInstance()
     private val db = FirebaseFirestore.getInstance()
 
+    // FOR ADDING EVENTS
     private val _addSuccess = MutableLiveData<Boolean?>()
     val addSuccess : LiveData<Boolean?>
         get() = _addSuccess
@@ -49,6 +50,7 @@ class DashboardDataViewModel : ViewModel() {
         _addFailure.value = null
     }
 
+    // FOR DELETING EVENTS
     private val _delSuccess = MutableLiveData<Boolean?>()
     val delSuccess : LiveData<Boolean?>
         get() = _delSuccess
@@ -77,5 +79,38 @@ class DashboardDataViewModel : ViewModel() {
 
     fun delEventFailureCompleted() {
         _delFailure.value = null
+    }
+
+
+    // FOR UPDATING EVENTS
+
+    private val _updateSuccess = MutableLiveData<Boolean?>()
+    val updateSuccess : LiveData<Boolean?>
+        get() = _updateSuccess
+
+    private val _updateFailure = MutableLiveData<Exception?>()
+    val updateFailure : LiveData<Exception?>
+        get() = _updateFailure
+
+    fun updateEvent(event: UserEvent) {
+        val id = event.id!!
+
+        db.collection("users") // users collection
+            .document(firebaseAuth.currentUser!!.uid) // current userId
+            .collection("events") // user events collection
+            .document(id).set(event)
+            .addOnSuccessListener {
+                _updateSuccess.value = true
+            }.addOnFailureListener {
+                _updateFailure.value = it
+            }
+    }
+
+    fun updateEventSuccessCompleted() {
+        _updateSuccess.value = null
+    }
+
+    fun updateEventFailureCompleted() {
+        _updateFailure.value = null
     }
 }

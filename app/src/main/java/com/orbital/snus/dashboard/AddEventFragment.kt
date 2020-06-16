@@ -26,16 +26,6 @@ class AddEventFragment() : Fragment() {
 
     private lateinit var binding: FragmentDashboardAddEventBinding
 
-    // Calendar and Date variables
-    val c = Calendar.getInstance()
-    var mYear = c[Calendar.YEAR]
-    var mMonth = c[Calendar.MONTH]
-    var mDay = c[Calendar.DAY_OF_MONTH]
-    var mHour = c[Calendar.HOUR_OF_DAY]
-    var mMinute = c[Calendar.MINUTE]
-
-    var dateFormatter: SimpleDateFormat = SimpleDateFormat("dd MMM YYYY'\n'hh:mm a")
-
     var startDate: Date? = null
     var endDate: Date? = null
 
@@ -126,6 +116,17 @@ class AddEventFragment() : Fragment() {
 
     // Sets date and time in textView, and save the data in correct Date object following the indicator
     fun setDateAndTime (v: TextView, indicator: String) {
+
+        // Calendar and Date variables
+        val c = Calendar.getInstance()
+        var mYear = c[Calendar.YEAR]
+        var mMonth = c[Calendar.MONTH]
+        var mDay = c[Calendar.DAY_OF_MONTH]
+        var mHour = c[Calendar.HOUR_OF_DAY]
+        var mMinute = c[Calendar.MINUTE]
+
+        var dateFormatter: SimpleDateFormat = SimpleDateFormat("dd MMM YYYY'\n'hh:mm a")
+
         // TIMEPICKER
         val timePickerDialog = TimePickerDialog(
             this.requireContext(),
