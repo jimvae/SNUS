@@ -1,5 +1,6 @@
 <?xml version="1.0" encoding="utf-8"?>
-<layout xmlns:android="http://schemas.android.com/apk/res/android"
+<layout
+    xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools">
 
@@ -20,7 +21,7 @@
             app:layout_constraintTop_toTopOf="parent" />
 
         <EditText
-            android:id="@+id/pop_up_event_name"
+            android:id="@+id/edit_event_name"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_marginStart="24dp"
@@ -32,56 +33,53 @@
             app:layout_constraintTop_toTopOf="parent" />
 
         <EditText
-            android:id="@+id/pop_up_event_description"
+            android:id="@+id/edit_event_description"
             android:layout_width="wrap_content"
             android:layout_height="28dp"
             android:layout_marginStart="24dp"
-            android:layout_marginTop="32dp"
+            android:layout_marginTop="64dp"
             android:text="Description"
             android:textColor="@color/color_NUS"
             android:textSize="24sp"
             app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toBottomOf="@+id/pop_up_event_name" />
+            app:layout_constraintTop_toBottomOf="@+id/edit_event_name" />
 
-        <EditText
-            android:id="@+id/pop_up_event_start_date"
+        <TextView
+            android:id="@+id/edit_event_start_date"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_marginStart="24dp"
-            android:layout_marginTop="16dp"
+            android:layout_marginStart="196dp"
             android:text="Start Date"
             android:textColor="@color/color_NUS"
             android:textSize="24sp"
             app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toBottomOf="@+id/pop_up_event_description" />
+            app:layout_constraintTop_toBottomOf="@+id/edit_event_description" />
 
-        <EditText
-            android:id="@+id/pop_up_event_end_date"
+        <TextView
+            android:id="@+id/edit_event_end_date"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_marginStart="24dp"
-            android:layout_marginTop="8dp"
+            android:layout_marginStart="72dp"
             android:text="End Date"
             android:textColor="@color/color_NUS"
             android:textSize="24sp"
             app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toBottomOf="@+id/pop_up_event_start_date" />
+            app:layout_constraintTop_toBottomOf="@+id/edit_event_start_date" />
 
         <EditText
-            android:id="@+id/pop_up_event_location"
+            android:id="@+id/edit_event_location"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_marginStart="24dp"
-            android:layout_marginTop="16dp"
+            android:layout_marginStart="44dp"
             android:text="Location"
             android:textColor="@color/color_NUS"
             android:textSize="24sp"
-            app:layout_constraintBottom_toTopOf="@+id/pop_up_delete_button"
             app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toBottomOf="@+id/pop_up_event_end_date" />
+            app:layout_constraintTop_toBottomOf="@+id/edit_event_end_date"
+            app:layout_constraintVertical_bias="0.103" />
 
         <Button
-            android:id="@+id/pop_up_delete_button"
+            android:id="@+id/edit_confirm_button"
             android:layout_width="136dp"
             android:layout_height="52dp"
             android:layout_marginBottom="4dp"
@@ -94,7 +92,7 @@
             app:layout_constraintStart_toStartOf="parent" />
 
         <Button
-            android:id="@+id/pop_up_close"
+            android:id="@+id/edit_close"
             android:layout_width="15dp"
             android:layout_height="15dp"
             android:layout_marginTop="32dp"
