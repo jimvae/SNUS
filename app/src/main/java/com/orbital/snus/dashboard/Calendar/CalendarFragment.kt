@@ -20,7 +20,6 @@ class CalendarFragment : Fragment() {
     private lateinit var viewModel: CalendarViewModel
     private var factory = CalendarViewModelFactory()
     private var events = ArrayList<UserEvent>()
-    private lateinit var adapter: CalendarEventAdapter
 
     override fun onCreateView(inflater: LayoutInflater,
                               container: ViewGroup?, savedInstanceState: Bundle?): View? {

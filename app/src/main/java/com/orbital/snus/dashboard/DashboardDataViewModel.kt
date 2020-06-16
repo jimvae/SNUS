@@ -63,9 +63,11 @@ class DashboardDataViewModel : ViewModel() {
             .collection("events") // user events collection
             .document(ID).delete()
             .addOnSuccessListener {
+                _delSuccess.value = true
                 Log.d("Delete Event", "DocumentSnapshot successfully deleted!")
             }.addOnFailureListener {
-                    e -> Log.w("Delete Event", "Error deleting document", e)
+                _delFailure.value = it
+                Log.w("Delete Event", "Error deleting document", it)
             }
     }
 

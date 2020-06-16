@@ -19,14 +19,6 @@ class UpcomingViewModel : ViewModel() {
     val events : LiveData<List<UserEvent>>
         get() = _events
 
-    private val _addSuccess = MutableLiveData<Boolean?>()
-    val addSuccess : LiveData<Boolean?>
-        get() = _addSuccess
-
-    private val _addFailure = MutableLiveData<Exception?>()
-    val addFailure : LiveData<Exception?>
-        get() = _addFailure
-
     private val _eventSunday = MutableLiveData<List<UserEvent>>()
     val eventSunday : LiveData<List<UserEvent>>
         get() = _eventSunday

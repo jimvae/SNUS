@@ -1,8 +1,10 @@
 package com.orbital.snus.dashboard.Calendar
 
+import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import androidx.navigation.findNavController
 import androidx.recyclerview.widget.RecyclerView
 import com.orbital.snus.R
 import com.orbital.snus.data.UserEvent
@@ -38,6 +40,17 @@ class CalendarEventAdapter(val eventList: List<UserEvent>) :
     override fun onBindViewHolder(holder: EventViewHolder, position: Int) {
         val event = eventList[position]
         holder.textView.event_name_calendar.text = event.eventName
+
+        holder.textView.setOnClickListener(onClickListener(position));
+    }
+
+    // Onclick of item, navigate to appropriate event fragment, passing in the event in the bundle
+    private fun onClickListener(position: Int): View.OnClickListener? {
+        return View.OnClickListener {
+            val bundle = Bundle()
+            bundle.putParcelable("event", eventList[position])
+            it.findNavController().navigate(R.id.action_calendarFragment_to_eventFragment, bundle)
+        }
     }
 
     // Return the size of your dataset (invoked by the layout manager)

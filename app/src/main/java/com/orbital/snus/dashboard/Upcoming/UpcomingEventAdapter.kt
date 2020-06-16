@@ -1,8 +1,10 @@
 package com.orbital.snus.dashboard.Upcoming
 
+import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import androidx.navigation.findNavController
 import androidx.recyclerview.widget.RecyclerView
 import com.orbital.snus.R
 import com.orbital.snus.data.UserEvent
@@ -56,8 +58,16 @@ class UpcomingEventAdapter(val eventList: List<UserEvent>, val dateOfWeek: Date)
                 holder.textView.upcoming_event_time.text = "All Day"
         }
 
-        // - get element from your dataset at this position
-        // - replace the contents of the view with that element
+        holder.textView.setOnClickListener(onClickListener(position));
+    }
+
+    // Onclick of item, navigate to appropriate event fragment, passing in the event in the bundle
+    private fun onClickListener(position: Int): View.OnClickListener? {
+        return View.OnClickListener {
+            val bundle = Bundle()
+            bundle.putParcelable("event", eventList[position])
+            it.findNavController().navigate(R.id.action_upcomingFragment_to_eventFragment, bundle)
+        }
     }
 
     // Return the size of your dataset (invoked by the layout manager)

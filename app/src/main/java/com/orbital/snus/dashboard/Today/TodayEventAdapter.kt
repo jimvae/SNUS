@@ -58,7 +58,6 @@ class TodayEventAdapter(val eventList: List<UserEvent>) :
 
         val event = eventList[position]
 
-
         holder.textView.event_name.text = event.eventName
         holder.textView.event_description.text = event.eventDescription
         holder.textView.event_location.text = event.location
