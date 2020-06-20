@@ -1,0 +1,33 @@
+<?xml version="1.0" encoding="utf-8"?>
+<navigation
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:id="@+id/navigation_module_forum"
+    app:startDestination="@id/mainPageFragment">
+
+    <fragment
+        android:id="@+id/mainPageFragment"
+        android:name="com.orbital.snus.modules.Forum.MainPage.MainPageFragment"
+        android:label="MainPageFragment"
+        tools:layout="@layout/module_forum_main_page" >
+        <action
+            android:id="@+id/action_mainPageFragment_to_individualModuleFragment"
+            app:destination="@id/individualModuleFragment" />
+    </fragment>
+
+    <fragment
+        android:id="@+id/individualModuleFragment"
+        android:name="com.orbital.snus.modules.Forum.IndividualModule.IndividualModuleFragment"
+        android:label="IndividualModuleFragment"
+        tools:layout="@layout/module_forum_individual_module" >
+        <action
+            android:id="@+id/action_individualModuleFragment_to_postsFragment"
+            app:destination="@id/postsFragment" />
+    </fragment>
+    <fragment
+        android:id="@+id/postsFragment"
+        android:name="com.orbital.snus.modules.Forum.Posts.PostsFragment"
+        android:label="PostsFragment"
+        tools:layout="@layout/module_forum_posts" />
+</navigation>
