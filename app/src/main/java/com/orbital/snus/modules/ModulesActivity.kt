@@ -1,14 +1,12 @@
 package com.orbital.snus.modules
 
 import android.content.Intent
-import android.os.Binder
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
 import android.view.MenuItem
 import androidx.databinding.DataBindingUtil
 import com.orbital.snus.R
 import com.orbital.snus.dashboard.DashboardActivity
-import com.orbital.snus.databinding.ActivityGroupsBinding
 import com.orbital.snus.databinding.ActivityModulesBinding
 import com.orbital.snus.groups.GroupsActivity
 import com.orbital.snus.messages.MessagesActivity
@@ -20,7 +18,7 @@ class ModulesActivity : AppCompatActivity() {
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
-        setContentView(R.layout.activity_modules)
+//        setContentView(R.layout.activity_modules)
         binding = DataBindingUtil.setContentView<ActivityModulesBinding>(this, R.layout.activity_modules)
 
         binding.bottomNavigationMenu.menu.findItem(R.id.ic_action_modules).setChecked(true)

@@ -2,7 +2,7 @@
 <navigation xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
-    android:id="@+id/navigation_opening"
+    android:id="@+id/navigation_dashboard"
     tools:context="com.orbital.snus.dashboard.DashboardActivity"
     app:startDestination="@id/todayFragment">
 
