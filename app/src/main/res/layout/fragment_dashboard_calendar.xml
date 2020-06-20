@@ -40,17 +40,21 @@
         android:id="@+id/button_calendar"
         android:layout_width="100dp"
         android:layout_height="40dp"
+        android:layout_marginStart="16dp"
         android:layout_marginEnd="8dp"
         android:background="@drawable/white_button"
+        android:text="@string/Calendar"
         android:textColor="@color/color_NUS"
         app:layout_constraintBaseline_toBaselineOf="@+id/button_upcoming"
         app:layout_constraintEnd_toStartOf="@+id/floating_button_add"
-        app:layout_constraintStart_toEndOf="@+id/button_upcoming"
-        android:text="@string/Calendar" />
+        app:layout_constraintStart_toEndOf="@+id/button_upcoming" />
 
     <Button
         android:id="@+id/button_today"
         style="@style/dashboard_current_button"
+        android:layout_width="0dp"
+        android:layout_marginStart="8dp"
+        android:layout_marginEnd="16dp"
         android:background="@android:color/transparent"
         android:text="@string/Today"
         android:textColor="@android:color/white"

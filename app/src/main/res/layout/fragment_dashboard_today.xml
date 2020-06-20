@@ -19,11 +19,11 @@
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintHorizontal_bias="0.0"
             app:layout_constraintStart_toStartOf="parent"
-            tools:layout_editor_absoluteY="1dp" />
+            tools:layout_editor_absoluteY="2dp" />
 
         <Button
             android:id="@+id/button_upcoming"
-            android:layout_width="100dp"
+            android:layout_width="0dp"
             android:layout_height="40dp"
             android:layout_marginTop="18dp"
             android:background="@android:color/transparent"
@@ -36,8 +36,9 @@
 
         <Button
             android:id="@+id/button_calendar"
-            android:layout_width="100dp"
+            android:layout_width="0dp"
             android:layout_height="40dp"
+            android:layout_marginStart="16dp"
             android:layout_marginEnd="8dp"
             android:background="@android:color/transparent"
             android:text="@string/Calendar"
@@ -79,10 +80,11 @@
             android:id="@+id/today_recyclerView"
             android:layout_width="0dp"
             android:layout_height="0dp"
-            android:layout_marginStart="16dp"
+            android:layout_marginStart="8dp"
             android:layout_marginTop="16dp"
-            android:layout_marginEnd="16dp"
-            android:layout_marginBottom="16dp"
+            android:layout_marginEnd="8dp"
+            android:layout_marginBottom="8dp"
+            android:background="@drawable/common_google_signin_btn_icon_light_normal_background"
             app:layout_constraintBottom_toBottomOf="parent"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"
