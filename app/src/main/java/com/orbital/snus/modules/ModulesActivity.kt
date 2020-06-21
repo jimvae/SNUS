@@ -4,6 +4,7 @@ import android.content.Intent
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
 import android.view.MenuItem
+import android.view.View
 import androidx.databinding.DataBindingUtil
 import com.orbital.snus.R
 import com.orbital.snus.dashboard.DashboardActivity
@@ -51,5 +52,13 @@ class ModulesActivity : AppCompatActivity() {
     override fun finish() {
         super.finish()
         overridePendingTransition(R.anim.slide_in_left, R.anim.slide_out_right)
+    }
+
+    fun hideNavBar() {
+        binding.bottomNavigationMenu.visibility = View.GONE
+    }
+
+    fun showNavBar() {
+        binding.bottomNavigationMenu.visibility = View.VISIBLE
     }
 }

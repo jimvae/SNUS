@@ -29,5 +29,14 @@
         android:id="@+id/postsFragment"
         android:name="com.orbital.snus.modules.Forum.Posts.PostsFragment"
         android:label="PostsFragment"
-        tools:layout="@layout/module_forum_posts" />
+        tools:layout="@layout/module_forum_posts" >
+        <action
+            android:id="@+id/action_postsFragment_to_askQuestionFragment"
+            app:destination="@id/askQuestionFragment" />
+    </fragment>
+    <fragment
+        android:id="@+id/askQuestionFragment"
+        android:name="com.orbital.snus.modules.Forum.Posts.AskQuestionFragment"
+        android:label="AskQuestionFragment"
+        tools:layout="@layout/module_forum_askquestion"/>
 </navigation>

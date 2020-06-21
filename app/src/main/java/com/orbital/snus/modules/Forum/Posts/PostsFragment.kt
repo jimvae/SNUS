@@ -9,6 +9,7 @@ import androidx.databinding.DataBindingUtil
 import androidx.fragment.app.Fragment
 import androidx.lifecycle.ViewModelProvider
 import androidx.navigation.findNavController
+import androidx.navigation.fragment.findNavController
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
 import com.google.firebase.auth.FirebaseAuth
@@ -42,6 +43,10 @@ class PostsFragment : Fragment() {
         val binding: ModuleForumPostsBinding = DataBindingUtil.inflate(
             inflater, R.layout.module_forum_posts, container, false
         )
+
+        binding.buttonAddPost.setOnClickListener {
+            findNavController().navigate(R.id.action_postsFragment_to_askQuestionFragment)
+        }
 
         return binding.root
     }
