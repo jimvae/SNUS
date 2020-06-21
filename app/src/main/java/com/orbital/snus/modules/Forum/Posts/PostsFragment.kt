@@ -33,6 +33,7 @@ class PostsFragment : Fragment() {
 //    private lateinit var viewModel: TodayViewModel
 //    private val events = ArrayList<UserEvent>() // holder to store events and for RecyclerViewAdapter to observe
 
+    // individual forum post pages
     override fun onCreateView(
         inflater: LayoutInflater,
         container: ViewGroup?, savedInstanceState: Bundle?
