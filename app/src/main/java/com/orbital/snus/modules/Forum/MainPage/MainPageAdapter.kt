@@ -26,7 +26,7 @@ class MainPageAdapter(val moduleList: List<String>) :
         // create a new view
         // EventDailyView shows the layout of each view
         val textView = LayoutInflater.from(parent.context)
-            .inflate(R.layout.event_daily_view, parent, false)
+            .inflate(R.layout.module_forum_recycler_enrolled_individual, parent, false)
         // set the view's size, margins, paddings and layout parameters
 
         return MainPageAdapter.ModuleViewHolder(
@@ -37,7 +37,7 @@ class MainPageAdapter(val moduleList: List<String>) :
     override fun onBindViewHolder(holder: ModuleViewHolder, position: Int) {
         val module = moduleList[position]
 
-        holder.textView.module_enrolled_individual_name.text = module
+        holder.textView.module_enrolled_individual_name.setText(module)
 
         holder.textView.setOnClickListener(onClickListener(module))
     }

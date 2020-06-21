@@ -22,14 +22,16 @@ import com.orbital.snus.data.UserEvent
 import com.orbital.snus.databinding.FragmentDashboardTodayBinding
 import com.orbital.snus.databinding.ModuleForumMainPageBinding
 import java.util.ArrayList
+import java.util.Observer
 
 class MainPageFragment : Fragment() {
     private lateinit var firebaseAuth: FirebaseAuth
     private lateinit var firestore: FirebaseFirestore
 
-//    private lateinit var recyclerView: RecyclerView
-//    private lateinit var viewAdapter: RecyclerView.Adapter<*>
-//    private lateinit var viewManager: RecyclerView.LayoutManager
+    private lateinit var recyclerView: RecyclerView
+    private lateinit var viewAdapter: RecyclerView.Adapter<*>
+    private lateinit var viewManager: RecyclerView.LayoutManager
+
 
     val factory = MainPageViewModelFactory()
     private lateinit var viewModel: MainPageViewModel
@@ -52,6 +54,22 @@ class MainPageFragment : Fragment() {
         }
 
         viewModel = ViewModelProvider(this, factory).get(MainPageViewModel::class.java)
+
+        viewAdapter = MainPageAdapter(mods)
+        viewManager = LinearLayoutManager(activity)
+
+        recyclerView = binding.forumMainPageRecyclerview.apply {
+            layoutManager = viewManager
+            adapter = viewAdapter
+        }
+
+        viewModel.modules.observe(viewLifecycleOwner, androidx.lifecycle.Observer<List<String>> { dbMods ->
+            mods.removeAll(mods)
+            mods.addAll(dbMods)
+            recyclerView.adapter!!.notifyDataSetChanged()
+        })
+
+
 
         return binding.root
     }
