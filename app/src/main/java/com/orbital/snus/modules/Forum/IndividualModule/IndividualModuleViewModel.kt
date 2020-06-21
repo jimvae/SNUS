@@ -6,16 +6,18 @@ import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
 import com.google.firebase.firestore.FirebaseFirestore
 
-class ModuleViewModel: ViewModel() {
+class IndividualModuleViewModel(val moduleName: String): ViewModel() {
     private val db = FirebaseFirestore.getInstance()
 
-    private val _forums = MutableLiveData<List<String>>()
-    val forums: LiveData<List<String>>
-        get() = _forums
+    private val _subForums = MutableLiveData<List<String>>()
+    val subForums: LiveData<List<String>>
+        get() = _subForums
 
     fun loadForums() {
         val mods = ArrayList<String>()
         db.collection("modules")
+            .document(moduleName)
+            .collection("forums")
             .addSnapshotListener { querySnapshot, firebaseFirestoreException ->
                 if (firebaseFirestoreException != null) {
                     Log.w("ModuleViewModel", firebaseFirestoreException.toString())
@@ -28,7 +30,7 @@ class ModuleViewModel: ViewModel() {
                         Log.d("ModuleViewModel", it.id)
                     }
                 }
-                _forums.value = mods
+                _subForums.value = mods
             }
     }
 }
