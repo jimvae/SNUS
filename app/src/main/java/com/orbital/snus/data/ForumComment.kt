@@ -2,7 +2,10 @@ package com.orbital.snus.data
 
 import java.util.*
 
-data class ForumComment (val forumid: String, val id: String, val date: Date, val text: String) {
+data class ForumComment (var forumID: String? = null,
+                         var userID: String? = null,
+                         val date: Date? = null,
+                         val text: String? = null) {
     // each user should have a unique ID for all their comments in a particular ForumPost
     // need think how to generate for each ForumPost
 }

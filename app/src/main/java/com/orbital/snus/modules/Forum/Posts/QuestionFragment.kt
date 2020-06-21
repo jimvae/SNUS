@@ -14,6 +14,7 @@ import androidx.fragment.app.DialogFragment
 import androidx.fragment.app.Fragment
 import androidx.lifecycle.Observer
 import androidx.lifecycle.ViewModelProvider
+import androidx.navigation.findNavController
 import androidx.navigation.fragment.findNavController
 import com.google.firebase.auth.FirebaseAuth
 import com.orbital.snus.R
@@ -52,11 +53,16 @@ class QuestionFragment : Fragment() {
         post = (requireArguments().get("post") as ForumPost)
         initiateViews()
 
-        factory = PostViewModelFactory(requireArguments().get("module") as String, requireArguments().get("subForum") as String)
+        val module = requireArguments().get("module") as String
+        val subForum = requireArguments().get("subForum") as String
+        val question = post.id
+
+        factory = PostViewModelFactory(module, subForum)
         viewModel = ViewModelProvider(this, factory).get(PostViewModel::class.java)
 
         binding.buttonAnswer.setOnClickListener {
             // go to the answers page
+            view: View -> view.setOnClickListener(onClickListener(module, subForum, question!!))
         }
 
         binding.buttonEdit.setOnClickListener {
@@ -175,5 +181,16 @@ class QuestionFragment : Fragment() {
         dialog.edit_question.isEnabled = boolean
         dialog.edit_close.isEnabled = boolean
         dialog.button_confirm.isEnabled = boolean
+    }
+
+    private fun onClickListener(module:String, subForum:String, question: String): View.OnClickListener? {
+        return View.OnClickListener {
+            val bundle = Bundle()
+            bundle.putString("module", module)
+            bundle.putString("subForum", subForum)
+            bundle.putString("question", question)
+
+            it.findNavController().navigate(R.id.action_questionFragment_to_answersFragment, bundle)
+        }
     }
 }

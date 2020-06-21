@@ -54,5 +54,18 @@
         <action
             android:id="@+id/action_questionFragment_to_postsFragment"
             app:destination="@id/postsFragment" />
+        <action
+            android:id="@+id/action_questionFragment_to_answersFragment"
+            app:destination="@id/answersFragment" />
+    </fragment>
+    <fragment
+        android:id="@+id/answersFragment"
+        android:name="com.orbital.snus.modules.Forum.Posts.Answers.AnswersFragment"
+        android:label="AnswersFragment"
+        tools:layout="@layout/module_forum_answers" >
+        <action
+            android:id="@+id/action_answersFragment_self"
+            app:destination="@id/answersFragment"
+            app:popUpTo="@id/answersFragment" />
     </fragment>
 </navigation>
