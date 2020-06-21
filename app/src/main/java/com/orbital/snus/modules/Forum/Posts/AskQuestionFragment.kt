@@ -78,14 +78,14 @@ class AskQuestionFragment : Fragment() {
                     Toast.makeText(requireContext(), "Post successfully added", Toast.LENGTH_SHORT)
                         .show()
                     findNavController().navigate(R.id.action_askQuestionFragment_to_postsFragment, requireArguments())
-                    viewModel.addEventSuccessCompleted()
+                    viewModel.addPostSuccessCompleted()
                 }
             })
             viewModel.addFailure.observe(viewLifecycleOwner, androidx.lifecycle.Observer {
                 if (it != null) {
                     Toast.makeText(requireContext(), it.toString(), Toast.LENGTH_SHORT).show()
                     configurePage(true)
-                    viewModel.addEventFailureCompleted()
+                    viewModel.addPostFailureCompleted()
                 }
             })
         }

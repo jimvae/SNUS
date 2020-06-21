@@ -11,4 +11,10 @@ data class ForumPost (val userid: String? = null, var id: String? = null,
     // Each ForumPost has a unique ID inside the thread
     // Add in image later
     // Add in suggested answer
+
+    fun updatePost(title: String, question: String) {
+        this.title = title
+        this.question = question
+        this.date = Calendar.getInstance().time
+    }
 }

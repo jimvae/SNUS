@@ -47,11 +47,11 @@ class PostViewModel(val module:String, val subForum:String) : ViewModel() {
             }
     }
 
-    fun addEventSuccessCompleted() {
+    fun addPostSuccessCompleted() {
         _addSuccess.value = null
     }
 
-    fun addEventFailureCompleted() {
+    fun addPostFailureCompleted() {
         _addFailure.value = null
     }
 
@@ -80,11 +80,11 @@ class PostViewModel(val module:String, val subForum:String) : ViewModel() {
             }
     }
 
-    fun delEventSuccessCompleted() {
+    fun delPostSuccessCompleted() {
         _delSuccess.value = null
     }
 
-    fun delEventFailureCompleted() {
+    fun delPostFailureCompleted() {
         _delFailure.value = null
     }
 
@@ -112,6 +112,40 @@ class PostViewModel(val module:String, val subForum:String) : ViewModel() {
             forumPosts.sortByDescending { it.date }
             _posts.value = forumPosts
         }
+    }
+
+    // FOR UPDATING EVENTS
+
+    private val _updateSuccess = MutableLiveData<Boolean?>()
+    val updateSuccess : LiveData<Boolean?>
+        get() = _updateSuccess
+
+    private val _updateFailure = MutableLiveData<Exception?>()
+    val updateFailure : LiveData<Exception?>
+        get() = _updateFailure
+
+    fun updatePost(post: ForumPost) {
+        val id = post.id!!
+
+        db.collection("modules")
+            .document(module)
+            .collection("forums")
+            .document(subForum)
+            .collection("posts")
+            .document(id).set(post)
+            .addOnSuccessListener {
+                _updateSuccess.value = true
+            }.addOnFailureListener {
+                _updateFailure.value = it
+            }
+    }
+
+    fun updatePostSuccessCompleted() {
+        _updateSuccess.value = null
+    }
+
+    fun updatePostFailureCompleted() {
+        _updateFailure.value = null
     }
 
 }
