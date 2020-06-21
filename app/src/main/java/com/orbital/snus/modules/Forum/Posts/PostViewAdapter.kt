@@ -42,16 +42,15 @@ class PostViewAdapter (val forumList: List<ForumPost>) :
         holder.textView.recycler_post_name.text = post.title
         holder.textView.recycler_post_poster.text = "Author ID Here (I haven't add)"
         holder.textView.recycler_post_date.text = dateFormatter.format(post.date!!).toPattern().toString()
-//        holder.textView.module_enrolled_individual_name.setText(module)
-//
-//        holder.textView.setOnClickListener(onClickListener(module))
+
+        holder.textView.setOnClickListener(onClickListener(post))
     }
 
-    private fun onClickListener(moduleName: String): View.OnClickListener? {
+    private fun onClickListener(post: ForumPost): View.OnClickListener? {
         return View.OnClickListener {
             val bundle = Bundle()
-            bundle.putString("module", moduleName)
-            it.findNavController().navigate(R.id.action_mainPageFragment_to_individualModuleFragment, bundle)
+            bundle.putParcelable("post", post)
+            it.findNavController().navigate(R.id.action_postsFragment_to_questionFragment, bundle)
         }
     }
 }

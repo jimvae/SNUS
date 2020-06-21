@@ -33,6 +33,9 @@
         <action
             android:id="@+id/action_postsFragment_to_askQuestionFragment"
             app:destination="@id/askQuestionFragment" />
+        <action
+            android:id="@+id/action_postsFragment_to_questionFragment"
+            app:destination="@id/questionFragment" />
     </fragment>
     <fragment
         android:id="@+id/askQuestionFragment"
@@ -43,4 +46,9 @@
             android:id="@+id/action_askQuestionFragment_to_postsFragment"
             app:destination="@id/postsFragment" />
     </fragment>
+    <fragment
+        android:id="@+id/questionFragment"
+        android:name="com.orbital.snus.modules.Forum.Posts.QuestionFragment"
+        android:label="QuestionFragment"
+        tools:layout="@layout/module_forum_question"/>
 </navigation>
