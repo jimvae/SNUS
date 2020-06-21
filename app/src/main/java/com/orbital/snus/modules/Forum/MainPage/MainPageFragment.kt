@@ -48,11 +48,6 @@ class MainPageFragment : Fragment() {
         )
         firestore = FirebaseFirestore.getInstance()
 
-        // click on specific module to go to specific module page
-        binding.Dummy.setOnClickListener {
-            view: View -> view.findNavController().navigate(R.id.action_mainPageFragment_to_individualModuleFragment)
-        }
-
         viewModel = ViewModelProvider(this, factory).get(MainPageViewModel::class.java)
 
         viewAdapter = MainPageAdapter(mods)
@@ -68,8 +63,6 @@ class MainPageFragment : Fragment() {
             mods.addAll(dbMods)
             recyclerView.adapter!!.notifyDataSetChanged()
         })
-
-
 
         return binding.root
     }
