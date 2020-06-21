@@ -44,7 +44,7 @@ class IndividualModuleFragment: Fragment() {
 
         viewModel = ViewModelProvider(this, factory).get(IndividualModuleViewModel::class.java)
 
-        viewAdapter = IndividualModuleAdapter(subForums)
+        viewAdapter = IndividualModuleAdapter(moduleName, subForums)
         viewManager = LinearLayoutManager(activity)
 
         recyclerView = binding.forumIndividualModuleRecyclerview.apply {

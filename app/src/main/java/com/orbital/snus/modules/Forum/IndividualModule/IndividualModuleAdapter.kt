@@ -12,7 +12,7 @@ import kotlinx.android.synthetic.main.module_forum_individual_module.view.*
 import kotlinx.android.synthetic.main.module_forum_recycler_enrolled_individual.view.*
 import kotlinx.android.synthetic.main.module_forum_recycler_sub_forums.view.*
 
-class IndividualModuleAdapter (val subForums: List<String>) :
+class IndividualModuleAdapter (val moduleName: String, val subForums: List<String>) :
     RecyclerView.Adapter<IndividualModuleAdapter.SubForumViewHolder>() {
 
     class SubForumViewHolder(val textView: View) : RecyclerView.ViewHolder(textView)
@@ -44,6 +44,7 @@ class IndividualModuleAdapter (val subForums: List<String>) :
     private fun onClickListener(subForum: String): View.OnClickListener? {
         return View.OnClickListener {
             val bundle = Bundle()
+            bundle.putString("module", moduleName)
             bundle.putString("subForum", subForum)
             it.findNavController().navigate(R.id.action_individualModuleFragment_to_postsFragment, bundle)
         }
