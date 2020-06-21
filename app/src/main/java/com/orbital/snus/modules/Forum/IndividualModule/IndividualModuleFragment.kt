@@ -41,6 +41,9 @@ class IndividualModuleFragment: Fragment() {
             inflater, R.layout.module_forum_individual_module, container, false
         )
 
+        val moduleName: String = (requireArguments().get("module") as String)
+        binding.moduleForumIndividualModuleTitle.text = moduleName
+
         // click on subforum to go to subforum page
         binding.moduleForumIndividualModuleLectures.setOnClickListener {
             view: View -> view.findNavController().navigate(R.id.action_individualModuleFragment_to_postsFragment)
