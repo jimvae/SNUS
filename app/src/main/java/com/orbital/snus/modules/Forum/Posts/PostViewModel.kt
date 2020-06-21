@@ -15,6 +15,7 @@ class PostViewModel(val module:String, val subForum:String) : ViewModel() {
     val posts: LiveData<List<ForumPost>>
         get() = _posts
 
+    // ADD POSTS
     private val _addSuccess = MutableLiveData<Boolean?>()
     val addSuccess : LiveData<Boolean?>
         get() = _addSuccess
@@ -52,6 +53,39 @@ class PostViewModel(val module:String, val subForum:String) : ViewModel() {
 
     fun addEventFailureCompleted() {
         _addFailure.value = null
+    }
+
+    // FOR DELETING POSTS
+    private val _delSuccess = MutableLiveData<Boolean?>()
+    val delSuccess : LiveData<Boolean?>
+        get() = _delSuccess
+
+    private val _delFailure = MutableLiveData<Exception?>()
+    val delFailure : LiveData<Exception?>
+        get() = _delFailure
+
+    fun deletePost(ID: String) {
+        db.collection("modules")
+            .document(module)
+            .collection("forums")
+            .document(subForum)
+            .collection("posts")
+            .document(ID).delete()
+            .addOnSuccessListener {
+                _delSuccess.value = true
+                Log.d("Delete Post", "DocumentSnapshot successfully deleted!")
+            }.addOnFailureListener {
+                _delFailure.value = it
+                Log.w("Delete Post", "Error deleting document", it)
+            }
+    }
+
+    fun delEventSuccessCompleted() {
+        _delSuccess.value = null
+    }
+
+    fun delEventFailureCompleted() {
+        _delFailure.value = null
     }
 
     fun loadPosts() {

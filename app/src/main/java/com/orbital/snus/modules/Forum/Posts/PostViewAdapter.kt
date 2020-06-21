@@ -13,7 +13,7 @@ import kotlinx.android.synthetic.main.module_forum_recycler_enrolled_individual.
 import kotlinx.android.synthetic.main.module_forum_recycler_posts.view.*
 import java.text.SimpleDateFormat
 
-class PostViewAdapter (val forumList: List<ForumPost>) :
+class PostViewAdapter (val bundle: Bundle, val forumList: List<ForumPost>) :
     RecyclerView.Adapter<PostViewAdapter.PostViewHolder>() {
 
     class PostViewHolder(val textView: View) : RecyclerView.ViewHolder(textView)
@@ -48,7 +48,6 @@ class PostViewAdapter (val forumList: List<ForumPost>) :
 
     private fun onClickListener(post: ForumPost): View.OnClickListener? {
         return View.OnClickListener {
-            val bundle = Bundle()
             bundle.putParcelable("post", post)
             it.findNavController().navigate(R.id.action_postsFragment_to_questionFragment, bundle)
         }

@@ -50,5 +50,9 @@
         android:id="@+id/questionFragment"
         android:name="com.orbital.snus.modules.Forum.Posts.QuestionFragment"
         android:label="QuestionFragment"
-        tools:layout="@layout/module_forum_question"/>
+        tools:layout="@layout/module_forum_question">
+        <action
+            android:id="@+id/action_questionFragment_to_postsFragment"
+            app:destination="@id/postsFragment" />
+    </fragment>
 </navigation>

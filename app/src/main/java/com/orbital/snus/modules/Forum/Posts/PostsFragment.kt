@@ -54,7 +54,7 @@ class PostsFragment : Fragment() {
         viewModel = ViewModelProvider(this, factory).get(PostViewModel::class.java)
 
         viewManager = LinearLayoutManager(activity)
-        viewAdapter = PostViewAdapter(posts)
+        viewAdapter = PostViewAdapter(requireArguments(), posts)
 
         recyclerView = binding.forumPostsRecyclerview.apply {
             // use a linear layout manager
