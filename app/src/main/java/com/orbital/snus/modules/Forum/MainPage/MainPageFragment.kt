@@ -10,6 +10,7 @@ import androidx.databinding.DataBindingUtil
 import androidx.fragment.app.Fragment
 import androidx.lifecycle.ViewModelProvider
 import androidx.navigation.findNavController
+import androidx.navigation.fragment.findNavController
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
 import com.google.firebase.auth.FirebaseAuth
@@ -63,6 +64,10 @@ class MainPageFragment : Fragment() {
             mods.addAll(dbMods)
             recyclerView.adapter!!.notifyDataSetChanged()
         })
+
+        binding.buttonReview.setOnClickListener {
+            findNavController().navigate(R.id.action_mainPageFragment_to_reviewMainPageFragment)
+        }
 
         return binding.root
     }

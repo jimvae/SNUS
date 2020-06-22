@@ -10,6 +10,7 @@ import androidx.databinding.DataBindingUtil
 import androidx.fragment.app.Fragment
 import androidx.lifecycle.ViewModelProvider
 import androidx.navigation.findNavController
+import androidx.navigation.fragment.findNavController
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
 import com.google.firebase.auth.FirebaseAuth
@@ -21,6 +22,7 @@ import com.orbital.snus.dashboard.Today.TodayViewModelFactory
 import com.orbital.snus.data.UserEvent
 import com.orbital.snus.databinding.FragmentDashboardTodayBinding
 import com.orbital.snus.databinding.ModuleForumMainPageBinding
+import com.orbital.snus.databinding.ModuleReviewMainPageBinding
 import java.util.ArrayList
 import java.util.Observer
 
@@ -37,12 +39,12 @@ class ReviewMainPageFragment : Fragment() {
         container: ViewGroup?, savedInstanceState: Bundle?
     ): View? {
 
-        val binding: ModuleForumMainPageBinding = DataBindingUtil.inflate(
+        val binding: ModuleReviewMainPageBinding = DataBindingUtil.inflate(
             inflater, R.layout.module_review_main_page, container, false
         )
-        firestore = FirebaseFirestore.getInstance()
-
-
+        binding.button.setOnClickListener {
+            findNavController().navigate(R.id.action_reviewMainPageFragment_to_individualModuleFragment2)
+        }
 
         return binding.root
     }

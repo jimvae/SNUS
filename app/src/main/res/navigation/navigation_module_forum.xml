@@ -14,6 +14,9 @@
         <action
             android:id="@+id/action_mainPageFragment_to_individualModuleFragment"
             app:destination="@id/individualModuleFragment" />
+        <action
+            android:id="@+id/action_mainPageFragment_to_reviewMainPageFragment"
+            app:destination="@id/reviewMainPageFragment" />
     </fragment>
 
     <fragment
@@ -72,4 +75,18 @@
             app:popUpToInclusive="true" />
 
     </fragment>
+    <fragment
+        android:id="@+id/reviewMainPageFragment"
+        android:name="com.orbital.snus.modules.Review.MainPageFragment.ReviewMainPageFragment"
+        android:label="ReviewMainPageFragment"
+        tools:layout="@layout/module_review_main_page">
+        <action
+            android:id="@+id/action_reviewMainPageFragment_to_individualModuleFragment2"
+            app:destination="@id/individualModuleFragment2" />
+    </fragment>
+    <fragment
+        android:id="@+id/individualModuleFragment2"
+        android:name="com.orbital.snus.modules.Review.IndividualModule.IndividualModuleFragment"
+        android:label="IndividualModuleFragment"
+        tools:layout="@layout/module_review_individual_module"/>
 </navigation>
