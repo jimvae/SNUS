@@ -112,7 +112,7 @@ class AddReviewFragment : Fragment() {
             configurePage(false)
 
             val review = UserReview(null, title, reviewDate, rating.toInt(), expected, actual, commitment, workload, professor, description)
-            viewModel.addModule(review)
+            viewModel.addReview(review)
             viewModel.addSuccess.observe(viewLifecycleOwner, androidx.lifecycle.Observer {
                 if (it != null) {
                     Toast.makeText(requireContext(), "Review successfully added", Toast.LENGTH_SHORT)

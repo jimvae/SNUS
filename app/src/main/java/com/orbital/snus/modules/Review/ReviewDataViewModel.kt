@@ -24,7 +24,7 @@ class ReviewDataViewModel(val module: String) : ViewModel() {
     val addFailure : LiveData<Exception?>
         get() = _addFailure
 
-    fun addModule(review: UserReview) {
+    fun addReview(review: UserReview) {
         // start to add inside database
         val id = db.collection("modules") // modules collection
             .document(module) // current userId
@@ -33,9 +33,9 @@ class ReviewDataViewModel(val module: String) : ViewModel() {
 
         review.id = id
 
-        db.collection("users") // users collection
-            .document(firebaseAuth.currentUser!!.uid) // current userId
-            .collection("events") // user events collection
+        db.collection("modules") // users collection
+            .document(module) // current userId
+            .collection("reviews") // user events collection
             .document(id).set(review)
             .addOnSuccessListener {
                 _addSuccess.value = true
