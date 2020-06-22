@@ -15,6 +15,8 @@ import androidx.fragment.app.Fragment
 import androidx.lifecycle.ViewModelProvider
 import androidx.navigation.findNavController
 import androidx.navigation.fragment.findNavController
+import com.google.firebase.auth.FirebaseAuth
+import com.google.firebase.firestore.FirebaseFirestore
 import com.orbital.snus.R
 import com.orbital.snus.dashboard.DashboardActivity
 import com.orbital.snus.dashboard.DashboardDataViewModel
@@ -27,6 +29,7 @@ import java.text.SimpleDateFormat
 import java.util.*
 
 class AddReviewFragment : Fragment() {
+    private val firebaseAuth = FirebaseAuth.getInstance()
 
     private lateinit var factory : ReviewDataViewModelFactory
     private lateinit var viewModel: ReviewDataViewModel
@@ -111,7 +114,7 @@ class AddReviewFragment : Fragment() {
             //disable page
             configurePage(false)
 
-            val review = UserReview(null, title, reviewDate, rating.toInt(), expected, actual, commitment, workload, professor, description)
+            val review = UserReview(null,firebaseAuth.currentUser!!.uid,  title, reviewDate, rating.toInt(), expected, actual, commitment, workload, professor, description)
             viewModel.addReview(review)
             viewModel.addSuccess.observe(viewLifecycleOwner, androidx.lifecycle.Observer {
                 if (it != null) {

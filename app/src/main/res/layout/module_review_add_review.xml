@@ -35,9 +35,9 @@
             android:layout_height="wrap_content"
             android:layout_marginStart="16dp"
             android:layout_marginTop="8dp"
-            android:inputType="number"
+            android:hint="Ratings"
 
-            android:text="Ratings"
+            android:inputType="number"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toBottomOf="@+id/individual_review_add_date" />
 
@@ -46,7 +46,7 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_marginStart="16dp"
-            android:text="Expected"
+            android:hint="Expected Grade"
             app:layout_constraintBaseline_toBaselineOf="@+id/individual_review_add_actual"
             app:layout_constraintStart_toStartOf="parent" />
 
@@ -56,7 +56,7 @@
             android:layout_height="wrap_content"
             android:layout_marginStart="16dp"
             android:layout_marginTop="8dp"
-            android:text="Actual"
+            android:hint="Actual Grade"
             app:layout_constraintStart_toEndOf="@+id/individual_review_add_expected"
             app:layout_constraintTop_toBottomOf="@+id/individual_review_add_ratings" />
 
@@ -66,7 +66,7 @@
             android:layout_height="wrap_content"
             android:layout_marginStart="16dp"
             android:layout_marginTop="8dp"
-            android:text="Commitment"
+            android:hint="Commitment"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toBottomOf="@+id/individual_review_add_expected" />
 
@@ -76,7 +76,7 @@
             android:layout_height="wrap_content"
             android:layout_marginStart="16dp"
             android:layout_marginTop="8dp"
-            android:text="Workload"
+            android:hint="Workload"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toBottomOf="@+id/individual_review_add_commitment" />
 
@@ -86,7 +86,7 @@
             android:layout_height="wrap_content"
             android:layout_marginStart="16dp"
             android:layout_marginTop="8dp"
-            android:text="Professor"
+            android:hint="Professor"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toBottomOf="@+id/individual_review_add_workload" />
 
@@ -114,7 +114,7 @@
                     android:layout_height="wrap_content"
                     android:layout_marginStart="16dp"
                     android:layout_marginTop="8dp"
-                    android:text="Description" />
+                    android:hint="Description" />
             </LinearLayout>
         </ScrollView>
 

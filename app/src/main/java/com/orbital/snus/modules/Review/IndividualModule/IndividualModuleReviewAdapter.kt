@@ -39,15 +39,19 @@ class IndividualModuleReviewAdapter(val reviewList: List<UserReview>) :
 
         holder.textView.reviews_recycler_title.setText(review.title)
 
-        holder.textView.reviews_recycler_date.setText(dateFormatter1.format(review.date!!).toPattern().toString())
-        holder.textView.reviews_recycler_ratings.setText(review.rating.toString())
+        holder.textView.reviews_recycler_date.setText(
+            dateFormatter1.format(review.date!!).toPattern().toString()
+        )
+        holder.textView.reviews_recycler_ratings.setText("${review.rating.toString()} out of 5")
+        holder.textView.setOnClickListener(onClickListener(review))
     }
 
-//    private fun onClickListener(subForum: String): View.OnClickListener? {
-//        return View.OnClickListener {
-//            val bundle = Bundle()
-//            bundle.putString("module", moduleName)
-//            bundle.putString("subForum", subForum)
-//            it.findNavController().navigate(R.id.action_individualModuleFragment_to_postsFragment, bundle)
-//        }
+    private fun onClickListener(review: UserReview): View.OnClickListener? {
+        return View.OnClickListener {
+            val bundle = Bundle()
+            bundle.putParcelable("review", review)
+            it.findNavController()
+                .navigate(R.id.action_individualModuleFragment2_to_individualReviewFragment, bundle)
+        }
     }
+}

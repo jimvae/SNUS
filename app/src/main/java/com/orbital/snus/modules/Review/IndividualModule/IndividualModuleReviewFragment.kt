@@ -44,7 +44,7 @@ class IndividualModuleReviewFragment : Fragment() {
         val moduleName = requireArguments().get("module") as String
         binding.textModuleName.setText(moduleName)
 
-        binding.button2.setOnClickListener {
+        binding.reviewModuleAddReview.setOnClickListener {
             val bundle = Bundle()
             bundle.putString("module", moduleName)
             findNavController().navigate(R.id.action_individualModuleFragment2_to_addReviewFragment, bundle)
