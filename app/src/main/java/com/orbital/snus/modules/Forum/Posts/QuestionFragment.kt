@@ -39,6 +39,8 @@ class QuestionFragment : Fragment() {
 
     private lateinit var dialog: Dialog
 
+    var toAns: Boolean = false
+
     override fun onCreateView(
         inflater: LayoutInflater,
         container: ViewGroup?,
@@ -62,7 +64,14 @@ class QuestionFragment : Fragment() {
 
         binding.buttonAnswer.setOnClickListener {
             // go to the answers page
-            view: View -> view.setOnClickListener(onClickListener(module, subForum, question!!))
+            toAns = true
+
+            val bundle = Bundle()
+            bundle.putString("module", module)
+            bundle.putString("subForum", subForum)
+            bundle.putString("question", question)
+
+            it.findNavController().navigate(R.id.action_questionFragment_to_answersFragment, bundle)
         }
 
         binding.buttonEdit.setOnClickListener {
@@ -97,8 +106,14 @@ class QuestionFragment : Fragment() {
 
     override fun onDestroyView() {
         super.onDestroyView()
-        (activity as ModulesActivity).showNavBar()
+        if (toAns) {
+            (activity as ModulesActivity).hideNavBar()
+        } else {
+            (activity as ModulesActivity).showNavBar()
+        }
+        toAns = false
     }
+
 
     fun initiateViews() {
         // if the user is not the poster, cannot delete or edit
@@ -183,14 +198,14 @@ class QuestionFragment : Fragment() {
         dialog.button_confirm.isEnabled = boolean
     }
 
-    private fun onClickListener(module:String, subForum:String, question: String): View.OnClickListener? {
-        return View.OnClickListener {
-            val bundle = Bundle()
-            bundle.putString("module", module)
-            bundle.putString("subForum", subForum)
-            bundle.putString("question", question)
-
-            it.findNavController().navigate(R.id.action_questionFragment_to_answersFragment, bundle)
-        }
-    }
+//    private fun onClickListener(module:String, subForum:String, question: String): View.OnClickListener? {
+//        return View.OnClickListener {
+//            val bundle = Bundle()
+//            bundle.putString("module", module)
+//            bundle.putString("subForum", subForum)
+//            bundle.putString("question", question)
+//
+//            it.findNavController().navigate(R.id.action_questionFragment_to_answersFragment, bundle)
+//        }
+//    }
 }

@@ -18,6 +18,7 @@ import com.google.firebase.auth.FirebaseAuth
 import com.orbital.snus.R
 import com.orbital.snus.data.ForumComment
 import com.orbital.snus.databinding.ModuleForumAnswersBinding
+import com.orbital.snus.modules.ModulesActivity
 import java.util.*
 
 
@@ -152,6 +153,7 @@ class AnswersFragment : Fragment() {
 
     override fun onActivityCreated(savedInstanceState: Bundle?) {
         super.onActivityCreated(savedInstanceState)
+
         val moduleName = (requireArguments().get("module") as String)
         val subForum = (requireArguments().get("subForum") as String)
         val question = (requireArguments().get("question") as String)
@@ -172,7 +174,8 @@ class AnswersFragment : Fragment() {
 
     fun configurePage(boolean: Boolean) {
         binding.moduleForumAnswersMessageHere.isEnabled = boolean
-        binding.moduleForumAnswersMessageHere.isEnabled = boolean
+        binding.moduleForumAnswersSend.isEnabled = boolean
+        binding.forumAnswersRecyclerView.isEnabled = boolean
     }
 
     fun hideKeyboard(view: View) {

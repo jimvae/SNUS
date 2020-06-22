@@ -40,7 +40,7 @@ class PostViewAdapter (val bundle: Bundle, val forumList: List<ForumPost>) :
         val post = forumList[position]
         val dateFormatter: SimpleDateFormat = SimpleDateFormat("dd/MM/YYYY | hh:mm a")
         holder.textView.recycler_post_name.text = post.title
-        holder.textView.recycler_post_poster.text = "Author ID Here (I haven't add)"
+        holder.textView.recycler_post_poster.text = "Author Random ID"
         holder.textView.recycler_post_date.text = dateFormatter.format(post.date!!).toPattern().toString()
 
         holder.textView.setOnClickListener(onClickListener(post))

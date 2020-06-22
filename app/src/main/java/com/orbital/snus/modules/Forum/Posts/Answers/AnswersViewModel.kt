@@ -51,14 +51,6 @@ class AnswersViewModel(val module:String, val subForum:String, val question: Str
             }
     }
 
-    fun addEventSuccessCompleted() {
-        _addSuccess.value = null
-    }
-
-    fun addEventFailureCompleted() {
-        _addFailure.value = null
-    }
-
     fun addPostSuccessCompleted() {
         _addSuccess.value = null
     }
