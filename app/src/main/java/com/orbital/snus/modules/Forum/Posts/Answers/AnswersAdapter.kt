@@ -41,7 +41,8 @@ class AnswersAdapter (val answerList: List<ForumComment>) :
     override fun onBindViewHolder(holder: AnswersAdapter.AnswersHolder, position: Int) {
         val answer = answerList[position]
 
-        val dateFormatter: SimpleDateFormat = SimpleDateFormat("hh:mm a")
+        // Should the format include date? if not the display a bit weird
+        val dateFormatter: SimpleDateFormat = SimpleDateFormat("dd/MM/yyyy | hh:mm a")
 
         holder.textView.module_forum_recycler_answers_answer.text = answer.text
         holder.textView.module_forum_recycler_answers_name.text = "Author Random ID"

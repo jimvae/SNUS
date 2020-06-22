@@ -53,7 +53,8 @@
         tools:layout="@layout/module_forum_question">
         <action
             android:id="@+id/action_questionFragment_to_postsFragment"
-            app:destination="@id/postsFragment" />
+            app:destination="@id/postsFragment"
+            app:popUpTo="@id/postsFragment" />
         <action
             android:id="@+id/action_questionFragment_to_answersFragment"
             app:destination="@id/answersFragment" />
@@ -69,5 +70,6 @@
             app:launchSingleTop="false"
             app:popUpTo="@id/answersFragment"
             app:popUpToInclusive="false" />
+
     </fragment>
 </navigation>
