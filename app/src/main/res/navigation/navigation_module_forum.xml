@@ -88,5 +88,13 @@
         android:id="@+id/individualModuleFragment2"
         android:name="com.orbital.snus.modules.Review.IndividualModule.IndividualModuleFragment"
         android:label="IndividualModuleFragment"
-        tools:layout="@layout/module_review_individual_module"/>
+        tools:layout="@layout/module_review_individual_module">
+        <action
+            android:id="@+id/action_individualModuleFragment2_to_individualReviewFragment"
+            app:destination="@id/individualReviewFragment" />
+    </fragment>
+    <fragment
+        android:id="@+id/individualReviewFragment"
+        android:name="com.orbital.snus.modules.Review.IndividualReviewFragment"
+        android:label="IndividualReviewFragment" />
 </navigation>
