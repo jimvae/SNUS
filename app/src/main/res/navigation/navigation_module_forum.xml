@@ -92,9 +92,23 @@
         <action
             android:id="@+id/action_individualModuleFragment2_to_individualReviewFragment"
             app:destination="@id/individualReviewFragment" />
+        <action
+            android:id="@+id/action_individualModuleFragment2_to_addReviewFragment"
+            app:destination="@id/addReviewFragment" />
     </fragment>
     <fragment
         android:id="@+id/individualReviewFragment"
         android:name="com.orbital.snus.modules.Review.IndividualReviewFragment"
-        android:label="IndividualReviewFragment" />
+        android:label="IndividualReviewFragment"
+        tools:layout="@layout/module_review_individual_review" />
+    <fragment
+        android:id="@+id/addReviewFragment"
+        android:name="com.orbital.snus.modules.Review.AddReviewFragment"
+        android:label="AddReviewFragment"
+        tools:layout="@layout/module_review_add_review" >
+        <action
+            android:id="@+id/action_addReviewFragment_to_individualModuleFragment2"
+            app:destination="@id/individualModuleFragment2"
+            app:popUpTo="@id/individualModuleFragment2" />
+    </fragment>
 </navigation>

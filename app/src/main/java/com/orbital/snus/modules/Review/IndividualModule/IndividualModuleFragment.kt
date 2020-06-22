@@ -7,6 +7,7 @@ import android.view.ViewGroup
 import androidx.databinding.DataBindingUtil
 import androidx.fragment.app.Fragment
 import androidx.navigation.findNavController
+import androidx.navigation.fragment.findNavController
 import com.google.firebase.firestore.FirebaseFirestore
 import com.orbital.snus.R
 import com.orbital.snus.databinding.ModuleReviewIndividualModuleBinding
@@ -22,8 +23,13 @@ class IndividualModuleFragment : Fragment() {
             inflater, R.layout.module_review_individual_module, container, false
         )
 
+        val moduleName = requireArguments().get("module") as String
+        binding.textModuleName.setText(moduleName)
+
         binding.button2.setOnClickListener {
-            view : View -> view.findNavController().navigate(R.id.action_individualModuleFragment2_to_individualReviewFragment)
+            val bundle = Bundle()
+            bundle.putString("module", moduleName)
+            findNavController().navigate(R.id.action_individualModuleFragment2_to_addReviewFragment, bundle)
         }
 
 
