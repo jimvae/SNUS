@@ -2,7 +2,7 @@
 <layout xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     xmlns:android="http://schemas.android.com/apk/res/android"
-    tools:context=".modules.Review.IndividualModule.IndividualModuleFragment">
+    tools:context=".modules.Review.IndividualModule.IndividualModuleReviewFragment">
 
 <androidx.constraintlayout.widget.ConstraintLayout
     android:layout_width="match_parent"
@@ -33,7 +33,7 @@
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/text_module_name"
-        tools:listitem="@layout/module_forum_reviews_recycler"/>
+        tools:listitem="@layout/module_reviews_review_recycler"/>
 
     <Button
         android:id="@+id/button2"

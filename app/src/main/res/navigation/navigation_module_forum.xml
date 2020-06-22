@@ -86,7 +86,7 @@
     </fragment>
     <fragment
         android:id="@+id/individualModuleFragment2"
-        android:name="com.orbital.snus.modules.Review.IndividualModule.IndividualModuleFragment"
+        android:name="com.orbital.snus.modules.Review.IndividualModule.IndividualModuleReviewFragment"
         android:label="IndividualModuleFragment"
         tools:layout="@layout/module_review_individual_module">
         <action

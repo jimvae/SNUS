@@ -6,7 +6,7 @@
     android:layout_height="wrap_content">
 
     <TextView
-        android:id="@+id/Forum_reviews_recycler_title"
+        android:id="@+id/reviews_recycler_title"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_marginStart="16dp"
@@ -16,21 +16,21 @@
         app:layout_constraintTop_toTopOf="parent" />
 
     <TextView
-        android:id="@+id/forum_reviews_recycler_ratings"
+        android:id="@+id/reviews_recycler_ratings"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_marginStart="16dp"
         android:layout_marginTop="8dp"
         android:text="Ratings"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/Forum_reviews_recycler_title" />
+        app:layout_constraintTop_toBottomOf="@+id/reviews_recycler_title" />
 
     <TextView
-        android:id="@+id/forum_reviews_recycler_date"
+        android:id="@+id/reviews_recycler_date"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_marginEnd="16dp"
         android:text="Title"
-        app:layout_constraintBaseline_toBaselineOf="@+id/Forum_reviews_recycler_title"
+        app:layout_constraintBaseline_toBaselineOf="@+id/reviews_recycler_title"
         app:layout_constraintEnd_toEndOf="parent" />
 </androidx.constraintlayout.widget.ConstraintLayout>
