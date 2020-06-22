@@ -67,7 +67,9 @@
         <action
             android:id="@+id/action_answersFragment_self"
             app:destination="@id/answersFragment"
+            app:launchSingleTop="false"
             app:popUpTo="@id/answersFragment"
-            app:popUpToInclusive="true" />
+            app:popUpToInclusive="false" />
+
     </fragment>
 </navigation>
