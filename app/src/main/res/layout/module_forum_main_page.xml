@@ -35,5 +35,15 @@
             app:layout_constraintTop_toBottomOf="@+id/forum_main_page_title"
             tools:listitem="@layout/module_forum_recycler_enrolled_individual" />
 
+        <Button
+            android:id="@+id/button_review"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="24dp"
+            android:layout_marginEnd="24dp"
+            android:text="Reviews"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintTop_toTopOf="parent" />
+
     </androidx.constraintlayout.widget.ConstraintLayout>
 </layout>
