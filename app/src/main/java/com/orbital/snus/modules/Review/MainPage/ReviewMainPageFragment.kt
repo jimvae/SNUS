@@ -21,9 +21,6 @@ class ReviewMainPageFragment : Fragment() {
     private val db = FirebaseFirestore.getInstance()
     private lateinit var firestore: FirebaseFirestore
 
-
-    private val mods = ArrayList<String>() // holder to store events and for RecyclerViewAdapter to observe
-
     // on main page, load out all the user's modules
     override fun onCreateView(
         inflater: LayoutInflater,
@@ -34,24 +31,27 @@ class ReviewMainPageFragment : Fragment() {
             inflater, R.layout.module_review_main_page, container, false
         )
         binding.button.setOnClickListener {
+            hideKeyboard(it)
             val search = binding.moduleReviewMainPageSearch
-            if (search.text.toString().trim() == "") {
+
+            // set all string to uppercase, so the search is consistent
+            val modifiedSearch = search.text.toString().toUpperCase(Locale.ROOT).trim()
+            if (modifiedSearch == "") {
                 search.setError("Missing Field")
                 return@setOnClickListener
             }
 
             val documentID: DocumentReference = db.collection("modules")
-                .document(search.text.toString().trim())
+                .document(modifiedSearch)
 
             documentID.get().addOnCompleteListener { task ->
                 if (task.isSuccessful) {
                     val document = task.result
-                    if (document!!.exists()) {
+                    if (document!!.exists()) { // if document null?
                         val bundle = Bundle()
-                        bundle.putString("module", search.text.toString().trim())
+                        bundle.putString("module", modifiedSearch)
                         Log.d("ReviewMainPage", "Document exists!")
                         findNavController().navigate(R.id.action_reviewMainPageFragment_to_individualModuleFragment2, bundle)
-                        hideKeyboard(it)
                     } else {
                         search.setError("Invalid module name ")
                         Log.d("ReviewMainPage", "Invalid input!")
@@ -66,11 +66,6 @@ class ReviewMainPageFragment : Fragment() {
 
         return binding.root
     }
-
-    override fun onActivityCreated(savedInstanceState: Bundle?) {
-        super.onActivityCreated(savedInstanceState)
-    }
-
 
     fun hideKeyboard(view: View) {
         val imm = activity?.getSystemService(Context.INPUT_METHOD_SERVICE) as InputMethodManager
