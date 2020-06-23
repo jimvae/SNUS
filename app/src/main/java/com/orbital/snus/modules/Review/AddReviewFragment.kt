@@ -159,7 +159,7 @@ class AddReviewFragment : Fragment() {
         var mDay = c[Calendar.DAY_OF_MONTH]
 
 
-        var dateFormatter: SimpleDateFormat = SimpleDateFormat("dd MMM YYYY'\n'hh:mm a")
+        var dateFormatter: SimpleDateFormat = SimpleDateFormat("dd MMM YYYY") //\n'hh:mm a")
 
 
         // DATEPICKER
@@ -183,5 +183,10 @@ class AddReviewFragment : Fragment() {
     fun hideKeyboard(view: View) {
         val imm = activity?.getSystemService(Context.INPUT_METHOD_SERVICE) as InputMethodManager
         imm.hideSoftInputFromWindow(view.windowToken, 0)
+    }
+
+    override fun onDestroyView() {
+        super.onDestroyView()
+        (activity as ModulesActivity).showNavBar()
     }
 }

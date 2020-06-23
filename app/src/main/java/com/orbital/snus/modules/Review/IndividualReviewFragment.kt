@@ -36,7 +36,7 @@ class IndividualReviewFragment : Fragment() {
         binding.individualReviewTitle.text = review.title
         binding.individualReviewActual.text = review.actualGrade
         binding.individualReviewCommitment.text = review.commitment
-        binding.individualReviewDate.text = dateFormatter1.format(review.date).toPattern().toString()
+        binding.individualReviewDate.text = dateFormatter1.format(review.date!!).toPattern().toString()
         binding.individualReviewExpected.text = review.expectedGrade
         binding.individualReviewProf.text = review.prof
         binding.individualReviewDescription.text = review.description
