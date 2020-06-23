@@ -11,7 +11,7 @@ import com.orbital.snus.data.UserReview
 import kotlinx.android.synthetic.main.module_reviews_review_recycler.view.*
 import java.text.SimpleDateFormat
 
-class IndividualModuleReviewAdapter(val reviewList: List<UserReview>) :
+class IndividualModuleReviewAdapter(val bundle: Bundle, val reviewList: List<UserReview>) :
     RecyclerView.Adapter<IndividualModuleReviewAdapter.ReviewViewHolder>() {
 
     class ReviewViewHolder(val textView: View) : RecyclerView.ViewHolder(textView)
@@ -48,7 +48,6 @@ class IndividualModuleReviewAdapter(val reviewList: List<UserReview>) :
 
     private fun onClickListener(review: UserReview): View.OnClickListener? {
         return View.OnClickListener {
-            val bundle = Bundle()
             bundle.putParcelable("review", review)
             it.findNavController()
                 .navigate(R.id.action_individualModuleFragment2_to_individualReviewFragment, bundle)

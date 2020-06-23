@@ -53,7 +53,7 @@ class IndividualModuleReviewFragment : Fragment() {
         factory = IndividualModuleReviewViewModelFactory(moduleName)
         viewModel = ViewModelProvider(this, factory).get(IndividualModuleReviewViewModel::class.java)
 
-        viewAdapter = IndividualModuleReviewAdapter(reviewList)
+        viewAdapter = IndividualModuleReviewAdapter(requireArguments(), reviewList)
         viewManager = LinearLayoutManager(activity)
 
         recyclerView = binding.recyclerviewReviews.apply {

@@ -100,7 +100,11 @@
         android:id="@+id/individualReviewFragment"
         android:name="com.orbital.snus.modules.Review.IndividualReviewFragment"
         android:label="IndividualReviewFragment"
-        tools:layout="@layout/module_review_individual_review" />
+        tools:layout="@layout/module_review_individual_review" >
+        <action
+            android:id="@+id/action_individualReviewFragment_to_individualModuleFragment2"
+            app:destination="@id/individualModuleFragment2" />
+    </fragment>
     <fragment
         android:id="@+id/addReviewFragment"
         android:name="com.orbital.snus.modules.Review.AddReviewFragment"

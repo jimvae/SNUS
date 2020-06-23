@@ -148,6 +148,8 @@ class AddReviewFragment : Fragment() {
         binding.individualReviewAddWorkload.isEnabled = boolean
         binding.individualReviewAddProf.isEnabled = boolean
         binding.individualReviewAddDescription.isEnabled = boolean
+
+        binding.individualReviewPostReview.isEnabled = boolean
     }
 
     fun setDate (v: TextView) {
