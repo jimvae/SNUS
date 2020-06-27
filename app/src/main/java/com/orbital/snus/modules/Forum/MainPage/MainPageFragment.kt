@@ -1,11 +1,16 @@
 package com.orbital.snus.modules.Forum.MainPage
 
+import android.content.Context
+import android.opengl.Visibility
 import android.os.Bundle
+import android.util.Log
 import android.view.LayoutInflater
 import android.view.Menu
 import android.view.View
 import android.view.ViewGroup
+import android.view.inputmethod.InputMethodManager
 import android.widget.Toast
+import androidx.core.view.isGone
 import androidx.databinding.DataBindingUtil
 import androidx.fragment.app.Fragment
 import androidx.lifecycle.ViewModelProvider
@@ -14,6 +19,7 @@ import androidx.navigation.fragment.findNavController
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
 import com.google.firebase.auth.FirebaseAuth
+import com.google.firebase.firestore.DocumentReference
 import com.google.firebase.firestore.FirebaseFirestore
 import com.orbital.snus.R
 import com.orbital.snus.dashboard.Today.TodayEventAdapter
@@ -22,11 +28,12 @@ import com.orbital.snus.dashboard.Today.TodayViewModelFactory
 import com.orbital.snus.data.UserEvent
 import com.orbital.snus.databinding.FragmentDashboardTodayBinding
 import com.orbital.snus.databinding.ModuleForumMainPageBinding
-import java.util.ArrayList
-import java.util.Observer
+import kotlinx.android.synthetic.main.activity_modules.*
+import java.util.*
 
 class MainPageFragment : Fragment() {
-    private lateinit var firebaseAuth: FirebaseAuth
+    private val db = FirebaseFirestore.getInstance()
+
     private lateinit var firestore: FirebaseFirestore
 
     private lateinit var recyclerView: RecyclerView
@@ -65,9 +72,54 @@ class MainPageFragment : Fragment() {
             recyclerView.adapter!!.notifyDataSetChanged()
         })
 
-        binding.buttonReview.setOnClickListener {
-            findNavController().navigate(R.id.action_mainPageFragment_to_reviewMainPageFragment)
+
+
+        binding.moduleReviewMainPageSearch.setOnFocusChangeListener { v, hasFocus ->
+            if (!hasFocus) {
+                hideKeyboard(v)
+                requireActivity()?.bottom_navigation_menu?.visibility ?: View.VISIBLE
+            } else {
+                requireActivity()?.bottom_navigation_menu?.visibility ?: View.INVISIBLE
+
+            }
         }
+
+
+        binding.button.setOnClickListener {
+            hideKeyboard(it)
+            val search = binding.moduleReviewMainPageSearch
+
+            // set all string to uppercase, so the search is consistent
+            val modifiedSearch = search.text.toString().toUpperCase(Locale.ROOT).trim()
+            if (modifiedSearch == "") {
+                search.setError("Missing Field")
+                return@setOnClickListener
+            }
+
+            val documentID: DocumentReference = db.collection("modules")
+                .document(modifiedSearch)
+
+            documentID.get().addOnCompleteListener { task ->
+                if (task.isSuccessful) {
+                    val document = task.result
+                    if (document!!.exists()) { // if document null?
+                        val bundle = Bundle()
+                        bundle.putString("module", modifiedSearch)
+                        Log.d("ReviewMainPage", "Document exists!")
+                        findNavController().navigate(R.id.action_mainPageFragment_to_individualModuleFragment2, bundle)
+                    } else {
+                        search.setError("Invalid module name ")
+                        Log.d("ReviewMainPage", "Invalid input!")
+                    }
+                } else {
+                    Log.d("ReviewMainPage", "Failed with: ", task.exception)
+                }
+            }
+            return@setOnClickListener
+
+        }
+
+
 
         return binding.root
     }
@@ -83,6 +135,12 @@ class MainPageFragment : Fragment() {
                 Toast.makeText(requireContext(), "Failed retrieval", Toast.LENGTH_SHORT).show()
             }
         })
+    }
+
+
+    fun hideKeyboard(view: View) {
+        val imm = activity?.getSystemService(Context.INPUT_METHOD_SERVICE) as InputMethodManager
+        imm.hideSoftInputFromWindow(view.windowToken, 0)
     }
 
 }
