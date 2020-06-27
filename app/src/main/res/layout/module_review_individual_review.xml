@@ -8,10 +8,21 @@
         android:layout_width="match_parent"
         android:layout_height="match_parent">
 
+
         <androidx.constraintlayout.widget.ConstraintLayout
 
             android:layout_width="match_parent"
             android:layout_height="wrap_content">
+            <TextView
+                android:id="@+id/button_back"
+                android:layout_width="0dp"
+                android:layout_height="200dp"
+                android:background="@drawable/blue_gradient"
+                android:textSize="12sp"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintHorizontal_bias="0.0"
+                app:layout_constraintStart_toStartOf="parent"
+                tools:layout_editor_absoluteY="2dp" />
 
             <TextView
                 android:id="@+id/individual_review_title"
@@ -24,6 +35,7 @@
                 android:paddingRight="8sp"
                 android:text="Title"
                 android:textAlignment="center"
+                android:textColor="@android:color/white"
                 android:textSize="32sp"
                 android:textStyle="bold"
                 app:layout_constraintEnd_toEndOf="parent"
@@ -37,6 +49,7 @@
                 android:layout_marginTop="12dp"
                 android:layout_marginEnd="16dp"
                 android:text="Date"
+                android:textColor="@android:color/white"
                 app:layout_constraintEnd_toEndOf="parent"
                 app:layout_constraintTop_toBottomOf="@+id/individual_review_rating_bar" />
 
@@ -60,8 +73,8 @@
                         android:id="@+id/textView15individual_review_description_header"
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
-                        android:text="Description"
-                        android:textSize="26sp"
+                        android:text="Description:"
+                        android:textSize="18sp"
                         android:textStyle="bold" />
 
                     <TextView
@@ -72,7 +85,8 @@
                         android:layout_marginTop="8dp"
                         android:layout_marginBottom="16sp"
                         android:text="Description"
-                        android:textSize="24sp" />
+                        android:textColor="@color/color_NUS"
+                        android:textSize="18sp" />
                 </LinearLayout>
             </ScrollView>
 
@@ -83,7 +97,9 @@
                 android:layout_marginStart="64dp"
                 android:layout_marginTop="20dp"
                 android:layout_marginBottom="32dp"
+                android:background="@drawable/blue_button"
                 android:text="Edit"
+                android:textColor="@android:color/white"
                 app:layout_constraintBottom_toBottomOf="parent"
                 app:layout_constraintStart_toStartOf="parent"
                 app:layout_constraintTop_toBottomOf="@+id/scrollView3" />
@@ -93,7 +109,9 @@
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_marginEnd="64dp"
+                android:background="@drawable/blue_button"
                 android:text="Delete"
+                android:textColor="@android:color/white"
                 app:layout_constraintBaseline_toBaselineOf="@+id/button_edit"
                 app:layout_constraintEnd_toEndOf="parent" />
 
@@ -103,6 +121,7 @@
                 android:layout_height="wrap_content"
                 android:layout_marginEnd="4dp"
                 android:text="Review Date:"
+                android:textColor="@android:color/white"
                 app:layout_constraintBaseline_toBaselineOf="@+id/individual_review_date"
                 app:layout_constraintEnd_toStartOf="@+id/individual_review_date" />
 
@@ -118,7 +137,7 @@
                 app:layout_constraintStart_toStartOf="parent"
                 app:layout_constraintTop_toBottomOf="@+id/individual_review_title" />
 
-            <LinearLayout
+            <androidx.constraintlayout.widget.ConstraintLayout
                 android:id="@+id/expected_linearlayout"
                 android:layout_width="0dp"
                 android:layout_height="wrap_content"
@@ -134,21 +153,28 @@
                     android:id="@+id/individual_review_expected_header"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
+                    android:layout_marginBottom="8dp"
                     android:text="Expected Grade:"
-                    android:textSize="26sp"
-                    android:textStyle="bold" />
+                    android:textSize="18sp"
+                    android:textStyle="bold"
+                    app:layout_constraintBottom_toBottomOf="parent"
+                    app:layout_constraintStart_toStartOf="parent"
+                    app:layout_constraintTop_toTopOf="parent" />
 
                 <TextView
                     android:id="@+id/individual_review_expected"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:layout_marginStart="4dp"
-                    android:layout_marginEnd="4dp"
+                    android:layout_marginStart="200dp"
                     android:text="Expected"
-                    android:textSize="24sp" />
-            </LinearLayout>
+                    android:textColor="@color/color_NUS"
+                    android:textSize="18sp"
+                    app:layout_constraintBottom_toBottomOf="parent"
+                    app:layout_constraintStart_toStartOf="@+id/individual_review_expected_header"
+                    app:layout_constraintTop_toTopOf="parent" />
+            </androidx.constraintlayout.widget.ConstraintLayout>
 
-            <LinearLayout
+            <androidx.constraintlayout.widget.ConstraintLayout
                 android:id="@+id/actual_linearlayout"
                 android:layout_width="0dp"
                 android:layout_height="wrap_content"
@@ -165,20 +191,26 @@
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:text="Actual Grade:"
-                    android:textSize="26sp"
-                    android:textStyle="bold" />
+                    android:textSize="18sp"
+                    android:textStyle="bold"
+                    app:layout_constraintBottom_toBottomOf="parent"
+                    app:layout_constraintStart_toStartOf="parent"
+                    app:layout_constraintTop_toTopOf="parent" />
 
                 <TextView
                     android:id="@+id/individual_review_actual"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:layout_marginStart="4dp"
-                    android:layout_marginEnd="4dp"
+                    android:layout_marginStart="200dp"
                     android:text="Actual"
-                    android:textSize="24sp" />
-            </LinearLayout>
+                    android:textColor="@color/color_NUS"
+                    android:textSize="18sp"
+                    app:layout_constraintBottom_toBottomOf="parent"
+                    app:layout_constraintStart_toStartOf="parent"
+                    app:layout_constraintTop_toTopOf="parent" />
+            </androidx.constraintlayout.widget.ConstraintLayout>
 
-            <LinearLayout
+            <androidx.constraintlayout.widget.ConstraintLayout
                 android:id="@+id/linearLayout3"
                 android:layout_width="0dp"
                 android:layout_height="wrap_content"
@@ -195,20 +227,26 @@
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:text="Commitment:"
-                    android:textSize="26sp"
-                    android:textStyle="bold" />
+                    android:textSize="18sp"
+                    android:textStyle="bold"
+                    app:layout_constraintBottom_toBottomOf="parent"
+                    app:layout_constraintStart_toStartOf="parent"
+                    app:layout_constraintTop_toTopOf="parent" />
 
                 <TextView
                     android:id="@+id/individual_review_commitment"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:layout_marginStart="4dp"
-                    android:layout_marginEnd="4dp"
+                    android:layout_marginStart="200dp"
                     android:text="Commitment"
-                    android:textSize="24sp" />
-            </LinearLayout>
+                    android:textColor="@color/color_NUS"
+                    android:textSize="18sp"
+                    app:layout_constraintBottom_toBottomOf="parent"
+                    app:layout_constraintStart_toStartOf="parent"
+                    app:layout_constraintTop_toTopOf="parent" />
+            </androidx.constraintlayout.widget.ConstraintLayout>
 
-            <LinearLayout
+            <androidx.constraintlayout.widget.ConstraintLayout
                 android:id="@+id/linearLayout4"
                 android:layout_width="0dp"
                 android:layout_height="wrap_content"
@@ -225,20 +263,26 @@
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:text="Workload:"
-                    android:textSize="26sp"
-                    android:textStyle="bold" />
+                    android:textSize="18sp"
+                    android:textStyle="bold"
+                    app:layout_constraintBottom_toBottomOf="parent"
+                    app:layout_constraintStart_toStartOf="parent"
+                    app:layout_constraintTop_toTopOf="parent" />
 
                 <TextView
                     android:id="@+id/individual_review_workload"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:layout_marginStart="4dp"
-                    android:layout_marginEnd="4dp"
+                    android:layout_marginStart="200dp"
                     android:text="Workload"
-                    android:textSize="24sp" />
-            </LinearLayout>
+                    android:textColor="@color/color_NUS"
+                    android:textSize="18sp"
+                    app:layout_constraintBottom_toBottomOf="parent"
+                    app:layout_constraintStart_toStartOf="parent"
+                    app:layout_constraintTop_toTopOf="parent" />
+            </androidx.constraintlayout.widget.ConstraintLayout>
 
-            <LinearLayout
+            <androidx.constraintlayout.widget.ConstraintLayout
                 android:id="@+id/prof_linearlayout"
                 android:layout_width="0dp"
                 android:layout_height="wrap_content"
@@ -255,18 +299,24 @@
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:text="Lecturer:"
-                    android:textSize="26sp"
-                    android:textStyle="bold" />
+                    android:textSize="18sp"
+                    android:textStyle="bold"
+                    app:layout_constraintBottom_toBottomOf="parent"
+                    app:layout_constraintStart_toStartOf="parent"
+                    app:layout_constraintTop_toTopOf="parent" />
 
                 <TextView
                     android:id="@+id/individual_review_prof"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:layout_marginStart="4sp"
-                    android:layout_marginRight="4sp"
+                    android:layout_marginStart="200dp"
                     android:text="Professor"
-                    android:textSize="24sp" />
-            </LinearLayout>
+                    android:textColor="@color/color_NUS"
+                    android:textSize="18sp"
+                    app:layout_constraintBottom_toBottomOf="parent"
+                    app:layout_constraintStart_toStartOf="parent"
+                    app:layout_constraintTop_toTopOf="parent" />
+            </androidx.constraintlayout.widget.ConstraintLayout>
 
         </androidx.constraintlayout.widget.ConstraintLayout>
     </ScrollView>
