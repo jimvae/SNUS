@@ -89,10 +89,10 @@ class IndividualReviewFragment : Fragment() {
         setUserPrivilege(firebaseAuth.currentUser!!.uid == review.userID)
         val dateFormatter1: SimpleDateFormat = SimpleDateFormat("dd MMM yy")
 
-        binding.individualReviewTitle.text = "Review: " +review.title
+        binding.individualReviewTitle.text = review.title
         binding.individualReviewActual.text = "Actual Grade: " + review.actualGrade
         binding.individualReviewCommitment.text = "Commitment: " + review.commitment
-        binding.individualReviewDate.text = "Date: " + dateFormatter1.format(review.date!!).toPattern().toString()
+        binding.individualReviewDate.text = dateFormatter1.format(review.date!!).toPattern().toString()
         binding.individualReviewExpected.text = "Expected Grade: " + review.expectedGrade
         binding.individualReviewProf.text = "Professor: " + review.prof
         binding.individualReviewDescription.text = "Description:\n" + review.description

@@ -1,34 +1,28 @@
 package com.orbital.snus.modules.Forum.MainPage
 
 import android.content.Context
-import android.opengl.Visibility
+import android.graphics.Rect
 import android.os.Bundle
 import android.util.Log
 import android.view.LayoutInflater
-import android.view.Menu
+import android.view.MotionEvent
 import android.view.View
 import android.view.ViewGroup
 import android.view.inputmethod.InputMethodManager
+import android.widget.EditText
 import android.widget.Toast
-import androidx.core.view.isGone
+import androidx.core.content.ContextCompat.getSystemService
 import androidx.databinding.DataBindingUtil
 import androidx.fragment.app.Fragment
 import androidx.lifecycle.ViewModelProvider
-import androidx.navigation.findNavController
 import androidx.navigation.fragment.findNavController
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
-import com.google.firebase.auth.FirebaseAuth
 import com.google.firebase.firestore.DocumentReference
 import com.google.firebase.firestore.FirebaseFirestore
 import com.orbital.snus.R
-import com.orbital.snus.dashboard.Today.TodayEventAdapter
-import com.orbital.snus.dashboard.Today.TodayViewModel
-import com.orbital.snus.dashboard.Today.TodayViewModelFactory
-import com.orbital.snus.data.UserEvent
-import com.orbital.snus.databinding.FragmentDashboardTodayBinding
 import com.orbital.snus.databinding.ModuleForumMainPageBinding
-import kotlinx.android.synthetic.main.activity_modules.*
+import com.orbital.snus.modules.ModulesActivity
 import java.util.*
 
 class MainPageFragment : Fragment() {
@@ -72,12 +66,18 @@ class MainPageFragment : Fragment() {
             recyclerView.adapter!!.notifyDataSetChanged()
         })
 
-
-
-
+        binding.moduleReviewMainPageSearch.setOnFocusChangeListener { v, hasFocus ->
+            if (!hasFocus) {
+                hideKeyboard(v)
+                (requireActivity() as ModulesActivity).showNavBar()
+            } else {
+                (requireActivity() as ModulesActivity).hideNavBar()
+            }
+        }
 
 
         binding.button.setOnClickListener {
+            binding.moduleReviewMainPageSearch.clearFocus()
             hideKeyboard(it)
             val search = binding.moduleReviewMainPageSearch
 
@@ -134,5 +134,4 @@ class MainPageFragment : Fragment() {
         val imm = activity?.getSystemService(Context.INPUT_METHOD_SERVICE) as InputMethodManager
         imm.hideSoftInputFromWindow(view.windowToken, 0)
     }
-
 }
