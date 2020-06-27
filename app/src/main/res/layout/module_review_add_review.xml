@@ -15,11 +15,14 @@
 
             <EditText
                 android:id="@+id/individual_review_add_title"
-                android:layout_width="wrap_content"
+                android:layout_width="0dp"
                 android:layout_height="wrap_content"
                 android:layout_marginStart="16dp"
                 android:layout_marginTop="8dp"
+                android:layout_marginEnd="16dp"
                 android:hint="Title"
+                android:textSize="24sp"
+                app:layout_constraintEnd_toEndOf="parent"
                 app:layout_constraintStart_toStartOf="parent"
                 app:layout_constraintTop_toBottomOf="@+id/individual_review_header" />
 
@@ -29,76 +32,29 @@
                 android:layout_height="wrap_content"
                 android:layout_marginStart="16dp"
                 android:layout_marginTop="8dp"
+                android:paddingStart="4dp"
+                android:paddingEnd="4dp"
                 android:text="Date"
+                android:textSize="20sp"
                 app:layout_constraintStart_toStartOf="parent"
                 app:layout_constraintTop_toBottomOf="@+id/individual_review_add_title" />
-
-            <EditText
-                android:id="@+id/individual_review_add_ratings"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_marginStart="16dp"
-                android:layout_marginTop="8dp"
-                android:hint="Ratings"
-
-                android:inputType="number"
-                app:layout_constraintStart_toStartOf="parent"
-                app:layout_constraintTop_toBottomOf="@+id/individual_review_add_date" />
-
-            <EditText
-                android:id="@+id/individual_review_add_expected"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_marginStart="16dp"
-                android:hint="Expected Grade"
-                app:layout_constraintBaseline_toBaselineOf="@+id/individual_review_add_actual"
-                app:layout_constraintStart_toStartOf="parent" />
-
-            <EditText
-                android:id="@+id/individual_review_add_actual"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_marginStart="16dp"
-                android:layout_marginTop="8dp"
-                android:hint="Actual Grade"
-                app:layout_constraintStart_toEndOf="@+id/individual_review_add_expected"
-                app:layout_constraintTop_toBottomOf="@+id/individual_review_add_ratings" />
-
-            <EditText
-                android:id="@+id/individual_review_add_commitment"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_marginStart="16dp"
-                android:layout_marginTop="8dp"
-                android:hint="Commitment"
-                app:layout_constraintStart_toStartOf="parent"
-                app:layout_constraintTop_toBottomOf="@+id/individual_review_add_expected" />
-
-            <EditText
-                android:id="@+id/individual_review_add_workload"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_marginStart="16dp"
-                android:layout_marginTop="8dp"
-                android:hint="Workload"
-                app:layout_constraintStart_toStartOf="parent"
-                app:layout_constraintTop_toBottomOf="@+id/individual_review_add_commitment" />
 
             <EditText
                 android:id="@+id/individual_review_add_prof"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_marginStart="16dp"
-                android:layout_marginTop="8dp"
+                android:layout_marginTop="12dp"
                 android:hint="Professor"
                 app:layout_constraintStart_toStartOf="parent"
-                app:layout_constraintTop_toBottomOf="@+id/individual_review_add_workload" />
+                app:layout_constraintTop_toBottomOf="@+id/workload_linearlayout" />
 
             <ScrollView
                 android:id="@+id/scrollView2"
                 android:layout_width="0dp"
                 android:layout_height="wrap_content"
                 android:layout_marginStart="16dp"
+                android:layout_marginTop="12dp"
                 android:layout_marginEnd="16dp"
                 android:layout_marginBottom="16dp"
                 app:layout_constraintBottom_toTopOf="@+id/individual_review_post_review"
@@ -136,12 +92,148 @@
                 android:id="@+id/individual_review_header"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:layout_marginTop="8dp"
+                android:layout_marginTop="16dp"
                 android:text="ADD REVIEW"
                 android:textSize="24sp"
                 app:layout_constraintEnd_toEndOf="parent"
                 app:layout_constraintStart_toStartOf="parent"
                 app:layout_constraintTop_toTopOf="parent" />
+
+            <RatingBar
+                android:id="@+id/individual_review_add_ratingBar"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="8dp"
+                android:numStars="5"
+                android:rating="0"
+                android:stepSize="1"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toBottomOf="@+id/individual_review_add_date" />
+
+            <LinearLayout
+                android:id="@+id/expected_grade_linearlayout"
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_marginStart="16dp"
+                android:layout_marginTop="16dp"
+                android:layout_marginEnd="16dp"
+                android:orientation="horizontal"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toBottomOf="@+id/individual_review_add_ratingBar">
+
+                <TextView
+                    android:id="@+id/individual_review_add_expected_text"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginStart="8dp"
+                    android:layout_marginTop="4dp"
+                    android:layout_marginBottom="4dp"
+                    android:text="Expected Grade"
+                    android:textSize="20sp" />
+
+                <Spinner
+                    android:id="@+id/individual_review_add_expected_spinner"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_marginStart="8dp"
+                    android:layout_marginTop="4dp"
+                    android:layout_marginBottom="4dp" />
+            </LinearLayout>
+
+            <LinearLayout
+                android:id="@+id/actual_grade_linearlayout"
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_marginStart="16dp"
+                android:layout_marginTop="12dp"
+                android:layout_marginEnd="16dp"
+                android:orientation="horizontal"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toBottomOf="@+id/expected_grade_linearlayout">
+
+                <TextView
+                    android:id="@+id/individual_review_add_actual_text"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginStart="8dp"
+                    android:layout_marginTop="4dp"
+                    android:layout_marginBottom="4dp"
+                    android:text="Actual Grade"
+                    android:textSize="20sp" />
+
+                <Spinner
+                    android:id="@+id/individual_review_add_actual_spinner"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_marginStart="8dp"
+                    android:layout_marginTop="4dp"
+                    android:layout_marginBottom="4dp" />
+            </LinearLayout>
+
+            <LinearLayout
+                android:id="@+id/commitment_linearlayout"
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_marginStart="16dp"
+                android:layout_marginTop="12dp"
+                android:layout_marginEnd="16dp"
+                android:orientation="horizontal"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toBottomOf="@+id/actual_grade_linearlayout">
+
+                <TextView
+                    android:id="@+id/individual_review_add_commitment_text"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginStart="8dp"
+                    android:layout_marginTop="4dp"
+                    android:layout_marginBottom="4dp"
+                    android:text="Commitment"
+                    android:textSize="20sp" />
+
+                <Spinner
+                    android:id="@+id/individual_review_add_commitment_spinner"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_marginStart="8dp"
+                    android:layout_marginTop="4dp"
+                    android:layout_marginBottom="4dp" />
+            </LinearLayout>
+
+            <LinearLayout
+                android:id="@+id/workload_linearlayout"
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_marginStart="16dp"
+                android:layout_marginTop="12dp"
+                android:layout_marginEnd="16dp"
+                android:orientation="horizontal"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toBottomOf="@+id/commitment_linearlayout">
+
+                <TextView
+                    android:id="@+id/individual_review_add_workload_text"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginStart="8dp"
+                    android:layout_marginTop="4dp"
+                    android:layout_marginBottom="4dp"
+                    android:text="Workload"
+                    android:textSize="20sp" />
+
+                <Spinner
+                    android:id="@+id/individual_review_add_workload_spinner"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_marginStart="8dp"
+                    android:layout_marginTop="4dp"
+                    android:layout_marginBottom="4dp" />
+            </LinearLayout>
 
 
         </androidx.constraintlayout.widget.ConstraintLayout>

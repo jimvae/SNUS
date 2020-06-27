@@ -10,8 +10,7 @@ import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import android.view.inputmethod.InputMethodManager
-import android.widget.TextView
-import android.widget.Toast
+import android.widget.*
 import androidx.core.view.isVisible
 import androidx.databinding.DataBindingUtil
 import androidx.fragment.app.Fragment
@@ -21,7 +20,6 @@ import androidx.navigation.fragment.findNavController
 import com.google.firebase.auth.FirebaseAuth
 import com.orbital.snus.R
 import com.orbital.snus.data.UserReview
-import com.orbital.snus.databinding.ModuleReviewIndividualModuleBinding
 import com.orbital.snus.databinding.ModuleReviewIndividualReviewBinding
 import kotlinx.android.synthetic.main.module_forum_question_dialog_edit.*
 import kotlinx.android.synthetic.main.module_forum_question_dialog_edit.edit_close
@@ -39,9 +37,24 @@ class IndividualReviewFragment : Fragment() {
     private lateinit var factory: ReviewDataViewModelFactory
 
     private lateinit var dialog: Dialog
-    var reviewDate: Date? = null
+    var reviewDate: Date? = Calendar.getInstance().time // reviewDate will change automatically to today's date
 
     private lateinit var review: UserReview
+
+    val grades = arrayOf("", "A+", "A", "A-", "B+", "B", "B-", "C+", "C", "D+", "D", "F", "CS", "CU")
+    private lateinit var spinnerExpected: Spinner
+    private lateinit var spinnerActual: Spinner
+
+    private lateinit var expected: String
+    private lateinit var actual: String
+
+    val commitmentLevel = arrayOf("", "Low", "Medium", "High")
+    private lateinit var spinnerCommit: Spinner
+    private lateinit var commitment: String
+
+    val workloadLevels = arrayOf("", "Low", "Medium", "High")
+    private lateinit var workloadSpinner: Spinner
+    private lateinit var workload: String
 
     override fun onCreateView(
         inflater: LayoutInflater,
@@ -90,14 +103,16 @@ class IndividualReviewFragment : Fragment() {
         val dateFormatter1: SimpleDateFormat = SimpleDateFormat("dd MMM yy")
 
         binding.individualReviewTitle.text = review.title
-        binding.individualReviewActual.text = "Actual Grade: " + review.actualGrade
-        binding.individualReviewCommitment.text = "Commitment: " + review.commitment
+        binding.individualReviewActual.text = review.actualGrade
+        binding.individualReviewCommitment.text = review.commitment
         binding.individualReviewDate.text = dateFormatter1.format(review.date!!).toPattern().toString()
-        binding.individualReviewExpected.text = "Expected Grade: " + review.expectedGrade
-        binding.individualReviewProf.text = "Professor: " + review.prof
-        binding.individualReviewDescription.text = "Description:\n" + review.description
-        binding.individualReviewWorkload.text = "Workload: " + review.workload
-        binding.individualReviewRatings.text = review.rating.toString() + " out of 5"
+        binding.individualReviewExpected.text = review.expectedGrade
+        binding.individualReviewProf.text = review.prof
+        binding.individualReviewDescription.text = review.description
+        binding.individualReviewWorkload.text = review.workload
+
+        binding.individualReviewRatingBar.rating = review.rating!!.toFloat()
+        binding.individualReviewRatingBar.setIsIndicator(true)
     }
 
     // user can see and interact with edit and delete buttons
@@ -122,22 +137,95 @@ class IndividualReviewFragment : Fragment() {
 
         val dateFormatter1: SimpleDateFormat = SimpleDateFormat("dd MMM yy")
         dialog.edit_title.setText(review.title)
-        dialog.edit_rating.setText(review.rating.toString())
-        dialog.edit_date.setText(dateFormatter1.format(review.date!!).toPattern().toString())
-        dialog.edit_expected.setText(review.expectedGrade)
-        dialog.edit_actual.setText(review.actualGrade)
-        dialog.edit_commitment.setText(review.commitment)
-        dialog.edit_workload.setText(review.workload)
+        dialog.edit_ratingbar.rating = review.rating!!.toFloat()
+        dialog.edit_date.setText(dateFormatter1.format(reviewDate!!).toPattern().toString())
         dialog.edit_prof.setText(review.prof)
         dialog.edit_description.setText(review.description)
 
+        spinnerExpected = dialog.spinner_expected
+        spinnerExpected.adapter = ArrayAdapter(requireContext(), R.layout.module_review_spinner_layout, grades)
+
+        spinnerExpected.onItemSelectedListener = object : AdapterView.OnItemSelectedListener{
+            override fun onNothingSelected(parent: AdapterView<*>?) {
+                expected = ""
+            }
+
+            override fun onItemSelected(
+                parent: AdapterView<*>?,
+                view: View?,
+                position: Int,
+                id: Long
+            ) {
+                expected = grades.get(position)
+            }
+
+        }
+
+        spinnerActual = dialog.spinner_actual
+        spinnerActual.adapter = ArrayAdapter(requireContext(), R.layout.module_review_spinner_layout, grades)
+
+        spinnerActual.onItemSelectedListener = object : AdapterView.OnItemSelectedListener{
+            override fun onNothingSelected(parent: AdapterView<*>?) {
+                actual = ""
+            }
+
+            override fun onItemSelected(
+                parent: AdapterView<*>?,
+                view: View?,
+                position: Int,
+                id: Long
+            ) {
+                actual = grades.get(position)
+            }
+
+        }
+
+        spinnerCommit = dialog.spinner_commitment
+        spinnerCommit.adapter = ArrayAdapter(requireContext(), R.layout.module_review_spinner_layout, commitmentLevel)
+
+        spinnerCommit.onItemSelectedListener = object : AdapterView.OnItemSelectedListener{
+            override fun onNothingSelected(parent: AdapterView<*>?) {
+                commitment = ""
+            }
+
+            override fun onItemSelected(
+                parent: AdapterView<*>?,
+                view: View?,
+                position: Int,
+                id: Long
+            ) {
+                commitment = commitmentLevel.get(position)
+            }
+
+        }
+
+        workloadSpinner = dialog.spinner_workload
+        workloadSpinner.adapter = ArrayAdapter(requireContext(), R.layout.module_review_spinner_layout, workloadLevels)
+
+        workloadSpinner.onItemSelectedListener = object : AdapterView.OnItemSelectedListener{
+            override fun onNothingSelected(parent: AdapterView<*>?) {
+                workload = ""
+            }
+
+            override fun onItemSelected(
+                parent: AdapterView<*>?,
+                view: View?,
+                position: Int,
+                id: Long
+            ) {
+                workload = workloadLevels.get(position)
+            }
+
+        }
+
+
+        spinnerExpected.prompt = review.expectedGrade
+        spinnerActual.prompt = review.actualGrade
+        spinnerCommit.prompt = review.commitment
+        workloadSpinner.prompt = review.workload
+
         dialog.getWindow()?.setBackgroundDrawable(ColorDrawable(Color.TRANSPARENT))
         dialog.show()
-
-        dialog.edit_date.setOnClickListener {
-            hideKeyboard(it)
-            setDate(it as TextView)
-        }
 
         dialog.edit_description.setOnFocusChangeListener { v, hasFocus ->
             if (!hasFocus) {
@@ -147,21 +235,13 @@ class IndividualReviewFragment : Fragment() {
 
         dialog.edit_close.setOnClickListener { dialog.dismiss() }
         dialog.edit_confirm.setOnClickListener {
-            val title = dialog.edit_title.text.toString()
-            val rating = dialog.edit_rating.text.toString()
-            val expected = dialog.edit_expected.text.toString()
-            val actual = dialog.edit_actual.text.toString()
-            val commitment = dialog.edit_commitment.text.toString()
-            val workload = dialog.edit_workload.text.toString()
-            val professor = dialog.edit_prof.text.toString()
-            val description = dialog.edit_description.text.toString()
+            val title = dialog.edit_title.text.toString().trim()
+            val rating = dialog.edit_ratingbar.rating.toInt().toString()
+            val professor = dialog.edit_prof.text.toString().trim()
+            val description = dialog.edit_description.text.toString().trim()
 
             if (title == "") {
                 Toast.makeText(requireContext(), "Please enter Review title", Toast.LENGTH_SHORT)
-                    .show()
-                return@setOnClickListener
-            } else if (reviewDate == null) {
-                Toast.makeText(requireContext(), "Please enter Review date", Toast.LENGTH_SHORT)
                     .show()
                 return@setOnClickListener
             } else if (rating.toInt() > 5 || rating.toInt() < 0) {
@@ -230,44 +310,14 @@ class IndividualReviewFragment : Fragment() {
 
     fun configureDialog(boolean: Boolean) {
         dialog.edit_title.isEnabled = boolean
-        dialog.edit_rating.isEnabled = boolean
+        dialog.edit_ratingbar.isEnabled = boolean
         dialog.edit_date.isEnabled = boolean
-        dialog.edit_expected.isEnabled = boolean
-        dialog.edit_actual.isEnabled = boolean
-        dialog.edit_commitment.isEnabled = boolean
-        dialog.edit_workload.isEnabled = boolean
+        dialog.spinner_expected.isEnabled = boolean
+        dialog.spinner_actual.isEnabled = boolean
+        dialog.spinner_commitment.isEnabled = boolean
+        dialog.spinner_workload.isEnabled = boolean
         dialog.edit_prof.isEnabled = boolean
         dialog.edit_description.isEnabled = boolean
-    }
-
-    fun setDate (v: TextView) {
-
-        // Calendar and Date variables
-        val c = Calendar.getInstance()
-        var mYear = c[Calendar.YEAR]
-        var mMonth = c[Calendar.MONTH]
-        var mDay = c[Calendar.DAY_OF_MONTH]
-
-
-        var dateFormatter: SimpleDateFormat = SimpleDateFormat("dd MMM YYYY") //\n'hh:mm a")
-
-
-        // DATEPICKER
-        val datePickerDialog = DatePickerDialog(
-            this.requireContext(),
-            DatePickerDialog.OnDateSetListener { _, year, monthOfYear, dayOfMonth ->
-                mYear = year
-                mMonth = monthOfYear
-                mDay = dayOfMonth
-                c.set(mYear, mMonth, mDay)
-
-                reviewDate = c.time
-                v.text = dateFormatter.format(reviewDate!!).toPattern().toString()
-
-            }, mYear, mMonth, mDay
-        )
-
-        datePickerDialog.show()
     }
 
     fun hideKeyboard(view: View) {

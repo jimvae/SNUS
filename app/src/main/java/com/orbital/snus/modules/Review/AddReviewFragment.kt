@@ -8,8 +8,7 @@ import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import android.view.inputmethod.InputMethodManager
-import android.widget.TextView
-import android.widget.Toast
+import android.widget.*
 import androidx.databinding.DataBindingUtil
 import androidx.fragment.app.Fragment
 import androidx.lifecycle.ViewModelProvider
@@ -35,8 +34,22 @@ class AddReviewFragment : Fragment() {
     private lateinit var viewModel: ReviewDataViewModel
     private lateinit var binding: ModuleReviewAddReviewBinding
 
-    var reviewDate: Date? = null
+    var reviewDate: Date? = Calendar.getInstance().time
 
+    val grades = arrayOf("", "A+", "A", "A-", "B+", "B", "B-", "C+", "C", "D+", "D", "F", "CS", "CU")
+    private lateinit var spinnerExpected: Spinner
+    private lateinit var spinnerActual: Spinner
+
+    private lateinit var expected: String
+    private lateinit var actual: String
+
+    val commitmentLevel = arrayOf("", "Low", "Medium", "High")
+    private lateinit var spinnerCommit: Spinner
+    private lateinit var commitment: String
+
+    val workloadLevels = arrayOf("", "Low", "Medium", "High")
+    private lateinit var workloadSpinner: Spinner
+    private lateinit var workload: String
 
     override fun onCreateView(
         inflater: LayoutInflater,
@@ -53,11 +66,10 @@ class AddReviewFragment : Fragment() {
 
         factory = ReviewDataViewModelFactory(moduleName)
         viewModel = ViewModelProvider(this, factory).get(ReviewDataViewModel::class.java)
+        spinnerSetup()
 
-        binding.individualReviewAddDate.setOnClickListener {
-            hideKeyboard(it)
-            setDate(it as TextView)
-        }
+        var dateFormatter: SimpleDateFormat = SimpleDateFormat("dd MMM YYYY") //\n'hh:mm a")
+        binding.individualReviewAddDate.text = dateFormatter.format(reviewDate!!).toPattern().toString()
 
         binding.individualReviewAddDescription.setOnFocusChangeListener { v, hasFocus ->
             if (!hasFocus) {
@@ -66,21 +78,13 @@ class AddReviewFragment : Fragment() {
         }
 
         binding.individualReviewPostReview.setOnClickListener {
-            val title = binding.individualReviewAddTitle.text.toString()
-            val rating = binding.individualReviewAddRatings.text.toString()
-            val expected = binding.individualReviewAddExpected.text.toString()
-            val actual = binding.individualReviewAddActual.text.toString()
-            val commitment = binding.individualReviewAddCommitment.text.toString()
-            val workload = binding.individualReviewAddWorkload.text.toString()
-            val professor = binding.individualReviewAddProf.text.toString()
-            val description = binding.individualReviewAddDescription.text.toString()
+            val title = binding.individualReviewAddTitle.text.toString().trim()
+            val rating = binding.individualReviewAddRatingBar.rating.toInt().toString().trim()
+            val professor = binding.individualReviewAddProf.text.toString().trim()
+            val description = binding.individualReviewAddDescription.text.toString().trim()
 
             if (title == "") {
                 Toast.makeText(requireContext(), "Please enter Review title", Toast.LENGTH_SHORT)
-                    .show()
-                return@setOnClickListener
-            } else if (reviewDate == null) {
-                Toast.makeText(requireContext(), "Please enter Review date", Toast.LENGTH_SHORT)
                     .show()
                 return@setOnClickListener
             } else if (rating.toInt() > 5 || rating.toInt() < 0) {
@@ -140,46 +144,15 @@ class AddReviewFragment : Fragment() {
 
     fun configurePage(boolean: Boolean) {
         binding.individualReviewAddTitle.isEnabled = boolean
-        binding.individualReviewAddDate.isEnabled = boolean
-        binding.individualReviewAddRatings.isEnabled = boolean
-        binding.individualReviewAddExpected.isEnabled = boolean
-        binding.individualReviewAddActual.isEnabled = boolean
-        binding.individualReviewAddCommitment.isEnabled = boolean
-        binding.individualReviewAddWorkload.isEnabled = boolean
+        binding.individualReviewAddRatingBar.isEnabled = boolean
+        binding.individualReviewAddExpectedSpinner.isEnabled = boolean
+        binding.individualReviewAddActualSpinner.isEnabled = boolean
+        binding.individualReviewAddCommitmentSpinner.isEnabled = boolean
+        binding.individualReviewAddWorkloadSpinner.isEnabled = boolean
         binding.individualReviewAddProf.isEnabled = boolean
         binding.individualReviewAddDescription.isEnabled = boolean
 
         binding.individualReviewPostReview.isEnabled = boolean
-    }
-
-    fun setDate (v: TextView) {
-
-        // Calendar and Date variables
-        val c = Calendar.getInstance()
-        var mYear = c[Calendar.YEAR]
-        var mMonth = c[Calendar.MONTH]
-        var mDay = c[Calendar.DAY_OF_MONTH]
-
-
-        var dateFormatter: SimpleDateFormat = SimpleDateFormat("dd MMM YYYY") //\n'hh:mm a")
-
-
-        // DATEPICKER
-        val datePickerDialog = DatePickerDialog(
-            this.requireContext(),
-            DatePickerDialog.OnDateSetListener { _, year, monthOfYear, dayOfMonth ->
-                mYear = year
-                mMonth = monthOfYear
-                mDay = dayOfMonth
-                c.set(mYear, mMonth, mDay)
-
-                        reviewDate = c.time
-                        v.text = dateFormatter.format(reviewDate!!).toPattern().toString()
-
-            }, mYear, mMonth, mDay
-        )
-
-        datePickerDialog.show()
     }
 
     fun hideKeyboard(view: View) {
@@ -190,5 +163,83 @@ class AddReviewFragment : Fragment() {
     override fun onDestroyView() {
         super.onDestroyView()
         (activity as ModulesActivity).showNavBar()
+    }
+
+    fun spinnerSetup() {
+        spinnerExpected = binding.individualReviewAddExpectedSpinner
+        spinnerExpected.adapter = ArrayAdapter(requireContext(), R.layout.module_review_spinner_layout, grades)
+
+        spinnerExpected.onItemSelectedListener = object : AdapterView.OnItemSelectedListener{
+            override fun onNothingSelected(parent: AdapterView<*>?) {
+                expected = ""
+            }
+
+            override fun onItemSelected(
+                parent: AdapterView<*>?,
+                view: View?,
+                position: Int,
+                id: Long
+            ) {
+                expected = grades.get(position)
+            }
+
+        }
+
+        spinnerActual = binding.individualReviewAddActualSpinner
+        spinnerActual.adapter = ArrayAdapter(requireContext(), R.layout.module_review_spinner_layout, grades)
+
+        spinnerActual.onItemSelectedListener = object : AdapterView.OnItemSelectedListener{
+            override fun onNothingSelected(parent: AdapterView<*>?) {
+                actual = ""
+            }
+
+            override fun onItemSelected(
+                parent: AdapterView<*>?,
+                view: View?,
+                position: Int,
+                id: Long
+            ) {
+                actual = grades.get(position)
+            }
+
+        }
+
+        spinnerCommit = binding.individualReviewAddCommitmentSpinner
+                spinnerCommit.adapter = ArrayAdapter(requireContext(), R.layout.module_review_spinner_layout, commitmentLevel)
+
+        spinnerCommit.onItemSelectedListener = object : AdapterView.OnItemSelectedListener{
+            override fun onNothingSelected(parent: AdapterView<*>?) {
+                commitment = ""
+            }
+
+            override fun onItemSelected(
+                parent: AdapterView<*>?,
+                view: View?,
+                position: Int,
+                id: Long
+            ) {
+                commitment = commitmentLevel.get(position)
+            }
+
+        }
+
+        workloadSpinner = binding.individualReviewAddWorkloadSpinner
+        workloadSpinner.adapter = ArrayAdapter(requireContext(), R.layout.module_review_spinner_layout, workloadLevels)
+
+        workloadSpinner.onItemSelectedListener = object : AdapterView.OnItemSelectedListener{
+            override fun onNothingSelected(parent: AdapterView<*>?) {
+                workload = ""
+            }
+
+            override fun onItemSelected(
+                parent: AdapterView<*>?,
+                view: View?,
+                position: Int,
+                id: Long
+            ) {
+                workload = workloadLevels.get(position)
+            }
+
+        }
     }
 }
