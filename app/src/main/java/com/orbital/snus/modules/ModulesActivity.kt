@@ -1,10 +1,15 @@
 package com.orbital.snus.modules
 
+import android.content.Context
 import android.content.Intent
-import androidx.appcompat.app.AppCompatActivity
+import android.graphics.Rect
 import android.os.Bundle
 import android.view.MenuItem
+import android.view.MotionEvent
 import android.view.View
+import android.view.inputmethod.InputMethodManager
+import android.widget.EditText
+import androidx.appcompat.app.AppCompatActivity
 import androidx.databinding.DataBindingUtil
 import com.orbital.snus.R
 import com.orbital.snus.dashboard.DashboardActivity
@@ -12,6 +17,7 @@ import com.orbital.snus.databinding.ActivityModulesBinding
 import com.orbital.snus.groups.GroupsActivity
 import com.orbital.snus.messages.MessagesActivity
 import com.orbital.snus.profile.ProfileActivity
+
 
 class ModulesActivity : AppCompatActivity() {
 
@@ -60,5 +66,22 @@ class ModulesActivity : AppCompatActivity() {
 
     fun showNavBar() {
         binding.bottomNavigationMenu.visibility = View.VISIBLE
+    }
+
+    override fun dispatchTouchEvent(event: MotionEvent): Boolean {
+        if (event.action == MotionEvent.ACTION_DOWN) {
+            val v = currentFocus
+            if (v is EditText) {
+                val outRect = Rect()
+                v.getGlobalVisibleRect(outRect)
+                if (!outRect.contains(event.rawX.toInt(), event.rawY.toInt())) {
+                    v.clearFocus()
+                    val imm: InputMethodManager =
+                        getSystemService(Context.INPUT_METHOD_SERVICE) as InputMethodManager
+                    imm.hideSoftInputFromWindow(v.getWindowToken(), 0)
+                }
+            }
+        }
+        return super.dispatchTouchEvent(event)
     }
 }
