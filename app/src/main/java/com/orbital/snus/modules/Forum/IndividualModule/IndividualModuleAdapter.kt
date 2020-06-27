@@ -7,9 +7,9 @@ import android.view.ViewGroup
 import androidx.navigation.findNavController
 import androidx.recyclerview.widget.RecyclerView
 import com.orbital.snus.R
-import com.orbital.snus.modules.Forum.MainPage.MainPageAdapter
-import kotlinx.android.synthetic.main.module_forum_individual_module.view.*
 import kotlinx.android.synthetic.main.module_forum_recycler_enrolled_individual.view.*
+import kotlinx.android.synthetic.main.module_forum_recycler_enrolled_individual.view.Sub_forums_enrolled_individual_name
+import kotlinx.android.synthetic.main.module_forum_recycler_enrolled_individual.view.sub_forums_arrow_button
 import kotlinx.android.synthetic.main.module_forum_recycler_sub_forums.view.*
 
 class IndividualModuleAdapter (val moduleName: String, val subForums: List<String>) :
@@ -36,9 +36,9 @@ class IndividualModuleAdapter (val moduleName: String, val subForums: List<Strin
     override fun onBindViewHolder(holder: SubForumViewHolder, position: Int) {
         val subForum = subForums[position]
 
-        holder.textView.module_sub_forum_name.setText(subForum)
+        holder.textView.Sub_forums_enrolled_individual_name.setText(subForum)
 
-        holder.textView.setOnClickListener(onClickListener(subForum))
+        holder.textView.sub_forums_arrow_button.setOnClickListener(onClickListener(subForum))
     }
 
     private fun onClickListener(subForum: String): View.OnClickListener? {
