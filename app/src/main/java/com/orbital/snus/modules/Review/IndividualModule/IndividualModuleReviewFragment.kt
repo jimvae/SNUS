@@ -62,7 +62,7 @@ class IndividualModuleReviewFragment : Fragment() {
 
         viewModel.reviewList.observe(viewLifecycleOwner, androidx.lifecycle.Observer<List<UserReview>> { dbReviews ->
             reviewList.removeAll(reviewList)
-            reviewList.addAll(dbReviews)
+            reviewList.addAll(dbReviews.sortedByDescending { it.date })
             recyclerView.adapter!!.notifyDataSetChanged()
         })
         return binding.root
