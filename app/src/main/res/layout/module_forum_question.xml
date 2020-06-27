@@ -8,6 +8,18 @@
     android:layout_height="match_parent">
 
     <TextView
+        android:id="@+id/button_back"
+        android:layout_width="0dp"
+        android:layout_height="200dp"
+        android:background="@drawable/blue_gradient"
+        android:textSize="12sp"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.0"
+        app:layout_constraintStart_toStartOf="parent"
+        tools:layout_editor_absoluteY="2dp" />
+
+
+    <TextView
         android:id="@+id/text_title"
         android:layout_width="0dp"
         android:layout_height="wrap_content"
@@ -16,6 +28,7 @@
         android:layout_marginEnd="16dp"
         android:text="Title"
         android:textAlignment="viewStart"
+        android:textColor="@android:color/white"
         android:textSize="32sp"
         app:layout_constraintEnd_toStartOf="@+id/button_answer"
         app:layout_constraintStart_toStartOf="parent"
@@ -24,12 +37,16 @@
     <TextView
         android:id="@+id/text_question"
         android:layout_width="0dp"
-        android:layout_height="wrap_content"
+        android:layout_height="0dp"
         android:layout_marginStart="32dp"
         android:layout_marginTop="20dp"
         android:layout_marginEnd="32dp"
+        android:layout_marginBottom="24dp"
+        android:background="@drawable/common_google_signin_btn_icon_light_normal_background"
         android:text="Question"
+        android:textColor="@color/color_NUS"
         android:textSize="20sp"
+        app:layout_constraintBottom_toTopOf="@+id/button_edit"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/text_title" />
@@ -38,18 +55,22 @@
         android:id="@+id/button_edit"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_marginStart="64dp"
         android:layout_marginBottom="32dp"
+        android:background="@drawable/blue_button"
         android:text="Edit"
+        android:textColor="@android:color/white"
         app:layout_constraintBottom_toBottomOf="parent"
-        app:layout_constraintStart_toStartOf="parent" />
+        app:layout_constraintEnd_toStartOf="@+id/button_delete"
+        app:layout_constraintStart_toEndOf="@+id/resolved_button" />
 
     <Button
         android:id="@+id/button_delete"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_marginEnd="64dp"
+        android:layout_marginEnd="32dp"
+        android:background="@drawable/blue_button"
         android:text="Delete"
+        android:textColor="@android:color/white"
         app:layout_constraintBaseline_toBaselineOf="@+id/button_edit"
         app:layout_constraintEnd_toEndOf="parent" />
 
@@ -59,8 +80,23 @@
         android:layout_height="wrap_content"
         android:layout_marginTop="32dp"
         android:layout_marginEnd="32dp"
+        android:background="@drawable/common_google_signin_btn_icon_light_normal_background"
         android:text="Answers"
+        android:textColor="@color/color_S"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintTop_toTopOf="parent" />
+
+    <Button
+        android:id="@+id/resolved_button"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="32dp"
+        android:background="@drawable/blue_button"
+        android:paddingLeft="10dp"
+        android:paddingRight="10dp"
+        android:text="Mark as Resolved"
+        android:textColor="@android:color/white"
+        app:layout_constraintBaseline_toBaselineOf="@+id/button_edit"
+        app:layout_constraintStart_toStartOf="parent" />
 </androidx.constraintlayout.widget.ConstraintLayout>
 </layout>

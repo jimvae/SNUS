@@ -101,6 +101,36 @@ class QuestionFragment : Fragment() {
             })
         }
 
+        binding.resolvedButton.setOnClickListener {
+            post.resolvedPost()
+            viewModel.updatePost(post)
+
+            viewModel.updateSuccess.observe(viewLifecycleOwner, Observer {
+                if (it != null) {
+                    Toast.makeText(requireContext(), "Post resolved", Toast.LENGTH_SHORT)
+                        .show()
+                    viewModel.updatePostSuccessCompleted()
+
+                    // unlock page
+                    configurePage(true)
+
+                    //updates the field of events fragment
+                    initiateViews()
+                }
+            })
+            viewModel.updateFailure.observe(viewLifecycleOwner, androidx.lifecycle.Observer {
+                if (it != null) {
+                    Toast.makeText(requireContext(), it.toString(), Toast.LENGTH_SHORT).show()
+                    viewModel.updatePostFailureCompleted()
+
+                    // unlock page
+                    configureDialog(true)
+                    configurePage(true)
+                }
+            })
+
+        }
+
         return binding.root
     }
 
@@ -128,6 +158,9 @@ class QuestionFragment : Fragment() {
         binding.buttonDelete.isVisible = boolean
         binding.buttonDelete.isEnabled = boolean
 
+        binding.resolvedButton.isVisible = boolean
+        binding.resolvedButton.isEnabled = boolean
+
         binding.buttonEdit.isVisible = boolean
         binding.buttonEdit.isEnabled = boolean
     }
@@ -137,6 +170,7 @@ class QuestionFragment : Fragment() {
         if (userPrivilege == true) {
             binding.buttonEdit.isEnabled = boolean
             binding.buttonDelete.isEnabled = boolean
+            binding.resolvedButton.isEnabled = boolean
         }
     }
 

@@ -31,14 +31,15 @@ class IndividualModuleFragment: Fragment() {
         inflater: LayoutInflater,
         container: ViewGroup?, savedInstanceState: Bundle?
     ): View? {
+        val moduleName: String = (requireArguments().get("module") as String)
 
-        factory = IndividualModuleViewModelFactory(requireArguments().get("module") as String)
+
+        factory = IndividualModuleViewModelFactory(moduleName)
 
         val binding: ModuleForumIndividualModuleBinding = DataBindingUtil.inflate(
             inflater, R.layout.module_forum_individual_module, container, false
         )
 
-        val moduleName: String = (requireArguments().get("module") as String)
         binding.moduleForumIndividualModuleTitle.text = moduleName
 
 

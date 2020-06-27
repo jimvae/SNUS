@@ -17,4 +17,8 @@ data class ForumPost (val userid: String? = null, var id: String? = null,
         this.question = question
         this.date = Calendar.getInstance().time
     }
+
+    fun resolvedPost() {
+        this.status = !this.status!!
+    }
 }

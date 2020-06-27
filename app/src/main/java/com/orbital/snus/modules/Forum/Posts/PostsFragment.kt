@@ -50,6 +50,8 @@ class PostsFragment : Fragment() {
         val moduleName = (requireArguments().get("module") as String)
         val subForum = (requireArguments().get("subForum") as String)
 
+        binding.moduleForumPostsTitles.setText("$moduleName $subForum")
+
         factory = PostViewModelFactory(moduleName, subForum)
         viewModel = ViewModelProvider(this, factory).get(PostViewModel::class.java)
 

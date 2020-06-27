@@ -4,8 +4,10 @@ import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import androidx.core.view.isVisible
 import androidx.navigation.findNavController
 import androidx.recyclerview.widget.RecyclerView
+import com.google.firebase.auth.FirebaseAuth
 import com.orbital.snus.R
 import com.orbital.snus.data.ForumComment
 import com.orbital.snus.data.ForumPost
@@ -16,7 +18,12 @@ import kotlinx.android.synthetic.main.module_forum_recycler_posts.view.*
 import java.text.SimpleDateFormat
 
 class AnswersAdapter (val answerList: List<ForumComment>) :
+
     RecyclerView.Adapter<AnswersAdapter.AnswersHolder>() {
+    val firebaseAuth = FirebaseAuth.getInstance()
+    val userID = firebaseAuth.currentUser!!.uid
+
+
 
     class AnswersHolder(val textView: View) : RecyclerView.ViewHolder(textView)
 
@@ -44,9 +51,34 @@ class AnswersAdapter (val answerList: List<ForumComment>) :
         // Should the format include date? if not the display a bit weird
         val dateFormatter: SimpleDateFormat = SimpleDateFormat("dd/MM/yyyy | hh:mm a")
 
-        holder.textView.module_forum_recycler_answers_answer.text = answer.text
-        holder.textView.module_forum_recycler_answers_name.text = "Author Random ID"
-        holder.textView.module_forum_recycler_answers_date.text = dateFormatter.format(answer.date!!).toPattern().toString()
+        if (answer.userID == userID) {
+            holder.textView.module_forum_recycler_answers_your_answer.text = answer.text
+            holder.textView.module_forum_recycler_answers_your_name.text = "You"
+            holder.textView.module_forum_recycler_answers_your_date.text =
+                dateFormatter.format(answer.date!!).toPattern().toString()
+            holder.textView.module_forum_recycler_answers_answer.isEnabled = false
+            holder.textView.module_forum_recycler_answers_answer.isVisible = false
+            holder.textView.module_forum_recycler_answers_date.isEnabled = false
+            holder.textView.module_forum_recycler_answers_date.isVisible = false
+            holder.textView.module_forum_recycler_answers_name.isEnabled = false
+            holder.textView.module_forum_recycler_answers_name.isVisible = false
+
+        } else {
+            holder.textView.module_forum_recycler_answers_answer.text = answer.text
+            holder.textView.module_forum_recycler_answers_name.text = "#ID"
+            holder.textView.module_forum_recycler_answers_date.text =
+                dateFormatter.format(answer.date!!).toPattern().toString()
+
+            holder.textView.module_forum_recycler_answers_your_answer.isEnabled = false
+            holder.textView.module_forum_recycler_answers_your_answer.isVisible = false
+            holder.textView.module_forum_recycler_answers_your_date.isEnabled = false
+            holder.textView.module_forum_recycler_answers_your_date.isVisible = false
+            holder.textView.module_forum_recycler_answers_your_name.isEnabled = false
+            holder.textView.module_forum_recycler_answers_your_name.isVisible = false
+
+
+        }
+
 
     }
 
