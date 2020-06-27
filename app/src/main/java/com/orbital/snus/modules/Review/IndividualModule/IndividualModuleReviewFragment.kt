@@ -17,7 +17,6 @@ import com.google.firebase.firestore.auth.User
 import com.orbital.snus.R
 import com.orbital.snus.data.UserReview
 import com.orbital.snus.databinding.ModuleReviewIndividualModuleBinding
-import com.orbital.snus.databinding.ModuleReviewMainPageBinding
 import com.orbital.snus.modules.Forum.IndividualModule.IndividualModuleAdapter
 import com.orbital.snus.modules.Forum.IndividualModule.IndividualModuleViewModel
 import com.orbital.snus.modules.Forum.IndividualModule.IndividualModuleViewModelFactory

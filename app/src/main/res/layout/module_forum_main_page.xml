@@ -10,12 +10,35 @@
         android:layout_width="match_parent"
         android:layout_height="match_parent">
 
+        <EditText
+            android:id="@+id/module_review_main_page_search"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginStart="16dp"
+            android:layout_marginTop="8dp"
+            android:ems="10"
+            android:hint="Search Module Reviews"
+            android:inputType="textPersonName"
+            app:layout_constraintEnd_toStartOf="@+id/button"
+            app:layout_constraintHorizontal_bias="0.897"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@+id/forum_main_page_title" />
+
+        <Button
+            android:id="@+id/button"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginEnd="16dp"
+            android:text="Search"
+            app:layout_constraintBaseline_toBaselineOf="@+id/module_review_main_page_search"
+            app:layout_constraintEnd_toEndOf="parent" />
+
         <TextView
             android:id="@+id/forum_main_page_title"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_marginTop="24dp"
-            android:text="Forums"
+            android:text="Modules"
             android:textSize="36sp"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"
@@ -27,23 +50,26 @@
             android:layout_width="0dp"
             android:layout_height="0dp"
 
-            android:layout_marginTop="8dp"
+            android:layout_marginStart="16dp"
+            android:layout_marginTop="16dp"
+            android:layout_marginEnd="16dp"
+            android:layout_marginBottom="16dp"
             android:background="@drawable/common_google_signin_btn_icon_light_normal_background"
             app:layout_constraintBottom_toBottomOf="parent"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toBottomOf="@+id/forum_main_page_title"
+            app:layout_constraintTop_toBottomOf="@+id/textView4"
             tools:listitem="@layout/module_forum_recycler_enrolled_individual" />
 
-        <Button
-            android:id="@+id/button_review"
+        <TextView
+            android:id="@+id/textView4"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_marginTop="24dp"
-            android:layout_marginEnd="24dp"
-            android:text="Reviews"
+            android:layout_marginTop="8dp"
+            android:text="AY2019/20, Special Term II"
             app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintTop_toTopOf="parent" />
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@+id/module_review_main_page_search" />
 
     </androidx.constraintlayout.widget.ConstraintLayout>
 </layout>
