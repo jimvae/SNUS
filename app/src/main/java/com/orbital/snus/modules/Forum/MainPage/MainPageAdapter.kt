@@ -7,8 +7,6 @@ import android.view.ViewGroup
 import androidx.navigation.findNavController
 import androidx.recyclerview.widget.RecyclerView
 import com.orbital.snus.R
-import com.orbital.snus.dashboard.Today.TodayEventAdapter
-import com.orbital.snus.data.UserEvent
 import kotlinx.android.synthetic.main.module_forum_recycler_enrolled_individual.view.*
 
 class MainPageAdapter(val moduleList: List<String>) :
@@ -37,9 +35,9 @@ class MainPageAdapter(val moduleList: List<String>) :
     override fun onBindViewHolder(holder: ModuleViewHolder, position: Int) {
         val module = moduleList[position]
 
-        holder.textView.module_enrolled_individual_name.setText(module)
+        holder.textView.Sub_forums_enrolled_individual_name.setText(module)
 
-        holder.textView.setOnClickListener(onClickListener(module))
+        holder.textView.sub_forums_arrow_button.setOnClickListener(onClickListener(module))
     }
 
     private fun onClickListener(moduleName: String): View.OnClickListener? {
