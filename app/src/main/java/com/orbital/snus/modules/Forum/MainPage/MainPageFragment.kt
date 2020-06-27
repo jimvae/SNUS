@@ -74,15 +74,7 @@ class MainPageFragment : Fragment() {
 
 
 
-        binding.moduleReviewMainPageSearch.setOnFocusChangeListener { v, hasFocus ->
-            if (!hasFocus) {
-                hideKeyboard(v)
-                requireActivity()?.bottom_navigation_menu?.visibility ?: View.VISIBLE
-            } else {
-                requireActivity()?.bottom_navigation_menu?.visibility ?: View.INVISIBLE
 
-            }
-        }
 
 
         binding.button.setOnClickListener {
