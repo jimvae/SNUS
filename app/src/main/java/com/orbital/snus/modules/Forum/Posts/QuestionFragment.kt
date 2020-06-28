@@ -8,6 +8,7 @@ import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import android.widget.Toast
+import androidx.activity.OnBackPressedCallback
 import androidx.core.view.isVisible
 import androidx.databinding.DataBindingUtil
 import androidx.fragment.app.DialogFragment
@@ -114,8 +115,7 @@ class QuestionFragment : Fragment() {
                     // unlock page
                     configurePage(true)
 
-                    //updates the field of events fragment
-                    initiateViews()
+                    findNavController().navigate(R.id.action_questionFragment_to_postsFragment, requireArguments())
                 }
             })
             viewModel.updateFailure.observe(viewLifecycleOwner, androidx.lifecycle.Observer {
@@ -163,6 +163,11 @@ class QuestionFragment : Fragment() {
 
         binding.buttonEdit.isVisible = boolean
         binding.buttonEdit.isEnabled = boolean
+
+        if (post.status!!) {
+            binding.resolvedButton.isVisible = false
+            binding.resolvedButton.isEnabled = false
+        }
     }
 
     fun configurePage(boolean: Boolean) {
@@ -230,6 +235,15 @@ class QuestionFragment : Fragment() {
         dialog.edit_question.isEnabled = boolean
         dialog.edit_close.isEnabled = boolean
         dialog.button_confirm.isEnabled = boolean
+    }
+
+    override fun onCreate(savedInstanceState: Bundle?) {
+        super.onCreate(savedInstanceState)
+        activity?.onBackPressedDispatcher?.addCallback(this, object : OnBackPressedCallback(true) {
+            override fun handleOnBackPressed() {
+                findNavController().navigate(R.id.action_questionFragment_to_postsFragment, requireArguments())
+            }
+        })
     }
 
 //    private fun onClickListener(module:String, subForum:String, question: String): View.OnClickListener? {

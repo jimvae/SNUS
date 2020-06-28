@@ -21,6 +21,7 @@ data class UserReview (var id: String? = null, val userID: String? = null, var t
                      prof: String, description: String) {
         this.title = title
         this.date = date
+        this.rating = rating
         this.expectedGrade = expectedGrade
         this.actualGrade = actualGrade
         this.commitment = commitment

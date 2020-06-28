@@ -35,10 +35,12 @@
         tools:layout="@layout/module_forum_posts" >
         <action
             android:id="@+id/action_postsFragment_to_askQuestionFragment"
-            app:destination="@id/askQuestionFragment" />
+            app:destination="@id/askQuestionFragment"
+            app:popUpTo="@id/postsFragment" />
         <action
             android:id="@+id/action_postsFragment_to_questionFragment"
-            app:destination="@id/questionFragment" />
+            app:destination="@id/questionFragment"
+            app:popUpTo="@id/postsFragment" />
     </fragment>
     <fragment
         android:id="@+id/askQuestionFragment"
@@ -47,7 +49,9 @@
         tools:layout="@layout/module_forum_askquestion">
         <action
             android:id="@+id/action_askQuestionFragment_to_postsFragment"
-            app:destination="@id/postsFragment" />
+            app:destination="@id/postsFragment"
+            app:popUpTo="@id/postsFragment"
+            app:popUpToInclusive="true" />
     </fragment>
     <fragment
         android:id="@+id/questionFragment"
@@ -57,7 +61,8 @@
         <action
             android:id="@+id/action_questionFragment_to_postsFragment"
             app:destination="@id/postsFragment"
-            app:popUpTo="@id/postsFragment" />
+            app:popUpTo="@id/postsFragment"
+            app:popUpToInclusive="true" />
         <action
             android:id="@+id/action_questionFragment_to_answersFragment"
             app:destination="@id/answersFragment" />

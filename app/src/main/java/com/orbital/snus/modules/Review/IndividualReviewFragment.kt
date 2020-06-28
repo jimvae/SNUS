@@ -219,10 +219,11 @@ class IndividualReviewFragment : Fragment() {
         }
 
 
-        spinnerExpected.prompt = review.expectedGrade
-        spinnerActual.prompt = review.actualGrade
-        spinnerCommit.prompt = review.commitment
-        workloadSpinner.prompt = review.workload
+        spinnerExpected.setSelection(grades.indexOf(review.expectedGrade))
+        spinnerActual.setSelection(grades.indexOf(review.actualGrade))
+        spinnerCommit.setSelection(commitmentLevel.indexOf(review.commitment))
+        workloadSpinner.setSelection(workloadLevels.indexOf(review.workload))
+
 
         dialog.getWindow()?.setBackgroundDrawable(ColorDrawable(Color.TRANSPARENT))
         dialog.show()
@@ -276,7 +277,6 @@ class IndividualReviewFragment : Fragment() {
             configurePage(false)
 
             review.updateReview(title, reviewDate!!, rating.toInt(), expected, actual, commitment, workload, professor, description)
-
             viewModel.updateReview(review)
 
             viewModel.updateSuccess.observe(viewLifecycleOwner, Observer {

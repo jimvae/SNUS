@@ -19,6 +19,6 @@ data class ForumPost (val userid: String? = null, var id: String? = null,
     }
 
     fun resolvedPost() {
-        this.status = !this.status!!
+        this.status = true
     }
 }

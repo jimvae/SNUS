@@ -43,7 +43,10 @@ class PostViewAdapter (val bundle: Bundle, val forumList: List<ForumPost>) :
         holder.textView.recycler_post_date.text =
             dateFormatter.format(post.date!!).toPattern().toString()
 
-        resolved(post.status!!, holder)
+        if (post.status == false) {
+            holder.textView.recycler_post_resolved.setText("Unresolved")
+            holder.textView.recycler_post_resolved.setTextColor(Color.RED)
+        }
         holder.textView.setOnClickListener(onClickListener(post))
     }
 
@@ -55,7 +58,7 @@ class PostViewAdapter (val bundle: Bundle, val forumList: List<ForumPost>) :
     }
 
     fun resolved(status: Boolean, holder: PostViewAdapter.PostViewHolder) {
-        if (!status) {
+        if (status == false) {
             holder.textView.recycler_post_resolved.setText("Unresolved")
             holder.textView.recycler_post_resolved.setTextColor(Color.RED)
         }
