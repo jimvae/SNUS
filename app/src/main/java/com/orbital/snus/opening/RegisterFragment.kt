@@ -28,6 +28,7 @@ import com.orbital.snus.R
 import com.orbital.snus.data.UserData
 import com.orbital.snus.data.UserEvent
 import com.orbital.snus.databinding.FragmentOpeningRegisterBinding
+import kotlinx.android.synthetic.main.fragment_opening_register.*
 import java.util.*
 
 /**
@@ -38,7 +39,7 @@ class RegisterFragment : Fragment() {
     private lateinit var firebaseAuth: FirebaseAuth
     private lateinit var firestore: FirebaseFirestore
 
-    private lateinit var fullNameText: EditText
+    private lateinit var confirmPassword: EditText
     private lateinit var emailText: EditText
     private lateinit var passwordText: EditText
     private lateinit var registerButton: Button
@@ -53,7 +54,7 @@ class RegisterFragment : Fragment() {
         firebaseAuth = FirebaseAuth.getInstance()
 
         // Buttons
-        fullNameText = binding.fullNameText
+        confirmPassword = binding.confirmPasswordText
         emailText = binding.emailText
         passwordText = binding.passwordText
         registerButton = binding.registerButton
@@ -66,6 +67,7 @@ class RegisterFragment : Fragment() {
         registerButton.setOnClickListener {
             val email = emailText.text.toString().trim()
             val password = passwordText.text.toString().trim()
+            val confirmPasswordText = confirm_password_text.toString().trim()
 
             if (TextUtils.isEmpty(email)) {
                 emailText.setError("Email is required")
@@ -77,6 +79,16 @@ class RegisterFragment : Fragment() {
                 return@setOnClickListener
             }
 
+            if (TextUtils.isEmpty(confirmPasswordText)) {
+                passwordText.setError("Confirm Password is required")
+                return@setOnClickListener
+            }
+
+            if (!password.equals(confirmPasswordText)) {
+                confirmPassword.setError("Password does not match")
+                return@setOnClickListener
+            }
+
             if (password.length < 6) {
                 passwordText.setError("Password must be at least 6 characters long")
                 return@setOnClickListener
@@ -85,7 +97,7 @@ class RegisterFragment : Fragment() {
             progressBar.visibility = View.VISIBLE
 
             // Set editable fields to be non-editable
-            fullNameText.isEnabled = false
+            confirmPassword.isEnabled = false
             emailText.isEnabled = false
             passwordText.isEnabled = false
             loginButton.isEnabled = false
@@ -121,7 +133,7 @@ class RegisterFragment : Fragment() {
                                 Toast.LENGTH_SHORT
                             ).show()
 
-                            fullNameText.isEnabled = true
+                            confirmPassword.isEnabled = true
                             emailText.isEnabled = true
                             passwordText.isEnabled = true
                             loginButton.isEnabled = true
