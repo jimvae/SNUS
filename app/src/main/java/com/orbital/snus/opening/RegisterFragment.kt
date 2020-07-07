@@ -20,6 +20,7 @@ import com.google.firebase.auth.FirebaseAuth
 import com.google.firebase.firestore.FirebaseFirestore
 import com.orbital.snus.dashboard.DashboardActivity
 import com.orbital.snus.R
+import com.orbital.snus.data.UserData
 import com.orbital.snus.data.UserEvent
 import com.orbital.snus.databinding.FragmentOpeningRegisterBinding
 import java.util.*
@@ -41,7 +42,8 @@ class RegisterFragment : Fragment() {
 
     override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?, savedInstanceState: Bundle?): View? {
         val binding: FragmentOpeningRegisterBinding = DataBindingUtil.inflate(
-            inflater, R.layout.fragment_opening_register, container, false)
+            inflater, R.layout.fragment_opening_register, container, false
+        )
 
         firebaseAuth = FirebaseAuth.getInstance()
 
@@ -85,17 +87,33 @@ class RegisterFragment : Fragment() {
             registerButton.isEnabled = false
 
             firebaseAuth.createUserWithEmailAndPassword(email, password)
-                .addOnCompleteListener {
-                        task ->
+                .addOnCompleteListener { task ->
                     run {
                         if (task.isSuccessful) {
                             firestore = FirebaseFirestore.getInstance()
-                            //createUserData()
+                            // creates blank user data
+                            // this is to be updated later when the user verifies account --> Goes to profile creation
+                            val user: UserData = UserData(firebaseAuth.currentUser?.uid,
+                                null, null, null, null, true)
+
+                            // store user data inside Firestore
+                            // path: users/{userID}
+                            firestore.collection("users").document(user.userID!!).set(user)
+
                             Toast.makeText(this.context, "User Created", Toast.LENGTH_SHORT).show()
-                            startActivity(Intent(activity?.applicationContext, DashboardActivity::class.java))
+                            startActivity(
+                                Intent(
+                                    activity?.applicationContext,
+                                    DashboardActivity::class.java
+                                )
+                            )
                             activity?.finish()
                         } else {
-                            Toast.makeText(this.context, "Error: " + (task.exception?.message ?: "Unknown"), Toast.LENGTH_SHORT).show()
+                            Toast.makeText(
+                                this.context,
+                                "Error: " + (task.exception?.message ?: "Unknown"),
+                                Toast.LENGTH_SHORT
+                            ).show()
 
                             fullNameText.isEnabled = true
                             emailText.isEnabled = true
@@ -110,29 +128,10 @@ class RegisterFragment : Fragment() {
             imm.hideSoftInputFromWindow(it.windowToken, 0)
         }
 
-        loginButton.setOnClickListener {
-            view: View -> view.findNavController().navigate(R.id.action_registerFragment_to_loginFragment)
+        loginButton.setOnClickListener { view: View ->
+            view.findNavController().navigate(R.id.action_registerFragment_to_loginFragment)
         }
 
         return binding.root
     }
-
-    // create documents for user data and store inside Firestore
-//    fun createUserData() {
-//        val userId: String = firebaseAuth.uid!!.toString()
-//        val USER_CALS : String = "UserCalendars"
-//        val USER_EVENT : String = "UserEvents"
-//        // UserCalendars holds ALL user calendars
-//        // First part, set up a document with userID as key.
-//        // Sets a dummy value in the document
-//        firestore.collection(USER_CALS)
-//            .document(userId)
-//            .collection(USER_EVENT)
-//            .add(UserEvent("h", "g", "", "", "l", false))
-//            .addOnFailureListener {
-//                exception ->
-//                Log.d("RegisterFragment", exception.toString())
-//            }
-//
-//    }
 }
