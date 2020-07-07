@@ -12,17 +12,11 @@ import android.widget.*
 import androidx.databinding.DataBindingUtil
 import androidx.fragment.app.Fragment
 import androidx.lifecycle.ViewModelProvider
-import androidx.navigation.findNavController
 import androidx.navigation.fragment.findNavController
 import com.google.firebase.auth.FirebaseAuth
-import com.google.firebase.firestore.FirebaseFirestore
 import com.orbital.snus.R
-import com.orbital.snus.dashboard.DashboardActivity
-import com.orbital.snus.dashboard.DashboardDataViewModel
-import com.orbital.snus.dashboard.DashboardDataViewModelFactory
 import com.orbital.snus.data.UserReview
 import com.orbital.snus.databinding.ModuleReviewAddReviewBinding
-import com.orbital.snus.databinding.ModuleReviewIndividualModuleBinding
 import com.orbital.snus.modules.ModulesActivity
 import java.text.SimpleDateFormat
 import java.util.*

@@ -6,10 +6,7 @@ import android.text.TextUtils
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
-import android.widget.AdapterView
-import android.widget.ArrayAdapter
-import android.widget.Spinner
-import android.widget.Toast
+import android.widget.*
 import androidx.databinding.DataBindingUtil
 import androidx.fragment.app.Fragment
 import androidx.navigation.findNavController
@@ -18,7 +15,6 @@ import com.google.firebase.firestore.FirebaseFirestore
 import com.orbital.snus.R
 import com.orbital.snus.dashboard.DashboardActivity
 import com.orbital.snus.data.UserData
-import com.orbital.snus.databinding.FragmentOpeningOpeningBinding
 import com.orbital.snus.databinding.FragmentOpeningProfileSetupBinding
 
 class ProfileSetUpFragment : Fragment() {
@@ -52,8 +48,7 @@ class ProfileSetUpFragment : Fragment() {
 
 
         binding = DataBindingUtil.inflate(
-            inflater, R.layout.fragment_opening_profile_setup, container, false
-        )
+            inflater, R.layout.fragment_opening_profile_setup, container, false)
         spinnerSetup()
         binding.firstLoginConfirm.setOnClickListener {
             val bio = binding.firstLoginBio.text.toString().trim()
@@ -101,6 +96,7 @@ class ProfileSetUpFragment : Fragment() {
             activity?.finish()
 
 
+
         }
         return binding.root
     }
@@ -121,10 +117,7 @@ class ProfileSetUpFragment : Fragment() {
                 position: Int,
                 id: Long
             ) {
-
-                course = courses[position]
-                Toast.makeText(requireContext(), course, Toast.LENGTH_SHORT).show()
-
+                course = courses.get(position)
             }
 
         }
@@ -132,7 +125,7 @@ class ProfileSetUpFragment : Fragment() {
         spinnerYear = binding.firstLoginYearOfStudySpinner
         spinnerYear.adapter = ArrayAdapter(requireContext(), R.layout.module_review_spinner_layout, year)
 
-        spinnerCourse.onItemSelectedListener = object : AdapterView.OnItemSelectedListener{
+        spinnerYear.onItemSelectedListener = object : AdapterView.OnItemSelectedListener{
             override fun onNothingSelected(parent: AdapterView<*>?) {
                 currYear = ""
             }
@@ -143,7 +136,7 @@ class ProfileSetUpFragment : Fragment() {
                 position: Int,
                 id: Long
             ) {
-                currYear = year[position]
+                currYear = year.get(position)
             }
 
         }
