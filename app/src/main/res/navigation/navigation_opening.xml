@@ -17,6 +17,10 @@
         <action
             android:id="@+id/action_openingFragment_to_loginFragment"
             app:destination="@id/loginFragment" />
+        <action
+            android:id="@+id/action_openingFragment_to_profileSetUpFragment"
+            app:destination="@id/profileSetUpFragment"
+            app:popUpTo="@id/openingFragment" />
     </fragment>
 
     <fragment

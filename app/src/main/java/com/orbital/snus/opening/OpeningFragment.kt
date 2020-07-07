@@ -6,13 +6,17 @@ import androidx.fragment.app.Fragment
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import android.widget.Toast
 import androidx.databinding.DataBindingUtil
 import androidx.navigation.findNavController
+import androidx.navigation.fragment.findNavController
 import com.google.firebase.auth.FirebaseAuth
+import com.google.firebase.firestore.FirebaseFirestore
 import com.orbital.snus.dashboard.DashboardActivity
 
 
 import com.orbital.snus.R
+import com.orbital.snus.data.UserData
 import com.orbital.snus.databinding.FragmentOpeningOpeningBinding
 
 class OpeningFragment : Fragment() {
@@ -24,8 +28,36 @@ class OpeningFragment : Fragment() {
         // If logged in, connect to dashboard
 
         if (firebaseAuth.currentUser != null) {
-            startActivity(Intent(activity?.applicationContext, DashboardActivity::class.java))
-            activity?.finish()
+            val firestore = FirebaseFirestore.getInstance()
+            var user: UserData? = null
+
+            firebaseAuth.fetchSignInMethodsForEmail(firebaseAuth.currentUser!!.email.toString()).addOnCompleteListener {
+                if (it.result?.signInMethods.isNullOrEmpty()) {
+                    Toast.makeText(this.context, "User is not in use, logging out", Toast.LENGTH_SHORT).show()
+                    firebaseAuth.signOut()
+                }
+            }
+
+            if (!firebaseAuth.currentUser!!.isEmailVerified) {
+                Toast.makeText(this.context, "Please verify account and log in", Toast.LENGTH_SHORT).show()
+                firebaseAuth.signOut()
+            }
+
+            // extract user data from firestore
+            firestore.collection("users").document(firebaseAuth.currentUser!!.uid).get()
+                .addOnSuccessListener {
+                    user = it.toObject(UserData::class.java)!!
+                    if (user!!.firstTime!!) {
+                        Toast.makeText(this.context, "Please finish Profile Setup", Toast.LENGTH_SHORT).show()
+                        findNavController().navigate(R.id.action_openingFragment_to_profileSetUpFragment)
+                    } else {
+                        startActivity(Intent(activity?.applicationContext, DashboardActivity::class.java))
+                        activity?.finish()
+                    }
+                }.addOnFailureListener {
+                    Toast.makeText(this.context, "Error: " + it.message, Toast.LENGTH_SHORT).show()
+                }
+
         }
 
         val binding: FragmentOpeningOpeningBinding = DataBindingUtil.inflate(

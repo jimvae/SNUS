@@ -34,11 +34,6 @@ class ProfileSetUpFragment : Fragment() {
     private lateinit var spinnerYear: Spinner
     private lateinit var currYear: String
 
-
-
-
-
-
     override fun onCreateView(
         inflater: LayoutInflater,
         container: ViewGroup?,
@@ -87,15 +82,14 @@ class ProfileSetUpFragment : Fragment() {
             firestore.collection("users").document(user.uid).get()
                 .addOnSuccessListener {
                     userData = it.toObject((UserData::class.java))!!
+                    userData.updateUserData(name, faculty, course, currYear.toInt(), bio, linkedIn, instagram, gitHub, false)
+                    updateUser(userData)
+                    startActivity(Intent(activity?.applicationContext, DashboardActivity::class.java))
+                    activity?.finish()
                 }.addOnFailureListener {
                     Toast.makeText(requireContext(), "Missing User Data", Toast.LENGTH_SHORT).show()
                 }
-            userData.updateUserData(name, faculty, course, currYear.toInt(), bio, linkedIn, instagram, gitHub, false)
-            updateUser(userData)
-            startActivity(Intent(activity?.applicationContext, DashboardActivity::class.java))
-            activity?.finish()
-
-
+            configurePage(true)
 
         }
         return binding.root
@@ -118,6 +112,7 @@ class ProfileSetUpFragment : Fragment() {
                 id: Long
             ) {
                 course = courses.get(position)
+
             }
 
         }
