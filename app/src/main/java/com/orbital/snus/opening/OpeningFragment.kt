@@ -31,6 +31,18 @@ class OpeningFragment : Fragment() {
             val firestore = FirebaseFirestore.getInstance()
             var user: UserData? = null
 
+            firebaseAuth.fetchSignInMethodsForEmail(firebaseAuth.currentUser!!.email.toString()).addOnCompleteListener {
+                if (it.result?.signInMethods.isNullOrEmpty()) {
+                    Toast.makeText(this.context, "User is not in use, logging out", Toast.LENGTH_SHORT).show()
+                    firebaseAuth.signOut()
+                }
+            }
+
+            if (!firebaseAuth.currentUser!!.isEmailVerified) {
+                Toast.makeText(this.context, "Please verify account and log in", Toast.LENGTH_SHORT).show()
+                firebaseAuth.signOut()
+            }
+
             // extract user data from firestore
             firestore.collection("users").document(firebaseAuth.currentUser!!.uid).get()
                 .addOnSuccessListener {
