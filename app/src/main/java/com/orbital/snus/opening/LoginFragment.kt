@@ -1,7 +1,10 @@
 package com.orbital.snus.opening
 
+import android.app.Dialog
 import android.content.Context
 import android.content.Intent
+import android.graphics.Color
+import android.graphics.drawable.ColorDrawable
 import android.os.Bundle
 import android.text.TextUtils
 import android.util.Log
@@ -18,6 +21,8 @@ import com.orbital.snus.dashboard.DashboardActivity
 
 import com.orbital.snus.R
 import com.orbital.snus.databinding.FragmentOpeningLoginBinding
+import kotlinx.android.synthetic.main.fragment_opening_login.*
+import kotlinx.android.synthetic.main.module_forum_main_page.*
 
 /**
  * A simple [Fragment] subclass.
@@ -119,11 +124,28 @@ class LoginFragment : Fragment() {
         }
 
         forgotPassword.setOnClickListener {
-            firebaseAuth.sendPasswordResetEmail(emailText.toString()).addOnSuccessListener {
+            val email = emailText.text.toString().trim()
+
+            // User authentication
+            if (TextUtils.isEmpty(email)) {
+                emailText.setError("Email is required")
+                return@setOnClickListener
+            }
+
+            val formatEmail = email.trim()
+            val domain = formatEmail.split('@').last()
+            print("Domain is here: " + domain)
+            if (domain != "u.nus.edu" && domain != "nus.edu.sg") {
+                emailText.setError("Please use your NUS email")
+                return@setOnClickListener
+            }
+
+            firebaseAuth.sendPasswordResetEmail(email.toString()).addOnSuccessListener {
                 Toast.makeText(this.requireContext(), "Link to reset password has been sent to your email", Toast.LENGTH_LONG).show()
             }.addOnFailureListener {
                 Toast.makeText(this.requireContext(), "Unable to send: " + it.message, Toast.LENGTH_LONG).show()
                 Log.d("Email Verification", "Email not Sent")
+
             }
         }
 
