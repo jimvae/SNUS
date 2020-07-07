@@ -16,10 +16,13 @@ import android.view.inputmethod.InputMethodManager
 import android.widget.*
 import androidx.databinding.DataBindingUtil
 import androidx.navigation.findNavController
+import androidx.navigation.fragment.findNavController
 import com.google.firebase.auth.FirebaseAuth
+import com.google.firebase.firestore.FirebaseFirestore
 import com.orbital.snus.dashboard.DashboardActivity
 
 import com.orbital.snus.R
+import com.orbital.snus.data.UserData
 import com.orbital.snus.databinding.FragmentOpeningLoginBinding
 import kotlinx.android.synthetic.main.fragment_opening_login.*
 import kotlinx.android.synthetic.main.module_forum_main_page.*
@@ -99,19 +102,38 @@ class LoginFragment : Fragment() {
                 .addOnCompleteListener { task ->
                     kotlin.run {
                         if (task.isSuccessful) {
+                            if (!firebaseAuth.currentUser!!.isEmailVerified) {
+                                Toast.makeText(this.context, "Please verify email before logging in", Toast.LENGTH_SHORT).show()
+                                firebaseAuth.signOut()
+                                return@run
+                            }
+
                             Toast.makeText(this.context, "Login Successful", Toast.LENGTH_SHORT).show()
-                            startActivity(Intent(activity?.applicationContext, DashboardActivity::class.java))
-                            activity?.finish()
+
+                            val firestore = FirebaseFirestore.getInstance()
+                            var user: UserData? = null
+                            // extract user data from firestore
+                            firestore.collection("users").document(firebaseAuth.currentUser!!.uid).get()
+                                    .addOnSuccessListener {
+                                        user = it.toObject(UserData::class.java)!!
+                                        if (user!!.firstTime!!) {
+                                            findNavController().navigate(R.id.action_loginFragment_to_profileSetUpFragment)
+                                        } else {
+                                            startActivity(Intent(activity?.applicationContext, DashboardActivity::class.java))
+                                            activity?.finish()
+                                        }
+                                    }.addOnFailureListener {
+                                        Toast.makeText(this.context, "Error: " + it.message, Toast.LENGTH_SHORT).show()
+                                    }
                         } else {
                             Toast.makeText(this.context, "Error: " + (task.exception?.message ?: "Unknown"), Toast.LENGTH_SHORT).show()
-
-                            emailText.isEnabled = true
-                            passwordText.isEnabled = true
-                            loginButton.isEnabled = true
-                            registerButton.isEnabled = true
-                            progressBar.visibility = View.GONE
                         }
                     }
+                    emailText.isEnabled = true
+                    passwordText.isEnabled = true
+                    loginButton.isEnabled = true
+                    registerButton.isEnabled = true
+                    progressBar.visibility = View.GONE
                 }
 
             val imm = activity?.getSystemService(Context.INPUT_METHOD_SERVICE) as InputMethodManager

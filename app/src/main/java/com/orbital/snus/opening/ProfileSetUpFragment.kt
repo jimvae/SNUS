@@ -12,6 +12,7 @@ import com.google.firebase.auth.FirebaseAuth
 import com.orbital.snus.R
 import com.orbital.snus.dashboard.DashboardActivity
 import com.orbital.snus.databinding.FragmentOpeningOpeningBinding
+import com.orbital.snus.databinding.FragmentOpeningProfileSetupBinding
 
 class ProfileSetUpFragment : Fragment() {
 
@@ -26,17 +27,10 @@ class ProfileSetUpFragment : Fragment() {
         // If logged in, connect to dashboard
 
 
-        val binding: FragmentOpeningOpeningBinding = DataBindingUtil.inflate(
+        val binding: FragmentOpeningProfileSetupBinding = DataBindingUtil.inflate(
             inflater, R.layout.fragment_opening_profile_setup, container, false
         )
 
-        binding.buttonLogin.setOnClickListener { view: View ->
-            view.findNavController().navigate(R.id.action_openingFragment_to_loginFragment)
-        }
-
-        binding.buttonSignup.setOnClickListener { view: View ->
-            view.findNavController().navigate(R.id.action_openingFragment_to_registerFragment)
-        }
         return binding.root
     }
 }
