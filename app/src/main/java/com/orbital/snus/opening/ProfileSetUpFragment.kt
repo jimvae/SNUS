@@ -38,11 +38,6 @@ class ProfileSetUpFragment : Fragment() {
     private lateinit var spinnerYear: Spinner
     private lateinit var currYear: String
 
-
-
-
-
-
     override fun onCreateView(
         inflater: LayoutInflater,
         container: ViewGroup?,
@@ -92,15 +87,14 @@ class ProfileSetUpFragment : Fragment() {
             firestore.collection("users").document(user.uid).get()
                 .addOnSuccessListener {
                     userData = it.toObject((UserData::class.java))!!
+                    userData.updateUserData(name, faculty, course, currYear.toInt(), bio, linkedIn, instagram, gitHub, false)
+                    updateUser(userData)
+                    startActivity(Intent(activity?.applicationContext, DashboardActivity::class.java))
+                    activity?.finish()
                 }.addOnFailureListener {
                     Toast.makeText(requireContext(), "Missing User Data", Toast.LENGTH_SHORT).show()
                 }
-            userData.updateUserData(name, faculty, course, currYear.toInt(), bio, linkedIn, instagram, gitHub, false)
-            updateUser(userData)
-            startActivity(Intent(activity?.applicationContext, DashboardActivity::class.java))
-            activity?.finish()
-
-
+            configurePage(true)
         }
         return binding.root
     }
@@ -122,7 +116,7 @@ class ProfileSetUpFragment : Fragment() {
                 id: Long
             ) {
 
-                course = courses[position]
+                course = courses.get(position)
                 Toast.makeText(requireContext(), course, Toast.LENGTH_SHORT).show()
 
             }
@@ -132,7 +126,7 @@ class ProfileSetUpFragment : Fragment() {
         spinnerYear = binding.firstLoginYearOfStudySpinner
         spinnerYear.adapter = ArrayAdapter(requireContext(), R.layout.module_review_spinner_layout, year)
 
-        spinnerCourse.onItemSelectedListener = object : AdapterView.OnItemSelectedListener{
+        spinnerYear.onItemSelectedListener = object : AdapterView.OnItemSelectedListener{
             override fun onNothingSelected(parent: AdapterView<*>?) {
                 currYear = ""
             }
@@ -143,7 +137,7 @@ class ProfileSetUpFragment : Fragment() {
                 position: Int,
                 id: Long
             ) {
-                currYear = year[position]
+                currYear = year.get(position)
             }
 
         }
