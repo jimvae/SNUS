@@ -67,6 +67,13 @@ class RegisterFragment : Fragment() {
                 return@setOnClickListener
             }
 
+            val formatEmail = email.trim()
+            val domain = formatEmail.split('@').last()
+            if (domain != "u.nus.edu" || domain != "nus.edu.sg") {
+                emailText.setError("Please use your NUS email to Log-in")
+                return@setOnClickListener
+            }
+
             if (TextUtils.isEmpty(password)) {
                 passwordText.setError("Password is required")
                 return@setOnClickListener
