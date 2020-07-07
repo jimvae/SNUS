@@ -68,7 +68,7 @@ class RegisterFragment : Fragment() {
         registerButton.setOnClickListener {
             val email = emailText.text.toString().trim()
             val password = passwordText.text.toString().trim()
-            val confirmPasswordText = confirm_password_text.toString().trim()
+            val confirmPasswordText = confirmPassword.text.toString().trim()
 
             if (TextUtils.isEmpty(email)) {
                 emailText.setError("Email is required")
@@ -92,7 +92,7 @@ class RegisterFragment : Fragment() {
                 return@setOnClickListener
             }
 
-            if (!password.equals(confirmPasswordText)) {
+            if (password.equals(confirmPasswordText) == false) {
                 confirmPassword.setError("Password does not match")
                 return@setOnClickListener
             }
@@ -118,8 +118,11 @@ class RegisterFragment : Fragment() {
                             firestore = FirebaseFirestore.getInstance()
 
                             val user: FirebaseUser = firebaseAuth.currentUser!!
-                            val userData = UserData(user.uid, null, null, null, null, true)
+                            val userData = UserData(user.uid, null, null, null, null,
+                                null, null, null, null, true)
                             firestore.collection("users").document(user.uid).set(userData)
+
+                            // send verification email and direct to login page
                             user.sendEmailVerification().addOnSuccessListener(
                                 OnSuccessListener {
                                     Toast.makeText(this@RegisterFragment.context, "Verification Email Has been Sent, Please verify to log-in", Toast.LENGTH_SHORT).show()
@@ -137,14 +140,14 @@ class RegisterFragment : Fragment() {
                                 "Error: " + (task.exception?.message ?: "Unknown"),
                                 Toast.LENGTH_SHORT
                             ).show()
-
-                            confirmPassword.isEnabled = true
-                            emailText.isEnabled = true
-                            passwordText.isEnabled = true
-                            loginButton.isEnabled = true
-                            registerButton.isEnabled = true
-                            progressBar.visibility = View.GONE
                         }
+                        // reactivate everything, because either error in run or error in sending email
+                        confirmPassword.isEnabled = true
+                        emailText.isEnabled = true
+                        passwordText.isEnabled = true
+                        loginButton.isEnabled = true
+                        registerButton.isEnabled = true
+                        progressBar.visibility = View.GONE
                     }
                 }
             val imm = activity?.getSystemService(Context.INPUT_METHOD_SERVICE) as InputMethodManager
