@@ -12,7 +12,7 @@ data class UserData(val userID: String? = null, var fullname: String? = null,
     // Need to add: Profile Photo, links for Github, Instagram and LinkedIn
 
     fun updateUserData(fullname: String, faculty: String, course: String, year: Int,
-                       bio: String, linkedIn: String, insta: String, git: String,
+                       bio: String, linkedIn: String?, insta: String?, git: String?,
                        firstTime: Boolean) {
         this.fullname = fullname
         this.faculty = faculty

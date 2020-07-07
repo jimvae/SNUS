@@ -30,9 +30,15 @@ class ProfileSetUpFragment : Fragment() {
 
     private lateinit var userData: UserData
 
-    val courses = arrayOf("Computer Science", "Business Analytics", "Computer Engineering", "Information Systems", "Information Security")
+    val courses = arrayOf("", "Computer Science", "Business Analytics", "Computer Engineering", "Information Systems", "Information Security")
     private lateinit var spinnerCourse: Spinner
     private lateinit var course: String
+
+    val year = arrayOf("", "1", "2", "3", "4", "5")
+    private lateinit var spinnerYear: Spinner
+    private lateinit var currYear: String
+
+
 
 
 
@@ -48,17 +54,14 @@ class ProfileSetUpFragment : Fragment() {
         binding = DataBindingUtil.inflate(
             inflater, R.layout.fragment_opening_profile_setup, container, false
         )
-
-
-
         spinnerSetup()
-
         binding.firstLoginConfirm.setOnClickListener {
             val bio = binding.firstLoginBio.text.toString().trim()
             val name = binding.firstLoginName.text.toString().trim()
             val gitHub = binding.firstLoginGithub.text.toString().trim()
             val instagram = binding.firstLoginInstagram.text.toString().trim()
             val linkedIn = binding.firstLoginLinkedin.text.toString().trim()
+            val faculty = "Computing"
 //            val profilePhoto = binding.profilePhoto
 
             if (TextUtils.isEmpty(name)) {
@@ -71,8 +74,14 @@ class ProfileSetUpFragment : Fragment() {
                 return@setOnClickListener
             }
 
-            if (TextUtils.isEmpty(course)) {
+            if (course == "") {
                 Toast.makeText(requireContext(), "Please select your course", Toast.LENGTH_SHORT)
+                    .show()
+                return@setOnClickListener
+            }
+
+            if (currYear == "") {
+                Toast.makeText(requireContext(), "Please select your year", Toast.LENGTH_SHORT)
                     .show()
                 return@setOnClickListener
             }
@@ -86,14 +95,18 @@ class ProfileSetUpFragment : Fragment() {
                 }.addOnFailureListener {
                     Toast.makeText(requireContext(), "Missing User Data", Toast.LENGTH_SHORT).show()
                 }
-//            user.upda
+            userData.updateUserData(name, faculty, course, currYear.toInt(), bio, linkedIn, instagram, gitHub, false)
+            updateUser(userData)
+            startActivity(Intent(activity?.applicationContext, DashboardActivity::class.java))
+            activity?.finish()
 
 
         }
         return binding.root
     }
 
-    fun spinnerSetup() {
+    private fun spinnerSetup() {
+        Toast.makeText(requireContext(), "SetUp", Toast.LENGTH_SHORT).show()
         spinnerCourse = binding.firstLoginCourseSpinner
         spinnerCourse.adapter = ArrayAdapter(requireContext(), R.layout.module_review_spinner_layout, courses)
 
@@ -108,13 +121,35 @@ class ProfileSetUpFragment : Fragment() {
                 position: Int,
                 id: Long
             ) {
-                course = courses.get(position)
+
+                course = courses[position]
+                Toast.makeText(requireContext(), course, Toast.LENGTH_SHORT).show()
+
+            }
+
+        }
+
+        spinnerYear = binding.firstLoginYearOfStudySpinner
+        spinnerYear.adapter = ArrayAdapter(requireContext(), R.layout.module_review_spinner_layout, year)
+
+        spinnerCourse.onItemSelectedListener = object : AdapterView.OnItemSelectedListener{
+            override fun onNothingSelected(parent: AdapterView<*>?) {
+                currYear = ""
+            }
+
+            override fun onItemSelected(
+                parent: AdapterView<*>?,
+                view: View?,
+                position: Int,
+                id: Long
+            ) {
+                currYear = year[position]
             }
 
         }
     }
 
-    fun configurePage(boolean: Boolean) {
+    private fun configurePage(boolean: Boolean) {
         binding.firstLoginBio.isEnabled = boolean
         binding.firstLoginName.isEnabled = boolean
         binding.firstLoginConfirm.isEnabled = boolean
@@ -123,13 +158,14 @@ class ProfileSetUpFragment : Fragment() {
         binding.firstLoginInstagram.isEnabled = boolean
         binding.firstLoginLinkedin.isEnabled = boolean
         binding.profilePhoto.isEnabled = boolean
+        binding.firstLoginYearOfStudySpinner.isEnabled = boolean
     }
 
-    fun updateUserData(userData: UserData) {
+    private fun updateUser(userData1: UserData) {
         val user = firebaseAuth.currentUser!!
         db.collection("users") // users collection
             .document(user.uid) // current userId
-            .set(userData)
+            .set(userData1)
 
     }
 
