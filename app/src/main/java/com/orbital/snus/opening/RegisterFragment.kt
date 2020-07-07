@@ -115,6 +115,7 @@ class RegisterFragment : Fragment() {
                                 }
                             ).addOnFailureListener(
                                 OnFailureListener {
+                                    Toast.makeText(this.requireContext(), "Unable to send: " + it.message, Toast.LENGTH_LONG).show()
                                     Log.d("Email Verification", "Email not Sent")
                                 })
 
