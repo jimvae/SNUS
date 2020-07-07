@@ -63,8 +63,9 @@ class LoginFragment : Fragment() {
 
             val formatEmail = email.trim()
             val domain = formatEmail.split('@').last()
-            if (domain != "u.nus.edu" || domain != "nus.edu.sg") {
-                emailText.setError("Please use your NUS email to Log-in")
+            print("Domain is here: " + domain)
+            if (domain != "u.nus.edu" && domain != "nus.edu.sg") {
+                emailText.setError("Please use your NUS email")
                 return@setOnClickListener
             }
 

@@ -10,4 +10,12 @@ enum class COURSE {BA, CS, CEG, InfoSys, InfoSec}
 data class UserData(val userID: String?, var faculty: FACULTY?, var course: COURSE?, var year: Int?,
                     var bio: String?, var firstTime: Boolean?) : Parcelable {
     // Need to add: Profile Photo, links for Github, Instagram and LinkedIn
+
+    fun updateUserData(faculty: FACULTY, course: COURSE, year: Int?, bio: String?, firstTime: Boolean?) {
+        this.faculty = faculty
+        this.course = course
+        this.year = year
+        this.bio = bio
+        this.firstTime = firstTime
+    }
 }
