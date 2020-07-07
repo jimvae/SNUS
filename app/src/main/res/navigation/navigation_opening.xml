@@ -40,6 +40,15 @@
             android:id="@+id/action_loginFragment_to_registerFragment"
             app:destination="@id/registerFragment"
             app:popUpTo="@id/openingFragment" />
+        <action
+            android:id="@+id/action_loginFragment_to_profileSetUpFragment"
+            app:destination="@id/profileSetUpFragment"
+            app:popUpTo="@id/profileSetUpFragment" />
     </fragment>
+    <fragment
+        android:id="@+id/profileSetUpFragment"
+        android:name="com.orbital.snus.opening.ProfileSetUpFragment"
+        android:label="fragment_opening_profile_setup"
+        tools:layout="@layout/fragment_opening_profile_setup" />
 
 </navigation>
