@@ -4,15 +4,13 @@ import android.content.Context
 import android.content.Intent
 import android.os.Bundle
 import android.text.TextUtils
+import android.util.Log
 import androidx.fragment.app.Fragment
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import android.view.inputmethod.InputMethodManager
-import android.widget.Button
-import android.widget.EditText
-import android.widget.ProgressBar
-import android.widget.Toast
+import android.widget.*
 import androidx.databinding.DataBindingUtil
 import androidx.navigation.findNavController
 import com.google.firebase.auth.FirebaseAuth
@@ -34,6 +32,7 @@ class LoginFragment : Fragment() {
     private lateinit var loginButton: Button
     private lateinit var registerButton: Button
     private lateinit var progressBar: ProgressBar
+    private lateinit var forgotPassword: TextView
 
     override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?, savedInstanceState: Bundle?): View? {
         val binding: FragmentOpeningLoginBinding = DataBindingUtil.inflate(
@@ -46,6 +45,7 @@ class LoginFragment : Fragment() {
         passwordText = binding.passwordText
         loginButton = binding.loginButton
         registerButton = binding.logToRegButton
+        forgotPassword = binding.textForgetPassword
 
         progressBar = binding.loginProgressBar
         progressBar.visibility = View.GONE
@@ -61,6 +61,14 @@ class LoginFragment : Fragment() {
                 return@setOnClickListener
             }
 
+            val formatEmail = email.trim()
+            val domain = formatEmail.split('@').last()
+            print("Domain is here: " + domain)
+            if (domain != "u.nus.edu" && domain != "nus.edu.sg") {
+                emailText.setError("Please use your NUS email")
+                return@setOnClickListener
+            }
+
             if (TextUtils.isEmpty(password)) {
                 passwordText.setError("Password is required")
                 return@setOnClickListener
@@ -70,6 +78,8 @@ class LoginFragment : Fragment() {
                 passwordText.setError("Password must be at least 6 characters long")
                 return@setOnClickListener
             }
+
+
 
             progressBar.visibility = View.VISIBLE
 
@@ -107,6 +117,16 @@ class LoginFragment : Fragment() {
         registerButton.setOnClickListener{
             view: View -> view.findNavController().navigate(R.id.action_loginFragment_to_registerFragment)
         }
+
+        forgotPassword.setOnClickListener {
+            firebaseAuth.sendPasswordResetEmail(emailText.toString()).addOnSuccessListener {
+                Toast.makeText(this.requireContext(), "Link to reset password has been sent to your email", Toast.LENGTH_LONG).show()
+            }.addOnFailureListener {
+                Toast.makeText(this.requireContext(), "Unable to send: " + it.message, Toast.LENGTH_LONG).show()
+                Log.d("Email Verification", "Email not Sent")
+            }
+        }
+
         return binding.root
     }
 }

@@ -23,6 +23,7 @@ import com.google.android.gms.tasks.OnSuccessListener
 import com.google.firebase.auth.FirebaseAuth
 import com.google.firebase.auth.FirebaseUser
 import com.google.firebase.firestore.FirebaseFirestore
+import com.google.firebase.firestore.auth.User
 import com.orbital.snus.dashboard.DashboardActivity
 import com.orbital.snus.R
 import com.orbital.snus.data.UserData
@@ -74,6 +75,13 @@ class RegisterFragment : Fragment() {
                 return@setOnClickListener
             }
 
+            val formatEmail = email.trim()
+            val domain = formatEmail.split('@').last()
+            if (domain != "u.nus.edu" && domain != "nus.edu.sg") {
+                emailText.setError("Please use your NUS email")
+                return@setOnClickListener
+            }
+
             if (TextUtils.isEmpty(password)) {
                 passwordText.setError("Password is required")
                 return@setOnClickListener
@@ -110,21 +118,18 @@ class RegisterFragment : Fragment() {
                             firestore = FirebaseFirestore.getInstance()
 
                             val user: FirebaseUser = firebaseAuth.currentUser!!
+                            val userData = UserData(user.uid, null, null, null, null, true)
+                            firestore.collection("users").document(user.uid).set(userData)
                             user.sendEmailVerification().addOnSuccessListener(
                                 OnSuccessListener {
-                                    Toast.makeText(this@RegisterFragment.context, "Verification Email Has been Sent", Toast.LENGTH_SHORT).show()
+                                    Toast.makeText(this@RegisterFragment.context, "Verification Email Has been Sent, Please verify to log-in", Toast.LENGTH_SHORT).show()
                                     findNavController().navigate(R.id.action_registerFragment_to_loginFragment)
-
                                 }
                             ).addOnFailureListener(
                                 OnFailureListener {
+                                    Toast.makeText(this.requireContext(), "Unable to send: " + it.message, Toast.LENGTH_LONG).show()
                                     Log.d("Email Verification", "Email not Sent")
                                 })
-
-//                            //createUserData()
-//                            Toast.makeText(this.context, "User Created", Toast.LENGTH_SHORT).show()
-//                            startActivity(Intent(activity?.applicationContext, DashboardActivity::class.java))
-//                            activity?.finish()
 
                         } else {
                             Toast.makeText(
