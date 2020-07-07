@@ -14,9 +14,14 @@ import android.widget.Button
 import android.widget.EditText
 import android.widget.ProgressBar
 import android.widget.Toast
+import androidx.annotation.NonNull
 import androidx.databinding.DataBindingUtil
 import androidx.navigation.findNavController
+import androidx.navigation.fragment.findNavController
+import com.google.android.gms.tasks.OnFailureListener
+import com.google.android.gms.tasks.OnSuccessListener
 import com.google.firebase.auth.FirebaseAuth
+import com.google.firebase.auth.FirebaseUser
 import com.google.firebase.firestore.FirebaseFirestore
 import com.orbital.snus.dashboard.DashboardActivity
 import com.orbital.snus.R
@@ -90,10 +95,22 @@ class RegisterFragment : Fragment() {
                     run {
                         if (task.isSuccessful) {
                             firestore = FirebaseFirestore.getInstance()
-                            //createUserData()
-                            Toast.makeText(this.context, "User Created", Toast.LENGTH_SHORT).show()
-                            startActivity(Intent(activity?.applicationContext, DashboardActivity::class.java))
-                            activity?.finish()
+                            val user: FirebaseUser = firebaseAuth.currentUser!!
+                            user.sendEmailVerification().addOnSuccessListener(
+                                OnSuccessListener {
+                                    Toast.makeText(this@RegisterFragment.context, "Verification Email Has been Sent", Toast.LENGTH_SHORT).show()
+                                    findNavController().navigate(R.id.action_registerFragment_to_loginFragment)
+
+                                }
+                            ).addOnFailureListener(
+                                OnFailureListener {
+                                    Log.d("Email Verification", "Email not Sent")
+                                })
+
+//                            //createUserData()
+//                            Toast.makeText(this.context, "User Created", Toast.LENGTH_SHORT).show()
+//                            startActivity(Intent(activity?.applicationContext, DashboardActivity::class.java))
+//                            activity?.finish()
                         } else {
                             Toast.makeText(this.context, "Error: " + (task.exception?.message ?: "Unknown"), Toast.LENGTH_SHORT).show()
 
@@ -116,6 +133,7 @@ class RegisterFragment : Fragment() {
 
         return binding.root
     }
+
 
     // create documents for user data and store inside Firestore
 //    fun createUserData() {
