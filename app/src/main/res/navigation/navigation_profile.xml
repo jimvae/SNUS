@@ -15,6 +15,10 @@
             android:id="@+id/action_mainTimelineFragment2_to_editProfileFragment2"
             app:destination="@id/editProfileFragment2"
             app:popUpTo="@id/mainTimelineFragment2" />
+        <action
+            android:id="@+id/action_mainTimelineFragment2_to_mainFriendsFragment"
+            app:destination="@id/mainFriendsFragment"
+            app:popUpTo="@id/mainTimelineFragment2" />
     </fragment>
     <fragment
         android:id="@+id/editProfileFragment2"
@@ -24,6 +28,22 @@
         <action
             android:id="@+id/action_editProfileFragment2_to_mainTimelineFragment2"
             app:destination="@id/mainTimelineFragment2"
+            app:popUpTo="@id/editProfileFragment2"
+            app:popUpToInclusive="true" />
+    </fragment>
+    <fragment
+        android:id="@+id/mainFriendsFragment"
+        android:name="com.orbital.snus.profile.MainTimeline.MainFriendsFragment"
+        android:label="MainFriendsFragment"
+        tools:layout="@layout/profile_main_friends">
+        <action
+            android:id="@+id/action_mainFriendsFragment_to_mainTimelineFragment2"
+            app:destination="@id/mainTimelineFragment2"
+            app:popUpTo="@id/mainFriendsFragment"
+            app:popUpToInclusive="true" />
+        <action
+            android:id="@+id/action_mainFriendsFragment_to_editProfileFragment2"
+            app:destination="@id/editProfileFragment2"
             app:popUpTo="@id/editProfileFragment2"
             app:popUpToInclusive="true" />
     </fragment>

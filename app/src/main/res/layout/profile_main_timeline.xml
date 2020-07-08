@@ -66,6 +66,7 @@
             android:id="@+id/main_timeline_timeline"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
+            android:layout_marginTop="8dp"
             android:text="Timeline"
             app:layout_constraintEnd_toStartOf="@+id/main_timeline_friends"
             app:layout_constraintHorizontal_bias="0.5"

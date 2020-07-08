@@ -38,7 +38,6 @@
             android:layout_marginStart="8dp"
             android:layout_marginTop="8dp"
             android:text="Course"
-            app:layout_constraintEnd_toStartOf="@+id/main_profile_year"
             app:layout_constraintStart_toEndOf="@+id/main_profile_photo"
             app:layout_constraintTop_toBottomOf="@+id/main_profile_name" />
 
@@ -46,10 +45,10 @@
             android:id="@+id/main_profile_year"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_marginEnd="8dp"
+            android:layout_marginStart="16dp"
             android:text="Year"
             app:layout_constraintBaseline_toBaselineOf="@+id/main_profile_course"
-            app:layout_constraintEnd_toEndOf="parent" />
+            app:layout_constraintStart_toEndOf="@+id/main_profile_course" />
 
         <TextView
             android:id="@+id/main_profile_bio"
@@ -101,27 +100,40 @@
             android:layout_width="0dp"
             android:layout_height="0dp"
             android:layout_marginStart="24dp"
-            android:layout_marginTop="8dp"
+            android:layout_marginTop="12dp"
             android:layout_marginEnd="24dp"
-            android:layout_marginBottom="8dp"
+            android:layout_marginBottom="12dp"
             android:background="@drawable/common_google_signin_btn_icon_light_normal_background"
             app:layout_constraintBottom_toBottomOf="parent"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintHorizontal_bias="1.0"
             app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toBottomOf="@+id/main_profile_timeline"
-            app:layout_constraintVertical_bias="0.0"
+            app:layout_constraintTop_toBottomOf="@+id/friends_searchview"
             tools:listitem="@layout/profile_main_friends_recycler" />
 
         <Button
             android:id="@+id/main_friends_links"
             android:layout_width="0dp"
             android:layout_height="wrap_content"
-            android:layout_marginStart="8dp"
-            android:layout_marginEnd="8dp"
+            android:layout_marginStart="16dp"
+            android:layout_marginTop="8dp"
+            android:layout_marginEnd="16dp"
             android:text="Links"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toBottomOf="@+id/main_profile_bio" />
+
+        <SearchView
+            android:id="@+id/friends_searchview"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_marginStart="16dp"
+            android:layout_marginTop="12dp"
+            android:layout_marginEnd="16dp"
+            android:clickable="false"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@+id/main_profile_friends" />
+
     </androidx.constraintlayout.widget.ConstraintLayout>
 </layout>
