@@ -72,54 +72,17 @@
             app:layout_constraintEnd_toStartOf="@+id/main_profile_friends"
             app:layout_constraintHorizontal_bias="0.5"
             app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toBottomOf="@+id/main_profile_insta" />
+            app:layout_constraintTop_toBottomOf="@+id/main_friends_links" />
 
         <Button
             android:id="@+id/main_profile_friends"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_marginTop="8dp"
             android:text="Friends"
+            app:layout_constraintBaseline_toBaselineOf="@+id/main_profile_timeline"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintHorizontal_bias="0.5"
-            app:layout_constraintStart_toEndOf="@+id/main_profile_timeline"
-            app:layout_constraintTop_toBottomOf="@+id/main_profile_linkedin" />
-
-        <Button
-            android:id="@+id/main_profile_insta"
-            android:layout_width="0dp"
-            android:layout_height="wrap_content"
-            android:layout_marginStart="8dp"
-            android:layout_marginTop="8dp"
-            android:text="Instagram"
-            app:layout_constraintEnd_toStartOf="@+id/main_profile_linkedin"
-            app:layout_constraintHorizontal_bias="0.5"
-            app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toBottomOf="@+id/main_profile_bio" />
-
-        <Button
-            android:id="@+id/main_profile_linkedin"
-            android:layout_width="0dp"
-            android:layout_height="wrap_content"
-            android:layout_marginStart="16dp"
-            android:layout_marginTop="8dp"
-            android:layout_marginEnd="16dp"
-            android:text="Linkedin"
-            app:layout_constraintEnd_toStartOf="@+id/main_profile_github"
-            app:layout_constraintHorizontal_bias="0.5"
-            app:layout_constraintStart_toEndOf="@+id/main_profile_insta"
-            app:layout_constraintTop_toBottomOf="@+id/main_profile_bio" />
-
-        <Button
-            android:id="@+id/main_profile_github"
-            android:layout_width="0dp"
-            android:layout_height="wrap_content"
-            android:layout_marginEnd="8dp"
-            android:text="Github"
-            app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintHorizontal_bias="0.5"
-            app:layout_constraintStart_toEndOf="@+id/main_profile_linkedin"
-            app:layout_constraintTop_toTopOf="@+id/main_profile_linkedin" />
+            app:layout_constraintStart_toEndOf="@+id/main_profile_timeline" />
 
         <TextView
             android:id="@+id/main_profile_edit_settings"
@@ -149,5 +112,16 @@
             app:layout_constraintTop_toBottomOf="@+id/main_profile_timeline"
             app:layout_constraintVertical_bias="0.0"
             tools:listitem="@layout/profile_main_friends_recycler" />
+
+        <Button
+            android:id="@+id/main_friends_links"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_marginStart="8dp"
+            android:layout_marginEnd="8dp"
+            android:text="Links"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@+id/main_profile_bio" />
     </androidx.constraintlayout.widget.ConstraintLayout>
 </layout>
