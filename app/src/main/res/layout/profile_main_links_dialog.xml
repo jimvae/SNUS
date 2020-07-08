@@ -5,7 +5,7 @@
     android:layout_width="wrap_content"
     android:layout_height="wrap_content">
 
-    <Button
+    git p<Button
         android:id="@+id/profile_dialog_instagram"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
