@@ -5,12 +5,14 @@ import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
 import android.view.MenuItem
 import androidx.databinding.DataBindingUtil
+import com.google.firebase.auth.FirebaseAuth
 import com.orbital.snus.R
 import com.orbital.snus.dashboard.DashboardActivity
 import com.orbital.snus.databinding.ActivityGroupsBinding
 import com.orbital.snus.databinding.ActivityMessagesBinding
 import com.orbital.snus.groups.GroupsActivity
 import com.orbital.snus.modules.ModulesActivity
+import com.orbital.snus.opening.MainActivity
 import com.orbital.snus.profile.ProfileActivity
 
 class MessagesActivity : AppCompatActivity() {
@@ -50,6 +52,13 @@ class MessagesActivity : AppCompatActivity() {
                 }
             }
             true
+        }
+
+        val firebaseAuth = FirebaseAuth.getInstance()
+        binding.buttonLogout.setOnClickListener {
+            firebaseAuth.signOut()
+            startActivity(Intent(this.applicationContext, MainActivity::class.java))
+            finish()
         }
     }
 }

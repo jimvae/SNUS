@@ -5,6 +5,7 @@ import android.os.Binder
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
 import android.view.MenuItem
+import android.view.View
 import androidx.databinding.DataBindingUtil
 import com.google.firebase.auth.FirebaseAuth
 import com.orbital.snus.R
@@ -54,12 +55,14 @@ class ProfileActivity : AppCompatActivity() {
             }
             true
         }
+    }
 
-        binding.logoutButton.setOnClickListener {
-            firebaseAuth.signOut()
-            startActivity(Intent(this.applicationContext, MainActivity::class.java))
-            finish()
-        }
+    fun hideNavBar() {
+        binding.bottomNavigationMenu.visibility = View.GONE
+    }
+
+    fun showNavBar() {
+        binding.bottomNavigationMenu.visibility = View.VISIBLE
     }
 
 

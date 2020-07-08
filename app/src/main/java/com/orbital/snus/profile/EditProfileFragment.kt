@@ -1,6 +1,8 @@
 package com.orbital.snus.profile
 
+import android.content.Intent
 import android.os.Bundle
+import android.text.TextUtils
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
@@ -10,9 +12,11 @@ import android.widget.Spinner
 import android.widget.Toast
 import androidx.databinding.DataBindingUtil
 import androidx.fragment.app.Fragment
+import androidx.navigation.fragment.findNavController
 import com.google.firebase.auth.FirebaseAuth
 import com.google.firebase.firestore.FirebaseFirestore
 import com.orbital.snus.R
+import com.orbital.snus.dashboard.DashboardActivity
 import com.orbital.snus.data.UserData
 import com.orbital.snus.databinding.ProfileMainTimelineEditBinding
 
@@ -35,12 +39,16 @@ class EditProfileFragment : Fragment() {
         container: ViewGroup?,
         savedInstanceState: Bundle?
     ): View? {
+
+        (activity as ProfileActivity).hideNavBar()
+
         binding = DataBindingUtil.inflate<ProfileMainTimelineEditBinding>(
             inflater, R.layout.profile_main_timeline_edit, container, false)
         spinnerSetup()
 
         var userData : UserData = requireArguments().getParcelable<UserData>("userdata") as UserData
 
+        // setup page
         binding.editProfileName.setText(userData.fullname)
         binding.editProfileBio.setText(userData.bio)
         binding.editProfileInstagram.setText(userData.insta)
@@ -49,15 +57,66 @@ class EditProfileFragment : Fragment() {
         binding.editProfileCourseSpinner.setSelection(courses.indexOf(userData.course))
         binding.editProfileYearOfStudySpinner.setSelection(year.indexOf(userData.year.toString()))
 
+        course = userData.course!!
+        currYear = userData.year.toString()
+
+        binding.editProfileConfirm.setOnClickListener {
+            val bio = binding.editProfileBio.text.toString().trim()
+            val name = binding.editProfileName.text.toString().trim()
+            val gitHub = binding.editProfileGithub.text.toString().trim()
+            val instagram = binding.editProfileInstagram.text.toString().trim()
+            val linkedIn = binding.editProfileLinkedin.text.toString().trim()
+            val faculty = "Computing"
+
+            if (TextUtils.isEmpty(name)) {
+                binding.editProfileName.setError("Name is required")
+                return@setOnClickListener
+            }
+
+            if (TextUtils.isEmpty(bio)) {
+                binding.editProfileBio.setError("Bio is required")
+                return@setOnClickListener
+            }
+
+            if (course == "") {
+                Toast.makeText(requireContext(), "Please select your course", Toast.LENGTH_SHORT)
+                    .show()
+                return@setOnClickListener
+            }
+
+            if (currYear == "") {
+                Toast.makeText(requireContext(), "Please select your year", Toast.LENGTH_SHORT)
+                    .show()
+                return@setOnClickListener
+            }
+
+            configurePage(false)
+
+            userData.updateUserData(name, faculty, course, currYear.toInt(), bio, linkedIn, instagram, gitHub, false)
+            db.collection("users") // users collection
+                .document(userData.userID!!) // current userId
+                .set(userData)
+                .addOnSuccessListener {
+                    findNavController().navigate(R.id.action_editProfileFragment2_to_mainTimelineFragment2)
+                }.addOnFailureListener {
+                    Toast.makeText(requireContext(), "Unable to update: " + it.message, Toast.LENGTH_SHORT).show()
+                }
+            configurePage(true)
+        }
         return binding.root
     }
 
-    private fun updateUser(userData1: UserData) {
-        val user = firebaseAuth.currentUser!!
-        db.collection("users") // users collection
-            .document(user.uid) // current userId
-            .set(userData1)
 
+    private fun configurePage(boolean: Boolean) {
+        binding.editProfileBio.isEnabled = boolean
+        binding.editProfileName.isEnabled = boolean
+        binding.editProfileConfirm.isEnabled = boolean
+        binding.editProfileCourseSpinner.isEnabled = boolean
+        binding.editProfileGithub.isEnabled = boolean
+        binding.editProfileInstagram.isEnabled = boolean
+        binding.editProfileLinkedin.isEnabled = boolean
+        binding.profilePhoto.isEnabled = boolean
+        binding.editProfileYearOfStudySpinner.isEnabled = boolean
     }
 
     private fun spinnerSetup() {
@@ -100,5 +159,10 @@ class EditProfileFragment : Fragment() {
             }
 
         }
+    }
+
+    override fun onDestroyView() {
+        super.onDestroyView()
+        (activity as ProfileActivity).showNavBar()
     }
 }
