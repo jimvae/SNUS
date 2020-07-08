@@ -59,18 +59,6 @@ class MainTimelineFragment : Fragment() {
                 }
 
                 // links: navigate to the different apps
-                binding.mainTimelineInsta.setOnClickListener {
-
-                }
-
-                binding.mainTimelineLinkedin.setOnClickListener {
-
-                }
-
-                binding.mainTimelineGithub.setOnClickListener {
-
-                }
-
 
             }.addOnFailureListener {
                 Toast.makeText(requireContext(), "Missing User Data: " + it.message, Toast.LENGTH_SHORT).show()
