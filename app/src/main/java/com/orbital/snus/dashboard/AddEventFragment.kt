@@ -89,10 +89,14 @@ class AddEventFragment() : Fragment() {
                 return@setOnClickListener
             }
 
+            var addToTimeline = false
+            if (binding.buttonAddToTimeline.isChecked) {
+                addToTimeline = true
+            }
             // disabling page
             configurePage(false)
 
-            val event = UserEvent(name, description, startDate!!, endDate!!, location, false)
+            val event = UserEvent(name, description, startDate!!, endDate!!, location, addToTimeline)
             viewModel.addEvent(event)
             viewModel.addSuccess.observe(viewLifecycleOwner, androidx.lifecycle.Observer {
                 if (it != null) {
