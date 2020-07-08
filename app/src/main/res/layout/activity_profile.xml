@@ -8,14 +8,19 @@
         android:layout_width="match_parent"
         android:layout_height="match_parent">
 
-        <TextView
-            android:id="@+id/textView3"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:text="Profile"
-            tools:layout_editor_absoluteX="163dp"
-            tools:layout_editor_absoluteY="219dp"
-            tools:ignore="MissingConstraints" />
+        <fragment
+            android:id="@+id/myNavHostFragmentProfile"
+            android:name="androidx.navigation.fragment.NavHostFragment"
+            app:defaultNavHost="true"
+            android:layout_width="0dp"
+            android:layout_height="0dp"
+            app:layout_constraintBottom_toTopOf="@+id/logout_button"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="parent"
+            app:navGraph="@navigation/navigation_profile">
+
+        </fragment>
 
         <Button
             android:id="@+id/logout_button"

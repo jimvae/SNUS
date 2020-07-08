@@ -23,7 +23,6 @@ class ProfileActivity : AppCompatActivity() {
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
-        setContentView(R.layout.activity_profile)
         binding = DataBindingUtil.setContentView<ActivityProfileBinding>(this, R.layout.activity_profile)
 
         binding.bottomNavigationMenu.menu.findItem(R.id.ic_action_profile).setChecked(true)

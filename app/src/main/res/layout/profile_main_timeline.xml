@@ -38,7 +38,6 @@
             android:layout_marginStart="8dp"
             android:layout_marginTop="8dp"
             android:text="Course"
-            app:layout_constraintEnd_toStartOf="@+id/main_timeline_year"
             app:layout_constraintStart_toEndOf="@+id/main_timeline_photo"
             app:layout_constraintTop_toBottomOf="@+id/main_timeline_name" />
 
@@ -46,10 +45,10 @@
             android:id="@+id/main_timeline_year"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_marginEnd="8dp"
+            android:layout_marginStart="16dp"
             android:text="Year"
             app:layout_constraintBaseline_toBaselineOf="@+id/main_timeline_course"
-            app:layout_constraintEnd_toEndOf="parent" />
+            app:layout_constraintStart_toEndOf="@+id/main_timeline_course" />
 
         <TextView
             android:id="@+id/main_timeline_bio"

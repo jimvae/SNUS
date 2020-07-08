@@ -87,7 +87,7 @@ class ProfileSetUpFragment : Fragment() {
                     startActivity(Intent(activity?.applicationContext, DashboardActivity::class.java))
                     activity?.finish()
                 }.addOnFailureListener {
-                    Toast.makeText(requireContext(), "Missing User Data", Toast.LENGTH_SHORT).show()
+                    Toast.makeText(requireContext(), "Missing User Data: " + it.message, Toast.LENGTH_SHORT).show()
                 }
             configurePage(true)
 
