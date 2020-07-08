@@ -62,6 +62,10 @@ class MainTimelineFragment : Fragment() {
                 binding.mainTimelineFriends.setOnClickListener {
                     // recycler view loads friends?
                     // friend requests?
+                    val bundle = Bundle()
+                    bundle.putParcelable("userdata", userData)
+                    findNavController().navigate(R.id.action_mainTimelineFragment2_to_mainFriendsFragment, bundle)
+
                 }
 
                 // links: navigate to the different apps
