@@ -48,8 +48,7 @@ class OpeningFragment : Fragment() {
                 .addOnSuccessListener {
                     user = it.toObject(UserData::class.java)!!
                     if (user!!.firstTime!!) {
-                        Toast.makeText(this.context, "Please finish Profile Setup", Toast.LENGTH_SHORT).show()
-                        findNavController().navigate(R.id.action_openingFragment_to_profileSetUpFragment)
+                        firebaseAuth.signOut() // must sign in to do profile setup
                     } else {
                         startActivity(Intent(activity?.applicationContext, DashboardActivity::class.java))
                         activity?.finish()
