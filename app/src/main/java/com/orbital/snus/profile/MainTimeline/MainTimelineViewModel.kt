@@ -8,9 +8,9 @@ import com.google.firebase.auth.FirebaseAuth
 import com.google.firebase.firestore.FirebaseFirestore
 import com.orbital.snus.data.ForumPost
 import com.orbital.snus.data.TimeLinePost
+import com.orbital.snus.data.UserData
 
-class MainTimelineViewModel() : ViewModel() {
-    private val user = FirebaseAuth.getInstance().currentUser!!
+class MainTimelineViewModel(val user: UserData) : ViewModel() {
 
     private val db = FirebaseFirestore.getInstance()
 
@@ -29,14 +29,14 @@ class MainTimelineViewModel() : ViewModel() {
 
     fun addTimeline(timelinePost: TimeLinePost) {
         val id = db.collection("users")
-            .document(user.uid)
+            .document(user.userID!!)
             .collection("timeline")
             .document().id
 
         timelinePost.id = id
 
         db.collection("users")
-            .document(user.uid)
+            .document(user.userID!!)
             .collection("timeline")
             .document(id).set(timelinePost)
             .addOnSuccessListener {
@@ -65,7 +65,7 @@ class MainTimelineViewModel() : ViewModel() {
 
     fun deletePost(ID: String) {
         db.collection("users")
-            .document(user.uid)
+            .document(user.userID!!)
             .collection("timeline")
             .document(ID).delete()
             .addOnSuccessListener {
@@ -88,7 +88,7 @@ class MainTimelineViewModel() : ViewModel() {
     fun loadPosts() {
         val posts = ArrayList<TimeLinePost>()
         db.collection("users")
-            .document(user.uid)
+            .document(user.userID!!)
             .collection("timeline")
             .addSnapshotListener { querySnapshot, firebaseFirestoreException ->
                 if (firebaseFirestoreException != null) {
@@ -123,7 +123,7 @@ class MainTimelineViewModel() : ViewModel() {
         val id = timelinePost.id!!
 
         db.collection("users")
-            .document(user.uid)
+            .document(user.userID!!)
             .collection("timeline")
             .document(id).set(timelinePost)
             .addOnSuccessListener {
