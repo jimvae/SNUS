@@ -55,9 +55,8 @@
             android:layout_height="wrap_content"
             android:layout_marginStart="16dp"
             android:layout_marginTop="32dp"
-            android:layout_marginEnd="16dp"
             android:text="Bio"
-            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintEnd_toStartOf="@+id/text_friend_status"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toBottomOf="@+id/main_timeline_photo" />
 
@@ -131,6 +130,15 @@
             android:layout_marginEnd="16dp"
             android:text="Add Post"
             app:layout_constraintBaseline_toBaselineOf="@+id/main_timeline_friends"
+            app:layout_constraintEnd_toEndOf="parent" />
+
+        <TextView
+            android:id="@+id/text_friend_status"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginEnd="16dp"
+            android:text="Status"
+            app:layout_constraintBaseline_toBaselineOf="@+id/main_timeline_bio"
             app:layout_constraintEnd_toEndOf="parent" />
 
     </androidx.constraintlayout.widget.ConstraintLayout>

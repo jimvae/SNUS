@@ -213,6 +213,9 @@ class MainFriendsFragment : Fragment() {
     fun setUserPrivilege(boolean: Boolean) {
         binding.mainProfileEditSettings.isVisible = boolean
         binding.mainProfileEditSettings.isEnabled = boolean
+
+        binding.textFriendStatus.isVisible = !boolean
+        binding.textFriendStatus.isEnabled = !boolean
     }
 
     override fun onActivityCreated(savedInstanceState: Bundle?) {

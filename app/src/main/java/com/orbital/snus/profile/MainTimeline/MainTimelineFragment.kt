@@ -179,6 +179,7 @@ class MainTimelineFragment : Fragment() {
             })
 
         } else {
+
             firestore.collection("users").document(firebaseAuth.currentUser!!.uid).get()
                 .addOnSuccessListener {
                     userData = it.toObject((UserData::class.java))!!
@@ -356,6 +357,9 @@ class MainTimelineFragment : Fragment() {
         binding.mainTimelineAddPost.isVisible = boolean
         binding.mainTimelineAddPost.isEnabled = boolean
 
+
+        binding.textFriendStatus.isVisible = !boolean
+        binding.textFriendStatus.isEnabled = !boolean
 
     }
 
