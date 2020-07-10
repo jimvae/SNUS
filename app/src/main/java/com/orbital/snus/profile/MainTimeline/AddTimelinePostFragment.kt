@@ -34,7 +34,7 @@ class AddTimelinePostFragment : Fragment() {
         savedInstanceState: Bundle?
     ): View? {
 
-        factory = MainTimelineViewModelFactory()
+        factory = MainTimelineViewModelFactory(requireArguments().get("userdata") as UserData)
         viewModel = ViewModelProvider(this, factory).get(MainTimelineViewModel::class.java)
 
 
@@ -87,5 +87,10 @@ class AddTimelinePostFragment : Fragment() {
         binding.mainTimelineAddPostConfirm.isEnabled = boolean
         binding.mainTimelineAddExtraDetails.isEnabled = boolean
         binding.mainTimelineAddPostTitle.isEnabled = boolean
+    }
+
+    override fun onDestroyView() {
+        super.onDestroyView()
+        (activity as ProfileActivity).showNavBar()
     }
 }

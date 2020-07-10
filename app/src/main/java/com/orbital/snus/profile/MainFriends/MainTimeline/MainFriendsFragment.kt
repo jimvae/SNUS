@@ -14,12 +14,14 @@ import android.view.View
 import android.view.ViewGroup
 import android.view.inputmethod.InputMethodManager
 import android.widget.Toast
+import androidx.core.view.isVisible
 import androidx.databinding.DataBindingUtil
 import androidx.fragment.app.Fragment
 import androidx.lifecycle.ViewModelProvider
 import androidx.navigation.fragment.findNavController
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
+import com.google.firebase.auth.FirebaseAuth
 import com.google.firebase.firestore.auth.User
 import com.orbital.snus.R
 import com.orbital.snus.data.TimeLinePost
@@ -44,6 +46,8 @@ class MainFriendsFragment : Fragment() {
     private lateinit var viewManager: RecyclerView.LayoutManager
     private lateinit var recyclerView: RecyclerView
 
+    val firebaseAuth = FirebaseAuth.getInstance()
+
     override fun onCreateView(
         inflater: LayoutInflater,
         container: ViewGroup?,
@@ -52,7 +56,9 @@ class MainFriendsFragment : Fragment() {
         binding = DataBindingUtil.inflate<ProfileMainFriendsBinding>(
             inflater, R.layout.profile_main_friends, container, false)
 
+
         var userData : UserData = requireArguments().getParcelable<UserData>("userdata") as UserData
+        setUserPrivilege(userData.userID == firebaseAuth.currentUser!!.uid)
         factory = MainFriendsViewModelFactory()
         viewModel = ViewModelProvider(this, factory).get(MainFriendsViewModel::class.java)
 
@@ -202,6 +208,11 @@ class MainFriendsFragment : Fragment() {
     fun hideKeyboard(view: View) {
         val imm = activity?.getSystemService(Context.INPUT_METHOD_SERVICE) as InputMethodManager
         imm.hideSoftInputFromWindow(view.windowToken, 0)
+    }
+
+    fun setUserPrivilege(boolean: Boolean) {
+        binding.mainProfileEditSettings.isVisible = boolean
+        binding.mainProfileEditSettings.isEnabled = boolean
     }
 
     override fun onActivityCreated(savedInstanceState: Bundle?) {

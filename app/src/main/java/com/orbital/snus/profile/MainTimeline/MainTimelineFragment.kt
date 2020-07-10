@@ -56,171 +56,289 @@ class MainTimelineFragment : Fragment() {
         binding = DataBindingUtil.inflate<ProfileMainTimelineBinding>(inflater,
             R.layout.profile_main_timeline, container, false)
 
-        val bundle = Bundle()
+        // if there is no arguments passed in, means default user profile should be loaded
+        // if not use the arguments
+        if (arguments != null) {
+            userData = requireArguments().getParcelable<UserData>("userdata") as UserData
+            pageSetup()
+            val bundle = Bundle()
+            bundle.putParcelable("userdata", userData)
 
-
-        firestore.collection("users").document(firebaseAuth.currentUser!!.uid).get()
-            .addOnSuccessListener {
-                userData = it.toObject((UserData::class.java))!!
-                bundle.putParcelable("userdata", userData)
-
-
-                // page setup
-                if (!userData.userID.equals(firebaseAuth.currentUser!!.uid)) {
-                    setUserPrivilege(false)
-                }
-                binding.mainTimelineName.text = userData.fullname
-                val facCourse : String =  userData.faculty + " (" + userData.course + ")"
-                binding.mainTimelineCourse.text = facCourse
-                val year: String = "Year " + userData.year.toString()
-                binding.mainTimelineYear.text = year
-                binding.mainTimelineBio.text = userData.bio
-
-
-                // on click listeners
-                binding.mainTimelineEditSettings.setOnClickListener {
-
-                    findNavController().navigate(R.id.action_mainTimelineFragment2_to_editProfileFragment2, bundle)
-                }
-
-                binding.mainTimelineTimeline.setOnClickListener {
-                    // recycler view loads timeline?
-                }
-
-                val bundle = Bundle()
-                bundle.putParcelable("userdata", userData)
-
-                binding.mainTimelineFriends.setOnClickListener {
-                    // recycler view loads friends?
-                    // friend requests?
-
-                    findNavController().navigate(R.id.action_mainTimelineFragment2_to_mainFriendsFragment, bundle)
-
-                }
-
-                // links: navigate to the different apps
-                binding.mainTimelineLinks.setOnClickListener {
-                    val dialog = Dialog(requireContext())
-                    dialog.setContentView(R.layout.profile_main_links_dialog)
-
-                    val insta: String? = userData.insta
-                    val linkedIn: String? = userData.linkedIn
-                    val github: String? = userData.git
-
-                    if (insta != null) {
-                        dialog.profile_dialog_instagram.setOnClickListener {
-                            val uri =
-                                Uri.parse("http://instagram.com/_u/" + insta)
-                            val likeIng = Intent(Intent.ACTION_VIEW, uri)
-
-                            likeIng.setPackage("com.instagram.android")
-
-                            try {
-                                startActivity(likeIng)
-                            } catch (e: ActivityNotFoundException) {
-                                startActivity(
-                                    Intent(
-                                        Intent.ACTION_VIEW,
-                                        Uri.parse("http://instagram.com/" + insta)
-                                    )
-                                )
-                            }
-                        }
-                    }
-
-                    if (github != null) {
-                        dialog.profile_dialog_github.setOnClickListener {
-                            val uri =
-                                Uri.parse("http://github.com/_u/" + github)
-                            val likeIng = Intent(Intent.ACTION_VIEW, uri)
-
-                            likeIng.setPackage("com.github.android")
-
-                            try {
-                                startActivity(likeIng)
-                            } catch (e: ActivityNotFoundException) {
-                                startActivity(
-                                    Intent(
-                                        Intent.ACTION_VIEW,
-                                        Uri.parse("http://github.com/" + github)
-                                    )
-                                )
-                            }
-                        }
-                    }
-
-                    if (linkedIn != null) {
-                        dialog.profile_dialog_linkedin.setOnClickListener {
-                            val uri =
-                                Uri.parse("http://linkedin.com/in/" + linkedIn)
-                            val likeIng = Intent(Intent.ACTION_VIEW, uri)
-
-                            likeIng.setPackage("com.linkedin.android")
-
-                            try {
-                                startActivity(likeIng)
-                            } catch (e: ActivityNotFoundException) {
-                                startActivity(
-                                    Intent(
-                                        Intent.ACTION_VIEW,
-                                        Uri.parse("http://linkedin.com/in/" + linkedIn)
-                                    )
-                                )
-                            }
-                        }
-                    }
-
-                    dialog.getWindow()?.setBackgroundDrawable(ColorDrawable(Color.WHITE))
-                    dialog.show()
-                }
-
-            }.addOnFailureListener {
-                Toast.makeText(requireContext(), "Missing User Data: " + it.message, Toast.LENGTH_SHORT).show()
+            // on click listeners
+            binding.mainTimelineEditSettings.setOnClickListener {
+                findNavController().navigate(R.id.action_mainTimelineFragment2_to_editProfileFragment2, bundle)
             }
 
-        factory = MainTimelineViewModelFactory()
-        viewModel = ViewModelProvider(this, factory).get(MainTimelineViewModel::class.java)
+            binding.mainTimelineTimeline.setOnClickListener {
+            }
 
-        viewManager = LinearLayoutManager(activity)
-        viewAdapter = MainTimelineAdapter(posts)
+            binding.mainTimelineFriends.setOnClickListener {
+                findNavController().navigate(R.id.action_mainTimelineFragment2_to_mainFriendsFragment, bundle)
+            }
 
-        recyclerView = binding.recyclerviewTimeline.apply {
-            // use a linear layout manager
-            layoutManager = viewManager
+            binding.mainTimelineAddPost.setOnClickListener {
+                findNavController().navigate(R.id.action_mainTimelineFragment2_to_addTimelinePostFragment, bundle)
+            }
 
-            // specify an viewAdapter (see also next example)
-            adapter = viewAdapter
+            // links: navigate to the different apps
+            binding.mainTimelineLinks.setOnClickListener {
+                val dialog = Dialog(requireContext())
+                dialog.setContentView(R.layout.profile_main_links_dialog)
+
+                val insta: String? = userData.insta
+                val linkedIn: String? = userData.linkedIn
+                val github: String? = userData.git
+
+                if (insta != null) {
+                    dialog.profile_dialog_instagram.setOnClickListener {
+                        val uri =
+                            Uri.parse("http://instagram.com/_u/" + insta)
+                        val likeIng = Intent(Intent.ACTION_VIEW, uri)
+
+                        likeIng.setPackage("com.instagram.android")
+
+                        try {
+                            startActivity(likeIng)
+                        } catch (e: ActivityNotFoundException) {
+                            startActivity(
+                                Intent(
+                                    Intent.ACTION_VIEW,
+                                    Uri.parse("http://instagram.com/" + insta)
+                                )
+                            )
+                        }
+                    }
+                }
+
+                if (github != null) {
+                    dialog.profile_dialog_github.setOnClickListener {
+                        val uri =
+                            Uri.parse("http://github.com/_u/" + github)
+                        val likeIng = Intent(Intent.ACTION_VIEW, uri)
+
+                        likeIng.setPackage("com.github.android")
+
+                        try {
+                            startActivity(likeIng)
+                        } catch (e: ActivityNotFoundException) {
+                            startActivity(
+                                Intent(
+                                    Intent.ACTION_VIEW,
+                                    Uri.parse("http://github.com/" + github)
+                                )
+                            )
+                        }
+                    }
+                }
+
+                if (linkedIn != null) {
+                    dialog.profile_dialog_linkedin.setOnClickListener {
+                        val uri =
+                            Uri.parse("http://linkedin.com/in/" + linkedIn)
+                        val likeIng = Intent(Intent.ACTION_VIEW, uri)
+
+                        likeIng.setPackage("com.linkedin.android")
+
+                        try {
+                            startActivity(likeIng)
+                        } catch (e: ActivityNotFoundException) {
+                            startActivity(
+                                Intent(
+                                    Intent.ACTION_VIEW,
+                                    Uri.parse("http://linkedin.com/in/" + linkedIn)
+                                )
+                            )
+                        }
+                    }
+                }
+
+                dialog.getWindow()?.setBackgroundDrawable(ColorDrawable(Color.WHITE))
+                dialog.show()
+            }
+
+            factory = MainTimelineViewModelFactory(userData)
+            viewModel = ViewModelProvider(this, factory).get(MainTimelineViewModel::class.java)
+
+            viewManager = LinearLayoutManager(activity)
+            viewAdapter = MainTimelineAdapter(posts)
+
+            recyclerView = binding.recyclerviewTimeline.apply {
+                // use a linear layout manager
+                layoutManager = viewManager
+
+                // specify an viewAdapter (see also next example)
+                adapter = viewAdapter
+            }
+
+            viewModel.timelinePosts.observe(viewLifecycleOwner, androidx.lifecycle.Observer<List<TimeLinePost>> { timelinePost ->
+                posts.removeAll(posts)
+                posts.addAll(timelinePost)
+                recyclerView.adapter!!.notifyDataSetChanged()
+            })
+
+        } else {
+            firestore.collection("users").document(firebaseAuth.currentUser!!.uid).get()
+                .addOnSuccessListener {
+                    userData = it.toObject((UserData::class.java))!!
+                    pageSetup()
+                    val bundle = Bundle()
+                    bundle.putParcelable("userdata", userData)
+
+                    // on click listeners
+                    binding.mainTimelineEditSettings.setOnClickListener {
+                        findNavController().navigate(R.id.action_mainTimelineFragment2_to_editProfileFragment2, bundle)
+                    }
+
+                    binding.mainTimelineTimeline.setOnClickListener {
+                    }
+
+                    binding.mainTimelineFriends.setOnClickListener {
+                        findNavController().navigate(R.id.action_mainTimelineFragment2_to_mainFriendsFragment, bundle)
+                    }
+
+                    binding.mainTimelineAddPost.setOnClickListener {
+                        findNavController().navigate(R.id.action_mainTimelineFragment2_to_addTimelinePostFragment, bundle)
+                    }
+
+                    // links: navigate to the different apps
+                    binding.mainTimelineLinks.setOnClickListener {
+                        val dialog = Dialog(requireContext())
+                        dialog.setContentView(R.layout.profile_main_links_dialog)
+
+                        val insta: String? = userData.insta
+                        val linkedIn: String? = userData.linkedIn
+                        val github: String? = userData.git
+
+                        if (insta != null) {
+                            dialog.profile_dialog_instagram.setOnClickListener {
+                                val uri =
+                                    Uri.parse("http://instagram.com/_u/" + insta)
+                                val likeIng = Intent(Intent.ACTION_VIEW, uri)
+
+                                likeIng.setPackage("com.instagram.android")
+
+                                try {
+                                    startActivity(likeIng)
+                                } catch (e: ActivityNotFoundException) {
+                                    startActivity(
+                                        Intent(
+                                            Intent.ACTION_VIEW,
+                                            Uri.parse("http://instagram.com/" + insta)
+                                        )
+                                    )
+                                }
+                            }
+                        }
+
+                        if (github != null) {
+                            dialog.profile_dialog_github.setOnClickListener {
+                                val uri =
+                                    Uri.parse("http://github.com/_u/" + github)
+                                val likeIng = Intent(Intent.ACTION_VIEW, uri)
+
+                                likeIng.setPackage("com.github.android")
+
+                                try {
+                                    startActivity(likeIng)
+                                } catch (e: ActivityNotFoundException) {
+                                    startActivity(
+                                        Intent(
+                                            Intent.ACTION_VIEW,
+                                            Uri.parse("http://github.com/" + github)
+                                        )
+                                    )
+                                }
+                            }
+                        }
+
+                        if (linkedIn != null) {
+                            dialog.profile_dialog_linkedin.setOnClickListener {
+                                val uri =
+                                    Uri.parse("http://linkedin.com/in/" + linkedIn)
+                                val likeIng = Intent(Intent.ACTION_VIEW, uri)
+
+                                likeIng.setPackage("com.linkedin.android")
+
+                                try {
+                                    startActivity(likeIng)
+                                } catch (e: ActivityNotFoundException) {
+                                    startActivity(
+                                        Intent(
+                                            Intent.ACTION_VIEW,
+                                            Uri.parse("http://linkedin.com/in/" + linkedIn)
+                                        )
+                                    )
+                                }
+                            }
+                        }
+
+                        dialog.getWindow()?.setBackgroundDrawable(ColorDrawable(Color.WHITE))
+                        dialog.show()
+                    }
+
+                    factory = MainTimelineViewModelFactory(userData)
+                    viewModel = ViewModelProvider(this, factory).get(MainTimelineViewModel::class.java)
+
+                    viewManager = LinearLayoutManager(activity)
+                    viewAdapter = MainTimelineAdapter(posts)
+
+                    recyclerView = binding.recyclerviewTimeline.apply {
+                        // use a linear layout manager
+                        layoutManager = viewManager
+
+                        // specify an viewAdapter (see also next example)
+                        adapter = viewAdapter
+                    }
+
+                    viewModel.timelinePosts.observe(viewLifecycleOwner, androidx.lifecycle.Observer<List<TimeLinePost>> { timelinePost ->
+                        posts.removeAll(posts)
+                        posts.addAll(timelinePost)
+                        recyclerView.adapter!!.notifyDataSetChanged()
+                    })
+                }.addOnFailureListener {
+                    Toast.makeText(requireContext(), "Missing User Data: " + it.message, Toast.LENGTH_SHORT).show()
+                }
         }
-
-        viewModel.timelinePosts.observe(viewLifecycleOwner, androidx.lifecycle.Observer<List<TimeLinePost>> { timelinePost ->
-            posts.removeAll(posts)
-            posts.addAll(timelinePost)
-            recyclerView.adapter!!.notifyDataSetChanged()
-        })
-
-        binding.mainTimelineAddPost.setOnClickListener {
-
-            findNavController().navigate(R.id.action_mainTimelineFragment2_to_addTimelinePostFragment, bundle)
-        }
-
-
 
         return binding.root
     }
 
     override fun onActivityCreated(savedInstanceState: Bundle?) {
         super.onActivityCreated(savedInstanceState)
-        factory = MainTimelineViewModelFactory()
-        viewModel = ViewModelProvider(this, factory).get(MainTimelineViewModel::class.java)
-        // On start of activity, we load the user data to be display on dashboard later
-        viewModel.loadPosts()
-        viewModel.timelinePosts.observe(viewLifecycleOwner, androidx.lifecycle.Observer<List<TimeLinePost>> { posts ->
-            if (posts.size != 0) {
-                Toast.makeText(requireContext(), "Success retrieval", Toast.LENGTH_SHORT).show()
-            } else {
-                Toast.makeText(requireContext(), "Failed retrieval", Toast.LENGTH_SHORT).show()
-            }
-        })
+
+        if (arguments != null) {
+            userData = requireArguments().getParcelable<UserData>("userdata") as UserData
+            factory = MainTimelineViewModelFactory(userData)
+            viewModel = ViewModelProvider(this, factory).get(MainTimelineViewModel::class.java)
+            // On start of activity, we load the user data to be display on dashboard later
+            viewModel.loadPosts()
+            viewModel.timelinePosts.observe(viewLifecycleOwner, androidx.lifecycle.Observer<List<TimeLinePost>> { posts ->
+                if (posts.size != 0) {
+                    Toast.makeText(requireContext(), "Success retrieval", Toast.LENGTH_SHORT).show()
+                } else {
+                    Toast.makeText(requireContext(), "Failed retrieval", Toast.LENGTH_SHORT).show()
+                }
+            })
+        } else {
+            firestore.collection("users").document(firebaseAuth.currentUser!!.uid).get()
+                .addOnSuccessListener {
+                    userData = it.toObject((UserData::class.java))!!
+                    factory = MainTimelineViewModelFactory(userData)
+                    viewModel = ViewModelProvider(this, factory).get(MainTimelineViewModel::class.java)
+                    // On start of activity, we load the user data to be display on dashboard later
+                    viewModel.loadPosts()
+                    viewModel.timelinePosts.observe(viewLifecycleOwner, androidx.lifecycle.Observer<List<TimeLinePost>> { posts ->
+                        if (posts.size != 0) {
+                            Toast.makeText(requireContext(), "Success retrieval", Toast.LENGTH_SHORT).show()
+                        } else {
+                            Toast.makeText(requireContext(), "Failed retrieval", Toast.LENGTH_SHORT).show()
+                        }
+                    })
+                }.addOnFailureListener {
+                    Toast.makeText(requireContext(), "Missing User Data: " + it.message, Toast.LENGTH_SHORT).show()
+                }
+        }
+
     }
 
     fun setUserPrivilege(boolean: Boolean) {
@@ -229,9 +347,15 @@ class MainTimelineFragment : Fragment() {
 
         binding.mainTimelineAddPost.isVisible = boolean
         binding.mainTimelineAddPost.isEnabled = boolean
-
-
     }
 
-
+    fun pageSetup() {
+        setUserPrivilege(userData.userID == firebaseAuth.currentUser!!.uid)
+        binding.mainTimelineName.text = userData.fullname
+        val facCourse : String =  userData.faculty + " (" + userData.course + ")"
+        binding.mainTimelineCourse.text = facCourse
+        val year: String = "Year " + userData.year.toString()
+        binding.mainTimelineYear.text = year
+        binding.mainTimelineBio.text = userData.bio
+    }
 }
