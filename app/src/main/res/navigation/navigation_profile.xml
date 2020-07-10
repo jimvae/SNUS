@@ -26,8 +26,7 @@
     <fragment
         android:id="@+id/editProfileFragment2"
         android:name="com.orbital.snus.profile.EditProfileFragment"
-        android:label="EditProfileFragment"
-        tools:layout="@layout/profile_main_timeline_edit">
+        android:label="EditProfileFragment">
         <action
             android:id="@+id/action_editProfileFragment2_to_mainTimelineFragment2"
             app:destination="@id/mainTimelineFragment2"
@@ -67,7 +66,7 @@
     <fragment
         android:id="@+id/addTimelinePostFragment"
         android:name="com.orbital.snus.profile.MainTimeline.AddTimelinePostFragment"
-        android:label="AddTimelinePostFragment" >
+        android:label="AddTimelinePostFragment">
         <action
             android:id="@+id/action_addTimelinePostFragment_to_mainTimelineFragment2"
             app:destination="@id/mainTimelineFragment2" />
