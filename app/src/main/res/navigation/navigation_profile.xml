@@ -19,6 +19,9 @@
             android:id="@+id/action_mainTimelineFragment2_to_mainFriendsFragment"
             app:destination="@id/mainFriendsFragment"
             app:popUpTo="@id/mainTimelineFragment2" />
+        <action
+            android:id="@+id/action_mainTimelineFragment2_to_addTimelinePostFragment"
+            app:destination="@id/addTimelinePostFragment" />
     </fragment>
     <fragment
         android:id="@+id/editProfileFragment2"
@@ -61,5 +64,13 @@
             app:destination="@id/mainFriendsFragment"
             app:popUpTo="@id/mainFriendsSearchFragment"
             app:popUpToInclusive="true" />
+    </fragment>
+    <fragment
+        android:id="@+id/addTimelinePostFragment"
+        android:name="com.orbital.snus.profile.MainTimeline.AddTimelinePostFragment"
+        android:label="AddTimelinePostFragment" >
+        <action
+            android:id="@+id/action_addTimelinePostFragment_to_mainTimelineFragment2"
+            app:destination="@id/mainTimelineFragment2" />
     </fragment>
 </navigation>

@@ -6,11 +6,13 @@ import android.content.Intent
 import android.graphics.Color
 import android.graphics.drawable.ColorDrawable
 import android.net.Uri
+import android.opengl.Visibility
 import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import android.widget.Toast
+import androidx.core.view.isVisible
 import androidx.databinding.DataBindingUtil
 import androidx.fragment.app.Fragment
 import androidx.lifecycle.ViewModelProvider
@@ -35,6 +37,7 @@ class MainTimelineFragment : Fragment() {
     val firestore = FirebaseFirestore.getInstance()
     val firebaseAuth = FirebaseAuth.getInstance()
 
+    private lateinit var binding: ProfileMainTimelineBinding
     private lateinit var userData: UserData
 
     private lateinit var factory: MainTimelineViewModelFactory
@@ -50,14 +53,22 @@ class MainTimelineFragment : Fragment() {
         container: ViewGroup?,
         savedInstanceState: Bundle?
     ): View? {
-        val binding = DataBindingUtil.inflate<ProfileMainTimelineBinding>(inflater,
+        binding = DataBindingUtil.inflate<ProfileMainTimelineBinding>(inflater,
             R.layout.profile_main_timeline, container, false)
+
+        val bundle = Bundle()
+
 
         firestore.collection("users").document(firebaseAuth.currentUser!!.uid).get()
             .addOnSuccessListener {
                 userData = it.toObject((UserData::class.java))!!
+                bundle.putParcelable("userdata", userData)
+
 
                 // page setup
+                if (!userData.userID.equals(firebaseAuth.currentUser!!.uid)) {
+                    setUserPrivilege(false)
+                }
                 binding.mainTimelineName.text = userData.fullname
                 val facCourse : String =  userData.faculty + " (" + userData.course + ")"
                 binding.mainTimelineCourse.text = facCourse
@@ -68,8 +79,7 @@ class MainTimelineFragment : Fragment() {
 
                 // on click listeners
                 binding.mainTimelineEditSettings.setOnClickListener {
-                    val bundle = Bundle()
-                    bundle.putParcelable("userdata", userData)
+
                     findNavController().navigate(R.id.action_mainTimelineFragment2_to_editProfileFragment2, bundle)
                 }
 
@@ -77,11 +87,13 @@ class MainTimelineFragment : Fragment() {
                     // recycler view loads timeline?
                 }
 
+                val bundle = Bundle()
+                bundle.putParcelable("userdata", userData)
+
                 binding.mainTimelineFriends.setOnClickListener {
                     // recycler view loads friends?
                     // friend requests?
-                    val bundle = Bundle()
-                    bundle.putParcelable("userdata", userData)
+
                     findNavController().navigate(R.id.action_mainTimelineFragment2_to_mainFriendsFragment, bundle)
 
                 }
@@ -186,6 +198,11 @@ class MainTimelineFragment : Fragment() {
             recyclerView.adapter!!.notifyDataSetChanged()
         })
 
+        binding.mainTimelineAddPost.setOnClickListener {
+
+            findNavController().navigate(R.id.action_mainTimelineFragment2_to_addTimelinePostFragment, bundle)
+        }
+
 
 
         return binding.root
@@ -204,6 +221,16 @@ class MainTimelineFragment : Fragment() {
                 Toast.makeText(requireContext(), "Failed retrieval", Toast.LENGTH_SHORT).show()
             }
         })
+    }
+
+    fun setUserPrivilege(boolean: Boolean) {
+        binding.mainTimelineEditSettings.isVisible = boolean
+        binding.mainTimelineEditSettings.isEnabled = boolean
+
+        binding.mainTimelineAddPost.isVisible = boolean
+        binding.mainTimelineAddPost.isEnabled = boolean
+
+
     }
 
 
