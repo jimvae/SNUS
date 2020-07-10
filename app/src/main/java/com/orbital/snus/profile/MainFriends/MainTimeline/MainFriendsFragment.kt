@@ -48,6 +48,8 @@ class MainFriendsFragment : Fragment() {
 
     val firebaseAuth = FirebaseAuth.getInstance()
 
+    private lateinit var userData: UserData
+
     override fun onCreateView(
         inflater: LayoutInflater,
         container: ViewGroup?,
@@ -57,9 +59,9 @@ class MainFriendsFragment : Fragment() {
             inflater, R.layout.profile_main_friends, container, false)
 
 
-        var userData : UserData = requireArguments().getParcelable<UserData>("userdata") as UserData
+        userData = requireArguments().getParcelable<UserData>("userdata") as UserData
         setUserPrivilege(userData.userID == firebaseAuth.currentUser!!.uid)
-        factory = MainFriendsViewModelFactory()
+        factory = MainFriendsViewModelFactory(userData)
         viewModel = ViewModelProvider(this, factory).get(MainFriendsViewModel::class.java)
 
         viewManager = LinearLayoutManager(activity)
@@ -98,6 +100,10 @@ class MainFriendsFragment : Fragment() {
 
         binding.mainProfileFriends.setOnClickListener {
             // does nothing
+        }
+
+        binding.buttonRequests.setOnClickListener {
+            findNavController().navigate(R.id.action_mainFriendsFragment_to_mainFriendsRequestFragment, bundle)
         }
 
         // links: navigate to the different apps
@@ -189,7 +195,20 @@ class MainFriendsFragment : Fragment() {
             // let the search fragment handle the search of users
             val searchBundle = Bundle()
             searchBundle.putString("search", text)
+            searchBundle.putParcelable("userdata", userData)
             findNavController().navigate(R.id.action_mainFriendsFragment_to_mainFriendsSearchFragment, searchBundle)
+        }
+
+        // NEED TO SET THE STATUS -> check if the user is in requests, requested or friends --> if not is stranger
+        if (userData.userID != firebaseAuth.currentUser!!.uid) {
+            binding.textFriendStatus.text = viewModel.getUserStatus(userData.userID!!)
+        }
+
+        binding.textFriendStatus.setOnClickListener {
+            // if the text is "Add Friend" --> send friend request
+            // if the text is "Friend Request sent to @Username" --> do nothing
+            // if the text is "Friends" --> delete friend
+            // if the text is "Friend Request sent to you!" --> redirect to friend request page
         }
 
         return binding.root
@@ -216,11 +235,14 @@ class MainFriendsFragment : Fragment() {
 
         binding.textFriendStatus.isVisible = !boolean
         binding.textFriendStatus.isEnabled = !boolean
+
+        binding.buttonRequests.isVisible = boolean
+        binding.buttonRequests.isEnabled = boolean
     }
 
     override fun onActivityCreated(savedInstanceState: Bundle?) {
         super.onActivityCreated(savedInstanceState)
-        factory = MainFriendsViewModelFactory()
+        factory = MainFriendsViewModelFactory(userData)
         viewModel = ViewModelProvider(this, factory).get(MainFriendsViewModel::class.java)
         viewModel.loadUsers()
         viewModel.users.observe(viewLifecycleOwner, androidx.lifecycle.Observer<List<UserData>> { users ->

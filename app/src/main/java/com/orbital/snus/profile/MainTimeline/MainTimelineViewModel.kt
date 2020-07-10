@@ -9,6 +9,7 @@ import com.google.firebase.firestore.FirebaseFirestore
 import com.orbital.snus.data.ForumPost
 import com.orbital.snus.data.TimeLinePost
 import com.orbital.snus.data.UserData
+import com.orbital.snus.data.UserFriendRequest
 
 class MainTimelineViewModel(val user: UserData) : ViewModel() {
 
@@ -139,6 +140,29 @@ class MainTimelineViewModel(val user: UserData) : ViewModel() {
 
     fun updatePostFailureCompleted() {
         _updateFailure.value = null
+    }
+
+
+    fun sendRequest(userFriendRequest: UserFriendRequest) {
+        // from -> add to into from's requested
+        // to -> add from into to's requests
+    }
+
+    fun acceptRequest(userFriendRequest: UserFriendRequest) {
+        // from -> delete to from from's requested, add to into friends
+        // to -> delete from from to's requests, add from into friends
+    }
+
+    fun declineRequest(userFriendRequest: UserFriendRequest) {
+        // from -> delete to from from's requested
+        // to -> delete from from to's requests
+    }
+
+    fun getUserStatus(userid: String) : String {
+        // check if user is in friends list -> return "Friends"
+        // check if user is in requested list -> return "Friend Request sent"
+        // check if user is in requests list -> return "Friend Request sent to you!"
+        return "Add Friend"
     }
 }
 

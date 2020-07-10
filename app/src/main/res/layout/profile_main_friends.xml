@@ -76,6 +76,7 @@
             android:id="@+id/main_profile_friends"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
+            android:layout_marginEnd="100dp"
             android:text="Friends"
             app:layout_constraintBaseline_toBaselineOf="@+id/main_profile_timeline"
             app:layout_constraintEnd_toEndOf="parent"
@@ -151,6 +152,15 @@
             android:layout_marginEnd="16dp"
             android:text="Status"
             app:layout_constraintBaseline_toBaselineOf="@+id/main_profile_bio"
+            app:layout_constraintEnd_toEndOf="parent" />
+
+        <Button
+            android:id="@+id/button_requests"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginEnd="16dp"
+            android:text="Requests"
+            app:layout_constraintBaseline_toBaselineOf="@+id/main_profile_friends"
             app:layout_constraintEnd_toEndOf="parent" />
 
     </androidx.constraintlayout.widget.ConstraintLayout>

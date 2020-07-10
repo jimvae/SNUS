@@ -45,7 +45,7 @@ class MainFriendsSearchFragment : Fragment() {
         binding = DataBindingUtil.inflate(layoutInflater, R.layout.profile_main_friends_search, container, false)
         binding.textSearchTitle.text = binding.textSearchTitle.text.toString() + "\n${requireArguments().get("search").toString()}"
 
-        factory = MainFriendsViewModelFactory()
+        factory = MainFriendsViewModelFactory(requireArguments().getParcelable<UserData>("userdata") as UserData)
         viewModel = ViewModelProvider(this, factory).get(MainFriendsViewModel::class.java)
 
         viewManager = LinearLayoutManager(activity)

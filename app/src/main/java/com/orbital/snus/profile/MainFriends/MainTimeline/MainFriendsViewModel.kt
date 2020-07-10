@@ -8,11 +8,11 @@ import com.google.firebase.auth.FirebaseAuth
 import com.google.firebase.firestore.FirebaseFirestore
 import com.orbital.snus.data.TimeLinePost
 import com.orbital.snus.data.UserData
+import com.orbital.snus.data.UserFriendRequest
 import java.util.*
 import kotlin.collections.ArrayList
 
-class MainFriendsViewModel() : ViewModel() {
-    private val user = FirebaseAuth.getInstance().currentUser!!
+class MainFriendsViewModel(val user: UserData) : ViewModel() {
 
     private val db = FirebaseFirestore.getInstance()
 
@@ -30,6 +30,16 @@ class MainFriendsViewModel() : ViewModel() {
     private val _friends = MutableLiveData<List<UserData>>()
     val friends: LiveData<List<UserData>>
         get() = _friends
+
+    // for requests
+    private val _requests = MutableLiveData<List<UserData>>()
+    val requests: LiveData<List<UserData>>
+        get() = _requests
+
+    // for requested
+    private val _requested = MutableLiveData<List<UserData>>()
+    val requested: LiveData<List<UserData>>
+        get() = _requested
 
     // for search
     fun filterUsers(username: String) {
@@ -76,5 +86,28 @@ class MainFriendsViewModel() : ViewModel() {
                 }
                 _users.value = listUsers
             }
+
+    }
+
+    fun sendRequest(userFriendRequest: UserFriendRequest) {
+        // from -> add to into from's requested
+        // to -> add from into to's requests
+    }
+
+    fun acceptRequest(userFriendRequest: UserFriendRequest) {
+        // from -> delete to from from's requested, add to into friends
+        // to -> delete from from to's requests, add from into friends
+    }
+
+    fun declineRequest(userFriendRequest: UserFriendRequest) {
+        // from -> delete to from from's requested
+        // to -> delete from from to's requests
+    }
+
+    fun getUserStatus(userid: String) : String {
+        // check if user is in friends list -> return "Friends"
+        // check if user is in requested list -> return "Friend Request sent"
+        // check if user is in requests list -> return "Friend Request sent to you!"
+        return "Add Friend"
     }
 }

@@ -58,6 +58,10 @@
             android:id="@+id/action_mainFriendsFragment_to_mainFriendsSearchFragment"
             app:destination="@id/mainFriendsSearchFragment"
             app:popUpTo="@id/mainFriendsFragment" />
+        <action
+            android:id="@+id/action_mainFriendsFragment_to_mainFriendsRequestFragment"
+            app:destination="@id/mainFriendsRequestFragment"
+            app:popUpTo="@id/mainFriendsFragment" />
     </fragment>
     <fragment
         android:id="@+id/mainFriendsSearchFragment"
@@ -78,5 +82,15 @@
             app:destination="@id/mainTimelineFragment2"
             app:popUpTo="@id/addTimelinePostFragment"
             app:popUpToInclusive="true" />
+    </fragment>
+    <fragment
+        android:id="@+id/mainFriendsRequestFragment"
+        android:name="com.orbital.snus.profile.MainFriends.MainTimeline.MainFriendsRequestFragment"
+        android:label="profile_main_friends_request"
+        tools:layout="@layout/profile_main_friends_request" >
+        <action
+            android:id="@+id/action_mainFriendsRequestFragment_to_mainFriendsFragment"
+            app:destination="@id/mainFriendsFragment"
+            app:popUpTo="@id/mainFriendsRequestFragment" />
     </fragment>
 </navigation>
