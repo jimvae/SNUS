@@ -108,7 +108,7 @@
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintHorizontal_bias="1.0"
             app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toBottomOf="@+id/friends_searchview"
+            app:layout_constraintTop_toBottomOf="@+id/button_search"
             tools:listitem="@layout/profile_main_friends_recycler" />
 
         <Button
@@ -123,16 +123,26 @@
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toBottomOf="@+id/main_profile_bio" />
 
-        <SearchView
-            android:id="@+id/friends_searchview"
+        <EditText
+            android:id="@+id/edit_text_search"
             android:layout_width="0dp"
             android:layout_height="wrap_content"
             android:layout_marginStart="16dp"
-            android:layout_marginTop="12dp"
+            android:ems="10"
+            android:hint="Search Users"
+            android:inputType="textPersonName"
+            app:layout_constraintBaseline_toBaselineOf="@+id/button_search"
+            app:layout_constraintEnd_toStartOf="@+id/button_search"
+            app:layout_constraintStart_toStartOf="parent" />
+
+        <Button
+            android:id="@+id/button_search"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="16dp"
             android:layout_marginEnd="16dp"
-            android:clickable="false"
+            android:text="Search"
             app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toBottomOf="@+id/main_profile_friends" />
 
     </androidx.constraintlayout.widget.ConstraintLayout>
