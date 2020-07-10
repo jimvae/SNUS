@@ -17,6 +17,7 @@ import androidx.databinding.DataBindingUtil
 import androidx.fragment.app.Fragment
 import androidx.lifecycle.ViewModelProvider
 import androidx.navigation.fragment.findNavController
+import androidx.recyclerview.widget.ItemTouchHelper
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
 import com.google.firebase.auth.FirebaseAuth
@@ -26,6 +27,7 @@ import com.orbital.snus.data.ForumPost
 import com.orbital.snus.data.TimeLinePost
 import com.orbital.snus.data.UserData
 import com.orbital.snus.databinding.ProfileMainTimelineBinding
+import com.orbital.snus.modules.Forum.Posts.Answers.AnswersAdapter
 import com.orbital.snus.modules.Forum.Posts.PostViewAdapter
 import com.orbital.snus.modules.Forum.Posts.PostViewModel
 import com.orbital.snus.modules.Forum.Posts.PostViewModelFactory
@@ -300,6 +302,11 @@ class MainTimelineFragment : Fragment() {
                 }
         }
 
+
+
+
+
+
         return binding.root
     }
 
@@ -310,6 +317,7 @@ class MainTimelineFragment : Fragment() {
             userData = requireArguments().getParcelable<UserData>("userdata") as UserData
             factory = MainTimelineViewModelFactory(userData)
             viewModel = ViewModelProvider(this, factory).get(MainTimelineViewModel::class.java)
+            swipeToDelete()
             // On start of activity, we load the user data to be display on dashboard later
             viewModel.loadPosts()
             viewModel.timelinePosts.observe(viewLifecycleOwner, androidx.lifecycle.Observer<List<TimeLinePost>> { posts ->
@@ -326,6 +334,7 @@ class MainTimelineFragment : Fragment() {
                     factory = MainTimelineViewModelFactory(userData)
                     viewModel = ViewModelProvider(this, factory).get(MainTimelineViewModel::class.java)
                     // On start of activity, we load the user data to be display on dashboard later
+                    swipeToDelete()
                     viewModel.loadPosts()
                     viewModel.timelinePosts.observe(viewLifecycleOwner, androidx.lifecycle.Observer<List<TimeLinePost>> { posts ->
                         if (posts.size != 0) {
@@ -344,9 +353,10 @@ class MainTimelineFragment : Fragment() {
     fun setUserPrivilege(boolean: Boolean) {
         binding.mainTimelineEditSettings.isVisible = boolean
         binding.mainTimelineEditSettings.isEnabled = boolean
-
         binding.mainTimelineAddPost.isVisible = boolean
         binding.mainTimelineAddPost.isEnabled = boolean
+
+
     }
 
     fun pageSetup() {
@@ -357,5 +367,43 @@ class MainTimelineFragment : Fragment() {
         val year: String = "Year " + userData.year.toString()
         binding.mainTimelineYear.text = year
         binding.mainTimelineBio.text = userData.bio
+    }
+
+    fun swipeToDelete(){
+        if (userData.userID == firebaseAuth.currentUser!!.uid) {
+            //swipe to delete if it is your comments
+            ItemTouchHelper(object : ItemTouchHelper.SimpleCallback(0, ItemTouchHelper.LEFT) {
+                override fun onMove(recyclerView: RecyclerView, viewHolder: RecyclerView.ViewHolder,
+                                    target: RecyclerView.ViewHolder): Boolean {
+                    return false
+                }
+
+                override fun onSwiped(viewHolder: RecyclerView.ViewHolder, direction: Int) {
+                    val post = (viewAdapter as MainTimelineAdapter).getPost(viewHolder.adapterPosition)
+                    viewModel.deletePost(post.id!!)
+                    viewModel.delSuccess.observe(viewLifecycleOwner, androidx.lifecycle.Observer {
+                        if (it != null) {
+                            Toast.makeText(requireContext(), "Post successfully deleted", Toast.LENGTH_SHORT)
+                                .show()
+                            val bundle = Bundle()
+                            bundle.putParcelable("userdata", userData)
+                            findNavController().navigate(R.id.action_mainTimelineFragment2_self, bundle)
+                            viewModel.delPostSuccessCompleted()
+                        }
+                    })
+                    viewModel.delFailure.observe(viewLifecycleOwner, androidx.lifecycle.Observer {
+                        if (it != null) {
+                            Toast.makeText(requireContext(), it.toString(), Toast.LENGTH_SHORT).show()
+                            viewModel.delPostFailureCompleted()
+                        }
+                    })
+
+
+                    viewAdapter.notifyItemChanged(viewHolder.adapterPosition)
+//                AnswersViewModel.delete(adapter.getNoteAt(viewHolder.adapterPosition))
+                    Toast.makeText(requireContext(), "Post deleted", Toast.LENGTH_SHORT).show()
+                }
+            }).attachToRecyclerView(recyclerView)
+        }
     }
 }

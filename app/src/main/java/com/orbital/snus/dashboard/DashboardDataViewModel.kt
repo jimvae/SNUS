@@ -21,17 +21,17 @@ class DashboardDataViewModel : ViewModel() {
         get() = _addSuccess
 
     //for adding posts
-    private val _addSuccess2 = MutableLiveData<Boolean?>()
-    val addSucces2 : LiveData<Boolean?>
-        get() = _addSuccess2
+//    private val _addSuccess2 = MutableLiveData<Boolean?>()
+//    val addSucces2 : LiveData<Boolean?>
+//        get() = _addSuccess2
 
     private val _addFailure = MutableLiveData<Exception?>()
     val addFailure : LiveData<Exception?>
         get() = _addFailure
 
-    private val _addFailure2 = MutableLiveData<Exception?>()
-    val addFailure2 : LiveData<Exception?>
-        get() = _addFailure2
+//    private val _addFailure2 = MutableLiveData<Exception?>()
+//    val addFailure2 : LiveData<Exception?>
+//        get() = _addFailure2
 
     fun addEvent(event: UserEvent) {
         // start to add inside database
@@ -52,26 +52,26 @@ class DashboardDataViewModel : ViewModel() {
                 _addFailure.value = it
             }
 
-        if (event.addToTimeline!!) {
-            val timelinePost = TimeLinePost(null, event.eventName, Calendar.getInstance().time, false, event.eventDescription, null)
-            val id = db.collection("users")
-                .document(firebaseAuth.currentUser!!.uid)
-                .collection("timeline")
-                .document().id
-
-            timelinePost.id = id
-
-            db.collection("users")
-                .document(firebaseAuth.currentUser!!.uid)
-                .collection("timeline")
-                .document(id).set(timelinePost)
-                .addOnSuccessListener {
-                    _addSuccess2.value = true
-                }.addOnFailureListener {
-                    _addFailure2.value = it
-                }
-
-        }
+//        if (event.addToTimeline!!) {
+//            val timelinePost = TimeLinePost(null, event.eventName, Calendar.getInstance().time, false, event.eventDescription, null)
+//            val id = db.collection("users")
+//                .document(firebaseAuth.currentUser!!.uid)
+//                .collection("timeline")
+//                .document().id
+//
+//            timelinePost.id = id
+//
+//            db.collection("users")
+//                .document(firebaseAuth.currentUser!!.uid)
+//                .collection("timeline")
+//                .document(id).set(timelinePost)
+//                .addOnSuccessListener {
+//                    _addSuccess2.value = true
+//                }.addOnFailureListener {
+//                    _addFailure2.value = it
+//                }
+//
+//        }
     }
 
     fun addEventSuccessCompleted() {

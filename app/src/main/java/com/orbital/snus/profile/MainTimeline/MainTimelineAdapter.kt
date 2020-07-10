@@ -7,6 +7,7 @@ import android.view.View
 import android.view.ViewGroup
 import androidx.recyclerview.widget.RecyclerView
 import com.orbital.snus.R
+import com.orbital.snus.data.ForumComment
 import com.orbital.snus.data.ForumPost
 import com.orbital.snus.data.TimeLinePost
 import com.orbital.snus.modules.Forum.Posts.PostViewAdapter
@@ -44,5 +45,9 @@ class MainTimelineAdapter (val timelineList: List<TimeLinePost>) :
         holder.textView.profile_timeline_recycler_date.text =
             dateFormatter.format(post.date!!).toPattern().toString()
         holder.textView.profile_timeline_recycler_extra_details.text = post.details
+    }
+
+    public fun getPost(position: Int) : TimeLinePost {
+        return timelineList.get(position)
     }
 }

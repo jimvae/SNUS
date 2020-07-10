@@ -23,6 +23,10 @@
         <action
             android:id="@+id/action_mainTimelineFragment2_to_addTimelinePostFragment"
             app:destination="@id/addTimelinePostFragment" />
+        <action
+            android:id="@+id/action_mainTimelineFragment2_self"
+            app:destination="@id/mainTimelineFragment2"
+            app:popUpTo="@id/mainTimelineFragment2" />
     </fragment>
     <fragment
         android:id="@+id/editProfileFragment2"

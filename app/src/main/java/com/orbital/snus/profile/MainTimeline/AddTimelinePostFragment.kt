@@ -5,6 +5,8 @@ import android.text.TextUtils
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import android.widget.AdapterView
+import android.widget.ArrayAdapter
 import android.widget.Spinner
 import android.widget.Toast
 import androidx.databinding.DataBindingUtil
@@ -27,6 +29,10 @@ class AddTimelinePostFragment : Fragment() {
     private lateinit var viewModel: MainTimelineViewModel
     private lateinit var factory: MainTimelineViewModelFactory
 
+    val categories = arrayOf("", "Camps", "Medium", "High")
+    private lateinit var categorySpinner: Spinner
+    private lateinit var category: String
+
 
     override fun onCreateView(
         inflater: LayoutInflater,
@@ -44,24 +50,31 @@ class AddTimelinePostFragment : Fragment() {
         binding = DataBindingUtil.inflate<ProfileMainTimelineAddPostBinding>(
             inflater, R.layout.profile_main_timeline_add_post, container, false
         )
+        spinnerSetup()
+
 
         binding.mainTimelineAddPostConfirm.setOnClickListener {
             val title = binding.mainTimelineAddPostTitle.text.toString().trim()
-            val details = binding.mainTimelineAddExtraDetails.text.toString().trim()
+//            val details = binding.mainTimelineAddExtraDetails.text.toString().trim()
 
             if (TextUtils.isEmpty(title)) {
                 binding.mainTimelineAddPostTitle.setError("Missing Title")
                 return@setOnClickListener
             }
 
-            if (TextUtils.isEmpty(details)) {
-                binding.mainTimelineAddPostTitle.setError("Missing Details")
+            if (category == "") {
+                Toast.makeText(requireContext(), "Please enter more details", Toast.LENGTH_SHORT)
+                    .show()
                 return@setOnClickListener
             }
+//            if (TextUtils.isEmpty(details)) {
+//                binding.mainTimelineAddPostTitle.setError("Missing Details")
+//                return@setOnClickListener
+//            }
 
             configurePage(false)
 
-            val post = TimeLinePost(null, title, Calendar.getInstance().time, false, details, null)
+            val post = TimeLinePost(null, title, Calendar.getInstance().time, false, category, null)
             viewModel.addTimeline(post)
             viewModel.addSuccess.observe(viewLifecycleOwner, androidx.lifecycle.Observer {
                 if (it != null) {
@@ -92,5 +105,26 @@ class AddTimelinePostFragment : Fragment() {
     override fun onDestroyView() {
         super.onDestroyView()
         (activity as ProfileActivity).showNavBar()
+    }
+
+    fun spinnerSetup() {
+        categorySpinner = binding.mainTimelineAddExtraDetails
+        categorySpinner.adapter =
+            ArrayAdapter(requireContext(), R.layout.module_review_spinner_layout, categories)
+
+        categorySpinner.onItemSelectedListener = object : AdapterView.OnItemSelectedListener {
+            override fun onNothingSelected(parent: AdapterView<*>?) {
+                category = ""
+            }
+
+            override fun onItemSelected(
+                parent: AdapterView<*>?,
+                view: View?,
+                position: Int,
+                id: Long
+            ) {
+                category = categories.get(position)
+            }
+        }
     }
 }
