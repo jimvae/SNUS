@@ -60,10 +60,9 @@
         android:label="MainFriendsSearchFragment"
         tools:layout="@layout/profile_main_friends_search">
         <action
-            android:id="@+id/action_mainFriendsSearchFragment_to_mainFriendsFragment"
-            app:destination="@id/mainFriendsFragment"
-            app:popUpTo="@id/mainFriendsSearchFragment"
-            app:popUpToInclusive="true" />
+            android:id="@+id/action_mainFriendsSearchFragment_to_mainTimelineFragment2"
+            app:destination="@id/mainTimelineFragment2"
+            app:popUpTo="@id/mainFriendsSearchFragment" />
     </fragment>
     <fragment
         android:id="@+id/addTimelinePostFragment"

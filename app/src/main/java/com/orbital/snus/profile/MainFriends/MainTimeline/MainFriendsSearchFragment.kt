@@ -48,7 +48,7 @@ class MainFriendsSearchFragment : Fragment() {
         viewModel = ViewModelProvider(this, factory).get(MainFriendsViewModel::class.java)
 
         viewManager = LinearLayoutManager(activity)
-        viewAdapter = MainFriendsAdapter(filteredUsers)
+        viewAdapter = MainFriendsSearchAdapter(filteredUsers)
         recyclerView = binding.recyclerviewSearch.apply {
             layoutManager = viewManager
             adapter = viewAdapter
