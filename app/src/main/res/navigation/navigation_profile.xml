@@ -46,5 +46,20 @@
             app:destination="@id/editProfileFragment2"
             app:popUpTo="@id/editProfileFragment2"
             app:popUpToInclusive="true" />
+        <action
+            android:id="@+id/action_mainFriendsFragment_to_mainFriendsSearchFragment"
+            app:destination="@id/mainFriendsSearchFragment"
+            app:popUpTo="@id/mainFriendsFragment" />
+    </fragment>
+    <fragment
+        android:id="@+id/mainFriendsSearchFragment"
+        android:name="com.orbital.snus.profile.MainFriends.MainTimeline.MainFriendsSearchFragment"
+        android:label="MainFriendsSearchFragment"
+        tools:layout="@layout/profile_main_friends_search">
+        <action
+            android:id="@+id/action_mainFriendsSearchFragment_to_mainFriendsFragment"
+            app:destination="@id/mainFriendsFragment"
+            app:popUpTo="@id/mainFriendsSearchFragment"
+            app:popUpToInclusive="true" />
     </fragment>
 </navigation>

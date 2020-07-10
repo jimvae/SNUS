@@ -12,7 +12,6 @@ import com.orbital.snus.data.TimeLinePost
 class MainTimelineViewModel() : ViewModel() {
     private val user = FirebaseAuth.getInstance().currentUser!!
 
-
     private val db = FirebaseFirestore.getInstance()
 
     private val _timelinePosts = MutableLiveData<List<TimeLinePost>>()
