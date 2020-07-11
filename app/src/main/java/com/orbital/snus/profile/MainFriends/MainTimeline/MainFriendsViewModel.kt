@@ -140,14 +140,12 @@ class MainFriendsViewModel(val user: UserData) : ViewModel() {
         _sendFailure.value = null
     }
 
-    fun acceptRequest(userFriendRequest: UserFriendRequest) {
-        // from -> delete to from from's requested, add to into friends
-        // to -> delete from from to's requests, add from into friends
+    fun acceptRequest(userid: String) {
+
     }
 
-    fun declineRequest(userFriendRequest: UserFriendRequest) {
-        // from -> delete to from from's requested
-        // to -> delete from from to's requests
+    fun declineRequest(userid: String) {
+
     }
 
     val _userStatus = MutableLiveData<String>()

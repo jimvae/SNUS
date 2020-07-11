@@ -63,7 +63,7 @@ class MainFriendsRequestFragment : Fragment() {
                 viewModel = ViewModelProvider(this, factory).get(MainFriendsViewModel::class.java)
 
                 viewManager = LinearLayoutManager(activity)
-                viewAdapter = MainFriendsRequestAdapter(requests)
+                viewAdapter = MainFriendsRequestAdapter(requests, viewModel)
                 recyclerView = binding.recyclerviewRequests.apply {
                     layoutManager = viewManager
                     adapter = viewAdapter
