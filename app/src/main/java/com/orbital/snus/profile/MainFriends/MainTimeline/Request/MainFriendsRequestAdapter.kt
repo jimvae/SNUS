@@ -10,6 +10,7 @@ import androidx.core.content.ContentProviderCompat.requireContext
 import androidx.navigation.findNavController
 import androidx.recyclerview.widget.RecyclerView
 import com.orbital.snus.R
+import com.orbital.snus.data.Friends
 import com.orbital.snus.data.UserData
 import com.orbital.snus.data.UserFriendRequest
 import com.orbital.snus.profile.MainTimeline.MainFriendsViewModel
@@ -44,9 +45,8 @@ class MainFriendsRequestAdapter (val users: List<UserFriendRequest>, val viewMod
         holder.textView.profile_friends_request_recycler_course.text = userRequest.fromCourse
 //        holder.textView.setOnClickListener(onClickListenerSeeProfile(position));
 
-        holder.textView.button_accept.setOnClickListener {
-
-        }
+        holder.textView.button_accept.setOnClickListener(
+            onClickListenerAccept(userRequest))
         holder.textView.button_decline.setOnClickListener(
             onClickListenDecline(userRequest))
     }
@@ -60,10 +60,19 @@ class MainFriendsRequestAdapter (val users: List<UserFriendRequest>, val viewMod
 //        }
 //    }
 
-    private fun onClickListenerAccept(position: Int): View.OnClickListener? {
+    private fun onClickListenerAccept(request: UserFriendRequest): View.OnClickListener? {
         return View.OnClickListener {
             val bundle = Bundle()
-            it.findNavController().navigate(R.id.action_mainFriendsRequestFragment_to_mainFriendsFragment, bundle)
+            bundle.putParcelable("userdata", currentUserData)
+            bundle.putParcelable("currentUserData", currentUserData )
+            val otherUserInfo = Friends(null, request.fromID, request.fromName, request.fromCourse)
+            val currentUserInfo= Friends(null, currentUserData.userID, currentUserData.fullname, currentUserData.course)
+            viewModel.acceptRequest(currentUserInfo, otherUserInfo)
+            viewModel.declineRequest(request.id!!)
+
+
+
+            it.findNavController().navigate(R.id.action_mainFriendsRequestFragment_to_mainFriendsFragment,bundle)
         }
     }
 

@@ -53,7 +53,7 @@ class MainFriendsSearchFragment : Fragment() {
                 filteredUsers, currentUserData
             )
         recyclerView = binding.recyclerviewSearch.apply {
-            layoutManager = viewManagergit
+            layoutManager = viewManager
             adapter = viewAdapter
         }
 

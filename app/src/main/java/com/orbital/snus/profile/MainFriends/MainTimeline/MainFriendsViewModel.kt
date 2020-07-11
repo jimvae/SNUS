@@ -6,6 +6,7 @@ import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
 import com.google.firebase.auth.FirebaseAuth
 import com.google.firebase.firestore.FirebaseFirestore
+import com.orbital.snus.data.Friends
 import com.orbital.snus.data.TimeLinePost
 import com.orbital.snus.data.UserData
 import com.orbital.snus.data.UserFriendRequest
@@ -54,7 +55,15 @@ class MainFriendsViewModel(val user: UserData, val currentUser: UserData) : View
     val delSuccessRequest: LiveData<Boolean?>
         get() = _delSuccessRequest
 
-    // for search
+
+    private val _addFailureRequest = MutableLiveData<Exception?>()
+    val addFailureRequest: LiveData<Exception?>
+        get() = _addFailureRequest
+
+    private val _addSuccessRequest = MutableLiveData<Boolean?>()
+    val addSuccessRequest: LiveData<Boolean?>
+        get() = _addSuccessRequest
+    // for searchx
     fun filterUsers(username: String) {
         val filteredList = ArrayList<UserData>()
 
@@ -156,7 +165,22 @@ class MainFriendsViewModel(val user: UserData, val currentUser: UserData) : View
         _sendFailure.value = null
     }
 
-    fun acceptRequest(userid: String) {
+    fun acceptRequest(currentUserInfo: Friends, otherUserInfo: Friends) {
+        val id = db.collection("users").document(currentUserInfo.friendID!!).collection("friends").document().id
+        currentUserInfo.friendshipID = id
+        otherUserInfo.friendshipID = id
+        db.collection("users").document(currentUserInfo.friendID!!).collection("friends").document(id).set(otherUserInfo)
+            .addOnSuccessListener {
+                _addSuccessRequest.value = true
+            }.addOnFailureListener {
+                _addFailureRequest.value = it
+            }
+        db.collection("users").document(otherUserInfo.friendID!!).collection("friends").document(id).set(currentUserInfo)
+            .addOnSuccessListener {
+                _addSuccessRequest.value = true
+            }.addOnFailureListener {
+                _addFailureRequest.value = it
+            }
 
     }
 
