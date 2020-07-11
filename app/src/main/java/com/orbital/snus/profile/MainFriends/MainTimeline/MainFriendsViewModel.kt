@@ -36,11 +36,6 @@ class MainFriendsViewModel(val user: UserData) : ViewModel() {
     val requests: LiveData<List<UserData>>
         get() = _requests
 
-    // for requested
-    private val _requested = MutableLiveData<List<UserData>>()
-    val requested: LiveData<List<UserData>>
-        get() = _requested
-
     // for search
     fun filterUsers(username: String) {
         val filteredList = ArrayList<UserData>()
@@ -48,7 +43,7 @@ class MainFriendsViewModel(val user: UserData) : ViewModel() {
         db.collection("users")
             .addSnapshotListener { querySnapshot, firebaseFirestoreException ->
                 if (firebaseFirestoreException != null) {
-                    Log.w("MainTimeLineViewModel", firebaseFirestoreException.toString())
+                    Log.w("MainFriendsViewModel", firebaseFirestoreException.toString())
                     return@addSnapshotListener
                 }
                 if (querySnapshot != null) {
@@ -66,13 +61,41 @@ class MainFriendsViewModel(val user: UserData) : ViewModel() {
             }
     }
 
+    fun loadRequests() {
+        val requestList = ArrayList<UserData>()
+
+        db.collection("requests")
+            .addSnapshotListener { querySnapshot, firebaseFirestoreException ->
+                if (firebaseFirestoreException != null) {
+                    Log.w("MainFriendsViewModel", firebaseFirestoreException.toString())
+                    return@addSnapshotListener
+                }
+                if (querySnapshot != null) {
+                    val documents = querySnapshot.documents
+                    documents.forEach {
+                        val eachUser = it.toObject(UserFriendRequest::class.java)
+                        if (eachUser != null) {
+                            if (eachUser.to.equals(user.userID)) {
+                                _users.value?.forEach {
+                                    if (it.userID.equals(eachUser.from)) {
+                                        requestList.add(it)
+                                    }
+                                }
+                            }
+                        }
+                    }
+                }
+                _requests.value = requestList
+            }
+    }
+
     // for all users
     fun loadUsers() {
         val listUsers = ArrayList<UserData>()
         db.collection("users")
             .addSnapshotListener { querySnapshot, firebaseFirestoreException ->
                 if (firebaseFirestoreException != null) {
-                    Log.w("MainTimeLineViewModel", firebaseFirestoreException.toString())
+                    Log.w("MainFriendsViewModel", firebaseFirestoreException.toString())
                     return@addSnapshotListener
                 }
                 if (querySnapshot != null) {
@@ -89,9 +112,32 @@ class MainFriendsViewModel(val user: UserData) : ViewModel() {
 
     }
 
+    // ADD POSTS
+    private val _sendSuccess = MutableLiveData<Boolean?>()
+    val sendSuccess: LiveData<Boolean?>
+        get() = _sendSuccess
+
+    private val _sendFailure = MutableLiveData<Exception?>()
+    val sendFailure: LiveData<Exception?>
+        get() = _sendFailure
+
     fun sendRequest(userFriendRequest: UserFriendRequest) {
         // from -> add to into from's requested
         // to -> add from into to's requests
+        db.collection("requests").document().set(userFriendRequest)
+            .addOnSuccessListener {
+                _sendSuccess.value = true
+            }.addOnFailureListener {
+                _sendFailure.value = it
+            }
+    }
+
+    fun sendSuccessCompleted() {
+        _sendSuccess.value = null
+    }
+
+    fun sendFailureCompleted() {
+        _sendFailure.value = null
     }
 
     fun acceptRequest(userFriendRequest: UserFriendRequest) {
@@ -104,10 +150,58 @@ class MainFriendsViewModel(val user: UserData) : ViewModel() {
         // to -> delete from from to's requests
     }
 
-    fun getUserStatus(userid: String) : String {
+    val _userStatus = MutableLiveData<String>()
+    val userStatus : LiveData<String>
+        get() = _userStatus
+
+    fun getUserStatus(userid: String) {
         // check if user is in friends list -> return "Friends"
         // check if user is in requested list -> return "Friend Request sent"
         // check if user is in requests list -> return "Friend Request sent to you!"
-        return "Add Friend"
+        val currentUserID = FirebaseAuth.getInstance().currentUser!!.uid
+        _userStatus.value = "Add Friend"
+
+        db.collection("requests")
+            .addSnapshotListener { querySnapshot, firebaseFirestoreException ->
+                if (firebaseFirestoreException != null) {
+                    Log.w("MainFriendsViewModel", firebaseFirestoreException.toString())
+                    return@addSnapshotListener
+                }
+                if (querySnapshot != null) {
+                    val documents = querySnapshot.documents
+                    documents.forEach {
+                        val eachRequest = it.toObject(UserFriendRequest::class.java)
+                        if (eachRequest != null) {
+                            // check if currentUser is sender, and userID is receiver
+                            if (eachRequest.from.equals(currentUserID) && eachRequest.to.equals(userid)) {
+                                _userStatus.value = "Friend Request Sent!"
+                            } else if (eachRequest.from.equals(userid) && eachRequest.to.equals(currentUserID)) {
+                                _userStatus.value = "Friend Request Sent to You!"
+                            }
+                        }
+                    }
+                }
+            }
+
+        db.collection("users")
+            .document(currentUserID)
+            .collection("friends")
+            .addSnapshotListener { querySnapshot, firebaseFirestoreException ->
+                if (firebaseFirestoreException != null) {
+                    Log.w("MainFriendsViewModel", firebaseFirestoreException.toString())
+                    return@addSnapshotListener
+                }
+                if (querySnapshot != null) {
+                    val documents = querySnapshot.documents
+                    documents.forEach {
+                        val eachFriend = it.toObject(String::class.java)
+                        if (eachFriend != null) {
+                            if (eachFriend.equals(userid)) {
+                                _userStatus.value = "Friends"
+                            }
+                        }
+                    }
+                }
+            }
     }
 }

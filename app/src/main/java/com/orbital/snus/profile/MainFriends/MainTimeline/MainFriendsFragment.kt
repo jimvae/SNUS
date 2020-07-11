@@ -17,6 +17,7 @@ import android.widget.Toast
 import androidx.core.view.isVisible
 import androidx.databinding.DataBindingUtil
 import androidx.fragment.app.Fragment
+import androidx.lifecycle.Observer
 import androidx.lifecycle.ViewModelProvider
 import androidx.navigation.fragment.findNavController
 import androidx.recyclerview.widget.LinearLayoutManager
@@ -26,6 +27,7 @@ import com.google.firebase.firestore.auth.User
 import com.orbital.snus.R
 import com.orbital.snus.data.TimeLinePost
 import com.orbital.snus.data.UserData
+import com.orbital.snus.data.UserFriendRequest
 import com.orbital.snus.databinding.ProfileMainFriendsBinding
 import kotlinx.android.synthetic.main.profile_main_links_dialog.*
 
@@ -201,7 +203,10 @@ class MainFriendsFragment : Fragment() {
 
         // NEED TO SET THE STATUS -> check if the user is in requests, requested or friends --> if not is stranger
         if (userData.userID != firebaseAuth.currentUser!!.uid) {
-            binding.textFriendStatus.text = viewModel.getUserStatus(userData.userID!!)
+            viewModel.getUserStatus(userData.userID!!)
+            viewModel.userStatus.observe(viewLifecycleOwner, Observer {
+                binding.textFriendStatus.text = it
+            })
         }
 
         binding.textFriendStatus.setOnClickListener {
@@ -209,6 +214,37 @@ class MainFriendsFragment : Fragment() {
             // if the text is "Friend Request sent to @Username" --> do nothing
             // if the text is "Friends" --> delete friend
             // if the text is "Friend Request sent to you!" --> redirect to friend request page
+            when (binding.textFriendStatus.text) {
+                "Add Friend" -> {
+                    viewModel.sendRequest(UserFriendRequest(firebaseAuth.currentUser!!.uid, userData.userID))
+                    viewModel.sendSuccess.observe(viewLifecycleOwner, androidx.lifecycle.Observer {
+                        if (it == true) {
+                            binding.textFriendStatus.text = "Friend Request Sent!"
+                            viewModel.sendSuccessCompleted()
+                        }
+                    })
+                    viewModel.sendFailure.observe(viewLifecycleOwner, androidx.lifecycle.Observer {
+                        if (it != null) {
+                            Toast.makeText(requireContext(), "Failed: " + it.message, Toast.LENGTH_SHORT).show()
+                        }
+                        viewModel.sendFailureCompleted()
+                    })
+                }
+                "Friends" -> {
+                    // add delete friend?
+                    return@setOnClickListener
+                }
+                "Friend Request Sent!" -> {
+                    // add cancel friend request?
+                    // or do nothing
+                    return@setOnClickListener
+                }
+                "Friend Request Sent to You!" -> {
+                    // navigate to friend requests
+                    findNavController().navigate(R.id.action_mainFriendsFragment_to_mainFriendsRequestFragment)
+                    return@setOnClickListener
+                }
+            }
         }
 
         return binding.root
