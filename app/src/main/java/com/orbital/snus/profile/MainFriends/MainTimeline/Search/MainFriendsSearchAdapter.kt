@@ -1,4 +1,4 @@
-package com.orbital.snus.profile.MainFriends.MainTimeline
+package com.orbital.snus.profile.MainFriends.MainTimeline.Search
 
 import android.os.Bundle
 import android.view.LayoutInflater
@@ -8,10 +8,9 @@ import androidx.navigation.findNavController
 import androidx.recyclerview.widget.RecyclerView
 import com.orbital.snus.R
 import com.orbital.snus.data.UserData
-import com.orbital.snus.profile.MainTimeline.MainFriendsAdapter
 import kotlinx.android.synthetic.main.profile_main_friends_recycler.view.*
 
-class MainFriendsSearchAdapter(val users: List<UserData>) :
+class MainFriendsSearchAdapter(val users: List<UserData>, val currentUserData: UserData) :
     RecyclerView.Adapter<MainFriendsSearchAdapter.UserViewHolder>() {
 
     class UserViewHolder (val textView: View) : RecyclerView.ViewHolder(textView)
@@ -19,17 +18,19 @@ class MainFriendsSearchAdapter(val users: List<UserData>) :
     override fun onCreateViewHolder(
         parent: ViewGroup,
         viewType: Int
-    ): MainFriendsSearchAdapter.UserViewHolder {
+    ): UserViewHolder {
         val textView = LayoutInflater.from(parent.context)
             .inflate(R.layout.profile_main_friends_recycler, parent, false)
-        return UserViewHolder(textView)
+        return UserViewHolder(
+            textView
+        )
     }
 
     override fun getItemCount(): Int {
         return users.size
     }
 
-    override fun onBindViewHolder(holder: MainFriendsSearchAdapter.UserViewHolder, position: Int) {
+    override fun onBindViewHolder(holder: UserViewHolder, position: Int) {
         val user = users[position]
         holder.textView.profile_friends_recycler_name.text = user.fullname
         holder.textView.profile_friends_recycler_course.text = user.course
@@ -40,6 +41,7 @@ class MainFriendsSearchAdapter(val users: List<UserData>) :
         return View.OnClickListener {
             val bundle = Bundle()
             bundle.putParcelable("userdata", users[position])
+            bundle.putParcelable("currentUserData", currentUserData)
             it.findNavController().navigate(R.id.action_mainFriendsSearchFragment_to_mainTimelineFragment2, bundle)
         }
     }

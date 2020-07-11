@@ -1,13 +1,11 @@
-package com.orbital.snus.profile.MainFriends.MainTimeline
+package com.orbital.snus.profile.MainFriends.MainTimeline.Search
 
 import android.os.Bundle
-import android.util.Log
 import androidx.fragment.app.Fragment
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import android.widget.Toast
-import androidx.core.view.isVisible
 import androidx.databinding.DataBindingUtil
 import androidx.lifecycle.ViewModelProvider
 import androidx.recyclerview.widget.LinearLayoutManager
@@ -15,7 +13,6 @@ import androidx.recyclerview.widget.RecyclerView
 import com.orbital.snus.R
 import com.orbital.snus.data.UserData
 import com.orbital.snus.databinding.ProfileMainFriendsSearchBinding
-import com.orbital.snus.profile.MainTimeline.MainFriendsAdapter
 import com.orbital.snus.profile.MainTimeline.MainFriendsViewModel
 import com.orbital.snus.profile.MainTimeline.MainFriendsViewModelFactory
 
@@ -44,14 +41,19 @@ class MainFriendsSearchFragment : Fragment() {
         // Inflate the layout for this fragment
         binding = DataBindingUtil.inflate(layoutInflater, R.layout.profile_main_friends_search, container, false)
         binding.textSearchTitle.text = binding.textSearchTitle.text.toString() + "\n${requireArguments().get("search").toString()}"
+        val currentUserData = requireArguments().getParcelable<UserData>("currentUserData") as UserData
 
-        factory = MainFriendsViewModelFactory(requireArguments().getParcelable<UserData>("userdata") as UserData)
+
+        factory = MainFriendsViewModelFactory(requireArguments().getParcelable<UserData>("userdata") as UserData, currentUserData)
         viewModel = ViewModelProvider(this, factory).get(MainFriendsViewModel::class.java)
 
         viewManager = LinearLayoutManager(activity)
-        viewAdapter = MainFriendsSearchAdapter(filteredUsers)
+        viewAdapter =
+            MainFriendsSearchAdapter(
+                filteredUsers, currentUserData
+            )
         recyclerView = binding.recyclerviewSearch.apply {
-            layoutManager = viewManager
+            layoutManager = viewManagergit
             adapter = viewAdapter
         }
 

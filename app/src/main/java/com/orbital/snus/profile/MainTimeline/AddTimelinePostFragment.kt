@@ -29,7 +29,7 @@ class AddTimelinePostFragment : Fragment() {
     private lateinit var viewModel: MainTimelineViewModel
     private lateinit var factory: MainTimelineViewModelFactory
 
-    val categories = arrayOf("", "Camps", "Medium", "High")
+    val categories = arrayOf("", "Camps", "Competitions", "Modules", "Internships", "Exchange")
     private lateinit var categorySpinner: Spinner
     private lateinit var category: String
 
@@ -39,8 +39,8 @@ class AddTimelinePostFragment : Fragment() {
         container: ViewGroup?,
         savedInstanceState: Bundle?
     ): View? {
-
-        factory = MainTimelineViewModelFactory(requireArguments().get("userdata") as UserData)
+        val currentUser = requireArguments().get("currentUserData") as UserData
+        factory = MainTimelineViewModelFactory(requireArguments().get("userdata") as UserData, currentUser)
         viewModel = ViewModelProvider(this, factory).get(MainTimelineViewModel::class.java)
 
 

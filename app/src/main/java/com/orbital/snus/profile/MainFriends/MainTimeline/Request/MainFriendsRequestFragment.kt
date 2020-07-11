@@ -1,4 +1,4 @@
-package com.orbital.snus.profile.MainFriends.MainTimeline
+package com.orbital.snus.profile.MainFriends.MainTimeline.Request
 
 import android.os.Bundle
 import androidx.fragment.app.Fragment
@@ -9,7 +9,6 @@ import android.widget.Toast
 import androidx.databinding.DataBindingUtil
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.Observer
-import androidx.lifecycle.ViewModel
 import androidx.lifecycle.ViewModelProvider
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
@@ -17,8 +16,8 @@ import com.google.firebase.auth.FirebaseAuth
 import com.google.firebase.firestore.FirebaseFirestore
 import com.orbital.snus.R
 import com.orbital.snus.data.UserData
+import com.orbital.snus.data.UserFriendRequest
 import com.orbital.snus.databinding.ProfileMainFriendsRequestBinding
-import com.orbital.snus.profile.MainTimeline.MainFriendsAdapter
 import com.orbital.snus.profile.MainTimeline.MainFriendsViewModel
 import com.orbital.snus.profile.MainTimeline.MainFriendsViewModelFactory
 
@@ -28,7 +27,7 @@ class MainFriendsRequestFragment : Fragment() {
     private lateinit var viewModel: MainFriendsViewModel
     private lateinit var factory: MainFriendsViewModelFactory
 
-    private val requests = ArrayList<UserData>()
+    private val requests = ArrayList<UserFriendRequest>()
 
     // the recyclerview here should display the user's friends
     private lateinit var viewAdapter: RecyclerView.Adapter<*>
@@ -59,11 +58,15 @@ class MainFriendsRequestFragment : Fragment() {
         _userDataObserver.observe(viewLifecycleOwner, Observer {
             if (it) {
 
-                factory = MainFriendsViewModelFactory(userData)
+                factory = MainFriendsViewModelFactory(userData, userData)
                 viewModel = ViewModelProvider(this, factory).get(MainFriendsViewModel::class.java)
 
                 viewManager = LinearLayoutManager(activity)
-                viewAdapter = MainFriendsRequestAdapter(requests, viewModel)
+                viewAdapter =
+                    MainFriendsRequestAdapter(
+                        requests,
+                        viewModel, userData
+                    )
                 recyclerView = binding.recyclerviewRequests.apply {
                     layoutManager = viewManager
                     adapter = viewAdapter
@@ -97,7 +100,7 @@ class MainFriendsRequestFragment : Fragment() {
             }
 
         _setupObserver.observe(viewLifecycleOwner, Observer {
-            factory = MainFriendsViewModelFactory(userData)
+            factory = MainFriendsViewModelFactory(userData, userData)
             viewModel = ViewModelProvider(this, factory).get(MainFriendsViewModel::class.java)
             viewModel.loadUsers()
             viewModel.loadRequests()

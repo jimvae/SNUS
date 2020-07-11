@@ -11,7 +11,7 @@ import com.orbital.snus.data.TimeLinePost
 import com.orbital.snus.data.UserData
 import com.orbital.snus.data.UserFriendRequest
 
-class MainTimelineViewModel(val user: UserData) : ViewModel() {
+class MainTimelineViewModel(val user: UserData, val currentUser: UserData) : ViewModel() {
 
     private val db = FirebaseFirestore.getInstance()
 
@@ -154,7 +154,9 @@ class MainTimelineViewModel(val user: UserData) : ViewModel() {
     fun sendRequest(userFriendRequest: UserFriendRequest) {
         // from -> add to into from's requested
         // to -> add from into to's requests
-        db.collection("requests").document().set(userFriendRequest)
+        val id = db.collection("requests").document().id
+        userFriendRequest.id = id
+        db.collection("requests").document(id).set(userFriendRequest)
             .addOnSuccessListener {
                 _sendSuccess.value = true
             }.addOnFailureListener {
@@ -203,9 +205,9 @@ class MainTimelineViewModel(val user: UserData) : ViewModel() {
                         val eachRequest = it.toObject(UserFriendRequest::class.java)
                         if (eachRequest != null) {
                             // check if currentUser is sender, and userID is receiver
-                            if (eachRequest.from.equals(currentUserID) && eachRequest.to.equals(userid)) {
+                            if (eachRequest.fromID.equals(currentUserID) && eachRequest.toID.equals(userid)) {
                                 _userStatus.value = "Friend Request Sent!"
-                            } else if (eachRequest.from.equals(userid) && eachRequest.to.equals(currentUserID)) {
+                            } else if (eachRequest.fromID.equals(userid) && eachRequest.toID.equals(currentUserID)) {
                                 _userStatus.value = "Friend Request Sent to You!"
                             }
                         }

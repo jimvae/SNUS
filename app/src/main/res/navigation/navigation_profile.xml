@@ -69,7 +69,7 @@
     </fragment>
     <fragment
         android:id="@+id/mainFriendsSearchFragment"
-        android:name="com.orbital.snus.profile.MainFriends.MainTimeline.MainFriendsSearchFragment"
+        android:name="com.orbital.snus.profile.MainFriends.MainTimeline.Search.MainFriendsSearchFragment"
         android:label="MainFriendsSearchFragment"
         tools:layout="@layout/profile_main_friends_search">
         <action
@@ -89,7 +89,7 @@
     </fragment>
     <fragment
         android:id="@+id/mainFriendsRequestFragment"
-        android:name="com.orbital.snus.profile.MainFriends.MainTimeline.MainFriendsRequestFragment"
+        android:name="com.orbital.snus.profile.MainFriends.MainTimeline.Request.MainFriendsRequestFragment"
         android:label="profile_main_friends_request"
         tools:layout="@layout/profile_main_friends_request" >
         <action

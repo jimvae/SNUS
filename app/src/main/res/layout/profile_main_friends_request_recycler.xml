@@ -6,7 +6,7 @@
     android:layout_height="wrap_content">
 
     <ImageView
-        android:id="@+id/profile_friends_recycler_title"
+        android:id="@+id/profile_friends_request_recycler_title"
         android:layout_width="47dp"
         android:layout_height="40dp"
         android:layout_marginStart="8dp"
@@ -16,7 +16,7 @@
         tools:srcCompat="@tools:sample/avatars" />
 
     <TextView
-        android:id="@+id/profile_friends_recycler_name"
+        android:id="@+id/profile_friends_request_recycler_name"
         android:layout_width="0dp"
         android:layout_height="wrap_content"
         android:layout_marginTop="8dp"
@@ -24,11 +24,11 @@
         android:text="Name"
         app:layout_constraintEnd_toStartOf="@+id/button_accept"
         app:layout_constraintHorizontal_bias="0.0"
-        app:layout_constraintStart_toEndOf="@+id/profile_friends_recycler_title"
+        app:layout_constraintStart_toEndOf="@+id/profile_friends_request_recycler_title"
         app:layout_constraintTop_toTopOf="parent" />
 
     <TextView
-        android:id="@+id/profile_friends_recycler_course"
+        android:id="@+id/profile_friends_request_recycler_course"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_marginTop="8dp"
@@ -36,8 +36,8 @@
         android:textSize="12sp"
         app:layout_constraintEnd_toStartOf="@+id/button_accept"
         app:layout_constraintHorizontal_bias="0.0"
-        app:layout_constraintStart_toEndOf="@+id/profile_friends_recycler_title"
-        app:layout_constraintTop_toBottomOf="@+id/profile_friends_recycler_name" />
+        app:layout_constraintStart_toEndOf="@+id/profile_friends_request_recycler_title"
+        app:layout_constraintTop_toBottomOf="@+id/profile_friends_request_recycler_name" />
 
     <Button
         android:id="@+id/button_decline"
@@ -52,6 +52,6 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:text="Accept"
-        app:layout_constraintBaseline_toBaselineOf="@+id/profile_friends_recycler_title"
+        app:layout_constraintBaseline_toBaselineOf="@+id/profile_friends_request_recycler_title"
         app:layout_constraintEnd_toStartOf="@+id/button_decline" />
 </androidx.constraintlayout.widget.ConstraintLayout>

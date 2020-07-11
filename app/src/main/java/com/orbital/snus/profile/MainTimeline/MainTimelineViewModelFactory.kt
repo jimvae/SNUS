@@ -5,8 +5,8 @@ import androidx.lifecycle.ViewModel
 import androidx.lifecycle.ViewModelProvider
 import com.orbital.snus.modules.Review.ReviewDataViewModel
 
-class MainTimelineViewModelFactory(val user: com.orbital.snus.data.UserData) : ViewModelProvider.NewInstanceFactory() {
+class MainTimelineViewModelFactory(val user: com.orbital.snus.data.UserData, val currentUser: com.orbital.snus.data.UserData) : ViewModelProvider.NewInstanceFactory() {
     override fun <T : ViewModel?> create(modelClass: Class<T>): T {
-        return MainTimelineViewModel(user) as T
+        return MainTimelineViewModel(user, currentUser) as T
     }
 }

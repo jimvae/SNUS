@@ -10,7 +10,7 @@ import com.orbital.snus.R
 import com.orbital.snus.data.UserData
 import kotlinx.android.synthetic.main.profile_main_friends_recycler.view.*
 
-class MainFriendsAdapter(val users: List<UserData>) :
+class MainFriendsAdapter(val currentUserData: UserData, val users: List<UserData>) :
     RecyclerView.Adapter<MainFriendsAdapter.UserViewHolder>() {
 
     class UserViewHolder (val textView: View) : RecyclerView.ViewHolder(textView)
@@ -39,6 +39,7 @@ class MainFriendsAdapter(val users: List<UserData>) :
         return View.OnClickListener {
             val bundle = Bundle()
             bundle.putParcelable("userdata", users[position])
+            bundle.putParcelable("currentUserData", currentUserData)
             it.findNavController().navigate(R.id.action_mainFriendsFragment_to_mainTimelineFragment2, bundle)
         }
     }

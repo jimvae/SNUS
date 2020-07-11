@@ -48,6 +48,7 @@ class MainTimelineFragment : Fragment() {
 
     private lateinit var binding: ProfileMainTimelineBinding
     private lateinit var userData: UserData
+    private lateinit var currentUserData: UserData
 
     private lateinit var factory: MainTimelineViewModelFactory
     private lateinit var viewModel: MainTimelineViewModel
@@ -67,23 +68,69 @@ class MainTimelineFragment : Fragment() {
         binding = DataBindingUtil.inflate<ProfileMainTimelineBinding>(inflater,
             R.layout.profile_main_timeline, container, false)
 
+        val bundle = Bundle()
+
         if (arguments != null) {
             userData = requireArguments().getParcelable<UserData>("userdata") as UserData
+            currentUserData = requireArguments().getParcelable<UserData>("currentUserData") as UserData
+            bundle.putParcelable("currentUserData", currentUserData)
+            factory = MainTimelineViewModelFactory(userData,currentUserData)
+            viewModel = ViewModelProvider(this@MainTimelineFragment, factory).get(MainTimelineViewModel::class.java)
+
+            viewManager = LinearLayoutManager(activity)
+            viewAdapter = MainTimelineAdapter(posts)
+
+            recyclerView = binding.recyclerviewTimeline.apply {
+                // use a linear layout manager
+                layoutManager = viewManager
+
+                // specify an viewAdapter (see also next example)
+                adapter = viewAdapter
+            }
+
+            viewModel.timelinePosts.observe(viewLifecycleOwner, androidx.lifecycle.Observer<List<TimeLinePost>> { timelinePost ->
+                posts.removeAll(posts)
+                posts.addAll(timelinePost)
+                recyclerView.adapter!!.notifyDataSetChanged()
+            })
+
             _userDataObserver.value = true
         } else {
             firestore.collection("users").document(firebaseAuth.currentUser!!.uid).get()
                 .addOnSuccessListener {
                     userData = it.toObject((UserData::class.java))!!
                     _userDataObserver.value = true
+                    currentUserData = userData
+                    bundle.putParcelable("currentUserData", currentUserData)
+
+                    factory = MainTimelineViewModelFactory(userData,currentUserData)
+                    viewModel = ViewModelProvider(this@MainTimelineFragment, factory).get(MainTimelineViewModel::class.java)
+
+                    viewManager = LinearLayoutManager(activity)
+                    viewAdapter = MainTimelineAdapter(posts)
+
+                    recyclerView = binding.recyclerviewTimeline.apply {
+                        // use a linear layout manager
+                        layoutManager = viewManager
+
+                        // specify an viewAdapter (see also next example)
+                        adapter = viewAdapter
+                    }
+
+                    viewModel.timelinePosts.observe(viewLifecycleOwner, androidx.lifecycle.Observer<List<TimeLinePost>> { timelinePost ->
+                        posts.removeAll(posts)
+                        posts.addAll(timelinePost)
+                        recyclerView.adapter!!.notifyDataSetChanged()
+                    })
                 }.addOnFailureListener {
                     Toast.makeText(requireContext(), "Missing User Data: " + it.message, Toast.LENGTH_SHORT).show()
                 }
         }
 
+        //when it is not your profile
         _userDataObserver.observe(viewLifecycleOwner, androidx.lifecycle.Observer {
             if (it) {
                 pageSetup()
-                val bundle = Bundle()
                 bundle.putParcelable("userdata", userData)
 
                 // on click listeners
@@ -178,25 +225,7 @@ class MainTimelineFragment : Fragment() {
                     dialog.show()
                 }
 
-                factory = MainTimelineViewModelFactory(userData)
-                viewModel = ViewModelProvider(this@MainTimelineFragment, factory).get(MainTimelineViewModel::class.java)
 
-                viewManager = LinearLayoutManager(activity)
-                viewAdapter = MainTimelineAdapter(posts)
-
-                recyclerView = binding.recyclerviewTimeline.apply {
-                    // use a linear layout manager
-                    layoutManager = viewManager
-
-                    // specify an viewAdapter (see also next example)
-                    adapter = viewAdapter
-                }
-
-                viewModel.timelinePosts.observe(viewLifecycleOwner, androidx.lifecycle.Observer<List<TimeLinePost>> { timelinePost ->
-                    posts.removeAll(posts)
-                    posts.addAll(timelinePost)
-                    recyclerView.adapter!!.notifyDataSetChanged()
-                })
 
                 // NEED TO SET THE STATUS -> check if the user is in requests, requested or friends --> if not is stranger
                 if (userData.userID != firebaseAuth.currentUser!!.uid) {
@@ -213,7 +242,8 @@ class MainTimelineFragment : Fragment() {
                     // if the text is "Friend Request sent to you!" --> redirect to friend request page
                     when (binding.textFriendStatus.text) {
                         "Add Friend" -> {
-                            viewModel.sendRequest(UserFriendRequest(firebaseAuth.currentUser!!.uid, userData.userID))
+                            viewModel.sendRequest(UserFriendRequest(null, firebaseAuth.currentUser!!.uid, userData.userID,
+                                currentUserData.fullname, currentUserData.course))
                             viewModel.sendSuccess.observe(viewLifecycleOwner, androidx.lifecycle.Observer {
                                 if (it == true) {
                                     binding.textFriendStatus.text = "Friend Request Sent!"
@@ -270,7 +300,7 @@ class MainTimelineFragment : Fragment() {
 
         _setupObserver.observe(viewLifecycleOwner, androidx.lifecycle.Observer {
             if (it) {
-                factory = MainTimelineViewModelFactory(userData)
+                factory = MainTimelineViewModelFactory(userData, currentUserData)
                 viewModel = ViewModelProvider(this, factory).get(MainTimelineViewModel::class.java)
                 swipeToDelete()
                 // On start of activity, we load the user data to be display on dashboard later

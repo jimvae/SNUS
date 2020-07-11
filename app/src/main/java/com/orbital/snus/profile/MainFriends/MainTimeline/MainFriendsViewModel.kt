@@ -12,7 +12,7 @@ import com.orbital.snus.data.UserFriendRequest
 import java.util.*
 import kotlin.collections.ArrayList
 
-class MainFriendsViewModel(val user: UserData) : ViewModel() {
+class MainFriendsViewModel(val user: UserData, val currentUser: UserData) : ViewModel() {
 
     private val db = FirebaseFirestore.getInstance()
 
@@ -32,9 +32,27 @@ class MainFriendsViewModel(val user: UserData) : ViewModel() {
         get() = _friends
 
     // for requests
-    private val _requests = MutableLiveData<List<UserData>>()
-    val requests: LiveData<List<UserData>>
+    private val _requests = MutableLiveData<List<UserFriendRequest>>()
+    val requests: LiveData<List<UserFriendRequest>>
         get() = _requests
+
+    // for deleting requests
+    private val _delRequestSuccess = MutableLiveData<Boolean?>()
+    val delRequestSuccess: LiveData<Boolean?>
+        get() = _delRequestSuccess
+
+    private val _delFailure = MutableLiveData<Exception?>()
+    val delFailure: LiveData<Exception?>
+        get() = _delFailure
+
+
+    private val _delFailureRequest = MutableLiveData<Exception?>()
+    val delFailureRequest: LiveData<Exception?>
+        get() = _delFailureRequest
+
+    private val _delSuccessRequest = MutableLiveData<Boolean?>()
+    val delSuccessRequest: LiveData<Boolean?>
+        get() = _delSuccessRequest
 
     // for search
     fun filterUsers(username: String) {
@@ -62,7 +80,7 @@ class MainFriendsViewModel(val user: UserData) : ViewModel() {
     }
 
     fun loadRequests() {
-        val requestList = ArrayList<UserData>()
+        val requestList = ArrayList<UserFriendRequest>()
 
         db.collection("requests")
             .addSnapshotListener { querySnapshot, firebaseFirestoreException ->
@@ -73,14 +91,10 @@ class MainFriendsViewModel(val user: UserData) : ViewModel() {
                 if (querySnapshot != null) {
                     val documents = querySnapshot.documents
                     documents.forEach {
-                        val eachUser = it.toObject(UserFriendRequest::class.java)
-                        if (eachUser != null) {
-                            if (eachUser.to.equals(user.userID)) {
-                                _users.value?.forEach {
-                                    if (it.userID.equals(eachUser.from)) {
-                                        requestList.add(it)
-                                    }
-                                }
+                        val request = it.toObject(UserFriendRequest::class.java)
+                        if (request != null) {
+                            if (request.toID.equals(user.userID)) {
+                                        requestList.add(request)
                             }
                         }
                     }
@@ -124,7 +138,9 @@ class MainFriendsViewModel(val user: UserData) : ViewModel() {
     fun sendRequest(userFriendRequest: UserFriendRequest) {
         // from -> add to into from's requested
         // to -> add from into to's requests
-        db.collection("requests").document().set(userFriendRequest)
+        val id = db.collection("requests").document().id
+        userFriendRequest.id = id
+        db.collection("requests").document(id).set(userFriendRequest)
             .addOnSuccessListener {
                 _sendSuccess.value = true
             }.addOnFailureListener {
@@ -144,7 +160,16 @@ class MainFriendsViewModel(val user: UserData) : ViewModel() {
 
     }
 
-    fun declineRequest(userid: String) {
+    fun declineRequest(id: String) {
+        db.collection("requests")
+            .document(id).delete()
+            .addOnSuccessListener {
+                _delSuccessRequest.value = true
+                Log.d("Delete Post", "DocumentSnapshot successfully deleted!")
+            }.addOnFailureListener {
+                _delFailureRequest.value = it
+                Log.w("Delete Post", "Error deleting document", it)
+            }
 
     }
 
@@ -171,9 +196,9 @@ class MainFriendsViewModel(val user: UserData) : ViewModel() {
                         val eachRequest = it.toObject(UserFriendRequest::class.java)
                         if (eachRequest != null) {
                             // check if currentUser is sender, and userID is receiver
-                            if (eachRequest.from.equals(currentUserID) && eachRequest.to.equals(userid)) {
+                            if (eachRequest.fromID.equals(currentUserID) && eachRequest.toID.equals(userid)) {
                                 _userStatus.value = "Friend Request Sent!"
-                            } else if (eachRequest.from.equals(userid) && eachRequest.to.equals(currentUserID)) {
+                            } else if (eachRequest.fromID.equals(userid) && eachRequest.toID.equals(currentUserID)) {
                                 _userStatus.value = "Friend Request Sent to You!"
                             }
                         }

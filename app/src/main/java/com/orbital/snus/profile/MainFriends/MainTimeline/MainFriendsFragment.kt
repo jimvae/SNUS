@@ -62,12 +62,14 @@ class MainFriendsFragment : Fragment() {
 
 
         userData = requireArguments().getParcelable<UserData>("userdata") as UserData
+        val currentUserData = requireArguments().getParcelable<UserData>("currentUserData") as UserData
+
         setUserPrivilege(userData.userID == firebaseAuth.currentUser!!.uid)
-        factory = MainFriendsViewModelFactory(userData)
+        factory = MainFriendsViewModelFactory(userData,currentUserData)
         viewModel = ViewModelProvider(this, factory).get(MainFriendsViewModel::class.java)
 
         viewManager = LinearLayoutManager(activity)
-        viewAdapter = MainFriendsAdapter(friends)
+        viewAdapter = MainFriendsAdapter(currentUserData, friends)
         recyclerView = binding.recyclerviewProfile.apply {
             layoutManager = viewManager
             adapter = viewAdapter
@@ -90,6 +92,8 @@ class MainFriendsFragment : Fragment() {
 
         val bundle = Bundle()
         bundle.putParcelable("userdata", userData)
+        bundle.putParcelable( "currentUserData", currentUserData)
+
 
         // on click listeners
         binding.mainProfileEditSettings.setOnClickListener {
@@ -198,6 +202,8 @@ class MainFriendsFragment : Fragment() {
             val searchBundle = Bundle()
             searchBundle.putString("search", text)
             searchBundle.putParcelable("userdata", userData)
+            searchBundle.putParcelable("currentUserData", currentUserData)
+
             findNavController().navigate(R.id.action_mainFriendsFragment_to_mainFriendsSearchFragment, searchBundle)
         }
 
@@ -278,7 +284,9 @@ class MainFriendsFragment : Fragment() {
 
     override fun onActivityCreated(savedInstanceState: Bundle?) {
         super.onActivityCreated(savedInstanceState)
-        factory = MainFriendsViewModelFactory(userData)
+        val currentUserData = requireArguments().getParcelable<UserData>("currentUserData") as UserData
+
+        factory = MainFriendsViewModelFactory(userData,currentUserData)
         viewModel = ViewModelProvider(this, factory).get(MainFriendsViewModel::class.java)
         viewModel.loadUsers()
         viewModel.users.observe(viewLifecycleOwner, androidx.lifecycle.Observer<List<UserData>> { users ->
