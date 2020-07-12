@@ -6,10 +6,7 @@ import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
 import com.google.firebase.auth.FirebaseAuth
 import com.google.firebase.firestore.FirebaseFirestore
-import com.orbital.snus.data.ForumPost
-import com.orbital.snus.data.TimeLinePost
-import com.orbital.snus.data.UserData
-import com.orbital.snus.data.UserFriendRequest
+import com.orbital.snus.data.*
 
 class MainTimelineViewModel(val user: UserData, val currentUser: UserData) : ViewModel() {
 
@@ -226,7 +223,7 @@ class MainTimelineViewModel(val user: UserData, val currentUser: UserData) : Vie
                 if (querySnapshot != null) {
                     val documents = querySnapshot.documents
                     documents.forEach {
-                        val eachFriend = it.toObject(String::class.java)
+                        val eachFriend = it.toObject(Friends::class.java)
                         if (eachFriend != null) {
                             if (eachFriend.equals(userid)) {
                                 _userStatus.value = "Friends"

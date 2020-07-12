@@ -1,6 +1,15 @@
 package com.orbital.snus.profile
 
+import android.Manifest
+import android.app.Activity
+import android.app.Activity.RESULT_OK
+import android.content.Context
 import android.content.Intent
+import android.content.pm.PackageManager
+import android.net.Uri
+import android.os.Build
+
+import android.os.Build.*
 import android.os.Bundle
 import android.text.TextUtils
 import android.view.LayoutInflater
@@ -10,6 +19,7 @@ import android.widget.AdapterView
 import android.widget.ArrayAdapter
 import android.widget.Spinner
 import android.widget.Toast
+import androidx.core.content.ContextCompat.checkSelfPermission
 import androidx.databinding.DataBindingUtil
 import androidx.fragment.app.Fragment
 import androidx.navigation.fragment.findNavController
@@ -103,8 +113,30 @@ class EditProfileFragment : Fragment() {
                 }
             configurePage(true)
         }
+
+        binding.profilePhoto.setOnClickListener {
+            //check runtime permission
+            if (VERSION.SDK_INT >= VERSION_CODES.M){
+                if (checkSelfPermission(requireContext(), Manifest.permission.READ_EXTERNAL_STORAGE) ==
+                    PackageManager.PERMISSION_DENIED){
+                    //permission denied
+                    val permissions = arrayOf(Manifest.permission.READ_EXTERNAL_STORAGE);
+                    //show popup to request runtime permission
+                    requestPermissions(permissions, PERMISSION_CODE);
+                }
+                else{
+                    //permission already granted
+                    pickImageFromGallery();
+                }
+            }
+            else{
+                //system OS is < Marshmallow
+                pickImageFromGallery();
+            }
+        }
         return binding.root
     }
+
 
 
     private fun configurePage(boolean: Boolean) {
@@ -164,5 +196,45 @@ class EditProfileFragment : Fragment() {
     override fun onDestroyView() {
         super.onDestroyView()
         (activity as ProfileActivity).showNavBar()
+    }
+
+
+    //Uploading image
+    private fun pickImageFromGallery() {
+        //Intent to pick image
+        val intent = Intent(Intent.ACTION_PICK)
+        intent.type = "image/*"
+        startActivityForResult(intent, IMAGE_PICK_CODE)
+    }
+
+    companion object {
+        //image pick code
+        private val IMAGE_PICK_CODE = 1000;
+        //Permission code
+        private val PERMISSION_CODE = 1001;
+    }
+
+    //handle requested permission result
+    override fun onRequestPermissionsResult(requestCode: Int, permissions: Array<out String>, grantResults: IntArray) {
+        when(requestCode){
+            PERMISSION_CODE -> {
+                if (grantResults.size >0 && grantResults[0] ==
+                    PackageManager.PERMISSION_GRANTED){
+                    //permission from popup granted
+                    pickImageFromGallery()
+                }
+                else{
+                    //permission from popup denied
+                    Toast.makeText(requireContext(), "Permission denied", Toast.LENGTH_SHORT).show()
+                }
+            }
+        }
+    }
+
+    //handle result of picked image
+    override fun onActivityResult(requestCode: Int, resultCode: Int, data: Intent?) {
+        if (resultCode == Activity.RESULT_OK && requestCode == IMAGE_PICK_CODE){
+            binding.profilePhoto.setImageURI(data?.data)
+        }
     }
 }

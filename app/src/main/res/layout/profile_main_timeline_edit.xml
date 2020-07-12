@@ -18,31 +18,29 @@
                 android:id="@+id/edit_profile_name"
                 android:layout_width="0dp"
                 android:layout_height="wrap_content"
-                android:layout_marginStart="16dp"
-                android:layout_marginTop="16dp"
+                android:layout_marginTop="32dp"
                 android:layout_marginEnd="16dp"
                 android:ems="10"
                 android:hint="Name"
                 android:inputType="textPersonName"
                 app:layout_constraintEnd_toEndOf="parent"
-                app:layout_constraintHorizontal_bias="0.496"
-                app:layout_constraintStart_toStartOf="parent"
-                app:layout_constraintTop_toBottomOf="@+id/profile_photo" />
+                app:layout_constraintHorizontal_bias="0.0"
+                app:layout_constraintStart_toEndOf="@+id/profile_photo_card"
+                app:layout_constraintTop_toBottomOf="@+id/edit_profile_text" />
 
             <EditText
                 android:id="@+id/edit_profile_bio"
                 android:layout_width="0dp"
                 android:layout_height="wrap_content"
                 android:layout_marginStart="16dp"
-                android:layout_marginTop="16dp"
                 android:layout_marginEnd="16dp"
                 android:ems="10"
                 android:hint="Bio / Introduce Yourself!"
                 android:inputType="textPersonName"
                 app:layout_constraintEnd_toEndOf="parent"
-                app:layout_constraintHorizontal_bias="0.496"
+                app:layout_constraintHorizontal_bias="0.0"
                 app:layout_constraintStart_toStartOf="parent"
-                app:layout_constraintTop_toBottomOf="@+id/edit_profile_name" />
+                app:layout_constraintTop_toBottomOf="@+id/profile_photo_card" />
 
             <EditText
                 android:id="@+id/edit_profile_instagram"
@@ -136,18 +134,24 @@
                 app:layout_constraintStart_toStartOf="parent"
                 app:layout_constraintTop_toBottomOf="@+id/edit_profile_course_spinner" />
 
-            <ImageView
-                android:id="@+id/profile_photo"
-                android:layout_width="0dp"
-                android:layout_height="wrap_content"
+            <androidx.cardview.widget.CardView
+                android:id="@+id/profile_photo_card"
+                android:layout_width="128dp"
+                android:layout_height="128dp"
                 android:layout_marginStart="32dp"
                 android:layout_marginTop="32dp"
-                android:layout_marginEnd="32dp"
-                android:background="@drawable/blue_button"
-                app:layout_constraintEnd_toEndOf="parent"
                 app:layout_constraintStart_toStartOf="parent"
                 app:layout_constraintTop_toBottomOf="@+id/edit_profile_text"
-                app:srcCompat="@android:drawable/btn_star_big_on" />
+                app:cardCornerRadius="64dp"
+                >
+
+            <ImageView
+                android:id="@+id/profile_photo"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:scaleType="centerCrop"
+                tools:srcCompat="@tools:sample/avatars" />
+            </androidx.cardview.widget.CardView>
         </androidx.constraintlayout.widget.ConstraintLayout>
     </ScrollView>
 </layout>
