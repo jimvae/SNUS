@@ -12,6 +12,7 @@ import android.os.Build
 import android.os.Build.*
 import android.os.Bundle
 import android.text.TextUtils
+import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
@@ -23,17 +24,28 @@ import androidx.core.content.ContextCompat.checkSelfPermission
 import androidx.databinding.DataBindingUtil
 import androidx.fragment.app.Fragment
 import androidx.navigation.fragment.findNavController
+import com.google.android.gms.tasks.Continuation
+import com.google.android.gms.tasks.Task
 import com.google.firebase.auth.FirebaseAuth
 import com.google.firebase.firestore.FirebaseFirestore
+import com.google.firebase.storage.FirebaseStorage
+import com.google.firebase.storage.StorageTask
+import com.google.firebase.storage.UploadTask
 import com.orbital.snus.R
 import com.orbital.snus.dashboard.DashboardActivity
 import com.orbital.snus.data.UserData
 import com.orbital.snus.databinding.ProfileMainTimelineEditBinding
+import com.squareup.picasso.Picasso
 
 class EditProfileFragment : Fragment() {
 
     val firebaseAuth = FirebaseAuth.getInstance()
     val db = FirebaseFirestore.getInstance()
+    val storage = FirebaseStorage.getInstance().getReference(firebaseAuth.currentUser!!.uid)
+    val imageRef = storage.child("profile_picture")
+    var imageUri: Uri? = null
+    var downloadUrl: Uri? =  null
+
     private lateinit var binding: ProfileMainTimelineEditBinding
 
     val courses = arrayOf("", "Computer Science", "Business Analytics", "Computer Engineering", "Information Systems", "Information Security")
@@ -66,6 +78,9 @@ class EditProfileFragment : Fragment() {
         binding.editProfileLinkedin.setText(userData.linkedIn)
         binding.editProfileCourseSpinner.setSelection(courses.indexOf(userData.course))
         binding.editProfileYearOfStudySpinner.setSelection(year.indexOf(userData.year.toString()))
+        if (userData.picUri != null) {
+            Picasso.get().load(userData.picUri).into(binding.profilePhoto)
+        }
 
         course = userData.course!!
         currYear = userData.year.toString()
@@ -102,7 +117,7 @@ class EditProfileFragment : Fragment() {
 
             configurePage(false)
 
-            userData.updateUserData(name, faculty, course, currYear.toInt(), bio, linkedIn, instagram, gitHub, false)
+            userData.updateUserData(name, faculty, course, currYear.toInt(), bio, linkedIn, instagram, gitHub, false, downloadUrl.toString())
             db.collection("users") // users collection
                 .document(userData.userID!!) // current userId
                 .set(userData)
@@ -233,8 +248,31 @@ class EditProfileFragment : Fragment() {
 
     //handle result of picked image
     override fun onActivityResult(requestCode: Int, resultCode: Int, data: Intent?) {
-        if (resultCode == Activity.RESULT_OK && requestCode == IMAGE_PICK_CODE){
-            binding.profilePhoto.setImageURI(data?.data)
+        if (resultCode == Activity.RESULT_OK && requestCode == IMAGE_PICK_CODE && data != null){
+            imageUri = data?.data
+            Log.d("DIRECT LINK >>>>>>>>>", imageUri!!.toString())
+
+            binding.profilePhoto.setImageURI(imageUri)
+
+
+            var uploadTask: StorageTask<*>
+            uploadTask =  imageRef!!.putFile(imageUri!!)
+            uploadTask.continueWithTask(Continuation <UploadTask.TaskSnapshot, Task<Uri>> { task ->
+                if (!task.isSuccessful) {
+                    task.exception?.let {
+                        throw it
+                    }
+                }
+                    return@Continuation imageRef.downloadUrl
+            }).addOnCompleteListener { task ->
+                if(task.isSuccessful) {
+                    downloadUrl = task.result
+                    val url = downloadUrl.toString()
+                    Log.d("DIRECT LINK >>>>>>>>>", url)
+                }
+            }
+
+
         }
     }
 }

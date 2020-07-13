@@ -8,15 +8,25 @@
         android:layout_height="match_parent">
 
 
-        <ImageView
+        <androidx.cardview.widget.CardView
             android:id="@+id/main_timeline_photo"
-            android:layout_width="80dp"
-            android:layout_height="56dp"
+            android:layout_width="100dp"
+            android:layout_height="100dp"
             android:layout_marginStart="16dp"
             android:layout_marginTop="16dp"
+            app:cardCornerRadius="64dp"
             app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toTopOf="parent"
+            app:layout_constraintTop_toTopOf="parent">
+
+        <ImageView
+            android:id="@+id/main_timeline_photo_view"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:scaleType="centerCrop"
             tools:srcCompat="@tools:sample/avatars" />
+        </androidx.cardview.widget.CardView>
+
+
 
         <TextView
             android:id="@+id/main_timeline_name"

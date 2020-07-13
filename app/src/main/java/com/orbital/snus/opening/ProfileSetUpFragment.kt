@@ -82,7 +82,7 @@ class ProfileSetUpFragment : Fragment() {
             firestore.collection("users").document(user.uid).get()
                 .addOnSuccessListener {
                     userData = it.toObject((UserData::class.java))!!
-                    userData.updateUserData(name, faculty, course, currYear.toInt(), bio, linkedIn, instagram, gitHub, false)
+                    userData.updateUserData(name, faculty, course, currYear.toInt(), bio, linkedIn, instagram, gitHub, false, null)
                     updateUser(userData)
                     startActivity(Intent(activity?.applicationContext, DashboardActivity::class.java))
                     activity?.finish()

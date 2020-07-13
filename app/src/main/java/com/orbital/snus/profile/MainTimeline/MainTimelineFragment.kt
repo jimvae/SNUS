@@ -35,6 +35,7 @@ import com.orbital.snus.modules.Forum.Posts.Answers.AnswersAdapter
 import com.orbital.snus.modules.Forum.Posts.PostViewAdapter
 import com.orbital.snus.modules.Forum.Posts.PostViewModel
 import com.orbital.snus.modules.Forum.Posts.PostViewModelFactory
+import com.squareup.picasso.Picasso
 import kotlinx.android.synthetic.main.profile_main_links_dialog.*
 import kotlinx.coroutines.Job
 import kotlinx.coroutines.launch
@@ -243,7 +244,7 @@ class MainTimelineFragment : Fragment() {
                     when (binding.textFriendStatus.text) {
                         "Add Friend" -> {
                             viewModel.sendRequest(UserFriendRequest(null, firebaseAuth.currentUser!!.uid, userData.userID,
-                                currentUserData.fullname, currentUserData.course))
+                                currentUserData.fullname, currentUserData.course, currentUserData.picUri))
                             viewModel.sendSuccess.observe(viewLifecycleOwner, androidx.lifecycle.Observer {
                                 if (it == true) {
                                     binding.textFriendStatus.text = "Friend Request Sent!"
@@ -337,6 +338,9 @@ class MainTimelineFragment : Fragment() {
         val year: String = "Year " + userData.year.toString()
         binding.mainTimelineYear.text = year
         binding.mainTimelineBio.text = userData.bio
+        if (userData.picUri != null) {
+            Picasso.get().load(userData.picUri).into(binding.mainTimelinePhotoView)
+        }
     }
 
     fun swipeToDelete(){

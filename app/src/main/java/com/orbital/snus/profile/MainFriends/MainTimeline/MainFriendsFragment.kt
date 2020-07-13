@@ -29,6 +29,7 @@ import com.orbital.snus.data.TimeLinePost
 import com.orbital.snus.data.UserData
 import com.orbital.snus.data.UserFriendRequest
 import com.orbital.snus.databinding.ProfileMainFriendsBinding
+import com.squareup.picasso.Picasso
 import kotlinx.android.synthetic.main.profile_main_links_dialog.*
 
 class MainFriendsFragment : Fragment() {
@@ -89,6 +90,9 @@ class MainFriendsFragment : Fragment() {
         val year: String = "Year " + userData.year.toString()
         binding.mainProfileYear.text = year
         binding.mainProfileBio.text = userData.bio
+        if (userData.picUri != null) {
+            Picasso.get().load(userData.picUri).into(binding.mainFriendPhotoView)
+        }
 
         val bundle = Bundle()
         bundle.putParcelable("userdata", userData)
@@ -222,7 +226,8 @@ class MainFriendsFragment : Fragment() {
             // if the text is "Friend Request sent to you!" --> redirect to friend request page
             when (binding.textFriendStatus.text) {
                 "Add Friend" -> {
-                    viewModel.sendRequest(UserFriendRequest(firebaseAuth.currentUser!!.uid, userData.userID))
+                    viewModel.sendRequest(UserFriendRequest(null, firebaseAuth.currentUser!!.uid, userData.userID,
+                        currentUserData.fullname, currentUserData.course, currentUserData.picUri))
                     viewModel.sendSuccess.observe(viewLifecycleOwner, androidx.lifecycle.Observer {
                         if (it == true) {
                             binding.textFriendStatus.text = "Friend Request Sent!"

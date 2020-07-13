@@ -14,8 +14,8 @@ import com.orbital.snus.data.Friends
 import com.orbital.snus.data.UserData
 import com.orbital.snus.data.UserFriendRequest
 import com.orbital.snus.profile.MainTimeline.MainFriendsViewModel
-import kotlinx.android.synthetic.main.profile_main_friends_recycler.view.profile_friends_recycler_course
-import kotlinx.android.synthetic.main.profile_main_friends_recycler.view.profile_friends_recycler_name
+import com.squareup.picasso.Picasso
+import kotlinx.android.synthetic.main.profile_main_friends_recycler.view.*
 import kotlinx.android.synthetic.main.profile_main_friends_request_recycler.view.*
 import kotlinx.coroutines.processNextEventInCurrentThread
 
@@ -49,6 +49,9 @@ class MainFriendsRequestAdapter (val users: List<UserFriendRequest>, val viewMod
             onClickListenerAccept(userRequest))
         holder.textView.button_decline.setOnClickListener(
             onClickListenDecline(userRequest))
+        if (userRequest.picUri != null) {
+            Picasso.get().load(userRequest.picUri).into(holder.textView.profile_friends_recycler_photo_actual)
+        }
     }
 
 //    private fun onClickListenerSeeProfile(position: Int): View.OnClickListener? {
