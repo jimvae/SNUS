@@ -219,6 +219,54 @@ class MainFriendsViewModel(val user: UserData, val currentUser: UserData) : View
 
     }
 
+    private val _delFailureReq = MutableLiveData<Exception?>()
+    val delFailureReq: LiveData<Exception?>
+        get() = _delFailureReq
+
+    private val _delSuccessReq = MutableLiveData<Boolean?>()
+    val delSuccessReq: LiveData<Boolean?>
+        get() = _delSuccessReq
+
+    fun delSuccessReqCompleted() {
+        _delSuccessReq.value = null
+    }
+
+    fun delFailureReqCompleted() {
+        _delFailureReq.value = null
+    }
+
+
+    fun declineMyRequest (id: String) {
+        var requestID : String
+        db.collection("requests")
+            .addSnapshotListener { querySnapshot, firebaseFirestoreException ->
+                if (firebaseFirestoreException != null) {
+                    Log.w("MainFriendsViewModel", firebaseFirestoreException.toString())
+                    return@addSnapshotListener
+                }
+                if (querySnapshot != null) {
+                    val documents = querySnapshot.documents
+                    documents.forEach {
+                        val eachRequest = it.toObject(UserFriendRequest::class.java)
+                        if (eachRequest != null) {
+                            // check if currentUser is sender, and userID is receiver
+                            if (eachRequest.fromID.equals(currentUser.userID) && eachRequest.toID.equals(user.userID)) {
+                                requestID = eachRequest.id!!
+
+                                db.collection("requests").document(requestID).delete()
+                                    .addOnSuccessListener {
+                                        _delSuccessReq.value = true
+                                    }.addOnFailureListener {
+                                        _delFailureReq.value = it
+                                    }
+
+                            }
+                        }
+                    }
+                }
+            }
+    }
+
     val _userStatus = MutableLiveData<String>()
     val userStatus : LiveData<String>
         get() = _userStatus
@@ -300,5 +348,13 @@ class MainFriendsViewModel(val user: UserData, val currentUser: UserData) : View
             .addOnFailureListener {
                 _delFailureFriend.value = it
             }
+    }
+
+    fun delSuccessFriendCompleted() {
+        _delSuccessFriend.value = null
+    }
+
+    fun delFailureFriendCompleted() {
+        _delFailureFriend.value = null
     }
 }

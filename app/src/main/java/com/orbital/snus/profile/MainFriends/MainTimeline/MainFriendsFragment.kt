@@ -31,6 +31,7 @@ import com.orbital.snus.data.UserFriendRequest
 import com.orbital.snus.databinding.ProfileMainFriendsBinding
 import com.squareup.picasso.Picasso
 import kotlinx.android.synthetic.main.profile_main_links_dialog.*
+import kotlinx.android.synthetic.main.profile_main_status_dialog.*
 
 class MainFriendsFragment : Fragment() {
 
@@ -242,13 +243,62 @@ class MainFriendsFragment : Fragment() {
                     })
                 }
                 "Friends" -> {
-                    // add delete friend?
-                    return@setOnClickListener
+                    val dialog = Dialog(requireContext())
+                    dialog.setContentView(R.layout.profile_main_status_dialog)
+                    dialog.profile_main_status_dialog_title.setText("Delete Friend")
+                    dialog.profile_main_status_dialog_details.setText("Are you sure you want to delete this friend?")
+                    dialog.profile_main_status_confirm.setText("Confirm Delete")
+
+                    dialog.profile_main_status_confirm.setOnClickListener {
+                        viewModel.deleteFriend()
+                        viewModel.delSuccessFriend.observe(viewLifecycleOwner, Observer {
+                            if (it == true) {
+                                binding.textFriendStatus.text = "Add Friend"
+
+                                dialog.dismiss()
+                                viewModel.delSuccessFriendCompleted()
+                            }
+                        })
+                        viewModel.delFailureFriend.observe(viewLifecycleOwner, Observer {
+                            if (it != null) {
+                                Toast.makeText(requireContext(), "Failed: " + it.message, Toast.LENGTH_SHORT).show()
+                                viewModel.delFailureFriendCompleted()
+                            }
+                        })
+                    }
+
+                    dialog.getWindow()?.setBackgroundDrawable(ColorDrawable(Color.WHITE))
+                    dialog.show()
                 }
                 "Friend Request Sent!" -> {
                     // add cancel friend request?
                     // or do nothing
-                    return@setOnClickListener
+                    val dialog = Dialog(requireContext())
+                    dialog.setContentView(R.layout.profile_main_status_dialog)
+                    dialog.profile_main_status_dialog_title.setText("Delete Request")
+                    dialog.profile_main_status_dialog_details.setText("Are you sure you want to delete this request?")
+                    dialog.profile_main_status_confirm.setText("Confirm Delete")
+
+                    dialog.profile_main_status_confirm.setOnClickListener {
+                        viewModel.declineMyRequest(userData.userID!!)
+                        viewModel.delSuccessReq.observe(viewLifecycleOwner, Observer {
+                            if (it == true) {
+                                binding.textFriendStatus.text = "Add Friend"
+                                dialog.dismiss()
+                                viewModel.delSuccessReqCompleted()
+                            }
+                        })
+                        viewModel.delFailureReq.observe(viewLifecycleOwner, Observer {
+                            if (it != null) {
+
+                                Toast.makeText(requireContext(), "Failed: " + it.message, Toast.LENGTH_SHORT).show()
+                                viewModel.delFailureReqCompleted()
+                            }
+                        })
+                    }
+
+                    dialog.getWindow()?.setBackgroundDrawable(ColorDrawable(Color.WHITE))
+                    dialog.show()
                 }
                 "Friend Request Sent to You!" -> {
                     // navigate to friend requests
