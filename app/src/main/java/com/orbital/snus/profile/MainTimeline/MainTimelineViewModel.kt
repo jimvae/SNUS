@@ -225,7 +225,7 @@ class MainTimelineViewModel(val user: UserData, val currentUser: UserData) : Vie
                     documents.forEach {
                         val eachFriend = it.toObject(Friends::class.java)
                         if (eachFriend != null) {
-                            if (eachFriend.equals(userid)) {
+                            if (eachFriend.friendID.equals(userid)) {
                                 _userStatus.value = "Friends"
                             }
                         }
