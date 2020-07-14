@@ -273,4 +273,32 @@ class MainFriendsViewModel(val user: UserData, val currentUser: UserData) : View
                 }
             }
     }
+
+    private val _delFailureFriend = MutableLiveData<Exception?>()
+    val delFailureFriend: LiveData<Exception?>
+        get() = _delFailureFriend
+
+    private val _delSuccessFriend = MutableLiveData<Boolean?>()
+    val delSuccessFriend: LiveData<Boolean?>
+        get() = _delSuccessFriend
+
+    fun deleteFriend() {
+        // delete from user's friends
+        // delete from current user's (my) friends
+
+        db.collection("users").document(user.userID!!).collection("friends").document(currentUser.userID!!).delete()
+            .addOnSuccessListener {
+                _delSuccessFriend.value = true
+            }
+            .addOnFailureListener {
+                _delFailureFriend.value = it
+            }
+        db.collection("users").document(currentUser.userID).collection("friends").document(user.userID).delete()
+            .addOnSuccessListener {
+                _delSuccessFriend.value = true
+            }
+            .addOnFailureListener {
+                _delFailureFriend.value = it
+            }
+    }
 }

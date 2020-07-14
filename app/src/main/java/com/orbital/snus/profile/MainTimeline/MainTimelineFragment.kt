@@ -260,11 +260,11 @@ class MainTimelineFragment : Fragment() {
                         }
                         "Friends" -> {
                             // add delete friend?
+                            // on click listener -> dialog to delete friend
                             return@setOnClickListener
                         }
                         "Friend Request Sent!" -> {
-                            // add cancel friend request?
-                            // or do nothing
+                            // dialog -> cancel friend request?
                             return@setOnClickListener
                         }
                         "Friend Request Sent to You!" -> {
