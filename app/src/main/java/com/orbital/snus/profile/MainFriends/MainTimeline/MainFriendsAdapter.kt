@@ -8,7 +8,9 @@ import androidx.navigation.findNavController
 import androidx.recyclerview.widget.RecyclerView
 import com.orbital.snus.R
 import com.orbital.snus.data.UserData
+import com.squareup.picasso.Picasso
 import kotlinx.android.synthetic.main.profile_main_friends_recycler.view.*
+import kotlinx.android.synthetic.main.profile_main_friends_request_recycler.view.*
 
 class MainFriendsAdapter(val currentUserData: UserData, val users: List<UserData>) :
     RecyclerView.Adapter<MainFriendsAdapter.UserViewHolder>() {
@@ -32,6 +34,9 @@ class MainFriendsAdapter(val currentUserData: UserData, val users: List<UserData
         val user = users[position]
         holder.textView.profile_friends_recycler_name.text = user.fullname
         holder.textView.profile_friends_recycler_course.text = user.course
+        if (user.picUri != null) {
+            Picasso.get().load(user.picUri).into(holder.textView.profile_friends_recycler_photo)
+        }
         holder.textView.setOnClickListener(onClickListener(position));
     }
 

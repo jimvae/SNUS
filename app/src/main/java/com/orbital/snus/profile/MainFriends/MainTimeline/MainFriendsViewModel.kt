@@ -18,8 +18,8 @@ class MainFriendsViewModel(val user: UserData, val currentUser: UserData) : View
     private val db = FirebaseFirestore.getInstance()
 
     // all users in db
-    private val _users = MutableLiveData<List<UserData>>()
-    val users: LiveData<List<UserData>>
+    private val _users = MutableLiveData<HashMap<String,UserData>>()
+    val users: LiveData<HashMap<String,UserData>>
         get() = _users
 
     // for search
@@ -114,7 +114,7 @@ class MainFriendsViewModel(val user: UserData, val currentUser: UserData) : View
 
     // for all users
     fun loadUsers() {
-        val listUsers = ArrayList<UserData>()
+        val listUsers = HashMap<String, UserData>()
         db.collection("users")
             .addSnapshotListener { querySnapshot, firebaseFirestoreException ->
                 if (firebaseFirestoreException != null) {
@@ -126,13 +126,38 @@ class MainFriendsViewModel(val user: UserData, val currentUser: UserData) : View
                     documents.forEach {
                         val eachUser = it.toObject(UserData::class.java)
                         if (eachUser != null) {
-                            listUsers.add(eachUser)
+                            listUsers.put(eachUser.userID!!, eachUser)
                         }
                     }
                 }
                 _users.value = listUsers
             }
 
+    }
+
+    fun loadFriends() {
+        val listFriends = ArrayList<UserData>()
+        db.collection("users")
+            .document(user.userID!!)
+            .collection("friends")
+            .addSnapshotListener { querySnapshot, firebaseFirestoreException ->
+                if (firebaseFirestoreException != null) {
+                    Log.w("MainFriendsViewModel", firebaseFirestoreException.toString())
+                    return@addSnapshotListener
+                }
+                if (querySnapshot != null) {
+                    val documents = querySnapshot.documents
+                    documents.forEach {
+                        val eachFriend = it.toObject(Friends::class.java)
+                        if (eachFriend != null) {
+                            if (_users.value!!.get(eachFriend.friendID) != null) {
+                                listFriends.add(_users.value!!.get(eachFriend.friendID)!!)
+                            }
+                        }
+                    }
+                    _friends.value = listFriends
+                }
+            }
     }
 
     // ADD POSTS
@@ -238,9 +263,9 @@ class MainFriendsViewModel(val user: UserData, val currentUser: UserData) : View
                 if (querySnapshot != null) {
                     val documents = querySnapshot.documents
                     documents.forEach {
-                        val eachFriend = it.toObject(String::class.java)
+                        val eachFriend = it.toObject(Friends::class.java)
                         if (eachFriend != null) {
-                            if (eachFriend.equals(userid)) {
+                            if (eachFriend.friendID.equals(userid)) {
                                 _userStatus.value = "Friends"
                             }
                         }

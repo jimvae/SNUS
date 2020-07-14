@@ -294,12 +294,14 @@ class MainFriendsFragment : Fragment() {
         factory = MainFriendsViewModelFactory(userData,currentUserData)
         viewModel = ViewModelProvider(this, factory).get(MainFriendsViewModel::class.java)
         viewModel.loadUsers()
-        viewModel.users.observe(viewLifecycleOwner, androidx.lifecycle.Observer<List<UserData>> { users ->
+        viewModel.users.observe(viewLifecycleOwner, androidx.lifecycle.Observer<HashMap<String,UserData>> { users ->
             if (users.size != 0) {
+                viewModel.loadFriends()
                 Toast.makeText(requireContext(), "Success retrieval", Toast.LENGTH_SHORT).show()
             } else {
                 Toast.makeText(requireContext(), "Failed retrieval", Toast.LENGTH_SHORT).show()
             }
         })
+
     }
 }
