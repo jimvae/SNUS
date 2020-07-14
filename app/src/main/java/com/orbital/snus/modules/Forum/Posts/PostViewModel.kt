@@ -25,21 +25,13 @@ class PostViewModel(val module:String, val subForum:String) : ViewModel() {
         get() = _addFailure
 
     fun addPost(post: ForumPost) {
-        val id = db.collection("modules")
-            .document(module)
-            .collection("forums")
-            .document(subForum)
-            .collection("posts")
-            .document().id
-
-        post.id = id
 
         db.collection("modules")
             .document(module)
             .collection("forums")
             .document(subForum)
             .collection("posts")
-            .document(id).set(post)
+            .document(post.id!!).set(post)
             .addOnSuccessListener {
                 _addSuccess.value = true
             }.addOnFailureListener {

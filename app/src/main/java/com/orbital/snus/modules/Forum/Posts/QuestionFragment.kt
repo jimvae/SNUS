@@ -1,14 +1,22 @@
 package com.orbital.snus.modules.Forum.Posts
 
+import android.Manifest
+import android.app.Activity
 import android.app.Dialog
+import android.content.Intent
+import android.content.pm.PackageManager
 import android.graphics.Color
 import android.graphics.drawable.ColorDrawable
+import android.net.Uri
+import android.os.Build
 import android.os.Bundle
+import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import android.widget.Toast
 import androidx.activity.OnBackPressedCallback
+import androidx.core.content.ContextCompat
 import androidx.core.view.isVisible
 import androidx.databinding.DataBindingUtil
 import androidx.fragment.app.DialogFragment
@@ -17,11 +25,18 @@ import androidx.lifecycle.Observer
 import androidx.lifecycle.ViewModelProvider
 import androidx.navigation.findNavController
 import androidx.navigation.fragment.findNavController
+import com.google.android.gms.tasks.Continuation
+import com.google.android.gms.tasks.Task
 import com.google.firebase.auth.FirebaseAuth
+import com.google.firebase.storage.FirebaseStorage
+import com.google.firebase.storage.StorageReference
+import com.google.firebase.storage.StorageTask
+import com.google.firebase.storage.UploadTask
 import com.orbital.snus.R
 import com.orbital.snus.data.ForumPost
 import com.orbital.snus.databinding.ModuleForumQuestionBinding
 import com.orbital.snus.modules.ModulesActivity
+import com.squareup.picasso.Picasso
 import kotlinx.android.synthetic.main.module_forum_individual_module.*
 import kotlinx.android.synthetic.main.module_forum_question.*
 import kotlinx.android.synthetic.main.module_forum_question_dialog_edit.*
@@ -32,6 +47,11 @@ class QuestionFragment : Fragment() {
 
     private lateinit var binding: ModuleForumQuestionBinding
     private lateinit var post: ForumPost
+
+    val storage = FirebaseStorage.getInstance().getReference("Forum_Posts")
+    private lateinit var imageRef: StorageReference
+    var imageUri: Uri? = null
+    var downloadUrl: String? =  null
 
     private lateinit var viewModel: PostViewModel
     private lateinit var factory: PostViewModelFactory
@@ -54,6 +74,7 @@ class QuestionFragment : Fragment() {
             inflater, R.layout.module_forum_question, container, false)
 
         post = (requireArguments().get("post") as ForumPost)
+        downloadUrl = post.photoURL
         initiateViews()
 
         val module = requireArguments().get("module") as String
@@ -75,6 +96,9 @@ class QuestionFragment : Fragment() {
             it.findNavController().navigate(R.id.action_questionFragment_to_answersFragment, bundle)
         }
 
+        imageRef = storage.child("${module}/${subForum}")
+        imageRef = imageRef.child(post.id!!)
+
         binding.buttonEdit.setOnClickListener {
             // Edit the page
             dialog = Dialog(requireContext())
@@ -84,6 +108,7 @@ class QuestionFragment : Fragment() {
         binding.buttonDelete.setOnClickListener {
             // delete post
             configurePage(false)
+            imageRef.delete()
             viewModel.deletePost(post.id!!)
             viewModel.delSuccess.observe(viewLifecycleOwner, Observer {
                 if (it != null) {
@@ -150,6 +175,10 @@ class QuestionFragment : Fragment() {
         setUserPrivilege(firebaseAuth.currentUser!!.uid == post.userid)
         binding.textTitle.text = post.title
         binding.textQuestion.text = post.question
+
+        if (post.photoURL != null) {
+            Picasso.get().load(post.photoURL).into(binding.attachImageInQuestion)
+        }
     }
 
     // user can see and interact with edit and delete buttons
@@ -184,6 +213,33 @@ class QuestionFragment : Fragment() {
         dialog.edit_title.setText(binding.textTitle.text)
         dialog.edit_question.setText(binding.textQuestion.text)
 
+        dialog.editImageInQuestion.setOnClickListener {
+            //check runtime permission
+            if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.M) {
+                if (ContextCompat.checkSelfPermission(
+                        requireContext(),
+                        Manifest.permission.READ_EXTERNAL_STORAGE
+                    ) ==
+                    PackageManager.PERMISSION_DENIED
+                ) {
+                    //permission denied
+                    val permissions = arrayOf(Manifest.permission.READ_EXTERNAL_STORAGE);
+                    //show popup to request runtime permission
+                    requestPermissions(permissions, QuestionFragment.PERMISSION_CODE);
+                } else {
+                    //permission already granted
+                    pickImageFromGallery();
+                }
+            } else {
+                //system OS is < Marshmallow
+                pickImageFromGallery();
+            }
+        }
+
+        if (post.photoURL != null) {
+            Picasso.get().load(post.photoURL).into(dialog.editImageInQuestion)
+        }
+
         dialog.getWindow()?.setBackgroundDrawable(ColorDrawable(Color.TRANSPARENT))
         dialog.show()
 
@@ -197,7 +253,7 @@ class QuestionFragment : Fragment() {
             configureDialog(false)
             configurePage(false)
 
-            post.updatePost(dialog.edit_title.text.toString(), dialog.edit_question.text.toString())
+            post.updatePost(dialog.edit_title.text.toString(), dialog.edit_question.text.toString(), downloadUrl)
 
             viewModel.updatePost(post)
 
@@ -256,4 +312,65 @@ class QuestionFragment : Fragment() {
 //            it.findNavController().navigate(R.id.action_questionFragment_to_answersFragment, bundle)
 //        }
 //    }
+
+        //Uploading image
+        private fun pickImageFromGallery() {
+            //Intent to pick image
+            val intent = Intent(Intent.ACTION_PICK)
+            intent.type = "image/*"
+            startActivityForResult(intent, IMAGE_PICK_CODE)
+        }
+
+        companion object {
+            //image pick code
+            private val IMAGE_PICK_CODE = 1000;
+            //Permission code
+            private val PERMISSION_CODE = 1001;
+        }
+
+        //handle requested permission result
+        override fun onRequestPermissionsResult(requestCode: Int, permissions: Array<out String>, grantResults: IntArray) {
+            when(requestCode){
+                PERMISSION_CODE -> {
+                    if (grantResults.size >0 && grantResults[0] ==
+                        PackageManager.PERMISSION_GRANTED){
+                        //permission from popup granted
+                        pickImageFromGallery()
+                    }
+                    else{
+                        //permission from popup denied
+                        Toast.makeText(requireContext(), "Permission denied", Toast.LENGTH_SHORT).show()
+                    }
+                }
+            }
+        }
+
+        //handle result of picked image
+        override fun onActivityResult(requestCode: Int, resultCode: Int, data: Intent?) {
+            if (resultCode == Activity.RESULT_OK && requestCode == IMAGE_PICK_CODE && data != null){
+                imageUri = data?.data
+                Log.d("DIRECT LINK >>>>>>>>>", imageUri!!.toString())
+
+                dialog.editImageInQuestion.setImageURI(imageUri)
+
+                var uploadTask: StorageTask<*>
+                uploadTask =  imageRef!!.putFile(imageUri!!)
+                uploadTask.continueWithTask(Continuation <UploadTask.TaskSnapshot, Task<Uri>> { task ->
+                    if (!task.isSuccessful) {
+                        task.exception?.let {
+                            throw it
+                        }
+                    }
+                    return@Continuation imageRef.downloadUrl
+                }).addOnCompleteListener { task ->
+                    if(task.isSuccessful) {
+                        downloadUrl = task.result.toString()
+                        val url = downloadUrl.toString()
+                        Log.d("DIRECT LINK >>>>>>>>>", url)
+                    }
+                }
+
+
+            }
+        }
 }

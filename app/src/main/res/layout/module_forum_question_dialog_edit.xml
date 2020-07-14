@@ -40,14 +40,35 @@
             android:layout_marginStart="8dp"
             android:layout_marginTop="24dp"
             android:layout_marginEnd="8dp"
-            android:layout_marginBottom="24dp"
             android:ems="10"
             android:hint="Question"
             android:inputType="textPersonName"
-            app:layout_constraintBottom_toTopOf="@+id/button_confirm"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toBottomOf="@+id/edit_title" />
+
+        <androidx.cardview.widget.CardView
+            android:id="@+id/profile_photo_card"
+            android:layout_width="0dp"
+            android:layout_height="300dp"
+            android:layout_marginTop="16dp"
+            android:layout_marginBottom="16dp"
+            app:layout_constraintBottom_toTopOf="@+id/button_confirm"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@+id/edit_question">
+
+            <ImageView
+                android:id="@+id/editImageInQuestion"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:scaleType="centerCrop"
+                app:layout_constraintBottom_toTopOf="@+id/resolved_button"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toBottomOf="@+id/button_back"
+                app:srcCompat="@android:drawable/ic_menu_add" />
+        </androidx.cardview.widget.CardView>
 
         <Button
             android:id="@+id/button_confirm"

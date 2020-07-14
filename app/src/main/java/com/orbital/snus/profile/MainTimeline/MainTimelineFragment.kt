@@ -386,6 +386,7 @@ class MainTimelineFragment : Fragment() {
         binding.mainTimelineBio.text = userData.bio
         if (userData.picUri != null) {
             Picasso.get().load(userData.picUri).into(binding.mainTimelinePhotoView)
+
         }
     }
 

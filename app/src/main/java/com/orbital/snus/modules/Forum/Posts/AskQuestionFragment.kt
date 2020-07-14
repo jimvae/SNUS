@@ -1,29 +1,49 @@
 package com.orbital.snus.modules.Forum.Posts
 
+import android.Manifest
+import android.app.Activity
 import android.content.Context
+import android.content.Intent
+import android.content.pm.PackageManager
+import android.net.Uri
+import android.os.Build
 import android.os.Bundle
+import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import android.view.inputmethod.InputMethodManager
 import android.widget.Toast
 import androidx.activity.OnBackPressedCallback
+import androidx.core.content.ContextCompat
 import androidx.databinding.DataBindingUtil
 import androidx.fragment.app.Fragment
 import androidx.lifecycle.ViewModelProvider
 import androidx.navigation.fragment.findNavController
+import com.google.android.gms.tasks.Continuation
+import com.google.android.gms.tasks.Task
 import com.google.firebase.auth.FirebaseAuth
 import com.google.firebase.firestore.FirebaseFirestore
+import com.google.firebase.storage.FirebaseStorage
+import com.google.firebase.storage.StorageReference
+import com.google.firebase.storage.StorageTask
+import com.google.firebase.storage.UploadTask
 import com.orbital.snus.R
 import com.orbital.snus.data.ForumPost
 import com.orbital.snus.databinding.ModuleForumAskquestionBinding
 import com.orbital.snus.databinding.ModuleForumPostsBinding
 import com.orbital.snus.modules.ModulesActivity
+import com.orbital.snus.profile.EditProfileFragment
 import java.util.*
 
 class AskQuestionFragment : Fragment() {
     private val firebaseAuth = FirebaseAuth.getInstance()
-    private val db = FirebaseFirestore.getInstance()
+
+    val db = FirebaseFirestore.getInstance()
+    val storage = FirebaseStorage.getInstance().getReference("Forum_Posts")
+    private lateinit var imageRef: StorageReference
+    var imageUri: Uri? = null
+    var downloadUrl: Uri? =  null
 
     private lateinit var factory: PostViewModelFactory
     private lateinit var viewModel: PostViewModel
@@ -52,6 +72,42 @@ class AskQuestionFragment : Fragment() {
             }
         }
 
+        //image name
+        val id = db.collection("modules")
+            .document(viewModel.module)
+            .collection("forums")
+            .document(subForum)
+            .collection("posts")
+            .document().id
+
+        imageRef = storage.child("${moduleName}/${subForum}")
+        imageRef = imageRef.child(id)
+
+        binding.attachImage.setOnClickListener {
+            //check runtime permission
+            if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.M){
+                if (ContextCompat.checkSelfPermission(
+                        requireContext(),
+                        Manifest.permission.READ_EXTERNAL_STORAGE
+                    ) ==
+                    PackageManager.PERMISSION_DENIED){
+                    //permission denied
+                    val permissions = arrayOf(Manifest.permission.READ_EXTERNAL_STORAGE);
+                    //show popup to request runtime permission
+                    requestPermissions(permissions, AskQuestionFragment.PERMISSION_CODE);
+                }
+                else{
+                    //permission already granted
+                    pickImageFromGallery();
+                }
+            }
+            else{
+                //system OS is < Marshmallow
+                pickImageFromGallery();
+            }
+        }
+
+
         binding.buttonConfirm.setOnClickListener {
             hideKeyboard(it)
             val title = binding.editTitle.text.toString()
@@ -69,9 +125,10 @@ class AskQuestionFragment : Fragment() {
 
             configurePage(false)
 
+
             val calendar = Calendar.getInstance()
-            val post: ForumPost = ForumPost(firebaseAuth.currentUser!!.uid, null,  title,
-                calendar.time, false, question)
+            val post: ForumPost = ForumPost(firebaseAuth.currentUser!!.uid, id,  title,
+                calendar.time, false, question, downloadUrl.toString())
             viewModel.addPost(post)
 
             viewModel.addSuccess.observe(viewLifecycleOwner, androidx.lifecycle.Observer {
@@ -117,5 +174,66 @@ class AskQuestionFragment : Fragment() {
                 findNavController().navigate(R.id.action_askQuestionFragment_to_postsFragment, requireArguments())
             }
         })
+    }
+
+    //Uploading image
+    private fun pickImageFromGallery() {
+        //Intent to pick image
+        val intent = Intent(Intent.ACTION_PICK)
+        intent.type = "image/*"
+        startActivityForResult(intent, IMAGE_PICK_CODE)
+    }
+
+    companion object {
+        //image pick code
+        private val IMAGE_PICK_CODE = 1000;
+        //Permission code
+        private val PERMISSION_CODE = 1001;
+    }
+
+    //handle requested permission result
+    override fun onRequestPermissionsResult(requestCode: Int, permissions: Array<out String>, grantResults: IntArray) {
+        when(requestCode){
+            PERMISSION_CODE -> {
+                if (grantResults.size >0 && grantResults[0] ==
+                    PackageManager.PERMISSION_GRANTED){
+                    //permission from popup granted
+                    pickImageFromGallery()
+                }
+                else{
+                    //permission from popup denied
+                    Toast.makeText(requireContext(), "Permission denied", Toast.LENGTH_SHORT).show()
+                }
+            }
+        }
+    }
+
+    //handle result of picked image
+    override fun onActivityResult(requestCode: Int, resultCode: Int, data: Intent?) {
+        if (resultCode == Activity.RESULT_OK && requestCode == IMAGE_PICK_CODE && data != null){
+            imageUri = data?.data
+            Log.d("DIRECT LINK >>>>>>>>>", imageUri!!.toString())
+
+            binding.attachImage.setImageURI(imageUri)
+
+            var uploadTask: StorageTask<*>
+            uploadTask =  imageRef!!.putFile(imageUri!!)
+            uploadTask.continueWithTask(Continuation <UploadTask.TaskSnapshot, Task<Uri>> { task ->
+                if (!task.isSuccessful) {
+                    task.exception?.let {
+                        throw it
+                    }
+                }
+                return@Continuation imageRef.downloadUrl
+            }).addOnCompleteListener { task ->
+                if(task.isSuccessful) {
+                    downloadUrl = task.result
+                    val url = downloadUrl.toString()
+                    Log.d("DIRECT LINK >>>>>>>>>", url)
+                }
+            }
+
+
+        }
     }
 }

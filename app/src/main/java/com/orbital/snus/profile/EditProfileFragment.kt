@@ -41,8 +41,9 @@ class EditProfileFragment : Fragment() {
 
     val firebaseAuth = FirebaseAuth.getInstance()
     val db = FirebaseFirestore.getInstance()
-    val storage = FirebaseStorage.getInstance().getReference(firebaseAuth.currentUser!!.uid)
-    val imageRef = storage.child("profile_picture")
+    val storage = FirebaseStorage.getInstance().getReference("Users")
+    val userRef = storage.child(firebaseAuth.currentUser!!.uid)
+    val imageRef = userRef.child("profile_picture")
     var imageUri: Uri? = null
     var downloadUrl: Uri? =  null
 
@@ -253,7 +254,6 @@ class EditProfileFragment : Fragment() {
             Log.d("DIRECT LINK >>>>>>>>>", imageUri!!.toString())
 
             binding.profilePhoto.setImageURI(imageUri)
-
 
             var uploadTask: StorageTask<*>
             uploadTask =  imageRef!!.putFile(imageUri!!)
