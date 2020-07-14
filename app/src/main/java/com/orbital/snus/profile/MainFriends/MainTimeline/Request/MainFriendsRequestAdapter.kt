@@ -68,12 +68,10 @@ class MainFriendsRequestAdapter (val users: List<UserFriendRequest>, val viewMod
             val bundle = Bundle()
             bundle.putParcelable("userdata", currentUserData)
             bundle.putParcelable("currentUserData", currentUserData )
-            val otherUserInfo = Friends(null, request.fromID, request.fromName, request.fromCourse)
-            val currentUserInfo= Friends(null, currentUserData.userID, currentUserData.fullname, currentUserData.course)
+            val otherUserInfo = Friends(request.fromID, request.fromName, request.fromCourse)
+            val currentUserInfo= Friends(currentUserData.userID, currentUserData.fullname, currentUserData.course)
             viewModel.acceptRequest(currentUserInfo, otherUserInfo)
             viewModel.declineRequest(request.id!!)
-
-
 
             it.findNavController().navigate(R.id.action_mainFriendsRequestFragment_to_mainFriendsFragment,bundle)
         }

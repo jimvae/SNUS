@@ -166,16 +166,13 @@ class MainFriendsViewModel(val user: UserData, val currentUser: UserData) : View
     }
 
     fun acceptRequest(currentUserInfo: Friends, otherUserInfo: Friends) {
-        val id = db.collection("users").document(currentUserInfo.friendID!!).collection("friends").document().id
-        currentUserInfo.friendshipID = id
-        otherUserInfo.friendshipID = id
-        db.collection("users").document(currentUserInfo.friendID!!).collection("friends").document(id).set(otherUserInfo)
+        db.collection("users").document(currentUserInfo.friendID!!).collection("friends").document(otherUserInfo.friendID!!).set(otherUserInfo)
             .addOnSuccessListener {
                 _addSuccessRequest.value = true
             }.addOnFailureListener {
                 _addFailureRequest.value = it
             }
-        db.collection("users").document(otherUserInfo.friendID!!).collection("friends").document(id).set(currentUserInfo)
+        db.collection("users").document(otherUserInfo.friendID).collection("friends").document(currentUserInfo.friendID).set(currentUserInfo)
             .addOnSuccessListener {
                 _addSuccessRequest.value = true
             }.addOnFailureListener {
