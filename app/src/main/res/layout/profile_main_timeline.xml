@@ -1,31 +1,42 @@
 <?xml version="1.0" encoding="utf-8"?>
-<layout xmlns:app="http://schemas.android.com/apk/res-auto"
-    xmlns:tools="http://schemas.android.com/tools"
-    xmlns:android="http://schemas.android.com/apk/res/android">
+<layout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools">
 
     <androidx.constraintlayout.widget.ConstraintLayout
         android:layout_width="match_parent"
-        android:layout_height="match_parent">
+        android:layout_height="match_parent"
+        android:background="@android:color/darker_gray">
+
+        <TextView
+            android:id="@+id/button_back"
+            android:layout_width="0dp"
+            android:layout_height="210dp"
+            android:background="@color/color_NUS"
+            android:textSize="12sp"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintHorizontal_bias="0.0"
+            app:layout_constraintStart_toStartOf="parent"
+            tools:layout_editor_absoluteY="2dp" />
 
 
         <androidx.cardview.widget.CardView
             android:id="@+id/main_timeline_photo"
-            android:layout_width="100dp"
-            android:layout_height="100dp"
+            android:layout_width="80dp"
+            android:layout_height="80dp"
             android:layout_marginStart="16dp"
             android:layout_marginTop="16dp"
             app:cardCornerRadius="64dp"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toTopOf="parent">
 
-        <ImageView
-            android:id="@+id/main_timeline_photo_view"
-            android:layout_width="match_parent"
-            android:layout_height="match_parent"
-            android:scaleType="centerCrop"
-            tools:srcCompat="@tools:sample/avatars" />
+            <ImageView
+                android:id="@+id/main_timeline_photo_view"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:scaleType="centerCrop"
+                tools:srcCompat="@tools:sample/avatars" />
         </androidx.cardview.widget.CardView>
-
 
 
         <TextView
@@ -34,7 +45,9 @@
             android:layout_height="wrap_content"
             android:layout_marginStart="8dp"
             android:layout_marginTop="16dp"
+            android:layout_marginEnd="16dp"
             android:text="Name"
+            android:textColor="@android:color/white"
             android:textSize="18sp"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toEndOf="@+id/main_timeline_photo"
@@ -45,8 +58,9 @@
             android:layout_width="0dp"
             android:layout_height="wrap_content"
             android:layout_marginStart="8dp"
-            android:layout_marginTop="8dp"
+            android:layout_marginTop="3dp"
             android:text="Course"
+            android:textColor="@android:color/white"
             app:layout_constraintStart_toEndOf="@+id/main_timeline_photo"
             app:layout_constraintTop_toBottomOf="@+id/main_timeline_name" />
 
@@ -56,6 +70,7 @@
             android:layout_height="wrap_content"
             android:layout_marginStart="16dp"
             android:text="Year"
+            android:textColor="@android:color/white"
             app:layout_constraintBaseline_toBaselineOf="@+id/main_timeline_course"
             app:layout_constraintStart_toEndOf="@+id/main_timeline_course" />
 
@@ -63,19 +78,25 @@
             android:id="@+id/main_timeline_bio"
             android:layout_width="0dp"
             android:layout_height="wrap_content"
-            android:layout_marginStart="16dp"
-            android:layout_marginTop="32dp"
+            android:layout_marginStart="8dp"
+            android:layout_marginTop="8dp"
+            android:layout_marginEnd="16dp"
             android:text="Bio"
-            app:layout_constraintEnd_toStartOf="@+id/text_friend_status"
-            app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toBottomOf="@+id/main_timeline_photo" />
+            android:textColor="@android:color/white"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintHorizontal_bias="0.0"
+            app:layout_constraintStart_toEndOf="@+id/main_timeline_photo"
+            app:layout_constraintTop_toBottomOf="@+id/main_timeline_course" />
 
         <Button
             android:id="@+id/main_timeline_timeline"
-            android:layout_width="wrap_content"
+            android:layout_width="0dp"
             android:layout_height="wrap_content"
+            android:layout_marginStart="16dp"
             android:layout_marginTop="8dp"
-            android:text="Timeline"
+            android:background="@drawable/list"
+            android:scaleX="0.25"
+            app:layout_constraintBottom_toBottomOf="@+id/button_back"
             app:layout_constraintEnd_toStartOf="@+id/main_timeline_friends"
             app:layout_constraintHorizontal_bias="0.5"
             app:layout_constraintStart_toStartOf="parent"
@@ -83,23 +104,26 @@
 
         <Button
             android:id="@+id/main_timeline_friends"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_marginEnd="100dp"
-            android:text="Friends"
-            app:layout_constraintBaseline_toBaselineOf="@+id/main_timeline_timeline"
-            app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintHorizontal_bias="0.5"
-            app:layout_constraintStart_toEndOf="@+id/main_timeline_timeline" />
-
-        <TextView
-            android:id="@+id/main_timeline_edit_settings"
             android:layout_width="0dp"
             android:layout_height="wrap_content"
+            android:layout_marginEnd="16dp"
+            android:background="@drawable/ic_people_outline_black_24dp"
+            android:scaleX="0.25"
+            app:layout_constraintBaseline_toBaselineOf="@+id/main_timeline_timeline"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toEndOf="@+id/main_timeline_timeline" />
+
+        <Button
+            android:id="@+id/main_timeline_edit_settings"
+            android:layout_width="0dp"
+            android:layout_height="21dp"
             android:layout_marginStart="16dp"
             android:layout_marginTop="8dp"
             android:layout_marginEnd="16dp"
-            android:text="Edit Settings"
+            android:background="@drawable/white_outline"
+            android:scrollbarSize="4dp"
+            android:text="Edit Profile"
+            android:textColor="@android:color/white"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toBottomOf="@+id/main_timeline_photo" />
@@ -108,48 +132,55 @@
             android:id="@+id/recyclerview_timeline"
             android:layout_width="0dp"
             android:layout_height="0dp"
-            android:layout_marginStart="24dp"
+            android:layout_marginStart="3dp"
             android:layout_marginTop="16dp"
-            android:layout_marginEnd="24dp"
-            android:layout_marginBottom="8dp"
-            android:background="@drawable/common_google_signin_btn_icon_light_normal_background"
+            android:layout_marginEnd="3dp"
+            android:layout_marginBottom="3dp"
             app:layout_constraintBottom_toBottomOf="parent"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintHorizontal_bias="1.0"
             app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toBottomOf="@+id/main_timeline_timeline"
+            app:layout_constraintTop_toBottomOf="@+id/button_back"
             app:layout_constraintVertical_bias="0.0"
             tools:listitem="@layout/profile_main_posts_recycler" />
 
         <Button
             android:id="@+id/main_timeline_Links"
             android:layout_width="0dp"
-            android:layout_height="wrap_content"
+            android:layout_height="21dp"
             android:layout_marginStart="16dp"
             android:layout_marginTop="8dp"
             android:layout_marginEnd="16dp"
+            android:background="@drawable/white_outline"
             android:text="Links"
-            app:layout_constraintEnd_toEndOf="parent"
+            android:textColor="@android:color/white"
+            app:layout_constraintEnd_toStartOf="@+id/text_friend_status"
             app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toBottomOf="@+id/main_timeline_bio" />
+            app:layout_constraintTop_toBottomOf="@+id/main_timeline_edit_settings" />
+
 
         <Button
+            android:id="@+id/text_friend_status"
+            android:layout_width="0dp"
+            android:layout_height="21dp"
+            android:layout_marginEnd="16dp"
+            android:background="@drawable/white_outline"
+            android:text="Status"
+            android:textColor="@android:color/white"
+            app:layout_constraintBaseline_toBaselineOf="@+id/main_timeline_Links"
+            app:layout_constraintEnd_toEndOf="parent" />
+
+        <com.google.android.material.floatingactionbutton.FloatingActionButton
             android:id="@+id/main_timeline_add_post"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_marginEnd="16dp"
-            android:text="Add Post"
-            app:layout_constraintBaseline_toBaselineOf="@+id/main_timeline_friends"
-            app:layout_constraintEnd_toEndOf="parent" />
-
-        <TextView
-            android:id="@+id/text_friend_status"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_marginEnd="16dp"
-            android:text="Status"
-            app:layout_constraintBaseline_toBaselineOf="@+id/main_timeline_bio"
-            app:layout_constraintEnd_toEndOf="parent" />
+            android:layout_marginEnd="3dp"
+            android:layout_marginBottom="3dp"
+            android:clickable="true"
+            app:backgroundTint="@color/color_NUS"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:srcCompat="@drawable/white_plus" />
 
     </androidx.constraintlayout.widget.ConstraintLayout>
 </layout>
