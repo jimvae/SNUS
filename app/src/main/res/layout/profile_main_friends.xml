@@ -9,7 +9,7 @@
         android:background="@android:color/darker_gray">
 
 
-    <TextView
+        <TextView
             android:id="@+id/button_back"
             android:layout_width="0dp"
             android:layout_height="210dp"
@@ -94,7 +94,7 @@
             android:layout_marginStart="16dp"
             android:layout_marginTop="8dp"
             android:background="@drawable/list"
-            android:scaleX="0.25"
+            android:scaleX="0.2"
             app:layout_constraintBottom_toBottomOf="@+id/button_back"
             app:layout_constraintEnd_toStartOf="@+id/main_profile_friends"
             app:layout_constraintHorizontal_bias="0.5"
@@ -107,7 +107,7 @@
             android:layout_height="wrap_content"
             android:layout_marginEnd="16dp"
             android:background="@drawable/ic_people_outline_black_24dp"
-            android:scaleX="0.25"
+            android:scaleX="0.2"
             app:layout_constraintBaseline_toBaselineOf="@+id/main_profile_timeline"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toEndOf="@+id/main_profile_timeline" />
@@ -132,14 +132,14 @@
             android:layout_width="0dp"
             android:layout_height="0dp"
             android:layout_marginStart="3dp"
-            android:layout_marginTop="3dp"
+            android:layout_marginTop="4dp"
             android:layout_marginEnd="3dp"
             android:layout_marginBottom="3dp"
             app:layout_constraintBottom_toBottomOf="parent"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintHorizontal_bias="1.0"
             app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toBottomOf="@+id/button_search"
+            app:layout_constraintTop_toBottomOf="@+id/textView5"
             app:layout_constraintVertical_bias="0.0"
             tools:listitem="@layout/profile_main_friends_recycler" />
 
@@ -160,28 +160,17 @@
         <EditText
             android:id="@+id/edit_text_search"
             android:layout_width="0dp"
-            android:layout_height="50dp"
+            android:layout_height="35dp"
             android:layout_marginStart="3dp"
-            android:layout_marginEnd="8dp"
+            android:layout_marginEnd="3dp"
             android:background="@android:color/white"
             android:ems="10"
             android:hint="Search Users"
             android:inputType="textPersonName"
             app:layout_constraintBaseline_toBaselineOf="@+id/button_search"
-            app:layout_constraintEnd_toStartOf="@+id/button_search"
+            app:layout_constraintEnd_toStartOf="@+id/textView5"
             app:layout_constraintStart_toStartOf="parent" />
 
-        <Button
-            android:id="@+id/button_search"
-            android:layout_width="wrap_content"
-            android:layout_height="50dp"
-            android:layout_marginTop="16dp"
-            android:layout_marginEnd="3dp"
-            android:background="@drawable/blue_button"
-            android:text="Search"
-            android:textColor="@android:color/white"
-            app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintTop_toBottomOf="@+id/main_profile_friends" />
 
         <Button
             android:id="@+id/text_friend_status"
@@ -205,6 +194,28 @@
             android:textColor="@android:color/white"
             app:layout_constraintBottom_toBottomOf="parent"
             app:layout_constraintEnd_toEndOf="parent" />
+
+        <TextView
+            android:id="@+id/textView5"
+            android:layout_width="40dp"
+            android:layout_height="40dp"
+            android:layout_marginTop="3dp"
+            android:layout_marginEnd="3dp"
+            android:background="#FF5722"
+            android:textColor="@color/color_S"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintTop_toBottomOf="@+id/button_back" />
+
+        <Button
+            android:id="@+id/button_search"
+            android:layout_width="25dp"
+            android:layout_height="25dp"
+            android:background="@drawable/search"
+            android:textColorLink="@color/color_S"
+            app:layout_constraintBottom_toBottomOf="@+id/textView5"
+            app:layout_constraintEnd_toEndOf="@+id/textView5"
+            app:layout_constraintStart_toStartOf="@+id/textView5"
+            app:layout_constraintTop_toTopOf="@+id/textView5" />
 
     </androidx.constraintlayout.widget.ConstraintLayout>
 </layout>

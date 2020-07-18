@@ -5,12 +5,16 @@
     android:layout_width="wrap_content"
     android:layout_height="wrap_content">
 
-    git p<Button
+    git p
+
+    <Button
         android:id="@+id/profile_dialog_instagram"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_marginStart="16dp"
+        android:background="@drawable/grey_outline"
         android:text="Instagram"
+        android:textColor="@color/color_NUS"
         app:layout_constraintBaseline_toBaselineOf="@+id/profile_dialog_github"
         app:layout_constraintStart_toStartOf="parent" />
 
@@ -22,7 +26,9 @@
         android:layout_marginTop="8dp"
         android:layout_marginEnd="8dp"
         android:layout_marginBottom="8dp"
+        android:background="@drawable/grey_outline"
         android:text="GitHub"
+        android:textColor="@color/color_NUS"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toStartOf="@+id/profile_dialog_linkedin"
         app:layout_constraintStart_toEndOf="@+id/profile_dialog_instagram"
@@ -33,7 +39,9 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_marginEnd="16dp"
+        android:background="@drawable/grey_outline"
         android:text="Linkedin"
+        android:textColor="@color/color_NUS"
         app:layout_constraintBaseline_toBaselineOf="@+id/profile_dialog_github"
         app:layout_constraintEnd_toEndOf="parent" />
 </androidx.constraintlayout.widget.ConstraintLayout>

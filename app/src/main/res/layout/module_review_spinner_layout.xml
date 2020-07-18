@@ -10,6 +10,6 @@
     android:paddingTop="4dp"
     android:paddingEnd="8dp"
     android:paddingBottom="2dp"
-    android:textColor="#000000"
+    android:textColor="@color/color_NUS"
     android:textSize="20sp"
     tools:text="test" />
