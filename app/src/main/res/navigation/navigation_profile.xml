@@ -51,7 +51,7 @@
         <action
             android:id="@+id/action_mainFriendsFragment_to_mainTimelineFragment2"
             app:destination="@id/mainTimelineFragment2"
-            app:popUpTo="@id/mainFriendsFragment"
+            app:popUpTo="@id/mainTimelineFragment2"
             app:popUpToInclusive="true" />
         <action
             android:id="@+id/action_mainFriendsFragment_to_editProfileFragment2"
