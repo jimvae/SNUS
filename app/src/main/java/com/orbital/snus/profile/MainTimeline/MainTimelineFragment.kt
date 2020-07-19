@@ -75,6 +75,7 @@ class MainTimelineFragment : Fragment() {
         if (arguments != null) {
             userData = requireArguments().getParcelable<UserData>("userdata") as UserData
             currentUserData = requireArguments().getParcelable<UserData>("currentUserData") as UserData
+            bundle.putParcelable("userdata", userData)
             bundle.putParcelable("currentUserData", currentUserData)
             factory = MainTimelineViewModelFactory(userData,currentUserData)
             viewModel = ViewModelProvider(this@MainTimelineFragment, factory).get(MainTimelineViewModel::class.java)
@@ -408,6 +409,7 @@ class MainTimelineFragment : Fragment() {
                                 .show()
                             val bundle = Bundle()
                             bundle.putParcelable("userdata", userData)
+                            bundle.putParcelable("currentUserData", currentUserData)
                             findNavController().navigate(R.id.action_mainTimelineFragment2_self, bundle)
                             viewModel.delPostSuccessCompleted()
                         }
