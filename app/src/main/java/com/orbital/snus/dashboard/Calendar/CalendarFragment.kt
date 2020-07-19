@@ -10,9 +10,11 @@ import androidx.fragment.app.Fragment
 import androidx.lifecycle.ViewModelProvider
 import androidx.navigation.findNavController
 import androidx.recyclerview.widget.LinearLayoutManager
+import androidx.recyclerview.widget.RecyclerView
 import com.orbital.snus.R
 import com.orbital.snus.data.UserEvent
 import com.orbital.snus.databinding.FragmentDashboardCalendarBinding
+import kotlinx.android.synthetic.main.fragment_dashboard_calendar.*
 import java.util.*
 import kotlin.collections.ArrayList
 
@@ -20,6 +22,7 @@ class CalendarFragment : Fragment() {
     private lateinit var viewModel: CalendarViewModel
     private var factory = CalendarViewModelFactory()
     private var events = ArrayList<UserEvent>()
+    private lateinit var recyclerView: RecyclerView
 
     override fun onCreateView(inflater: LayoutInflater,
                               container: ViewGroup?, savedInstanceState: Bundle?): View? {
@@ -29,7 +32,7 @@ class CalendarFragment : Fragment() {
         )
 
         // set up the recyclerView
-        val recyclerView = binding.calendarRecyclerView.apply{
+        recyclerView = binding.calendarRecyclerView.apply{
             // use a linear layout manager
             layoutManager = LinearLayoutManager(activity)
 
@@ -49,6 +52,7 @@ class CalendarFragment : Fragment() {
                 view: View -> view.findNavController().navigate(R.id.action_calendarFragment_to_addEventFragment)
         }
 
+
         binding.calendarView.setOnDateChangeListener {
             //calendarview, year , month , date
                 _, i, il, i2 ->
@@ -60,6 +64,9 @@ class CalendarFragment : Fragment() {
             recyclerView.adapter!!.notifyDataSetChanged()
         }
 
+
+
+
         return binding.root
     }
 
@@ -69,8 +76,13 @@ class CalendarFragment : Fragment() {
         viewModel = ViewModelProvider(this, factory).get(CalendarViewModel::class.java)
         // On start of activity, we load the user data to be display on dashboard later
         viewModel.loadUsers()
-        viewModel.events.observe(viewLifecycleOwner, androidx.lifecycle.Observer<List<UserEvent>> { events ->
-            if (events.size != 0) {
+        viewModel.events.observe(viewLifecycleOwner, androidx.lifecycle.Observer<List<UserEvent>> { eventList ->
+            if (eventList.size != 0) {
+                val currentDate = Calendar.getInstance()
+                val todayEvents = viewModel.checkIfThisDate(currentDate.time)
+                events.removeAll(events)
+                events.addAll(todayEvents)
+                recyclerView.adapter!!.notifyDataSetChanged()
                 Toast.makeText(requireContext(), "Success retrieval", Toast.LENGTH_SHORT).show()
             } else {
                 Toast.makeText(requireContext(), "Failed retrieval", Toast.LENGTH_SHORT).show()

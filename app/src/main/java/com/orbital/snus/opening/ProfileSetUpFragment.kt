@@ -145,7 +145,7 @@ class ProfileSetUpFragment : Fragment() {
         binding.firstLoginGithub.isEnabled = boolean
         binding.firstLoginInstagram.isEnabled = boolean
         binding.firstLoginLinkedin.isEnabled = boolean
-        binding.profilePhoto.isEnabled = boolean
+//        binding.profilePhoto.isEnabled = boolean
         binding.firstLoginYearOfStudySpinner.isEnabled = boolean
     }
 
