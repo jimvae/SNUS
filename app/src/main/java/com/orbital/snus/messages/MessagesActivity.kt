@@ -21,7 +21,6 @@ class MessagesActivity : AppCompatActivity() {
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
-        setContentView(R.layout.activity_messages)
         binding = DataBindingUtil.setContentView<ActivityMessagesBinding>(this, R.layout.activity_messages)
 
         binding.bottomNavigationMenu.menu.findItem(R.id.ic_action_messages).setChecked(true)
@@ -54,11 +53,6 @@ class MessagesActivity : AppCompatActivity() {
             true
         }
 
-        val firebaseAuth = FirebaseAuth.getInstance()
-        binding.buttonLogout.setOnClickListener {
-            firebaseAuth.signOut()
-            startActivity(Intent(this.applicationContext, MainActivity::class.java))
-            finish()
-        }
+
     }
 }

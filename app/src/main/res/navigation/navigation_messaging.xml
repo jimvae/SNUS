@@ -1,0 +1,22 @@
+<?xml version="1.0" encoding="utf-8"?>
+<navigation xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:id="@+id/navigation_messaging"
+    tools:context="com.orbital.snus.messages.MessagesActivity"
+    app:startDestination="@id/messagesMainPageFragment">
+    <fragment
+        android:id="@+id/messagesMainPageFragment"
+        android:name="com.orbital.snus.messages.MainPage.MessagesMainPageFragment"
+        android:label="messages_main_page"
+        tools:layout="@layout/messages_main_page" >
+        <action
+            android:id="@+id/action_messagesMainPageFragment_to_messagingFragment"
+            app:destination="@id/messagingFragment" />
+    </fragment>
+    <fragment
+        android:id="@+id/messagingFragment"
+        android:name="com.orbital.snus.messages.Messaging.MessagingFragment"
+        android:label="messages_messaging"
+        tools:layout="@layout/messages_messaging" />
+</navigation>
