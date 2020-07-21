@@ -138,13 +138,9 @@ class MessageTo(val message: FriendsMessage) : Item<GroupieViewHolder>() {
 
     override fun bind(viewHolder: GroupieViewHolder, position: Int) {
         viewHolder.itemView.messages_messaging_recycler_message_to.text = message.latestMessage.toString()
-<<<<<<< HEAD
-        viewHolder.itemView.messages_messaging_to_date.text =
-            SimpleDateFormat("dd/MM/yyyy | hh:mm a").format(message.date).toPattern().toString()
-=======
         viewHolder.itemView.messages_messaging_recycler_to_date.text =
             SimpleDateFormat("dd/MM/yyyy | hh:mm a").format(message.date!!).toPattern().toString()
->>>>>>> 315551d3137eeb3a7e718766e0a9755b32bc19b1
+
     }
 
 }
@@ -157,11 +153,8 @@ class MessageFrom(val message: FriendsMessage) : Item<GroupieViewHolder>() {
     override fun bind(viewHolder: GroupieViewHolder, position: Int) {
         viewHolder.itemView.messages_messaging_recycler_message_from.text = message.latestMessage.toString()
         viewHolder.itemView.messages_messaging_from_date.text =
-<<<<<<< HEAD
-            SimpleDateFormat("dd/MM/yyyy | hh:mm a").format(message.date).toPattern().toString()
-=======
             SimpleDateFormat("dd/MM/yyyy | hh:mm a").format(message.date!!).toPattern().toString()
->>>>>>> 315551d3137eeb3a7e718766e0a9755b32bc19b1
+
     }
 
 }

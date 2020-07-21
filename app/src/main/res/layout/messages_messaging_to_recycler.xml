@@ -21,11 +21,7 @@
         app:layout_constraintTop_toTopOf="parent" />
 
     <TextView
-<<<<<<< HEAD
-        android:id="@+id/messages_messaging_to_date"
-=======
         android:id="@+id/messages_messaging_recycler_to_date"
->>>>>>> 315551d3137eeb3a7e718766e0a9755b32bc19b1
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_marginStart="16dp"
