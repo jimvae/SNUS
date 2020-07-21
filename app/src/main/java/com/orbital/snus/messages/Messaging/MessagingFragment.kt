@@ -67,7 +67,8 @@ class MessagingFragment : Fragment() {
             val text = binding.messagesMessagingMessageHere.text.toString()
             val myID = FirebaseAuth.getInstance().currentUser!!.uid
             val friendID = userData.userID!!
-            val date = Calendar.getInstance().time
+            val calendar = Calendar.getInstance()
+            val date = calendar.time
             // add to my database
             // add to friend database
 
@@ -87,7 +88,7 @@ class MessagingFragment : Fragment() {
                 .collection("messages").document(textID).set(message)
 
 
-            groupAdapter.add(MessageFrom(message))
+            groupAdapter.add(MessageTo(message))
 
             binding.messagesMessagingMessageHere.setText("")
             hideKeyboard(it)
@@ -118,9 +119,9 @@ class MessagingFragment : Fragment() {
                         val eachMessage = it.toObject(FriendsMessage::class.java)
                         if (eachMessage != null) {
                             if (eachMessage.sender!!.equals(myID)) {
-                                groupAdapter.add(MessageFrom(eachMessage))
-                            } else {
                                 groupAdapter.add(MessageTo(eachMessage))
+                            } else {
+                                groupAdapter.add(MessageFrom(eachMessage))
                             }
                         }
                     }
@@ -141,7 +142,7 @@ class MessageTo(val message: FriendsMessage) : Item<GroupieViewHolder>() {
 
     override fun bind(viewHolder: GroupieViewHolder, position: Int) {
         viewHolder.itemView.messages_messaging_recycler_message_to.text = message.latestMessage.toString()
-        viewHolder.itemView.messages_messaging_answers_date.text =
+        viewHolder.itemView.messages_messaging_to_date.text =
             SimpleDateFormat("dd/MM/yyyy | hh:mm a").format(message.date).toPattern().toString()
     }
 
@@ -154,7 +155,7 @@ class MessageFrom(val message: FriendsMessage) : Item<GroupieViewHolder>() {
 
     override fun bind(viewHolder: GroupieViewHolder, position: Int) {
         viewHolder.itemView.messages_messaging_recycler_message_from.text = message.latestMessage.toString()
-        viewHolder.itemView.messages_messaging_answers_date.text =
+        viewHolder.itemView.messages_messaging_from_date.text =
             SimpleDateFormat("dd/MM/yyyy | hh:mm a").format(message.date).toPattern().toString()
     }
 
