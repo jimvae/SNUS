@@ -22,8 +22,7 @@
             app:layout_constraintBottom_toTopOf="@+id/messages_messaging_message_here"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toBottomOf="@+id/messages_friends_request_recycler_title"
-            tools:listitem="@layout/messages_messaging_recycler" />
+            app:layout_constraintTop_toBottomOf="@+id/messages_friends_request_recycler_title" />
 
         <EditText
             android:id="@+id/messages_messaging_message_here"

@@ -9,6 +9,5 @@ data class FriendsMessage (var id: String? = null,
                            val sender: String? = null,
                            var reciever: String? = null,
                            var latestMessage: String? = null,
-                           var date: Date? = null,
-                           var rating: Int? = null) : Parcelable {
+                           var date: Date? = null) : Parcelable {
 }
