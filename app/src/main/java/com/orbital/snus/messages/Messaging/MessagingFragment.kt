@@ -82,9 +82,6 @@ class MessagingFragment : Fragment() {
                 .collection("friends").document(myID)
                 .collection("messages").document(textID).set(message)
 
-
-            groupAdapter.add(MessageTo(message))
-
             binding.messagesMessagingMessageHere.setText("")
             hideKeyboard(it)
         }
@@ -97,8 +94,9 @@ class MessagingFragment : Fragment() {
         imm.hideSoftInputFromWindow(view.windowToken, 0)
     }
 
-    fun fetchMessages(userData: UserData){
+    val messages = ArrayList<FriendsMessage>()
 
+    fun fetchMessages(userData: UserData){
         val myID = FirebaseAuth.getInstance().currentUser!!.uid
         val friendID = userData.userID!!
         db.collection("users").document(myID)
@@ -113,10 +111,13 @@ class MessagingFragment : Fragment() {
                     documents.forEach {
                         val eachMessage = it.toObject(FriendsMessage::class.java)
                         if (eachMessage != null) {
-                            if (eachMessage.sender!!.equals(myID)) {
-                                groupAdapter.add(MessageTo(eachMessage))
-                            } else {
-                                groupAdapter.add(MessageFrom(eachMessage))
+                            if (!messages.contains(eachMessage)) {
+                                messages.add(eachMessage)
+                                if (eachMessage.sender!!.equals(myID)) {
+                                    groupAdapter.add(MessageTo(eachMessage))
+                                } else {
+                                    groupAdapter.add(MessageFrom(eachMessage))
+                                }
                             }
                         }
                     }
