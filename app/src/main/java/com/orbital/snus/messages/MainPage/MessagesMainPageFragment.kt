@@ -9,6 +9,7 @@ import androidx.fragment.app.Fragment
 import androidx.navigation.fragment.findNavController
 import com.orbital.snus.R
 import com.orbital.snus.databinding.MessagesMainPageBinding
+import com.orbital.snus.messages.MessagesActivity
 
 class MessagesMainPageFragment : Fragment() {
     override fun onCreateView(inflater: LayoutInflater,
@@ -18,10 +19,12 @@ class MessagesMainPageFragment : Fragment() {
             inflater, R.layout.messages_main_page, container, false
         )
 
-        binding.button2.setOnClickListener {
-            findNavController().navigate(R.id.action_messagesMainPageFragment_to_messagingFragment)
+        binding.messagesMainAddMessage.setOnClickListener {
+            findNavController().navigate(R.id.action_messagesMainPageFragment_to_messagesNewMessageFragment)
         }
 
         return binding.root
     }
+
+
 }

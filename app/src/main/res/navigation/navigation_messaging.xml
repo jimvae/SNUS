@@ -11,12 +11,21 @@
         android:label="messages_main_page"
         tools:layout="@layout/messages_main_page" >
         <action
-            android:id="@+id/action_messagesMainPageFragment_to_messagingFragment"
-            app:destination="@id/messagingFragment" />
+            android:id="@+id/action_messagesMainPageFragment_to_messagesNewMessageFragment"
+            app:destination="@id/messagesNewMessageFragment" />
     </fragment>
     <fragment
         android:id="@+id/messagingFragment"
         android:name="com.orbital.snus.messages.Messaging.MessagingFragment"
         android:label="messages_messaging"
         tools:layout="@layout/messages_messaging" />
+    <fragment
+        android:id="@+id/messagesNewMessageFragment"
+        android:name="com.orbital.snus.messages.NewMessage.MessagesNewMessageFragment"
+        android:label="MessagesNewMessageFragment"
+        tools:layout="@layout/messages_new_message">
+        <action
+            android:id="@+id/action_messagesNewMessageFragment_to_messagingFragment"
+            app:destination="@id/messagingFragment" />
+    </fragment>
 </navigation>
