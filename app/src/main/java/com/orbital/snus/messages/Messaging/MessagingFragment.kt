@@ -63,7 +63,8 @@ class MessagingFragment : Fragment() {
             val text = binding.messagesMessagingMessageHere.text.toString()
             val myID = FirebaseAuth.getInstance().currentUser!!.uid
             val friendID = userData.userID!!
-            val date = Calendar.getInstance().time
+            val calendar = Calendar.getInstance()
+            val date = calendar.time
             // add to my database
             // add to friend database
 
@@ -140,6 +141,7 @@ class MessageTo(val message: FriendsMessage) : Item<GroupieViewHolder>() {
         viewHolder.itemView.messages_messaging_recycler_message_to.text = message.latestMessage.toString()
         viewHolder.itemView.messages_messaging_recycler_to_date.text =
             SimpleDateFormat("dd/MM/yyyy | hh:mm a").format(message.date!!).toPattern().toString()
+
     }
 
 }
@@ -153,6 +155,7 @@ class MessageFrom(val message: FriendsMessage) : Item<GroupieViewHolder>() {
         viewHolder.itemView.messages_messaging_recycler_message_from.text = message.latestMessage.toString()
         viewHolder.itemView.messages_messaging_from_date.text =
             SimpleDateFormat("dd/MM/yyyy | hh:mm a").format(message.date!!).toPattern().toString()
+
     }
 
 }
