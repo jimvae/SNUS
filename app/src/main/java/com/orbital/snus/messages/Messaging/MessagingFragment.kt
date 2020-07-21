@@ -15,6 +15,7 @@ import androidx.recyclerview.widget.LinearLayoutManager
 import com.google.firebase.auth.FirebaseAuth
 import com.google.firebase.firestore.FirebaseFirestore
 import com.orbital.snus.R
+import com.orbital.snus.data.Friends
 import com.orbital.snus.data.FriendsMessage
 import com.orbital.snus.data.UserData
 import com.orbital.snus.messages.MessagesActivity
@@ -98,13 +99,15 @@ class MessagingFragment : Fragment() {
         imm.hideSoftInputFromWindow(view.windowToken, 0)
     }
 
-    fun fetchMessages(userData: UserData){
+    val messages = ArrayList<FriendsMessage>()
+    fun fetchMessages(userData: UserData) {
 
         val myID = FirebaseAuth.getInstance().currentUser!!.uid
         val friendID = userData.userID!!
         db.collection("users").document(myID)
             .collection("friends").document(friendID)
-            .collection("messages").addSnapshotListener { querySnapshot, firebaseFirestoreException ->
+            .collection("messages")
+            .addSnapshotListener { querySnapshot, firebaseFirestoreException ->
                 if (firebaseFirestoreException != null) {
                     Log.w("NewMessageViewModel", firebaseFirestoreException.toString())
                     return@addSnapshotListener
@@ -114,10 +117,13 @@ class MessagingFragment : Fragment() {
                     documents.forEach {
                         val eachMessage = it.toObject(FriendsMessage::class.java)
                         if (eachMessage != null) {
-                            if (eachMessage.sender!!.equals(myID)) {
-                                groupAdapter.add(MessageTo(eachMessage))
-                            } else {
-                                groupAdapter.add(MessageFrom(eachMessage))
+                            if (!messages.contains(eachMessage)) {
+                                messages.add(eachMessage)
+                                if (eachMessage.sender!!.equals(myID)) {
+                                    groupAdapter.add(MessageTo(eachMessage))
+                                } else {
+                                    groupAdapter.add(MessageFrom(eachMessage))
+                                }
                             }
                         }
                     }

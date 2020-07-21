@@ -129,7 +129,7 @@ class AnswersFragment : Fragment() {
                         if (it != null) {
                             Toast.makeText(requireContext(), "Comment successfully deleted", Toast.LENGTH_SHORT)
                                 .show()
-                            findNavController().navigate(R.id.action_answersFragment_self, requireArguments())
+//                            findNavController().navigate(R.id.action_answersFragment_self, requireArguments())
                             viewModel.delPostSuccessCompleted()
                         }
                     })
