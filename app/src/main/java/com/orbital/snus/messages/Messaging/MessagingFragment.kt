@@ -85,6 +85,8 @@ class MessagingFragment : Fragment() {
 
             binding.messagesMessagingMessageHere.setText("")
             hideKeyboard(it)
+
+            binding.messagesMessagingRecyclerView.scrollToPosition(groupAdapter.itemCount - 1)
         }
 
         return binding.root
@@ -95,7 +97,6 @@ class MessagingFragment : Fragment() {
         imm.hideSoftInputFromWindow(view.windowToken, 0)
     }
 
-    val messages = ArrayList<FriendsMessage>()
 
     fun fetchMessages(userData: UserData){
         val myID = FirebaseAuth.getInstance().currentUser!!.uid
@@ -108,18 +109,21 @@ class MessagingFragment : Fragment() {
                     return@addSnapshotListener
                 }
                 if (querySnapshot != null) {
+                    groupAdapter.clear()
+                    val messages = ArrayList<FriendsMessage>()
                     val documents = querySnapshot.documents
                     documents.forEach {
                         val eachMessage = it.toObject(FriendsMessage::class.java)
                         if (eachMessage != null) {
-                            if (!messages.contains(eachMessage)) {
-                                messages.add(eachMessage)
-                                if (eachMessage.sender!!.equals(myID)) {
-                                    groupAdapter.add(MessageTo(eachMessage))
-                                } else {
-                                    groupAdapter.add(MessageFrom(eachMessage))
-                                }
-                            }
+                            messages.add(eachMessage)
+                        }
+                    }
+                    messages.sortedBy { it -> it.date }
+                    messages.forEach { eachMessage ->
+                        if (eachMessage.sender!!.equals(myID)) {
+                            groupAdapter.add(MessageTo(eachMessage))
+                        } else {
+                            groupAdapter.add(MessageFrom(eachMessage))
                         }
                     }
                 }
