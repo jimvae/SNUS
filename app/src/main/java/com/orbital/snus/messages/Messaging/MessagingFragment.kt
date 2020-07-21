@@ -120,7 +120,8 @@ class MessagingFragment : Fragment() {
                             messages.add(eachMessage)
                         }
                     }
-                    messages.sortedBy { it -> it.date }
+
+                    messages.sortWith(compareBy { it -> it.date })
                     messages.forEach { eachMessage ->
                         if (eachMessage.sender!!.equals(myID)) {
                             groupAdapter.add(MessageTo(eachMessage))
