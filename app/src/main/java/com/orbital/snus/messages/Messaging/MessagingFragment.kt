@@ -11,14 +11,10 @@ import android.view.ViewGroup
 import android.view.inputmethod.InputMethodManager
 import androidx.databinding.DataBindingUtil
 import androidx.fragment.app.Fragment
-import androidx.lifecycle.LiveData
-import androidx.lifecycle.MutableLiveData
 import androidx.recyclerview.widget.LinearLayoutManager
-import androidx.recyclerview.widget.RecyclerView
 import com.google.firebase.auth.FirebaseAuth
 import com.google.firebase.firestore.FirebaseFirestore
 import com.orbital.snus.R
-import com.orbital.snus.data.Friends
 import com.orbital.snus.data.FriendsMessage
 import com.orbital.snus.data.UserData
 import com.orbital.snus.messages.MessagesActivity
@@ -142,8 +138,13 @@ class MessageTo(val message: FriendsMessage) : Item<GroupieViewHolder>() {
 
     override fun bind(viewHolder: GroupieViewHolder, position: Int) {
         viewHolder.itemView.messages_messaging_recycler_message_to.text = message.latestMessage.toString()
+<<<<<<< HEAD
         viewHolder.itemView.messages_messaging_to_date.text =
             SimpleDateFormat("dd/MM/yyyy | hh:mm a").format(message.date).toPattern().toString()
+=======
+        viewHolder.itemView.messages_messaging_recycler_to_date.text =
+            SimpleDateFormat("dd/MM/yyyy | hh:mm a").format(message.date!!).toPattern().toString()
+>>>>>>> 315551d3137eeb3a7e718766e0a9755b32bc19b1
     }
 
 }
@@ -156,7 +157,11 @@ class MessageFrom(val message: FriendsMessage) : Item<GroupieViewHolder>() {
     override fun bind(viewHolder: GroupieViewHolder, position: Int) {
         viewHolder.itemView.messages_messaging_recycler_message_from.text = message.latestMessage.toString()
         viewHolder.itemView.messages_messaging_from_date.text =
+<<<<<<< HEAD
             SimpleDateFormat("dd/MM/yyyy | hh:mm a").format(message.date).toPattern().toString()
+=======
+            SimpleDateFormat("dd/MM/yyyy | hh:mm a").format(message.date!!).toPattern().toString()
+>>>>>>> 315551d3137eeb3a7e718766e0a9755b32bc19b1
     }
 
 }
