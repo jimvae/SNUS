@@ -80,6 +80,7 @@ class AnswersViewModel(val module:String, val subForum:String, val question: Str
                     documents.forEach {
                         val answer = it.toObject(ForumComment::class.java)
                         if (answer != null) {
+                            if (!answers.contains(answer))
                             answers.add(answer)
                         }
                     }

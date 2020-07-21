@@ -15,6 +15,7 @@ import androidx.recyclerview.widget.LinearLayoutManager
 import com.google.firebase.auth.FirebaseAuth
 import com.google.firebase.firestore.FirebaseFirestore
 import com.orbital.snus.R
+import com.orbital.snus.data.Friends
 import com.orbital.snus.data.FriendsMessage
 import com.orbital.snus.data.UserData
 import com.orbital.snus.messages.MessagesActivity
@@ -100,6 +101,7 @@ class MessagingFragment : Fragment() {
     }
 
 
+    val messages = ArrayList<FriendsMessage>()
     fun fetchMessages(userData: UserData){
         val myID = FirebaseAuth.getInstance().currentUser!!.uid
         val friendID = userData.userID!!
