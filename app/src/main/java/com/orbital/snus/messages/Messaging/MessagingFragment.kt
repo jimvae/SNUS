@@ -33,12 +33,14 @@ class MessagingFragment : Fragment() {
 
     val groupAdapter = GroupAdapter<GroupieViewHolder>()
 
+    private lateinit var binding: MessagesMessagingBinding
+
     override fun onCreateView(inflater: LayoutInflater,
                               container: ViewGroup?, savedInstanceState: Bundle?): View? {
 
         (activity as MessagesActivity).hideNavBar()
 
-        val binding: MessagesMessagingBinding = DataBindingUtil.inflate(
+        binding = DataBindingUtil.inflate(
             inflater, R.layout.messages_messaging, container, false
         )
 
@@ -118,7 +120,7 @@ class MessagingFragment : Fragment() {
                             messages.add(eachMessage)
                         }
                     }
-                    messages.sortedBy { it -> it.date }
+                    messages.sortWith(compareBy { it -> it.date })
                     messages.forEach { eachMessage ->
                         if (eachMessage.sender!!.equals(myID)) {
                             groupAdapter.add(MessageTo(eachMessage))
@@ -126,6 +128,7 @@ class MessagingFragment : Fragment() {
                             groupAdapter.add(MessageFrom(eachMessage))
                         }
                     }
+                    binding.messagesMessagingRecyclerView.scrollToPosition(groupAdapter.itemCount - 1)
                 }
             }
     }
