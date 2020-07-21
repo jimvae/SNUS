@@ -11,14 +11,10 @@ import android.view.ViewGroup
 import android.view.inputmethod.InputMethodManager
 import androidx.databinding.DataBindingUtil
 import androidx.fragment.app.Fragment
-import androidx.lifecycle.LiveData
-import androidx.lifecycle.MutableLiveData
 import androidx.recyclerview.widget.LinearLayoutManager
-import androidx.recyclerview.widget.RecyclerView
 import com.google.firebase.auth.FirebaseAuth
 import com.google.firebase.firestore.FirebaseFirestore
 import com.orbital.snus.R
-import com.orbital.snus.data.Friends
 import com.orbital.snus.data.FriendsMessage
 import com.orbital.snus.data.UserData
 import com.orbital.snus.messages.MessagesActivity
@@ -87,7 +83,7 @@ class MessagingFragment : Fragment() {
                 .collection("messages").document(textID).set(message)
 
 
-            groupAdapter.add(MessageFrom(message))
+            groupAdapter.add(MessageTo(message))
 
             binding.messagesMessagingMessageHere.setText("")
             hideKeyboard(it)
@@ -118,9 +114,9 @@ class MessagingFragment : Fragment() {
                         val eachMessage = it.toObject(FriendsMessage::class.java)
                         if (eachMessage != null) {
                             if (eachMessage.sender!!.equals(myID)) {
-                                groupAdapter.add(MessageFrom(eachMessage))
-                            } else {
                                 groupAdapter.add(MessageTo(eachMessage))
+                            } else {
+                                groupAdapter.add(MessageFrom(eachMessage))
                             }
                         }
                     }
@@ -141,8 +137,8 @@ class MessageTo(val message: FriendsMessage) : Item<GroupieViewHolder>() {
 
     override fun bind(viewHolder: GroupieViewHolder, position: Int) {
         viewHolder.itemView.messages_messaging_recycler_message_to.text = message.latestMessage.toString()
-        viewHolder.itemView.messages_messaging_answers_date.text =
-            SimpleDateFormat("dd/MM/yyyy | hh:mm a").format(message.date).toPattern().toString()
+        viewHolder.itemView.messages_messaging_recycler_to_date.text =
+            SimpleDateFormat("dd/MM/yyyy | hh:mm a").format(message.date!!).toPattern().toString()
     }
 
 }
@@ -154,8 +150,8 @@ class MessageFrom(val message: FriendsMessage) : Item<GroupieViewHolder>() {
 
     override fun bind(viewHolder: GroupieViewHolder, position: Int) {
         viewHolder.itemView.messages_messaging_recycler_message_from.text = message.latestMessage.toString()
-        viewHolder.itemView.messages_messaging_answers_date.text =
-            SimpleDateFormat("dd/MM/yyyy | hh:mm a").format(message.date).toPattern().toString()
+        viewHolder.itemView.messages_messaging_from_date.text =
+            SimpleDateFormat("dd/MM/yyyy | hh:mm a").format(message.date!!).toPattern().toString()
     }
 
 }
