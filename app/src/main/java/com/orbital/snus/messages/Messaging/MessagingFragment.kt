@@ -84,11 +84,10 @@ class MessagingFragment : Fragment() {
                 .collection("friends").document(myID)
                 .collection("messages").document(textID).set(message)
 
-
-            groupAdapter.add(MessageTo(message))
-
             binding.messagesMessagingMessageHere.setText("")
             hideKeyboard(it)
+
+            binding.messagesMessagingRecyclerView.scrollToPosition(groupAdapter.itemCount - 1)
         }
 
         return binding.root
@@ -99,32 +98,34 @@ class MessagingFragment : Fragment() {
         imm.hideSoftInputFromWindow(view.windowToken, 0)
     }
 
-    val messages = ArrayList<FriendsMessage>()
-    fun fetchMessages(userData: UserData) {
 
+    val messages = ArrayList<FriendsMessage>()
+    fun fetchMessages(userData: UserData){
         val myID = FirebaseAuth.getInstance().currentUser!!.uid
         val friendID = userData.userID!!
         db.collection("users").document(myID)
             .collection("friends").document(friendID)
-            .collection("messages")
-            .addSnapshotListener { querySnapshot, firebaseFirestoreException ->
+            .collection("messages").addSnapshotListener { querySnapshot, firebaseFirestoreException ->
                 if (firebaseFirestoreException != null) {
                     Log.w("NewMessageViewModel", firebaseFirestoreException.toString())
                     return@addSnapshotListener
                 }
                 if (querySnapshot != null) {
+                    groupAdapter.clear()
+                    val messages = ArrayList<FriendsMessage>()
                     val documents = querySnapshot.documents
                     documents.forEach {
                         val eachMessage = it.toObject(FriendsMessage::class.java)
                         if (eachMessage != null) {
-                            if (!messages.contains(eachMessage)) {
-                                messages.add(eachMessage)
-                                if (eachMessage.sender!!.equals(myID)) {
-                                    groupAdapter.add(MessageTo(eachMessage))
-                                } else {
-                                    groupAdapter.add(MessageFrom(eachMessage))
-                                }
-                            }
+                            messages.add(eachMessage)
+                        }
+                    }
+                    messages.sortedBy { it -> it.date }
+                    messages.forEach { eachMessage ->
+                        if (eachMessage.sender!!.equals(myID)) {
+                            groupAdapter.add(MessageTo(eachMessage))
+                        } else {
+                            groupAdapter.add(MessageFrom(eachMessage))
                         }
                     }
                 }
