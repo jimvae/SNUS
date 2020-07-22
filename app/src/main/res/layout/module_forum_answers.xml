@@ -23,7 +23,7 @@
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toTopOf="parent"
-            tools:listitem="@layout/module_forum_recycler_answers" />
+            tools:listitem="@layout/module_forum_recycler_answers_from" />
 
         <EditText
             android:id="@+id/module_forum_answers_message_here"

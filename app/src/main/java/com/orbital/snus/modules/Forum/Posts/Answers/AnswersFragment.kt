@@ -2,6 +2,7 @@ package com.orbital.snus.modules.Forum.Posts.Answers
 
 import android.content.Context
 import android.os.Bundle
+import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
@@ -15,24 +16,40 @@ import androidx.recyclerview.widget.ItemTouchHelper
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
 import com.google.firebase.auth.FirebaseAuth
+import com.google.firebase.firestore.FirebaseFirestore
 import com.orbital.snus.R
 import com.orbital.snus.data.ForumComment
+import com.orbital.snus.data.FriendsMessage
 import com.orbital.snus.databinding.ModuleForumAnswersBinding
+import com.orbital.snus.messages.Messaging.showDate
 import com.orbital.snus.modules.ModulesActivity
+import com.xwray.groupie.GroupAdapter
+import com.xwray.groupie.GroupieViewHolder
+import com.xwray.groupie.Item
+import kotlinx.android.synthetic.main.messages_messaging_from_recycler.view.*
+import kotlinx.android.synthetic.main.messages_messaging_to_recycler.view.*
+import kotlinx.android.synthetic.main.module_forum_recycler_answers_from.view.*
+import kotlinx.android.synthetic.main.module_forum_recycler_answers_to.view.*
+import java.text.SimpleDateFormat
 import java.util.*
 
 
 class AnswersFragment : Fragment() {
     private val firebaseAuth = FirebaseAuth.getInstance()
+    private val db = FirebaseFirestore.getInstance()
+    private val user = firebaseAuth.currentUser?.uid
+
 
     private lateinit var binding: ModuleForumAnswersBinding
+    val groupAdapter = GroupAdapter<GroupieViewHolder>()
 
-    private lateinit var recyclerView: RecyclerView
-    private lateinit var viewAdapter: RecyclerView.Adapter<*>
-    private lateinit var viewManager: RecyclerView.LayoutManager
+    private lateinit var module: String
+    private lateinit var subForum: String
+    private lateinit var question: String
 
-    private lateinit var factory: AnswersViewModelFactory
-    private lateinit var viewModel: AnswersViewModel
+
+
+
     private val answers =
         ArrayList<ForumComment>() // holder to store events and for RecyclerViewAdapter to observe
 
@@ -47,30 +64,19 @@ class AnswersFragment : Fragment() {
             inflater, R.layout.module_forum_answers, container, false
         )
 
-        val moduleName = (requireArguments().get("module") as String)
-        val subForum = (requireArguments().get("subForum") as String)
-        val question = (requireArguments().get("question") as String)
-        factory = AnswersViewModelFactory(moduleName, subForum, question)
-        viewModel = ViewModelProvider(this, factory).get(AnswersViewModel::class.java)
+        module = (requireArguments().get("module") as String)
+        subForum = (requireArguments().get("subForum") as String)
+        question = (requireArguments().get("question") as String)
 
-        viewManager = LinearLayoutManager(activity)
-        viewAdapter = AnswersAdapter(answers)
+        fetchAnswers()
 
-        recyclerView = binding.forumAnswersRecyclerView.apply {
+
+        binding.forumAnswersRecyclerView.apply {
             // use a linear layout manager
-            layoutManager = viewManager
-
+            layoutManager = LinearLayoutManager(this.context)
             // specify an viewAdapter (see also next example)
-            adapter = viewAdapter
+            adapter = groupAdapter
         }
-
-        viewModel.answers.observe(
-            viewLifecycleOwner,
-            androidx.lifecycle.Observer<List<ForumComment>> { forumComments ->
-                answers.removeAll(answers)
-                answers.addAll(forumComments)
-                recyclerView.adapter!!.notifyDataSetChanged()
-            })
 
 
 
@@ -85,92 +91,54 @@ class AnswersFragment : Fragment() {
             }
 
 
-            configurePage(false)
+            //create comment, add to data base
+            addComment(text)
+            binding.moduleForumAnswersMessageHere.setText("")
+            hideKeyboard(it)
 
-            val calendar = Calendar.getInstance()
-            val answer: ForumComment = ForumComment(null,
-                firebaseAuth.currentUser!!.uid, calendar.time, text)
-
-            viewModel.addAnswers(answer)
-
-            viewModel.addSuccess.observe(viewLifecycleOwner, androidx.lifecycle.Observer {
-                if (it != null) {
-                    Toast.makeText(requireContext(), "Comment successfully added", Toast.LENGTH_SHORT)
-                        .show()
-                    findNavController().navigate(
-                        R.id.action_answersFragment_self,
-                        requireArguments()
-                    )
-                    viewModel.addPostSuccessCompleted()
-                }
-            })
-            viewModel.addFailure.observe(viewLifecycleOwner, androidx.lifecycle.Observer {
-                if (it != null) {
-                    Toast.makeText(requireContext(), it.toString(), Toast.LENGTH_SHORT).show()
-                    configurePage(true)
-                    viewModel.addPostFailureCompleted()
-                }
-            })
         }
-
-
-        //swipe to delete if it is your comments
-        ItemTouchHelper(object : ItemTouchHelper.SimpleCallback(0, ItemTouchHelper.LEFT) {
-            override fun onMove(recyclerView: RecyclerView, viewHolder: RecyclerView.ViewHolder,
-                target: RecyclerView.ViewHolder): Boolean {
-                return false
-            }
-
-            override fun onSwiped(viewHolder: RecyclerView.ViewHolder, direction: Int) {
-                val comment = (viewAdapter as AnswersAdapter).getComment(viewHolder.adapterPosition)
-                if (comment.userID == firebaseAuth.currentUser!!.uid) {
-                    viewModel.deleteComment(comment.forumID!!)
-                    viewModel.delSuccess.observe(viewLifecycleOwner, androidx.lifecycle.Observer {
-                        if (it != null) {
-                            Toast.makeText(requireContext(), "Comment successfully deleted", Toast.LENGTH_SHORT)
-                                .show()
-//                            findNavController().navigate(R.id.action_answersFragment_self, requireArguments())
-                            viewModel.delPostSuccessCompleted()
-                        }
-                    })
-                    viewModel.delFailure.observe(viewLifecycleOwner, androidx.lifecycle.Observer {
-                        if (it != null) {
-                            Toast.makeText(requireContext(), it.toString(), Toast.LENGTH_SHORT).show()
-                            configurePage(true)
-                            viewModel.delPostFailureCompleted()
-                        }
-                    })
-
-                }
-                viewAdapter.notifyItemChanged(viewHolder.adapterPosition)
-//                AnswersViewModel.delete(adapter.getNoteAt(viewHolder.adapterPosition))
-                Toast.makeText(requireContext(), "Note deleted", Toast.LENGTH_SHORT).show()
-            }
-        }).attachToRecyclerView(recyclerView)
-
         return binding.root
     }
 
-    override fun onActivityCreated(savedInstanceState: Bundle?) {
-        super.onActivityCreated(savedInstanceState)
 
-        val moduleName = (requireArguments().get("module") as String)
-        val subForum = (requireArguments().get("subForum") as String)
-        val question = (requireArguments().get("question") as String)
-        factory = AnswersViewModelFactory(moduleName, subForum, question)
-        viewModel = ViewModelProvider(this, factory).get(AnswersViewModel::class.java)
-        // On start of activity, we load the user data to be display on dashboard later
-        viewModel.loadPosts()
-        viewModel.answers.observe(
-            viewLifecycleOwner,
-            androidx.lifecycle.Observer<List<ForumComment>> { posts ->
-                if (posts.size != 0) {
-                    Toast.makeText(requireContext(), "Success retrieval", Toast.LENGTH_SHORT).show()
-                } else {
-                    Toast.makeText(requireContext(), "Failed retrieval", Toast.LENGTH_SHORT).show()
+    fun fetchAnswers(){
+        db.collection("modules").document(module)
+            .collection("forums").document(subForum)
+            .collection("posts").document(question)
+            .collection("comments")
+            .addSnapshotListener { querySnapshot, firebaseFirestoreException ->
+                if (firebaseFirestoreException != null) {
+                    Log.w("AnswersFragment", firebaseFirestoreException.toString())
+                    return@addSnapshotListener
                 }
-            })
+
+                if (querySnapshot != null) {
+                    groupAdapter.clear()
+                    val comments = ArrayList<ForumComment>()
+                    val documents = querySnapshot.documents
+                    documents.forEach {
+                        val individualComment = it.toObject(ForumComment::class.java)
+                        if (individualComment != null) {
+                            comments.add(individualComment)
+                        }
+                    }
+
+                    comments.sortWith(compareBy { it -> it.date })
+                    comments.forEach { eachComment ->
+                        if (eachComment.userID == user) {
+                            groupAdapter.add(CommentTo(eachComment))
+                        } else {
+                            groupAdapter.add(CommentFrom(eachComment))
+                        }
+                    }
+
+                    binding.forumAnswersRecyclerView.scrollToPosition(groupAdapter.itemCount - 1)
+
+
+                }
+            }
     }
+
 
     fun configurePage(boolean: Boolean) {
         binding.moduleForumAnswersMessageHere.isEnabled = boolean
@@ -182,4 +150,73 @@ class AnswersFragment : Fragment() {
         val imm = activity?.getSystemService(Context.INPUT_METHOD_SERVICE) as InputMethodManager
         imm.hideSoftInputFromWindow(view.windowToken, 0)
     }
+
+    fun addComment(comment: String) {
+        val calendar = Calendar.getInstance()
+        val id = db
+            .collection("modules").document(module)
+            .collection("forums").document(subForum)
+            .collection("posts").document(question)
+            .collection("comments").document().id
+
+        val answer: ForumComment = ForumComment(id,
+            firebaseAuth.currentUser!!.uid, calendar.time, comment)
+
+        db.collection("modules").document(module)
+            .collection("forums").document(subForum)
+            .collection("posts").document(question)
+            .collection("comments").document(id).set(answer)
+
+        binding.forumAnswersRecyclerView.scrollToPosition(groupAdapter.itemCount - 1)
+
+    }
+}
+
+class CommentTo(val comment: ForumComment) : Item<GroupieViewHolder>() {
+    override fun getLayout(): Int {
+        return R.layout.module_forum_recycler_answers_to
+    }
+
+    override fun bind(viewHolder: GroupieViewHolder, position: Int) {
+        viewHolder.itemView.module_forum_recycler_answers_to_answer.text = comment.text.toString()
+        viewHolder.itemView.module_forum_recycler_answers_to_date.text = showDate(comment.date!!)
+
+    }
+
+}
+
+class CommentFrom(val comment: ForumComment) : Item<GroupieViewHolder>() {
+    override fun getLayout(): Int {
+        return R.layout.module_forum_recycler_answers_from
+    }
+
+    override fun bind(viewHolder: GroupieViewHolder, position: Int) {
+        viewHolder.itemView.module_forum_recycler_answers_from_answer.text = comment.text.toString()
+        viewHolder.itemView.module_forum_recycler_answers_from_date.text = showDate(comment.date!!)
+
+
+    }
+
+}
+
+fun showDate(given: Date) : String {
+    val dateFormatDay = SimpleDateFormat("EEEE")
+    val dateFormatDayOfYear = SimpleDateFormat("dd/MM/yyyy")
+    val dateFormatTime = SimpleDateFormat("hh:mma")
+    val weekOfYear = SimpleDateFormat("w")
+
+
+    val today = Calendar.getInstance().time
+    val thisWeek = weekOfYear.format(today).toPattern().toString()
+    val messageWeek = weekOfYear.format(given).toPattern().toString()
+
+    if (dateFormatDayOfYear.format(today).toPattern().toString().equals(dateFormatDayOfYear.format(given).toPattern().toString())) {
+        return dateFormatTime.format(given).toPattern().toString()
+
+    } else if (thisWeek.equals(messageWeek)) {
+        return dateFormatDay.format(given).toPattern().toString()
+    } else {
+        return dateFormatDayOfYear.format(given).toPattern().toString()
+    }
+
 }

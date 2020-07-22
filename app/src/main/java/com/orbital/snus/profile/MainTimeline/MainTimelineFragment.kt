@@ -31,7 +31,6 @@ import com.orbital.snus.data.TimeLinePost
 import com.orbital.snus.data.UserData
 import com.orbital.snus.data.UserFriendRequest
 import com.orbital.snus.databinding.ProfileMainTimelineBinding
-import com.orbital.snus.modules.Forum.Posts.Answers.AnswersAdapter
 import com.orbital.snus.modules.Forum.Posts.PostViewAdapter
 import com.orbital.snus.modules.Forum.Posts.PostViewModel
 import com.orbital.snus.modules.Forum.Posts.PostViewModelFactory
