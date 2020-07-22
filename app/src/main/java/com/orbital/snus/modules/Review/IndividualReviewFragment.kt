@@ -95,6 +95,11 @@ class IndividualReviewFragment : Fragment() {
             showPopup(it)
         }
 
+        // pass in review and module for path
+        binding.textQuestions.setOnClickListener {
+            findNavController().navigate(R.id.action_individualReviewFragment_to_individualReviewThreadFragment, requireArguments())
+        }
+
         return binding.root
     }
 

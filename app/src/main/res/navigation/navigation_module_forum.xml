@@ -103,6 +103,9 @@
         <action
             android:id="@+id/action_individualReviewFragment_to_individualModuleFragment2"
             app:destination="@id/individualModuleFragment2" />
+        <action
+            android:id="@+id/action_individualReviewFragment_to_individualReviewThreadFragment"
+            app:destination="@id/individualReviewThreadFragment" />
     </fragment>
     <fragment
         android:id="@+id/addReviewFragment"
@@ -119,4 +122,9 @@
         android:name="com.orbital.snus.modules.Review.IndividualModule.IndividualModuleReviewInformationFragment"
         android:label="module_review_individual_review_information"
         tools:layout="@layout/module_review_individual_review_information" />
+    <fragment
+        android:id="@+id/individualReviewThreadFragment"
+        android:name="com.orbital.snus.modules.Review.IndividualReviewThreadFragment"
+        android:label="module_review_individual_review_thread"
+        tools:layout="@layout/module_review_individual_review_thread" />
 </navigation>
