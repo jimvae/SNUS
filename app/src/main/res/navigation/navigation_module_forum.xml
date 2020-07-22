@@ -91,6 +91,9 @@
         <action
             android:id="@+id/action_individualModuleFragment2_to_addReviewFragment"
             app:destination="@id/addReviewFragment" />
+        <action
+            android:id="@+id/action_individualModuleFragment2_to_individualModuleReviewInformationFragment"
+            app:destination="@id/individualModuleReviewInformationFragment" />
     </fragment>
     <fragment
         android:id="@+id/individualReviewFragment"
@@ -111,4 +114,9 @@
             app:destination="@id/individualModuleFragment2"
             app:popUpTo="@id/individualModuleFragment2" />
     </fragment>
+    <fragment
+        android:id="@+id/individualModuleReviewInformationFragment"
+        android:name="com.orbital.snus.modules.Review.IndividualModule.IndividualModuleReviewInformationFragment"
+        android:label="module_review_individual_review_information"
+        tools:layout="@layout/module_review_individual_review_information" />
 </navigation>

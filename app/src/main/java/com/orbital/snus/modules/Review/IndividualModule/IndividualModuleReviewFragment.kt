@@ -65,6 +65,14 @@ class IndividualModuleReviewFragment : Fragment() {
             reviewList.addAll(dbReviews.sortedByDescending { it.date })
             recyclerView.adapter!!.notifyDataSetChanged()
         })
+
+
+        // go to module information page. can see how to integrate nusmods inside?
+        // i think nusmods should start integrating since the search function...?
+        binding.textModuleInfo.setOnClickListener {
+            findNavController().navigate(R.id.action_individualModuleFragment2_to_individualModuleReviewInformationFragment)
+        }
+
         return binding.root
     }
 
