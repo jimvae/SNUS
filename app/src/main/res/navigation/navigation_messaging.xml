@@ -13,6 +13,9 @@
         <action
             android:id="@+id/action_messagesMainPageFragment_to_messagesNewMessageFragment"
             app:destination="@id/messagesNewMessageFragment" />
+        <action
+            android:id="@+id/action_messagesMainPageFragment_to_messagingFragment"
+            app:destination="@id/messagingFragment" />
     </fragment>
     <fragment
         android:id="@+id/messagingFragment"

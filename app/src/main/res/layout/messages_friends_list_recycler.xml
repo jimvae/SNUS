@@ -45,10 +45,22 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_marginStart="8dp"
-        android:layout_marginTop="4dp"
+        android:layout_marginTop="2dp"
+        android:layout_marginBottom="3dp"
+        android:maxWidth="250dp"
         android:text="Last Message"
-        android:textColor="@color/color_NUS"
         android:textSize="12sp"
+        app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintStart_toEndOf="@+id/message_friends_recycler_title"
         app:layout_constraintTop_toBottomOf="@+id/message_friends_recycler_name" />
+
+    <TextView
+        android:id="@+id/message_friends_recycler_time"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginEnd="8dp"
+        android:text="TextView"
+        android:textSize="12sp"
+        app:layout_constraintBaseline_toBaselineOf="@+id/message_friends_recycler_last_message"
+        app:layout_constraintEnd_toEndOf="parent" />
 </androidx.constraintlayout.widget.ConstraintLayout>

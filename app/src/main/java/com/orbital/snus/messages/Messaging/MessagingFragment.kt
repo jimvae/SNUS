@@ -142,6 +142,27 @@ class MessagingFragment : Fragment() {
     }
 }
 
+fun showDate(given: Date) : String {
+    val dateFormatDay = SimpleDateFormat("EEEE")
+    val dateFormatDayOfYear = SimpleDateFormat("dd/MM/yyyy")
+    val dateFormatTime = SimpleDateFormat("hh:mma")
+    val weekOfYear = SimpleDateFormat("w")
+
+
+    val today = Calendar.getInstance().time
+    val thisWeek = weekOfYear.format(today).toPattern().toString()
+    val messageWeek = weekOfYear.format(given).toPattern().toString()
+
+    if (dateFormatDayOfYear.format(today).toPattern().toString().equals(dateFormatDayOfYear.format(given).toPattern().toString())) {
+        return dateFormatTime.format(given).toPattern().toString()
+
+    } else if (thisWeek.equals(messageWeek)) {
+        return dateFormatDay.format(given).toPattern().toString()
+    } else {
+        return dateFormatDayOfYear.format(given).toPattern().toString()
+    }
+
+}
 class MessageTo(val message: FriendsMessage) : Item<GroupieViewHolder>() {
     override fun getLayout(): Int {
         return R.layout.messages_messaging_to_recycler
@@ -149,8 +170,7 @@ class MessageTo(val message: FriendsMessage) : Item<GroupieViewHolder>() {
 
     override fun bind(viewHolder: GroupieViewHolder, position: Int) {
         viewHolder.itemView.messages_messaging_recycler_message_to.text = message.latestMessage.toString()
-        viewHolder.itemView.messages_messaging_recycler_to_date.text =
-            SimpleDateFormat("dd/MM/yyyy | hh:mm a").format(message.date!!).toPattern().toString()
+            viewHolder.itemView.messages_messaging_recycler_to_date.text = showDate(message.date!!)
 
     }
 
@@ -164,7 +184,8 @@ class MessageFrom(val message: FriendsMessage) : Item<GroupieViewHolder>() {
     override fun bind(viewHolder: GroupieViewHolder, position: Int) {
         viewHolder.itemView.messages_messaging_recycler_message_from.text = message.latestMessage.toString()
         viewHolder.itemView.messages_messaging_from_date.text =
-            SimpleDateFormat("dd/MM/yyyy | hh:mm a").format(message.date!!).toPattern().toString()
+            showDate(message.date!!)
+
 
     }
 
