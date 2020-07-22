@@ -21,6 +21,7 @@ import com.orbital.snus.modules.ModulesActivity
 import com.xwray.groupie.GroupAdapter
 import com.xwray.groupie.GroupieViewHolder
 import com.xwray.groupie.Item
+import kotlinx.android.synthetic.main.messages_messaging_from_recycler.view.*
 import kotlinx.android.synthetic.main.messages_messaging_to_recycler.view.*
 import java.text.SimpleDateFormat
 import java.util.*
@@ -141,8 +142,8 @@ class AnonymousComment (val comment: ReviewThreadComment) : Item<GroupieViewHold
     }
 
     override fun bind(viewHolder: GroupieViewHolder, position: Int) {
-        viewHolder.itemView.messages_messaging_recycler_message_to.text = comment.text.toString()
-        viewHolder.itemView.messages_messaging_recycler_to_date.text =
+        viewHolder.itemView.messages_messaging_recycler_message_from.text = comment.text.toString()
+        viewHolder.itemView.messages_messaging_from_date.text =
             SimpleDateFormat("dd/MM/yyyy | hh:mm a").format(comment.date!!).toPattern().toString()
     }
 
