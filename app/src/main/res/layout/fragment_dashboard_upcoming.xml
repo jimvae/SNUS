@@ -12,8 +12,8 @@
         <TextView
             android:id="@+id/button_back"
             android:layout_width="0dp"
-            android:layout_height="200dp"
-            android:background="@drawable/blue_gradient"
+            android:layout_height="100dp"
+            android:background="@color/color_NUS"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintHorizontal_bias="0.0"
             app:layout_constraintStart_toStartOf="parent"
@@ -25,15 +25,25 @@
             android:layout_height="wrap_content"
             app:layout_constraintTop_toTopOf="parent">
 
+            <TextView
+                android:id="@+id/textView2"
+                android:layout_width="0dp"
+                android:layout_height="2dp"
+                android:layout_marginTop="2dp"
+                android:background="@android:color/white"
+                app:layout_constraintEnd_toEndOf="@+id/button_upcoming"
+                app:layout_constraintStart_toStartOf="@+id/button_upcoming"
+                app:layout_constraintTop_toBottomOf="@+id/button_today" />
+
 
             <Button
                 android:id="@+id/button_upcoming"
                 android:layout_width="100dp"
                 android:layout_height="40dp"
                 android:layout_marginTop="18dp"
-                android:background="@drawable/white_button"
+                android:background="@android:color/transparent"
                 android:text="@string/Upcoming"
-                android:textColor="@color/color_NUS"
+                android:textColor="@android:color/white"
                 app:layout_constraintEnd_toStartOf="@+id/button_calendar"
                 app:layout_constraintHorizontal_bias="0.5"
                 app:layout_constraintStart_toEndOf="@+id/button_today"
@@ -43,6 +53,7 @@
                 android:id="@+id/button_calendar"
                 android:layout_width="100dp"
                 android:layout_height="40dp"
+                android:layout_marginStart="16dp"
                 android:layout_marginEnd="8dp"
                 android:background="@android:color/transparent"
                 android:text="@string/Calendar"
@@ -54,6 +65,10 @@
             <Button
                 android:id="@+id/button_today"
                 style="@style/dashboard_current_button"
+                android:layout_width="0dp"
+                android:layout_height="40dp"
+                android:layout_marginStart="8dp"
+                android:layout_marginEnd="16dp"
                 android:background="@android:color/transparent"
                 android:text="@string/Today"
                 android:textColor="@android:color/white"
@@ -82,15 +97,12 @@
             android:id="@+id/constraint_Sunday"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:layout_marginStart="16dp"
-            android:layout_marginTop="24dp"
-            android:layout_marginEnd="16dp"
             android:background="@android:color/white"
             android:foregroundGravity="center"
             android:paddingBottom="8dp"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toBottomOf="@+id/TopBar">
+            app:layout_constraintTop_toBottomOf="@+id/button_back">
 
             <androidx.recyclerview.widget.RecyclerView
                 android:id="@+id/recyclerViewSunday"
@@ -139,8 +151,6 @@
             android:id="@+id/constraint_Monday"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:layout_marginStart="16dp"
-            android:layout_marginEnd="16dp"
             android:background="@android:color/white"
             android:foregroundGravity="center"
             android:paddingBottom="8dp"
@@ -194,8 +204,6 @@
             android:id="@+id/constraint_Tuesday"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:layout_marginStart="16dp"
-            android:layout_marginEnd="16dp"
             android:background="@android:color/white"
             android:foregroundGravity="center"
             android:paddingBottom="8dp"
@@ -249,8 +257,6 @@
             android:id="@+id/constraint_Wednesday"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:layout_marginStart="16dp"
-            android:layout_marginEnd="16dp"
             android:background="@android:color/white"
             android:foregroundGravity="center"
             android:paddingBottom="8dp"
@@ -303,8 +309,6 @@
             android:id="@+id/constraint_Thursday"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:layout_marginStart="16dp"
-            android:layout_marginEnd="16dp"
             android:background="@android:color/white"
             android:foregroundGravity="center"
             android:paddingBottom="8dp"
@@ -358,8 +362,6 @@
             android:id="@+id/constraint_Friday"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:layout_marginStart="16dp"
-            android:layout_marginEnd="16dp"
             android:background="@android:color/white"
             android:foregroundGravity="center"
             android:paddingBottom="8dp"
@@ -413,8 +415,6 @@
             android:id="@+id/constraint_Saturday"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:layout_marginStart="16dp"
-            android:layout_marginEnd="16dp"
             android:background="@android:color/white"
             android:foregroundGravity="center"
             android:paddingBottom="8dp"
@@ -462,6 +462,8 @@
                 app:layout_constraintStart_toStartOf="parent"
                 app:layout_constraintTop_toBottomOf="@+id/Saturday" />
         </androidx.constraintlayout.widget.ConstraintLayout>
+
+
 
 
     </androidx.constraintlayout.widget.ConstraintLayout>

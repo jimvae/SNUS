@@ -15,8 +15,6 @@
         <action
             android:id="@+id/action_todayFragment_to_calendarFragment"
             app:destination="@id/calendarFragment"
-            app:enterAnim="@anim/slide_in_left"
-            app:exitAnim="@anim/slide_out_right"
             app:popUpTo="@id/calendarFragment" />
         <action
             android:id="@+id/action_todayFragment_to_upcomingFragment"
@@ -37,14 +35,10 @@
         <action
             android:id="@+id/action_calendarFragment_to_todayFragment"
             app:destination="@id/todayFragment"
-            app:enterAnim="@anim/slide_in_right"
-            app:exitAnim="@anim/slide_out_left"
             app:popUpTo="@id/todayFragment" />
         <action
             android:id="@+id/action_calendarFragment_to_upcomingFragment"
             app:destination="@id/upcomingFragment"
-            app:enterAnim="@anim/slide_in_right"
-            app:exitAnim="@anim/slide_out_left"
             app:popUpTo="@id/upcomingFragment" />
         <action
             android:id="@+id/action_calendarFragment_to_addEventFragment"
@@ -61,8 +55,6 @@
         <action
             android:id="@+id/action_upcomingFragment_to_calendarFragment"
             app:destination="@id/calendarFragment"
-            app:enterAnim="@anim/slide_in_left"
-            app:exitAnim="@anim/slide_out_right"
             app:popUpTo="@id/calendarFragment" />
         <action
             android:id="@+id/action_upcomingFragment_to_todayFragment"

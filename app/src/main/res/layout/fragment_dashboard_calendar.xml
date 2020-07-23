@@ -15,8 +15,8 @@
     <TextView
         android:id="@+id/button_back"
         android:layout_width="0dp"
-        android:layout_height="200dp"
-        android:background="@drawable/blue_gradient"
+        android:layout_height="100dp"
+        android:background="@color/color_NUS"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintHorizontal_bias="0.0"
         app:layout_constraintStart_toStartOf="parent"
@@ -42,20 +42,32 @@
         android:layout_height="40dp"
         android:layout_marginStart="16dp"
         android:layout_marginEnd="8dp"
-        android:background="@drawable/white_button"
+        android:background="@android:color/transparent"
         android:text="@string/Calendar"
-        android:textColor="@color/color_NUS"
+        android:textColor="@android:color/white"
         app:layout_constraintBaseline_toBaselineOf="@+id/button_upcoming"
         app:layout_constraintEnd_toStartOf="@+id/floating_button_add"
         app:layout_constraintStart_toEndOf="@+id/button_upcoming" />
+
+    <TextView
+        android:id="@+id/textView2"
+        android:layout_width="0dp"
+        android:layout_height="2dp"
+        android:layout_marginTop="2dp"
+        android:background="@android:color/white"
+        app:layout_constraintEnd_toEndOf="@+id/button_calendar"
+        app:layout_constraintStart_toStartOf="@+id/button_calendar"
+        app:layout_constraintTop_toBottomOf="@+id/button_today" />
 
     <Button
         android:id="@+id/button_today"
         style="@style/dashboard_current_button"
         android:layout_width="0dp"
+        android:layout_height="40dp"
         android:layout_marginStart="8dp"
         android:layout_marginEnd="16dp"
         android:background="@android:color/transparent"
+        android:singleLine="false"
         android:text="@string/Today"
         android:textColor="@android:color/white"
         app:layout_constraintBaseline_toBaselineOf="@+id/button_upcoming"
@@ -78,23 +90,18 @@
 
     <CalendarView
         android:id="@+id/calendarView"
-        android:layout_width="wrap_content"
+        android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:layout_marginStart="16dp"
-        android:layout_marginTop="16dp"
-        android:layout_marginEnd="16dp"
-        android:background="@drawable/background_for_recycler_view"
+        android:background="@android:color/white"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintHorizontal_bias="0.482"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/floating_button_add" />
+        app:layout_constraintTop_toBottomOf="@+id/button_back" />
 
     <androidx.recyclerview.widget.RecyclerView
         android:id="@+id/calendar_recyclerView"
         android:layout_width="0dp"
         android:layout_height="0dp"
-        android:layout_marginStart="32dp"
-        android:layout_marginEnd="32dp"
         android:layout_marginBottom="16dp"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
