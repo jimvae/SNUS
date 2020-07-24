@@ -10,9 +10,7 @@ import androidx.databinding.DataBindingUtil
 import com.google.firebase.auth.FirebaseAuth
 import com.orbital.snus.R
 import com.orbital.snus.dashboard.DashboardActivity
-import com.orbital.snus.databinding.ActivityGroupsBinding
 import com.orbital.snus.databinding.ActivityProfileBinding
-import com.orbital.snus.groups.GroupsActivity
 import com.orbital.snus.messages.MessagesActivity
 import com.orbital.snus.modules.ModulesActivity
 import com.orbital.snus.opening.MainActivity
@@ -42,11 +40,7 @@ class ProfileActivity : AppCompatActivity() {
                     overridePendingTransition(R.anim.slide_in_right, R.anim.slide_out_left)
                     finish()
                 }
-                R.id.ic_action_groups -> {
-                    startActivity(Intent(applicationContext, GroupsActivity::class.java))
-                    overridePendingTransition(R.anim.slide_in_right, R.anim.slide_out_left)
-                    finish()
-                }
+
                 R.id.ic_action_modules -> {
                     startActivity(Intent(applicationContext, ModulesActivity::class.java))
                     overridePendingTransition(R.anim.slide_in_right, R.anim.slide_out_left)

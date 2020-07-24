@@ -22,12 +22,7 @@
         android:title="Messages"
         app:showAsAction="ifRoom" />
 
-    <item
-        android:id="@+id/ic_action_groups"
-        android:enabled="true"
-        android:icon="@drawable/ic_groups_white"
-        android:title="Groups"
-        app:showAsAction="ifRoom" />
+
 
     <item
         android:id="@+id/ic_action_modules"

@@ -9,18 +9,17 @@
         android:layout_height="match_parent">
 
 
-
         <com.google.android.material.bottomnavigation.BottomNavigationView
             android:id="@+id/bottom_navigation_menu"
             android:layout_width="0dp"
             android:layout_height="wrap_content"
-            app:itemBackground="@color/color_NUS"
-            app:itemIconTint="@android:color/white"
-            app:itemTextColor="@android:color/white"
+            app:itemBackground="@android:color/white"
+            app:itemIconTint="@color/color_NUS"
+            app:itemTextColor="@color/color_NUS"
             app:layout_constraintBottom_toBottomOf="parent"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"
-        app:menu="@menu/bottom_menu" />
+            app:menu="@menu/bottom_menu" />
 
         <fragment
             android:id="@+id/myNavHostFragmentModule"

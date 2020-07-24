@@ -21,7 +21,6 @@ import com.google.firebase.firestore.auth.User
 import com.orbital.snus.R
 import com.orbital.snus.data.UserEvent
 import com.orbital.snus.databinding.ActivityDashboardBinding
-import com.orbital.snus.groups.GroupsActivity
 import com.orbital.snus.messages.MessagesActivity
 import com.orbital.snus.modules.ModulesActivity
 import com.orbital.snus.opening.MainActivity
@@ -57,10 +56,7 @@ class DashboardActivity : AppCompatActivity() {
                     startActivity(Intent(applicationContext, MessagesActivity::class.java))
                     finish()
                 }
-                R.id.ic_action_groups -> {
-                    startActivity(Intent(applicationContext, GroupsActivity::class.java))
-                    finish()
-                }
+
                 R.id.ic_action_modules -> {
                     startActivity(Intent(applicationContext, ModulesActivity::class.java))
                     finish()
