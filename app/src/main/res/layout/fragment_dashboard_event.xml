@@ -12,7 +12,7 @@
         <TextView
             android:id="@+id/button_back"
             android:layout_width="0dp"
-            android:layout_height="100dp"
+            android:layout_height="110dp"
             android:background="@color/color_NUS"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintHorizontal_bias="0.0"
@@ -37,12 +37,15 @@
             android:layout_marginTop="8dp"
             android:layout_marginEnd="8dp"
             android:text="Name"
+            android:textAlignment="center"
             android:textColor="@android:color/white"
             android:textSize="30sp"
             app:layout_constraintBottom_toBottomOf="@+id/button_back"
             app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintHorizontal_bias="0.0"
             app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toTopOf="parent" />
+            app:layout_constraintTop_toTopOf="parent"
+            app:layout_constraintVertical_bias="0.509" />
 
         <TextView
             android:id="@+id/pop_up_event_description"
@@ -114,7 +117,7 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_marginStart="32dp"
-            android:layout_marginTop="8dp"
+            android:layout_marginTop="32dp"
             android:text="Start"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toBottomOf="@+id/button_back" />
@@ -135,7 +138,7 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_marginStart="32dp"
-            android:layout_marginTop="80dp"
+            android:layout_marginTop="32dp"
             android:text="Description"
             android:textColor="#828282"
             app:layout_constraintStart_toStartOf="parent"
@@ -146,7 +149,7 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_marginStart="32dp"
-            android:layout_marginTop="64dp"
+            android:layout_marginTop="32dp"
             android:text="Location"
             android:textColor="#828282"
             app:layout_constraintStart_toStartOf="parent"

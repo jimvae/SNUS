@@ -15,7 +15,7 @@
     <TextView
         android:id="@+id/button_back"
         android:layout_width="0dp"
-        android:layout_height="100dp"
+        android:layout_height="110dp"
         android:background="@color/color_NUS"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintHorizontal_bias="0.0"
