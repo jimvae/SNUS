@@ -15,8 +15,8 @@
             android:id="@+id/action_mainPageFragment_to_individualModuleFragment"
             app:destination="@id/individualModuleFragment" />
         <action
-            android:id="@+id/action_mainPageFragment_to_individualModuleFragment2"
-            app:destination="@id/individualModuleFragment2" />
+            android:id="@+id/action_mainPageFragment_to_individualModuleReviewInformationFragment"
+            app:destination="@id/individualModuleReviewInformationFragment" />
     </fragment>
 
     <fragment
@@ -91,9 +91,6 @@
         <action
             android:id="@+id/action_individualModuleFragment2_to_addReviewFragment"
             app:destination="@id/addReviewFragment" />
-        <action
-            android:id="@+id/action_individualModuleFragment2_to_individualModuleReviewInformationFragment"
-            app:destination="@id/individualModuleReviewInformationFragment" />
     </fragment>
     <fragment
         android:id="@+id/individualReviewFragment"
@@ -121,7 +118,11 @@
         android:id="@+id/individualModuleReviewInformationFragment"
         android:name="com.orbital.snus.modules.Review.IndividualModule.IndividualModuleReviewInformationFragment"
         android:label="module_review_individual_review_information"
-        tools:layout="@layout/module_review_individual_review_information" />
+        tools:layout="@layout/module_review_individual_review_information" >
+        <action
+            android:id="@+id/action_individualModuleReviewInformationFragment_to_individualModuleFragment2"
+            app:destination="@id/individualModuleFragment2" />
+    </fragment>
     <fragment
         android:id="@+id/individualReviewThreadFragment"
         android:name="com.orbital.snus.modules.Review.IndividualReviewThreadFragment"
