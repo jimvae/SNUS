@@ -1,20 +1,17 @@
 package com.orbital.snus.modules.Forum.MainPage
 
 import android.content.Context
-import android.graphics.Rect
 import android.os.Bundle
 import android.util.Log
 import android.view.LayoutInflater
-import android.view.MotionEvent
 import android.view.View
 import android.view.ViewGroup
 import android.view.inputmethod.InputMethodManager
-import android.widget.EditText
 import android.widget.Toast
-import androidx.core.content.ContextCompat.getSystemService
 import androidx.databinding.DataBindingUtil
 import androidx.fragment.app.Fragment
 import androidx.lifecycle.ViewModelProvider
+import androidx.lifecycle.ViewModelProviders
 import androidx.navigation.fragment.findNavController
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
@@ -23,6 +20,12 @@ import com.google.firebase.firestore.FirebaseFirestore
 import com.orbital.snus.R
 import com.orbital.snus.databinding.ModuleForumMainPageBinding
 import com.orbital.snus.modules.ModulesActivity
+import kotlinx.coroutines.CoroutineScope
+import kotlinx.coroutines.Dispatchers
+import kotlinx.coroutines.Job
+import kotlinx.coroutines.launch
+import okhttp3.*
+import java.io.IOException
 import java.util.*
 
 class MainPageFragment : Fragment() {
@@ -33,7 +36,6 @@ class MainPageFragment : Fragment() {
     private lateinit var recyclerView: RecyclerView
     private lateinit var viewAdapter: RecyclerView.Adapter<*>
     private lateinit var viewManager: RecyclerView.LayoutManager
-
 
     val factory = MainPageViewModelFactory()
     private lateinit var viewModel: MainPageViewModel
@@ -76,6 +78,7 @@ class MainPageFragment : Fragment() {
         }
 
 
+        // searching function
         binding.button.setOnClickListener {
             binding.moduleReviewMainPageSearch.clearFocus()
             hideKeyboard(it)
@@ -88,6 +91,7 @@ class MainPageFragment : Fragment() {
                 return@setOnClickListener
             }
 
+            // previous database manual searching
             val documentID: DocumentReference = db.collection("modules")
                 .document(modifiedSearch)
 
@@ -98,10 +102,12 @@ class MainPageFragment : Fragment() {
                         val bundle = Bundle()
                         bundle.putString("module", modifiedSearch)
                         Log.d("ReviewMainPage", "Document exists!")
-                        findNavController().navigate(R.id.action_mainPageFragment_to_individualModuleFragment2, bundle)
+                        findNavController().navigate(R.id.action_mainPageFragment_to_individualModuleReviewInformationFragment, bundle)
                     } else {
                         search.setError("Invalid module name ")
                         Log.d("ReviewMainPage", "Invalid input!")
+
+                        fetchJson(modifiedSearch)
                     }
                 } else {
                     Log.d("ReviewMainPage", "Failed with: ", task.exception)
@@ -111,9 +117,30 @@ class MainPageFragment : Fragment() {
 
         }
 
-
-
         return binding.root
+    }
+
+    fun fetchJson(moduleCode: String) {
+        val api = "https://api.nusmods.com/v2/"
+        val acadYear = "2018-2019"
+        val extension = "{$acadYear}/modules/{$moduleCode}.json"
+        val request = Request.Builder().url(api + extension).build()
+        val client = OkHttpClient()
+
+        // main UI thread cannot execute HTTP request
+        // android doesnt allow
+        client.newCall(request).enqueue(object : Callback {
+            override fun onFailure(call: Call, e: IOException) {
+                print("failed " + e.message)
+            }
+
+            override fun onResponse(call: Call, response: Response) {
+                val body = response.body.toString()
+                print(body)
+            }
+        })
+
+
     }
 
     override fun onActivityCreated(savedInstanceState: Bundle?) {
@@ -135,3 +162,4 @@ class MainPageFragment : Fragment() {
         imm.hideSoftInputFromWindow(view.windowToken, 0)
     }
 }
+

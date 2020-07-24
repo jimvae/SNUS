@@ -6,6 +6,7 @@ import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import androidx.databinding.DataBindingUtil
+import androidx.navigation.fragment.findNavController
 import com.orbital.snus.R
 import com.orbital.snus.databinding.ModuleReviewIndividualReviewInformationBinding
 
@@ -25,6 +26,11 @@ class IndividualModuleReviewInformationFragment : Fragment() {
         // maybe if it works can consider how to include other information
         // like if can SU, prerequisites, content (lab, lect etc)
         // or just load the nusmods page in the app? xd
+
+        binding.textModuleName.text = requireArguments().get("module") as String
+        binding.textGotoReview.setOnClickListener {
+            findNavController().navigate(R.id.action_individualModuleReviewInformationFragment_to_individualModuleFragment2, requireArguments())
+        }
 
         return binding.root
     }
