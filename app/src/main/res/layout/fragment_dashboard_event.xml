@@ -6,19 +6,42 @@
     <androidx.constraintlayout.widget.ConstraintLayout
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-        android:background="@drawable/common_google_signin_btn_icon_light_normal_background"
         android:orientation="vertical">
 
 
         <TextView
+            android:id="@+id/button_back"
+            android:layout_width="0dp"
+            android:layout_height="100dp"
+            android:background="@color/color_NUS"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintHorizontal_bias="0.0"
+            app:layout_constraintStart_toStartOf="parent"
+            tools:layout_editor_absoluteY="1dp" />
+
+        <TextView
+            android:id="@+id/button_back2"
+            android:layout_width="0dp"
+            android:layout_height="50dp"
+            android:background="@color/color_NUS"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintHorizontal_bias="0.0"
+            app:layout_constraintStart_toStartOf="parent" />
+
+        <TextView
             android:id="@+id/pop_up_event_name"
-            android:layout_width="wrap_content"
+            android:layout_width="0dp"
             android:layout_height="wrap_content"
-            android:layout_marginTop="70dp"
+            android:layout_marginStart="8dp"
+            android:layout_marginTop="8dp"
+            android:layout_marginEnd="8dp"
             android:text="Name"
-            android:textColor="@color/color_NUS"
+            android:textColor="@android:color/white"
             android:textSize="30sp"
-            app:layout_constraintStart_toEndOf="@+id/taskicon"
+            app:layout_constraintBottom_toBottomOf="@+id/button_back"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toTopOf="parent" />
 
         <TextView
@@ -69,30 +92,32 @@
             android:id="@+id/pop_up_delete_button"
             android:layout_width="40dp"
             android:layout_height="40dp"
-            android:layout_marginEnd="32dp"
+            android:layout_marginEnd="8dp"
             android:background="@drawable/delete_button"
-            app:layout_constraintBaseline_toBaselineOf="@+id/pop_up_event_location"
-            app:layout_constraintEnd_toEndOf="parent" />
+            app:layout_constraintBottom_toBottomOf="@+id/button_back2"
+            app:layout_constraintEnd_toEndOf="@+id/button_back2"
+            app:layout_constraintTop_toTopOf="@+id/button_back2" />
 
         <Button
             android:id="@+id/pop_up_edit"
-            android:layout_width="40dp"
-            android:layout_height="40dp"
-            android:layout_marginEnd="32dp"
-            android:background="@drawable/pop_up_edit"
-            android:textColor="#000000"
-            app:layout_constraintBaseline_toBaselineOf="@+id/pop_up_event_name"
-            app:layout_constraintEnd_toEndOf="parent" />
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:background="@android:color/transparent"
+            android:text="Edit"
+            android:textColor="@android:color/white"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintStart_toStartOf="@+id/button_back2"
+            app:layout_constraintTop_toTopOf="@+id/button_back2" />
 
         <TextView
             android:id="@+id/fixedStartDate"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_marginStart="32dp"
-            android:layout_marginTop="32dp"
+            android:layout_marginTop="8dp"
             android:text="Start"
             app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toBottomOf="@+id/taskicon" />
+            app:layout_constraintTop_toBottomOf="@+id/button_back" />
 
         <TextView
             android:id="@+id/fixedEndDate"
@@ -126,16 +151,6 @@
             android:textColor="#828282"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toBottomOf="@+id/pop_up_event_description" />
-
-        <TextView
-            android:id="@+id/taskicon"
-            android:layout_width="51dp"
-            android:layout_height="48dp"
-            android:layout_marginStart="25dp"
-            android:layout_marginTop="70dp"
-            android:background="@drawable/ic_assessment_black_24dp"
-            app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toTopOf="parent" />
 
     </androidx.constraintlayout.widget.ConstraintLayout>
 </layout>
