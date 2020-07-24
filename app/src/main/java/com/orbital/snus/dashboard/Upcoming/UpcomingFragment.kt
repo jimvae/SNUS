@@ -31,6 +31,9 @@ class UpcomingFragment : Fragment() {
     private lateinit var recyclerViewFriday: RecyclerView
     private lateinit var recyclerViewSaturday: RecyclerView
 
+    private lateinit var sunday: String
+    private lateinit var saturday: String
+
     override fun onCreateView(inflater: LayoutInflater,
                               container: ViewGroup?, savedInstanceState: Bundle?): View? {
 
@@ -48,8 +51,8 @@ class UpcomingFragment : Fragment() {
         val eventThursday = ArrayList<UserEvent>()
         val eventFriday = ArrayList<UserEvent>()
         val eventSaturday = ArrayList<UserEvent>()
-
         val calendar = Calendar.getInstance()
+
 
         // set up the recyclerView
         recyclerViewSunday = binding.recyclerViewSunday.apply {
@@ -60,6 +63,7 @@ class UpcomingFragment : Fragment() {
             calendar.set(Calendar.DAY_OF_WEEK, Calendar.SUNDAY);
             val todayDate = calendar.time
             binding.SundayDayOfWeek.text = dateFormatter.format(todayDate).toPattern().toString()
+            sunday = dateFormatter.format(todayDate).toPattern().toString()
             adapter = UpcomingEventAdapter(
                 eventSunday,
                 todayDate
@@ -146,6 +150,7 @@ class UpcomingFragment : Fragment() {
             calendar.set(Calendar.DAY_OF_WEEK, Calendar.SATURDAY);
             val todayDate = calendar.time
             binding.SaturdayDayOfWeek5.text = dateFormatter.format(todayDate).toPattern().toString()
+            saturday = dateFormatter.format(todayDate).toPattern().toString()
 
             adapter = UpcomingEventAdapter(
                 eventSaturday,
@@ -153,6 +158,10 @@ class UpcomingFragment : Fragment() {
             )
 
         }
+
+        val month = SimpleDateFormat("MMMM").format(Calendar.getInstance().time).toPattern().toString()
+
+        binding.thisWeek.setText("${sunday} - ${saturday} ${month}")
 
         viewModel.events.observe(viewLifecycleOwner, Observer<List<UserEvent>> { dbEvents ->
             viewModel.filterEvents()

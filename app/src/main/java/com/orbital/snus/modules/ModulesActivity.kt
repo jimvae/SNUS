@@ -14,7 +14,6 @@ import androidx.databinding.DataBindingUtil
 import com.orbital.snus.R
 import com.orbital.snus.dashboard.DashboardActivity
 import com.orbital.snus.databinding.ActivityModulesBinding
-import com.orbital.snus.groups.GroupsActivity
 import com.orbital.snus.messages.MessagesActivity
 import com.orbital.snus.profile.ProfileActivity
 
@@ -43,10 +42,7 @@ class ModulesActivity : AppCompatActivity() {
                     startActivity(Intent(applicationContext, MessagesActivity::class.java))
                     finish()
                 }
-                R.id.ic_action_groups -> {
-                    startActivity(Intent(applicationContext, GroupsActivity::class.java))
-                    finish()
-                }
+
                 R.id.ic_action_modules -> {
 
                 }
