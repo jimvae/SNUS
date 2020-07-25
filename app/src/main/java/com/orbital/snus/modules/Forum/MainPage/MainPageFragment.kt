@@ -25,6 +25,7 @@ import com.orbital.snus.modules.ModulesActivity
 import okhttp3.*
 import java.io.IOException
 import java.util.*
+import kotlin.collections.HashMap
 
 class MainPageFragment : Fragment() {
     private val db = FirebaseFirestore.getInstance()
@@ -177,15 +178,24 @@ class MainPageFragment : Fragment() {
                 val body = response.body?.string()
                 System.out.println(body)
 
-                val gson = GsonBuilder().create()
-                val mod = gson.fromJson(body, Module::class.java)
-                System.out.println(mod)
+                if (body != null && body.contains("html")) {
+                    this@MainPageFragment.activity?.runOnUiThread {
+                        binding.moduleReviewMainPageSearch.setError("Invalid module name")
+                        configurePage(true)
+                    }
+                } else {
+                    val gson = GsonBuilder().create()
+                    val mod = gson.fromJson(body, DummyModule::class.java)
 
-                module = mod
+                    val convertedMod = convertMod(mod)
+                    System.out.println(mod)
 
-                this@MainPageFragment.activity?.runOnUiThread {
-                    fetchResponse.value = true
-                    configurePage(true)
+                    module = convertedMod
+
+                    this@MainPageFragment.activity?.runOnUiThread {
+                        fetchResponse.value = true
+                        configurePage(true)
+                    }
                 }
             }
         })
@@ -210,6 +220,72 @@ class MainPageFragment : Fragment() {
         val imm = activity?.getSystemService(Context.INPUT_METHOD_SERVICE) as InputMethodManager
         imm.hideSoftInputFromWindow(view.windowToken, 0)
     }
+
+    fun convertMod(mod: DummyModule) : Module {
+        val lessons = ArrayList<String>()
+
+        mod.semesterData?.forEach {
+            it.timetable.forEach {
+                if (!lessons.contains(it.lessonType)) {
+                    lessons.add(it.lessonType)
+                }
+            }
+        }
+        System.out.println(lessons)
+
+        // implement forums
+        lessons.forEach {
+            val test = HashMap<String, String>()
+            test.put("Creation", "Confirmation")
+
+            db.collection("modules")
+                .document(mod.moduleCode!!)
+                .collection("forums")
+                .document(it.toUpperCase(Locale.ROOT))
+                .set(test as Map<String, Any>)
+        }
+
+        return Module(mod.acadYear, mod.preclusion, mod.description, mod.title,
+                        mod.department, mod.faculty, mod.workload, mod.prerequisite, mod.moduleCredit, mod.moduleCode,
+                        lessons, mod.prereqTree, mod.fulfillRequirements)
+    }
+
 }
 
+class DummyModule(val acadYear: String? = null,
+             val preclusion: String? = null,
+             val description: String? = null,
+             val title: String? = null,
+             val department: String? = null,
+             val faculty: String? = null,
+             val workload: List<Int>? = null,
+             val prerequisite: String? = null,
+             val moduleCredit: String? = null,
+             val moduleCode: String? = null,
+             val semesterData: List<SemesterData>? = null,
+             val prereqTree: Any? = null,
+             val fulfillRequirements: List<String>? = null) {
 
+    override fun toString(): String {
+        return "acadYear " + acadYear + "\n" +
+                "preclusion " + preclusion + "\n" +
+                "title " + title + "\n" +
+                "department " + department + "\n" +
+                "faculty " + faculty + "\n" +
+                "workload " + workload + "\n" +
+                "prerequisite " + prerequisite + "\n" +
+                "moduleCredit " + moduleCredit + "\n" +
+                "moduleCode " + moduleCode + "\n" +
+                "semesterData " + semesterData + "\n" +
+                "prereqTree " + prereqTree + "\n" +
+                "fulfillRequirements " + fulfillRequirements + "\n"
+    }
+
+}
+
+class SemesterData(val semester: Int, val examDate: String, val examDuration: String,
+                        val timetable: List<Lesson>)
+
+class Lesson(val classNo: String, val startTime: String, val endTime: String,
+                val weeks: Any, val venue: String, val day: String,
+                val lessonType: String, val size: Int)
