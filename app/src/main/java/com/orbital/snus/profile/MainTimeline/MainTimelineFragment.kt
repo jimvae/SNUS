@@ -6,7 +6,6 @@ import android.content.Intent
 import android.graphics.Color
 import android.graphics.drawable.ColorDrawable
 import android.net.Uri
-import android.opengl.Visibility
 import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.View
@@ -15,33 +14,24 @@ import android.widget.Toast
 import androidx.core.view.isVisible
 import androidx.databinding.DataBindingUtil
 import androidx.fragment.app.Fragment
-import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModelProvider
 import androidx.navigation.fragment.findNavController
 import androidx.recyclerview.widget.ItemTouchHelper
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
-import com.google.android.gms.tasks.Task
 import com.google.firebase.auth.FirebaseAuth
 import com.google.firebase.firestore.FirebaseFirestore
 import com.orbital.snus.R
-import com.orbital.snus.data.ForumPost
 import com.orbital.snus.data.TimeLinePost
 import com.orbital.snus.data.UserData
 import com.orbital.snus.data.UserFriendRequest
 import com.orbital.snus.databinding.ProfileMainTimelineBinding
-import com.orbital.snus.modules.Forum.Posts.PostViewAdapter
-import com.orbital.snus.modules.Forum.Posts.PostViewModel
-import com.orbital.snus.modules.Forum.Posts.PostViewModelFactory
+import com.orbital.snus.opening.MainActivity
 import com.squareup.picasso.Picasso
 import kotlinx.android.synthetic.main.profile_main_links_dialog.*
 import kotlinx.android.synthetic.main.profile_main_status_dialog.*
-import kotlinx.coroutines.Job
-import kotlinx.coroutines.launch
-import kotlinx.coroutines.runBlocking
-import java.util.ArrayList
-import java.util.Observer
+import java.util.*
 
 class MainTimelineFragment : Fragment() {
     val firestore = FirebaseFirestore.getInstance()
@@ -325,9 +315,16 @@ class MainTimelineFragment : Fragment() {
             }
         })
 
+        binding.logOut.setOnClickListener {
+            firebaseAuth.signOut()
+            val intent = Intent(activity, MainActivity::class.java)
+            startActivity(intent)
+            requireActivity().finish()
+        }
 
         return binding.root
     }
+
 
     override fun onActivityCreated(savedInstanceState: Bundle?) {
         super.onActivityCreated(savedInstanceState)
@@ -369,6 +366,8 @@ class MainTimelineFragment : Fragment() {
         binding.mainTimelineEditSettings.isEnabled = boolean
         binding.mainTimelineAddPost.isVisible = boolean
         binding.mainTimelineAddPost.isEnabled = boolean
+        binding.logOut.isEnabled = boolean
+        binding.logOut.isVisible = boolean
 
 
         binding.textFriendStatus.isVisible = !boolean

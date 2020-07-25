@@ -33,6 +33,8 @@ import com.google.firebase.storage.StorageTask
 import com.google.firebase.storage.UploadTask
 import com.orbital.snus.R
 import com.orbital.snus.dashboard.DashboardActivity
+import com.orbital.snus.data.ForumNameList
+import com.orbital.snus.data.TimeLinePost
 import com.orbital.snus.data.UserData
 import com.orbital.snus.databinding.ProfileMainTimelineEditBinding
 import com.squareup.picasso.Picasso
@@ -57,6 +59,9 @@ class EditProfileFragment : Fragment() {
     private lateinit var spinnerYear: Spinner
     private lateinit var currYear: String
 
+    private lateinit var forumNameList: ForumNameList
+    private val uid = firebaseAuth.currentUser!!.uid
+
     override fun onCreateView(
         inflater: LayoutInflater,
         container: ViewGroup?,
@@ -70,6 +75,7 @@ class EditProfileFragment : Fragment() {
         spinnerSetup()
 
         var userData : UserData = requireArguments().getParcelable<UserData>("userdata") as UserData
+        fetchForumNameList()
 
         // setup page
         binding.editProfileName.setText(userData.fullname)
@@ -102,7 +108,12 @@ class EditProfileFragment : Fragment() {
             }
 
             if (TextUtils.isEmpty(forumName)) {
-                binding.editProfileBio.setError("Forum Name is required")
+                binding.editProfileForumName.setError("Forum Name is required")
+                return@setOnClickListener
+            }
+
+            if (forumNameList.checkIfForumNameIsTaken(forumName) && !forumNameList.map!!.get(uid).equals(forumName)) {
+                binding.editProfileForumName.setError("Forum Name is already taken")
                 return@setOnClickListener
             }
 
@@ -127,11 +138,27 @@ class EditProfileFragment : Fragment() {
 
             configurePage(false)
 
+//            val map: HashMap<String, String> = HashMap<String,String>()
+//            val list = ForumNameList(map)
+//            list.updateForumName(forumName, firebaseAuth.currentUser!!.uid)
+//
+//            db.collection("forumNameList").document("forumNameList").set(list)
+//                .addOnSuccessListener {
+//            }.addOnFailureListener {
+//                Toast.makeText(requireContext(), "Unable to update: " + it.message, Toast.LENGTH_SHORT).show()
+//            }
+
+
             userData.updateUserData(name, faculty, course, currYear.toInt(), bio, linkedIn, instagram, gitHub, false, downloadUrl.toString(), userData.moduleList,  forumName)
+            forumNameList.updateForumName(forumName, firebaseAuth.currentUser!!.uid)
+
+
+
             db.collection("users") // users collection
                 .document(userData.userID!!) // current userId
                 .set(userData)
                 .addOnSuccessListener {
+                    updateForumNameList(forumNameList)
                     findNavController().navigate(R.id.action_editProfileFragment2_to_mainTimelineFragment2)
                 }.addOnFailureListener {
                     Toast.makeText(requireContext(), "Unable to update: " + it.message, Toast.LENGTH_SHORT).show()
@@ -160,6 +187,37 @@ class EditProfileFragment : Fragment() {
             }
         }
         return binding.root
+    }
+
+    private fun fetchForumNameList() {
+        db.collection("forumNameList")
+            .addSnapshotListener{ querySnapshot, firebaseFirestoreException ->
+            if (firebaseFirestoreException != null) {
+                Log.w("EditProfileFragment", firebaseFirestoreException.toString())
+                return@addSnapshotListener
+            }
+            if (querySnapshot != null) {
+                val documents = querySnapshot.documents
+                documents.forEach {
+                    val forumNameList1 = it.toObject(ForumNameList::class.java)
+                    if (forumNameList1 != null) {
+                        forumNameList = forumNameList1
+                        Log.d("ModuleViewModel", it.id)
+                        Log.d("ModuleViewModel", forumNameList1.map.toString())
+
+                    }
+                }
+            }
+        }
+
+    }
+
+    fun updateForumNameList(list: ForumNameList) {
+        db.collection("forumNameList").document("forumNameList").set(list)
+            .addOnSuccessListener {
+            }.addOnFailureListener {
+                Toast.makeText(requireContext(), "Unable to update: " + it.message, Toast.LENGTH_SHORT).show()
+            }
     }
 
 

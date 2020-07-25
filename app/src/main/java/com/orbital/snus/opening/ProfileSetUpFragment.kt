@@ -26,6 +26,7 @@ import com.google.firebase.storage.StorageTask
 import com.google.firebase.storage.UploadTask
 import com.orbital.snus.R
 import com.orbital.snus.dashboard.DashboardActivity
+import com.orbital.snus.data.ForumNameList
 import com.orbital.snus.data.UserData
 import com.orbital.snus.databinding.FragmentOpeningProfileSetupBinding
 import com.orbital.snus.profile.EditProfileFragment
@@ -52,6 +53,10 @@ class ProfileSetUpFragment : Fragment() {
     private lateinit var spinnerYear: Spinner
     private lateinit var currYear: String
 
+    private lateinit var forumNameList: ForumNameList
+    private val uid = firebaseAuth.currentUser!!.uid
+
+
     override fun onCreateView(
         inflater: LayoutInflater,
         container: ViewGroup?,
@@ -63,6 +68,8 @@ class ProfileSetUpFragment : Fragment() {
         binding = DataBindingUtil.inflate(
             inflater, R.layout.fragment_opening_profile_setup, container, false)
         spinnerSetup()
+        fetchForumNameList()
+
         binding.firstLoginConfirm.setOnClickListener {
             val bio = binding.firstLoginBio.text.toString().trim()
             val name = binding.firstLoginName.text.toString().trim()
@@ -79,7 +86,12 @@ class ProfileSetUpFragment : Fragment() {
             }
 
             if (TextUtils.isEmpty(forumName)) {
-                binding.firstLoginName.setError("Forum Name is required")
+                binding.firstLoginForumName.setError("Forum Name is required")
+                return@setOnClickListener
+            }
+
+            if (forumNameList.checkIfForumNameIsTaken(forumName)) {
+                binding.firstLoginForumName.setError("Forum Name is already taken")
                 return@setOnClickListener
             }
 
@@ -103,8 +115,13 @@ class ProfileSetUpFragment : Fragment() {
             configurePage(false)
 
             val user = firebaseAuth.currentUser!!
+
+            forumNameList.updateForumName(forumName, firebaseAuth.currentUser!!.uid)
+
             firestore.collection("users").document(user.uid).get()
                 .addOnSuccessListener {
+                    updateForumNameList(forumNameList)
+
                     userData = it.toObject((UserData::class.java))!!
                     userData.updateUserData(name, faculty, course, currYear.toInt(), bio, linkedIn, instagram, gitHub, false, downloadUrl.toString(), null, forumName)
                     updateUser(userData)
@@ -143,6 +160,13 @@ class ProfileSetUpFragment : Fragment() {
         return binding.root
     }
 
+    fun updateForumNameList(list: ForumNameList) {
+        db.collection("forumNameList").document("forumNameList").set(list)
+            .addOnSuccessListener {
+            }.addOnFailureListener {
+                Toast.makeText(requireContext(), "Unable to update: " + it.message, Toast.LENGTH_SHORT).show()
+            }
+    }
     private fun spinnerSetup() {
         Toast.makeText(requireContext(), "SetUp", Toast.LENGTH_SHORT).show()
         spinnerCourse = binding.firstLoginCourseSpinner
@@ -235,6 +259,29 @@ class ProfileSetUpFragment : Fragment() {
                 }
             }
         }
+    }
+
+    private fun fetchForumNameList() {
+        db.collection("forumNameList")
+            .addSnapshotListener{ querySnapshot, firebaseFirestoreException ->
+                if (firebaseFirestoreException != null) {
+                    Log.w("ProfileSetUpFragment", firebaseFirestoreException.toString())
+                    return@addSnapshotListener
+                }
+                if (querySnapshot != null) {
+                    val documents = querySnapshot.documents
+                    documents.forEach {
+                        val forumNameList1 = it.toObject(ForumNameList::class.java)
+                        if (forumNameList1 != null) {
+                            forumNameList = forumNameList1
+                            Log.d("ModuleViewModel", it.id)
+                            Log.d("ModuleViewModel", forumNameList1.map.toString())
+
+                        }
+                    }
+                }
+            }
+
     }
 
     //handle result of picked image

@@ -12,7 +12,7 @@
         <TextView
             android:id="@+id/button_back"
             android:layout_width="0dp"
-            android:layout_height="210dp"
+            android:layout_height="220dp"
             android:background="@color/color_NUS"
             android:textSize="12sp"
             app:layout_constraintEnd_toEndOf="parent"
@@ -90,21 +90,19 @@
         <Button
             android:id="@+id/main_profile_timeline"
             android:layout_width="0dp"
-            android:layout_height="wrap_content"
+            android:layout_height="30dp"
             android:layout_marginStart="16dp"
-            android:layout_marginTop="8dp"
             android:background="@drawable/list"
             android:scaleX="0.2"
             app:layout_constraintBottom_toBottomOf="@+id/button_back"
             app:layout_constraintEnd_toStartOf="@+id/main_profile_friends"
             app:layout_constraintHorizontal_bias="0.5"
-            app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toBottomOf="@+id/main_friends_links" />
+            app:layout_constraintStart_toStartOf="parent" />
 
         <Button
             android:id="@+id/main_profile_friends"
             android:layout_width="0dp"
-            android:layout_height="wrap_content"
+            android:layout_height="30dp"
             android:layout_marginEnd="16dp"
             android:background="@drawable/ic_people_outline_black_24dp"
             android:scaleX="0.2"
@@ -218,6 +216,16 @@
             app:layout_constraintEnd_toEndOf="@+id/textView5"
             app:layout_constraintStart_toStartOf="@+id/textView5"
             app:layout_constraintTop_toTopOf="@+id/textView5" />
+
+        <TextView
+            android:id="@+id/textView29"
+            android:layout_width="0dp"
+            android:layout_height="2dp"
+            android:layout_marginBottom="2dp"
+            android:background="@drawable/white_outline"
+            app:layout_constraintBottom_toBottomOf="@+id/main_profile_friends"
+            app:layout_constraintEnd_toEndOf="@+id/main_profile_friends"
+            app:layout_constraintStart_toEndOf="@+id/main_profile_timeline" />
 
     </androidx.constraintlayout.widget.ConstraintLayout>
 </layout>
