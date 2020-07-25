@@ -20,6 +20,7 @@ import com.google.firebase.firestore.FirebaseFirestore
 import com.orbital.snus.R
 import com.orbital.snus.data.ForumComment
 import com.orbital.snus.data.FriendsMessage
+import com.orbital.snus.data.UserData
 import com.orbital.snus.databinding.ModuleForumAnswersBinding
 import com.orbital.snus.messages.Messaging.showDate
 import com.orbital.snus.modules.ModulesActivity
@@ -46,6 +47,7 @@ class AnswersFragment : Fragment() {
     private lateinit var module: String
     private lateinit var subForum: String
     private lateinit var question: String
+    private lateinit var userData: UserData
 
 
 
@@ -68,6 +70,7 @@ class AnswersFragment : Fragment() {
         subForum = (requireArguments().get("subForum") as String)
         question = (requireArguments().get("question") as String)
 
+        fetchUser()
         fetchAnswers()
 
 
@@ -98,6 +101,30 @@ class AnswersFragment : Fragment() {
 
         }
         return binding.root
+    }
+
+    fun fetchUser() {
+        db.collection("users")
+            .addSnapshotListener { querySnapshot, firebaseFirestoreException ->
+                if (firebaseFirestoreException != null) {
+                    Log.w("AnswersFragment", firebaseFirestoreException.toString())
+                    return@addSnapshotListener
+                }
+
+                if (querySnapshot != null) {
+                    val documents = querySnapshot.documents
+                    documents.forEach {
+                        val user = it.toObject(UserData::class.java)
+                        if (user != null) {
+                            if (user.userID.equals(firebaseAuth.currentUser!!.uid)) {
+                                userData = user
+                            }
+                        }
+                    }
+
+
+                }
+            }
     }
 
 
@@ -160,7 +187,7 @@ class AnswersFragment : Fragment() {
             .collection("comments").document().id
 
         val answer: ForumComment = ForumComment(id,
-            firebaseAuth.currentUser!!.uid, calendar.time, comment)
+            firebaseAuth.currentUser!!.uid, userData.forumName, calendar.time, comment)
 
         db.collection("modules").document(module)
             .collection("forums").document(subForum)
@@ -180,6 +207,7 @@ class CommentTo(val comment: ForumComment) : Item<GroupieViewHolder>() {
     override fun bind(viewHolder: GroupieViewHolder, position: Int) {
         viewHolder.itemView.module_forum_recycler_answers_to_answer.text = comment.text.toString()
         viewHolder.itemView.module_forum_recycler_answers_to_date.text = showDate(comment.date!!)
+        viewHolder.itemView.module_forum_recycler_answers_to_name.text = comment.forumName.toString()
 
     }
 
@@ -193,6 +221,8 @@ class CommentFrom(val comment: ForumComment) : Item<GroupieViewHolder>() {
     override fun bind(viewHolder: GroupieViewHolder, position: Int) {
         viewHolder.itemView.module_forum_recycler_answers_from_answer.text = comment.text.toString()
         viewHolder.itemView.module_forum_recycler_answers_from_date.text = showDate(comment.date!!)
+        viewHolder.itemView.module_forum_recycler_answers_from_name.text = comment.forumName.toString()
+
 
 
     }
