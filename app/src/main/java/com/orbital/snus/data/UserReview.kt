@@ -5,10 +5,17 @@ import kotlinx.android.parcel.Parcelize
 import java.util.*
 
 @Parcelize
-data class UserReview (var id: String? = null, val userID: String? = null, var title: String? = null,
-                       var date: Date? = null, var rating: Int? = null,
-                       var expectedGrade: String? = null, var actualGrade: String? = null, var commitment: String? = null,
-                       var workload: String? = null, var prof: String? = null, var description: String? = null) : Parcelable {
+data class UserReview (var id: String? = null,
+                       val userID: String? = null,
+                       var title: String? = null,
+                       var date: Date? = null,
+                       var rating: Int? = null,
+                       var expectedGrade: String? = null,
+                       var actualGrade: String? = null,
+                       var commitment: String? = null,
+                       var workload: String? = null,
+                       var prof: String? = null,
+                       var description: String? = null) : Parcelable {
     // Under each Module, users can only add one review, so the ID is the userID
     // ratings is out of 5
     // grades should be enum? B, B+, A- etc
