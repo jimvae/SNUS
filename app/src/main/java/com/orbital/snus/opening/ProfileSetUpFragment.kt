@@ -123,7 +123,7 @@ class ProfileSetUpFragment : Fragment() {
                     updateForumNameList(forumNameList)
 
                     userData = it.toObject((UserData::class.java))!!
-                    userData.updateUserData(name, faculty, course, currYear.toInt(), bio, linkedIn, instagram, gitHub, false, downloadUrl.toString(), null, forumName)
+                    userData.updateUserData(name, faculty, course, currYear.toInt(), bio, linkedIn, instagram, gitHub, false, downloadUrl.toString(), ArrayList(), forumName)
                     updateUser(userData)
                     startActivity(Intent(activity?.applicationContext, DashboardActivity::class.java))
                     activity?.finish()

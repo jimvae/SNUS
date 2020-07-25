@@ -25,7 +25,6 @@ class OpeningFragment : Fragment() {
 
     override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?, savedInstanceState: Bundle?): View? {
         firebaseAuth = FirebaseAuth.getInstance()
-        // If logged in, connect to dashboard
 
         if (firebaseAuth.currentUser == null) {
 

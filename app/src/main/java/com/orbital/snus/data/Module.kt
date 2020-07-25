@@ -3,7 +3,6 @@ package com.orbital.snus.data
 import android.os.Parcelable
 import kotlinx.android.parcel.Parcelize
 
-
 data class Module(val acadYear: String? = null,
                   val preclusion: String? = null,
                   val description: String? = null,
@@ -16,7 +15,7 @@ data class Module(val acadYear: String? = null,
                   val moduleCode: String? = null,
                   val semesterData: Any? = null,
                   val prereqTree: Any? = null,
-                  val fulfillRequirements: List<String>? = null)  {
+                  val fulfillRequirements: List<String>? = null) {
 
     override fun toString(): String {
         return "acadYear " + acadYear + "\n" +
