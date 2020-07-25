@@ -30,9 +30,9 @@
     </fragment>
     <fragment
         android:id="@+id/postsFragment"
-        android:name="com.orbital.snus.modules.Forum.Posts.PostsFragment"
+        android:name="com.orbital.snus.modules.Forum.Posts.PostsResolvedFragment"
         android:label="PostsFragment"
-        tools:layout="@layout/module_forum_posts" >
+        tools:layout="@layout/module_forum_posts_unresolved" >
         <action
             android:id="@+id/action_postsFragment_to_askQuestionFragment"
             app:destination="@id/askQuestionFragment"
@@ -41,6 +41,9 @@
             android:id="@+id/action_postsFragment_to_questionFragment"
             app:destination="@id/questionFragment"
             app:popUpTo="@id/postsFragment" />
+        <action
+            android:id="@+id/action_postsFragment_to_postsUnresolvedFragment"
+            app:destination="@id/postsUnresolvedFragment" />
     </fragment>
     <fragment
         android:id="@+id/askQuestionFragment"
@@ -128,4 +131,19 @@
         android:name="com.orbital.snus.modules.Review.IndividualReviewThreadFragment"
         android:label="module_review_individual_review_thread"
         tools:layout="@layout/module_review_individual_review_thread" />
+    <fragment
+        android:id="@+id/postsUnresolvedFragment"
+        android:name="com.orbital.snus.modules.Forum.Posts.PostsUnresolvedFragment"
+        android:label="PostsUnresolvedFragment" >
+        <action
+            android:id="@+id/action_postsUnresolvedFragment_to_postsFragment"
+            app:destination="@id/postsFragment"
+            app:popUpTo="@id/postsFragment" />
+        <action
+            android:id="@+id/action_postsUnresolvedFragment_to_questionFragment"
+            app:destination="@id/questionFragment" />
+        <action
+            android:id="@+id/action_postsUnresolvedFragment_to_askQuestionFragment"
+            app:destination="@id/askQuestionFragment" />
+    </fragment>
 </navigation>

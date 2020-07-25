@@ -46,14 +46,25 @@ class PostViewAdapter (val bundle: Bundle, val forumList: List<ForumPost>) :
         if (post.status == false) {
             holder.textView.recycler_post_resolved.setText("Unresolved")
             holder.textView.recycler_post_resolved.setTextColor(Color.RED)
+            holder.textView.setOnClickListener(onClickListenerUnresolved(post))
+
+        } else {
+            holder.textView.setOnClickListener(onClickListenerResolved(post))
+
         }
-        holder.textView.setOnClickListener(onClickListener(post))
     }
 
-    private fun onClickListener(post: ForumPost): View.OnClickListener? {
+    private fun onClickListenerResolved(post: ForumPost): View.OnClickListener? {
         return View.OnClickListener {
             bundle.putParcelable("post", post)
             it.findNavController().navigate(R.id.action_postsFragment_to_questionFragment, bundle)
+        }
+    }
+
+    private fun onClickListenerUnresolved(post: ForumPost): View.OnClickListener? {
+        return View.OnClickListener {
+            bundle.putParcelable("post", post)
+            it.findNavController().navigate(R.id.action_postsUnresolvedFragment_to_questionFragment, bundle)
         }
     }
 

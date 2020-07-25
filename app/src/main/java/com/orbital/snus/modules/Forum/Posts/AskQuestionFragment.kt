@@ -31,7 +31,6 @@ import com.google.firebase.storage.UploadTask
 import com.orbital.snus.R
 import com.orbital.snus.data.ForumPost
 import com.orbital.snus.databinding.ModuleForumAskquestionBinding
-import com.orbital.snus.databinding.ModuleForumPostsBinding
 import com.orbital.snus.modules.ModulesActivity
 import com.orbital.snus.profile.EditProfileFragment
 import java.util.*
@@ -83,7 +82,7 @@ class AskQuestionFragment : Fragment() {
         imageRef = storage.child("${moduleName}/${subForum}")
         imageRef = imageRef.child(id)
 
-        binding.attachImage.setOnClickListener {
+        binding.addImage.setOnClickListener {
             //check runtime permission
             if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.M){
                 if (ContextCompat.checkSelfPermission(

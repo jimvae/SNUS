@@ -80,7 +80,7 @@ class PostViewModel(val module:String, val subForum:String) : ViewModel() {
         _delFailure.value = null
     }
 
-    fun loadPosts() {
+    fun loadResolvedPosts() {
         val forumPosts = ArrayList<ForumPost>()
         db.collection("modules")
             .document(module)
@@ -92,18 +92,50 @@ class PostViewModel(val module:String, val subForum:String) : ViewModel() {
                 Log.w("PostViewModel", firebaseFirestoreException.toString())
                 return@addSnapshotListener
             }
-            if (querySnapshot != null) {
-                val documents = querySnapshot.documents
-                documents.forEach {
-                    val event = it.toObject(ForumPost::class.java)
-                    if (event != null) {
-                        forumPosts.add(event)
+                if (querySnapshot != null) {
+                    val documents = querySnapshot.documents
+                    documents.forEach {
+                        val event = it.toObject(ForumPost::class.java)
+                        if (event != null) {
+                            if (event.status == true) {
+                                forumPosts.add(event)
+
+                            }
+                        }
                     }
                 }
+                forumPosts.sortByDescending { it.date }
+                _posts.value = forumPosts
             }
-            forumPosts.sortByDescending { it.date }
-            _posts.value = forumPosts
-        }
+    }
+
+    fun loadUnresolvedPosts() {
+        val forumPosts = ArrayList<ForumPost>()
+        db.collection("modules")
+            .document(module)
+            .collection("forums")
+            .document(subForum)
+            .collection("posts")
+            .addSnapshotListener { querySnapshot, firebaseFirestoreException ->
+                if (firebaseFirestoreException != null) {
+                    Log.w("PostViewModel", firebaseFirestoreException.toString())
+                    return@addSnapshotListener
+                }
+                if (querySnapshot != null) {
+                    val documents = querySnapshot.documents
+                    documents.forEach {
+                        val event = it.toObject(ForumPost::class.java)
+                        if (event != null) {
+                            if (event.status == false) {
+                                forumPosts.add(event)
+
+                            }
+                        }
+                    }
+                }
+                forumPosts.sortByDescending { it.date }
+                _posts.value = forumPosts
+            }
     }
 
     // FOR UPDATING EVENTS
