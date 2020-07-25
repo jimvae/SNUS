@@ -75,7 +75,8 @@
                     android:id="@+id/edit_description_header"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:text="Description" />
+                    android:text="Description"
+                    android:textColor="@color/color_NUS" />
 
                 <EditText
                     android:id="@+id/edit_description"
@@ -106,6 +107,7 @@
             android:layout_marginStart="16dp"
             android:layout_marginTop="16dp"
             android:text="Title"
+            android:textColor="@color/color_NUS"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toTopOf="parent" />
 
@@ -116,6 +118,7 @@
             android:layout_marginStart="16dp"
             android:layout_marginTop="12dp"
             android:text="Date"
+            android:textColor="@color/color_NUS"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toBottomOf="@+id/edit_title" />
 
@@ -126,6 +129,7 @@
             android:layout_marginStart="16dp"
             android:layout_marginTop="12dp"
             android:text="Rating"
+            android:textColor="@color/color_NUS"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toBottomOf="@+id/edit_date" />
 
@@ -136,6 +140,7 @@
             android:layout_marginStart="16dp"
             android:layout_marginTop="12dp"
             android:text="Expected Grade"
+            android:textColor="@color/color_NUS"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toBottomOf="@+id/edit_ratingbar" />
 
@@ -146,6 +151,7 @@
             android:layout_marginStart="16dp"
             android:layout_marginTop="12dp"
             android:text="Actual Grade"
+            android:textColor="@color/color_NUS"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toBottomOf="@+id/spinner_expected" />
 
@@ -156,6 +162,7 @@
             android:layout_marginStart="16dp"
             android:layout_marginTop="12dp"
             android:text="Commitment"
+            android:textColor="@color/color_NUS"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toBottomOf="@+id/spinner_actual" />
 
@@ -166,6 +173,7 @@
             android:layout_marginStart="16dp"
             android:layout_marginTop="12dp"
             android:text="Workload"
+            android:textColor="@color/color_NUS"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toBottomOf="@+id/spinner_commitment" />
 
@@ -176,6 +184,7 @@
             android:layout_marginStart="16dp"
             android:layout_marginTop="12dp"
             android:text="Lecturer"
+            android:textColor="@color/color_NUS"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toBottomOf="@+id/spinner_workload" />
 

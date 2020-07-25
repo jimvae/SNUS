@@ -140,7 +140,7 @@ class AddReviewFragment : Fragment() {
             val dialog = Dialog(requireContext())
             dialog.setContentView(R.layout.module_review_dialog_extra_information)
             dialog.extra_information_title.setText("Commitment")
-            dialog.extra_information_details.setText("The actual number of hours you put in this module per week including your timetable and the amount of time to study/prepare")
+            dialog.extra_information_details.setText("The actual number of hours you put in this module per week including your timetable and the actual amount of time to study/prepare")
             dialog.extra_information_back.setOnClickListener {
                 dialog.dismiss()
             }
