@@ -37,7 +37,7 @@ class MainPageFragment : Fragment() {
 
     val factory = MainPageViewModelFactory()
     private lateinit var viewModel: MainPageViewModel
-    private val mods = ArrayList<String>() // holder to store events and for RecyclerViewAdapter to observe
+    private val mods = ArrayList<Module>() // holder to store events and for RecyclerViewAdapter to observe
 
     private lateinit var binding: ModuleForumMainPageBinding
 
@@ -66,7 +66,7 @@ class MainPageFragment : Fragment() {
             adapter = viewAdapter
         }
 
-        viewModel.modules.observe(viewLifecycleOwner, androidx.lifecycle.Observer<List<String>> { dbMods ->
+        viewModel.modules.observe(viewLifecycleOwner, androidx.lifecycle.Observer<List<Module>> { dbMods ->
             mods.removeAll(mods)
             mods.addAll(dbMods)
             recyclerView.adapter!!.notifyDataSetChanged()
@@ -196,7 +196,7 @@ class MainPageFragment : Fragment() {
         super.onActivityCreated(savedInstanceState)
         viewModel = ViewModelProvider(this, factory).get(MainPageViewModel::class.java)
         viewModel.loadModules()
-        viewModel.modules.observe(viewLifecycleOwner, androidx.lifecycle.Observer<List<String>> { mods ->
+        viewModel.modules.observe(viewLifecycleOwner, androidx.lifecycle.Observer<List<Module>> { mods ->
             if (mods.size != 0) {
                 Toast.makeText(requireContext(), "Success retrieval", Toast.LENGTH_SHORT).show()
             } else {
