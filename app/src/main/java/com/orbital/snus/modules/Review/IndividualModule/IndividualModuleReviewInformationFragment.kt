@@ -19,6 +19,7 @@ import com.orbital.snus.R
 import com.orbital.snus.data.Module
 import com.orbital.snus.data.UserData
 import com.orbital.snus.databinding.ModuleReviewIndividualReviewInformationBinding
+import com.orbital.snus.modules.ModulesActivity
 import kotlinx.android.synthetic.main.profile_main_status_dialog.*
 
 class IndividualModuleReviewInformationFragment : Fragment() {
@@ -28,6 +29,10 @@ class IndividualModuleReviewInformationFragment : Fragment() {
     private var modStatus = MutableLiveData<String>()
     private lateinit var userData: UserData
     private lateinit var module: String
+    private lateinit var moduleInformation: String
+    private lateinit var moduleTitle: String
+
+
 
     val db = FirebaseFirestore.getInstance()
     val firebaseAuth = FirebaseAuth.getInstance()
@@ -40,12 +45,20 @@ class IndividualModuleReviewInformationFragment : Fragment() {
         binding = DataBindingUtil
             .inflate(layoutInflater, R.layout.module_review_individual_review_information, container, false)
 
+        (requireActivity() as ModulesActivity).hideNavBar()
+
+
         // figure out how to access NUSMODS API to extract module information
         // maybe if it works can consider how to include other information
         // like if can SU, prerequisites, content (lab, lect etc)
         // or just load the nusmods page in the app? xd
 
         module = requireArguments().get("module") as String
+        moduleInformation = requireArguments().get("moduleInformation") as String
+        moduleTitle = requireArguments().get("title") as String
+
+        binding.textModuleName2.text = moduleTitle
+        binding.textModuleInformation.text = moduleInformation
         binding.textModuleName.text = module
         binding.textGotoReview.setOnClickListener {
             findNavController().navigate(R.id.action_individualModuleReviewInformationFragment_to_individualModuleFragment2, requireArguments())
@@ -115,5 +128,10 @@ class IndividualModuleReviewInformationFragment : Fragment() {
                     }
                 }
             }
+    }
+
+    override fun onDestroyView() {
+        super.onDestroyView()
+        (activity as ModulesActivity).showNavBar()
     }
 }

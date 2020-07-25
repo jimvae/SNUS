@@ -56,6 +56,7 @@ class AskQuestionFragment : Fragment() {
 
         (activity as ModulesActivity).hideNavBar()
 
+
         binding = DataBindingUtil.inflate(
             inflater, R.layout.module_forum_askquestion, container, false)
 

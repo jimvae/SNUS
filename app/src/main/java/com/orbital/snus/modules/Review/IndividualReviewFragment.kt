@@ -21,6 +21,7 @@ import com.google.firebase.auth.FirebaseAuth
 import com.orbital.snus.R
 import com.orbital.snus.data.UserReview
 import com.orbital.snus.databinding.ModuleReviewIndividualReviewBinding
+import com.orbital.snus.modules.ModulesActivity
 import kotlinx.android.synthetic.main.module_forum_question_dialog_edit.*
 import kotlinx.android.synthetic.main.module_forum_question_dialog_edit.edit_close
 import kotlinx.android.synthetic.main.module_forum_question_dialog_edit.edit_title
@@ -61,9 +62,12 @@ class IndividualReviewFragment : Fragment() {
         container: ViewGroup?, savedInstanceState: Bundle?
     ): View? {
 
+
         binding = DataBindingUtil.inflate(
             inflater, R.layout.module_review_individual_review, container, false
         )
+
+        (activity as ModulesActivity).hideNavBar()
 
         review = requireArguments().get("review") as UserReview
         factory = ReviewDataViewModelFactory(requireArguments().get("module") as String)
@@ -328,6 +332,11 @@ class IndividualReviewFragment : Fragment() {
     fun hideKeyboard(view: View) {
         val imm = activity?.getSystemService(Context.INPUT_METHOD_SERVICE) as InputMethodManager
         imm.hideSoftInputFromWindow(view.windowToken, 0)
+    }
+
+    override fun onDestroyView() {
+        super.onDestroyView()
+        (activity as ModulesActivity).showNavBar()
     }
 
 }

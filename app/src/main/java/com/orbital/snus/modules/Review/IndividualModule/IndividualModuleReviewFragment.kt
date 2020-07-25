@@ -20,6 +20,7 @@ import com.orbital.snus.databinding.ModuleReviewIndividualModuleBinding
 import com.orbital.snus.modules.Forum.IndividualModule.IndividualModuleAdapter
 import com.orbital.snus.modules.Forum.IndividualModule.IndividualModuleViewModel
 import com.orbital.snus.modules.Forum.IndividualModule.IndividualModuleViewModelFactory
+import com.orbital.snus.modules.ModulesActivity
 import java.util.ArrayList
 
 class IndividualModuleReviewFragment : Fragment() {
@@ -36,9 +37,13 @@ class IndividualModuleReviewFragment : Fragment() {
         container: ViewGroup?, savedInstanceState: Bundle?
     ): View? {
 
+
         val binding: ModuleReviewIndividualModuleBinding = DataBindingUtil.inflate(
             inflater, R.layout.module_review_individual_module, container, false
         )
+
+        (requireActivity() as ModulesActivity).hideNavBar()
+
 
         val moduleName = requireArguments().get("module") as String
         binding.textModuleName.setText(moduleName)
@@ -81,6 +86,11 @@ class IndividualModuleReviewFragment : Fragment() {
                 Toast.makeText(requireContext(), "Failed retrieval", Toast.LENGTH_SHORT).show()
             }
         })
+    }
+
+    override fun onDestroyView() {
+        super.onDestroyView()
+        (activity as ModulesActivity).showNavBar()
     }
 
 }

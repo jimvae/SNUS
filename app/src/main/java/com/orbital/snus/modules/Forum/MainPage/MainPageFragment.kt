@@ -20,6 +20,7 @@ import com.google.firebase.firestore.FirebaseFirestore
 import com.google.gson.GsonBuilder
 import com.orbital.snus.R
 import com.orbital.snus.data.Module
+import com.orbital.snus.data.UserReview
 import com.orbital.snus.databinding.ModuleForumMainPageBinding
 import com.orbital.snus.modules.ModulesActivity
 import okhttp3.*
@@ -108,9 +109,33 @@ class MainPageFragment : Fragment() {
                     bundle.putString("module", modifiedSearch)
 
                     val document = task.result
+
                     if (document!!.exists()) { // if document null?
+
+                        db.collection("modules").addSnapshotListener { querySnapshot, Exception ->
+                            if (Exception != null) {
+                                Log.w("MainPageFragment", Exception.toString())
+                                return@addSnapshotListener
+                            }
+                            if (querySnapshot != null) {
+                                val documents = querySnapshot.documents
+                                documents.forEach {
+                                    val module1 = it.toObject(Module::class.java)
+                                    if (module1 != null) {
+                                        if (module1.moduleCode.equals(modifiedSearch)) {
+                                            module = module1
+                                            bundle.putString("moduleInformation", module.description)
+                                            bundle.putString("title", module.title)
+
+                                            findNavController().navigate(R.id.action_mainPageFragment_to_individualModuleReviewInformationFragment, bundle)
+
+
+                                        }
+                                    }
+                                }
+                            }
+                        }
                         Log.d("ReviewMainPage", "Document exists!")
-                        findNavController().navigate(R.id.action_mainPageFragment_to_individualModuleReviewInformationFragment, bundle)
                     } else {
 
                         System.out.println("running JSON")
@@ -119,6 +144,9 @@ class MainPageFragment : Fragment() {
                         fetchResponse.observe(viewLifecycleOwner, androidx.lifecycle.Observer {
                             if (it != null) {
                                 db.collection("modules").document(module.moduleCode!!.toUpperCase(Locale.ROOT)).set(module)
+                                bundle.putString("moduleInformation", module.description)
+                                bundle.putString("title", module.title)
+
                                 findNavController().navigate(R.id.action_mainPageFragment_to_individualModuleReviewInformationFragment, bundle)
                                 fetchComplete()
                             }

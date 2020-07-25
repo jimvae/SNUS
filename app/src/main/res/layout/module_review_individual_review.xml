@@ -12,7 +12,7 @@
         <androidx.constraintlayout.widget.ConstraintLayout
 
             android:layout_width="match_parent"
-            android:layout_height="wrap_content">
+            android:layout_height="match_parent">
 
             <TextView
                 android:id="@+id/button_back"
@@ -24,6 +24,16 @@
                 app:layout_constraintHorizontal_bias="0.0"
                 app:layout_constraintStart_toStartOf="parent"
                 tools:layout_editor_absoluteY="2dp" />
+
+            <TextView
+                android:id="@+id/button_back2"
+                android:layout_width="0dp"
+                android:layout_height="50dp"
+                android:background="@color/color_NUS"
+                app:layout_constraintBottom_toBottomOf="parent"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintHorizontal_bias="0.0"
+                app:layout_constraintStart_toStartOf="parent" />
 
             <TextView
                 android:id="@+id/individual_review_title"
@@ -75,8 +85,8 @@
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
                         android:text="Description:"
-                        android:textSize="18sp"
-                        android:textStyle="bold" />
+                        android:textColor="@color/color_NUS"
+                        android:textSize="18sp" />
 
                     <TextView
                         android:id="@+id/individual_review_description"
@@ -86,7 +96,7 @@
                         android:layout_marginTop="8dp"
                         android:layout_marginBottom="16sp"
                         android:text="Description"
-                        android:textColor="@color/color_NUS"
+                        android:textColor="@android:color/black"
                         android:textSize="18sp" />
                 </LinearLayout>
             </ScrollView>
@@ -95,23 +105,19 @@
                 android:id="@+id/button_edit"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:layout_marginStart="64dp"
                 android:layout_marginTop="20dp"
-                android:layout_marginBottom="32dp"
-                android:background="@drawable/blue_button"
+                android:background="@drawable/grey_outline_with_transparent_fill"
                 android:text="Edit"
                 android:textColor="@android:color/white"
                 app:layout_constraintBottom_toBottomOf="parent"
-                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintStart_toStartOf="@+id/button_back2"
                 app:layout_constraintTop_toBottomOf="@+id/scrollView3" />
 
             <Button
                 android:id="@+id/button_delete"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_marginEnd="64dp"
-                android:background="@drawable/blue_button"
-                android:text="Delete"
+                android:layout_width="40dp"
+                android:layout_height="40dp"
+                android:background="@drawable/delete_button"
                 android:textColor="@android:color/white"
                 app:layout_constraintBaseline_toBaselineOf="@+id/button_edit"
                 app:layout_constraintEnd_toEndOf="parent" />
@@ -154,10 +160,11 @@
                     android:id="@+id/individual_review_expected_header"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
+                    android:layout_marginTop="8dp"
                     android:layout_marginBottom="8dp"
                     android:text="Expected Grade:"
+                    android:textColor="@color/color_NUS"
                     android:textSize="18sp"
-                    android:textStyle="bold"
                     app:layout_constraintBottom_toBottomOf="parent"
                     app:layout_constraintStart_toStartOf="parent"
                     app:layout_constraintTop_toTopOf="parent" />
@@ -168,7 +175,7 @@
                     android:layout_height="wrap_content"
                     android:layout_marginStart="200dp"
                     android:text="Expected"
-                    android:textColor="@color/color_NUS"
+                    android:textColor="@android:color/black"
                     android:textSize="18sp"
                     app:layout_constraintBottom_toBottomOf="parent"
                     app:layout_constraintStart_toStartOf="@+id/individual_review_expected_header"
@@ -192,8 +199,8 @@
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:text="Actual Grade:"
+                    android:textColor="@color/color_NUS"
                     android:textSize="18sp"
-                    android:textStyle="bold"
                     app:layout_constraintBottom_toBottomOf="parent"
                     app:layout_constraintStart_toStartOf="parent"
                     app:layout_constraintTop_toTopOf="parent" />
@@ -204,7 +211,7 @@
                     android:layout_height="wrap_content"
                     android:layout_marginStart="200dp"
                     android:text="Actual"
-                    android:textColor="@color/color_NUS"
+                    android:textColor="@android:color/black"
                     android:textSize="18sp"
                     app:layout_constraintBottom_toBottomOf="parent"
                     app:layout_constraintStart_toStartOf="parent"
@@ -227,9 +234,9 @@
                     android:id="@+id/individual_review_commit_header"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:text="Weekly Commitment"
+                    android:text="Suggested Workload"
+                    android:textColor="@color/color_NUS"
                     android:textSize="18sp"
-                    android:textStyle="bold"
                     app:layout_constraintBottom_toBottomOf="parent"
                     app:layout_constraintStart_toStartOf="parent"
                     app:layout_constraintTop_toTopOf="parent" />
@@ -240,7 +247,7 @@
                     android:layout_height="wrap_content"
                     android:layout_marginStart="200dp"
                     android:text="Commitment"
-                    android:textColor="@color/color_NUS"
+                    android:textColor="@android:color/black"
                     android:textSize="18sp"
                     app:layout_constraintBottom_toBottomOf="parent"
                     app:layout_constraintStart_toStartOf="parent"
@@ -275,9 +282,19 @@
                     android:layout_height="wrap_content"
                     android:layout_marginStart="200dp"
                     android:text="Workload"
-                    android:textColor="@color/color_NUS"
+                    android:textColor="@android:color/black"
                     android:textSize="18sp"
                     app:layout_constraintBottom_toBottomOf="parent"
+                    app:layout_constraintStart_toStartOf="parent"
+                    app:layout_constraintTop_toTopOf="parent" />
+
+                <TextView
+                    android:id="@+id/textView34"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="Actual Workload:"
+                    android:textColor="@color/color_NUS"
+                    android:textSize="18sp"
                     app:layout_constraintStart_toStartOf="parent"
                     app:layout_constraintTop_toTopOf="parent" />
             </androidx.constraintlayout.widget.ConstraintLayout>
@@ -299,8 +316,8 @@
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:text="Lecturer:"
+                    android:textColor="@color/color_NUS"
                     android:textSize="18sp"
-                    android:textStyle="bold"
                     app:layout_constraintBottom_toBottomOf="parent"
                     app:layout_constraintStart_toStartOf="parent"
                     app:layout_constraintTop_toTopOf="parent" />
@@ -311,7 +328,7 @@
                     android:layout_height="wrap_content"
                     android:layout_marginStart="200dp"
                     android:text="Professor"
-                    android:textColor="@color/color_NUS"
+                    android:textColor="@android:color/black"
                     android:textSize="18sp"
                     app:layout_constraintBottom_toBottomOf="parent"
                     app:layout_constraintStart_toStartOf="parent"
