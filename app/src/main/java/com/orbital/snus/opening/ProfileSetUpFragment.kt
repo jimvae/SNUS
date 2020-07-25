@@ -117,7 +117,7 @@ class ProfileSetUpFragment : Fragment() {
 
         }
 
-        binding.profilePhoto.setOnClickListener {
+        binding.firstLoginSelectProfilePhoto.setOnClickListener {
             //check runtime permission
             if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.M){
                 if (ContextCompat.checkSelfPermission(

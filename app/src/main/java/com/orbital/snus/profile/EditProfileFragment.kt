@@ -79,6 +79,7 @@ class EditProfileFragment : Fragment() {
         binding.editProfileLinkedin.setText(userData.linkedIn)
         binding.editProfileCourseSpinner.setSelection(courses.indexOf(userData.course))
         binding.editProfileYearOfStudySpinner.setSelection(year.indexOf(userData.year.toString()))
+        binding.editProfileForumName.setText(userData.forumName)
         if (userData.picUri != null) {
             Picasso.get().load(userData.picUri).into(binding.profilePhoto)
         }
@@ -138,7 +139,7 @@ class EditProfileFragment : Fragment() {
             configurePage(true)
         }
 
-        binding.profilePhoto.setOnClickListener {
+        binding.editProfileSelectProfilePhoto.setOnClickListener {
             //check runtime permission
             if (VERSION.SDK_INT >= VERSION_CODES.M){
                 if (checkSelfPermission(requireContext(), Manifest.permission.READ_EXTERNAL_STORAGE) ==

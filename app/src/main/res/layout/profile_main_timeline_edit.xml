@@ -28,7 +28,7 @@
                 app:layout_constraintEnd_toEndOf="parent"
                 app:layout_constraintHorizontal_bias="0.0"
                 app:layout_constraintStart_toStartOf="parent"
-                app:layout_constraintTop_toBottomOf="@+id/profile_photo_card" />
+                app:layout_constraintTop_toBottomOf="@+id/edit_profile_select_profile_photo" />
 
             <EditText
                 android:id="@+id/edit_profile_bio"
@@ -259,6 +259,18 @@
                 android:textSize="18sp"
                 app:layout_constraintBaseline_toBaselineOf="@+id/edit_profile_linkedin"
                 app:layout_constraintStart_toStartOf="parent" />
+
+            <TextView
+                android:id="@+id/edit_profile_select_profile_photo"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="8dp"
+                android:text="Select Profile Photo"
+                android:textColor="@color/color_NUS"
+                android:textSize="18sp"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toBottomOf="@+id/profile_photo_card" />
 
         </androidx.constraintlayout.widget.ConstraintLayout>
     </ScrollView>
