@@ -1,6 +1,7 @@
 package com.orbital.snus.modules.Review
 
 import android.app.DatePickerDialog
+import android.app.Dialog
 import android.app.TimePickerDialog
 import android.content.Context
 import android.os.Bundle
@@ -18,6 +19,8 @@ import com.orbital.snus.R
 import com.orbital.snus.data.UserReview
 import com.orbital.snus.databinding.ModuleReviewAddReviewBinding
 import com.orbital.snus.modules.ModulesActivity
+import kotlinx.android.synthetic.main.module_review_dialog_extra_information.*
+import kotlinx.android.synthetic.main.profile_main_status_dialog.*
 import java.text.SimpleDateFormat
 import java.util.*
 
@@ -37,11 +40,11 @@ class AddReviewFragment : Fragment() {
     private lateinit var expected: String
     private lateinit var actual: String
 
-    val commitmentLevel = arrayOf("", "Low", "Medium", "High")
+    val commitmentLevel = arrayOf("", "1", "2", "3","4", "5", "6", "7", "8", "9", "10", "11", "12", "13","14", "15", "16", "17", "18", "19", "20")
     private lateinit var spinnerCommit: Spinner
     private lateinit var commitment: String
 
-    val workloadLevels = arrayOf("", "Low", "Medium", "High")
+    val workloadLevels = arrayOf("", "1", "2", "3","4", "5", "6", "7", "8", "9", "10", "11", "12", "13","14", "15", "16", "17", "18", "19", "20")
     private lateinit var workloadSpinner: Spinner
     private lateinit var workload: String
 
@@ -131,6 +134,28 @@ class AddReviewFragment : Fragment() {
                     viewModel.addEventFailureCompleted()
                 }
             })
+        }
+
+        binding.commitmentInfo.setOnClickListener {
+            val dialog = Dialog(requireContext())
+            dialog.setContentView(R.layout.module_review_dialog_extra_information)
+            dialog.extra_information_title.setText("Commitment")
+            dialog.extra_information_details.setText("The actual number of hours you put in this module per week including your timetable and the amount of time to study/prepare")
+            dialog.extra_information_back.setOnClickListener {
+                dialog.dismiss()
+            }
+            dialog.show()
+        }
+
+        binding.workloadInfo.setOnClickListener {
+            val dialog = Dialog(requireContext())
+            dialog.setContentView(R.layout.module_review_dialog_extra_information)
+            dialog.extra_information_title.setText("Workload")
+            dialog.extra_information_details.setText("The number of hours you have to spend in this module per week including your timetable and suggested amount of time to study/prepare")
+            dialog.extra_information_back.setOnClickListener {
+                dialog.dismiss()
+            }
+            dialog.show()
         }
 
         return binding.root

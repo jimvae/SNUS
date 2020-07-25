@@ -17,24 +17,34 @@
                 android:id="@+id/individual_review_add_title"
                 android:layout_width="0dp"
                 android:layout_height="wrap_content"
-                android:layout_marginStart="151dp"
-                android:layout_marginTop="8dp"
+                android:layout_marginStart="8dp"
                 android:layout_marginEnd="16dp"
                 android:hint="Title"
                 android:textColor="@color/color_NUS"
                 android:textSize="14sp"
                 app:layout_constraintEnd_toEndOf="parent"
                 app:layout_constraintStart_toStartOf="parent"
-                app:layout_constraintTop_toBottomOf="@+id/individual_review_header" />
+                app:layout_constraintTop_toBottomOf="@+id/individual_review_add_date4" />
 
             <TextView
                 android:id="@+id/individual_review_add_date"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:layout_marginStart="16dp"
-                android:layout_marginTop="8dp"
+                android:layout_marginStart="8dp"
                 android:paddingEnd="4dp"
                 android:text="Date"
+                android:textColor="@color/color_NUS"
+                android:textSize="18sp"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toBottomOf="@+id/individual_review_add_date2" />
+
+            <TextView
+                android:id="@+id/individual_review_add_date2"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginStart="8dp"
+                android:paddingEnd="4dp"
+                android:text="Date:"
                 android:textColor="@color/color_NUS"
                 android:textSize="18sp"
                 app:layout_constraintStart_toStartOf="parent"
@@ -44,30 +54,33 @@
                 android:id="@+id/individual_review_add_date3"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:layout_marginStart="16dp"
+                android:layout_marginStart="8dp"
                 android:layout_marginTop="24dp"
                 android:paddingEnd="4dp"
                 android:text="Ratings:"
+                android:textColor="@color/color_NUS"
                 android:textSize="18sp"
                 app:layout_constraintStart_toStartOf="parent"
                 app:layout_constraintTop_toBottomOf="@+id/individual_review_add_date" />
 
             <TextView
-                android:id="@+id/individual_review_add_date2"
+                android:id="@+id/individual_review_add_date4"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:layout_marginStart="16dp"
+                android:layout_marginStart="8dp"
+                android:layout_marginTop="8dp"
                 android:paddingEnd="4dp"
                 android:text="Title:"
+                android:textColor="@color/color_NUS"
                 android:textSize="18sp"
-                app:layout_constraintBaseline_toBaselineOf="@+id/individual_review_add_title"
-                app:layout_constraintStart_toStartOf="parent" />
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toBottomOf="@+id/individual_review_header" />
 
             <EditText
                 android:id="@+id/individual_review_add_prof"
                 android:layout_width="0dp"
                 android:layout_height="wrap_content"
-                android:layout_marginStart="151dp"
+                android:layout_marginStart="142dp"
                 android:layout_marginEnd="16dp"
                 android:hint="Professor"
                 android:textColor="@color/color_NUS"
@@ -80,14 +93,13 @@
                 android:id="@+id/scrollView2"
                 android:layout_width="0dp"
                 android:layout_height="wrap_content"
-                android:layout_marginStart="151dp"
-                android:layout_marginTop="24dp"
+                android:layout_marginStart="8dp"
                 android:layout_marginEnd="16dp"
                 android:layout_marginBottom="16dp"
                 app:layout_constraintBottom_toTopOf="@+id/individual_review_post_review"
                 app:layout_constraintEnd_toEndOf="parent"
                 app:layout_constraintStart_toStartOf="parent"
-                app:layout_constraintTop_toBottomOf="@+id/textView9"
+                app:layout_constraintTop_toBottomOf="@+id/textView10"
                 app:layout_constraintVertical_bias="0.0">
 
                 <androidx.constraintlayout.widget.ConstraintLayout
@@ -138,7 +150,7 @@
                 android:id="@+id/individual_review_add_ratingBar"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:layout_marginStart="151dp"
+                android:layout_marginStart="142dp"
                 android:layout_marginTop="8dp"
                 android:numStars="5"
                 android:rating="0"
@@ -150,8 +162,8 @@
                 android:id="@+id/expected_grade_linearlayout"
                 android:layout_width="0dp"
                 android:layout_height="wrap_content"
-                android:layout_marginStart="16dp"
-                android:layout_marginTop="16dp"
+                android:layout_marginStart="8dp"
+                android:layout_marginTop="8dp"
                 android:layout_marginEnd="16dp"
                 android:orientation="horizontal"
                 app:layout_constraintEnd_toEndOf="parent"
@@ -163,6 +175,7 @@
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:text="Expected Grade"
+                    android:textColor="@color/color_NUS"
                     android:textSize="18sp" />
 
                 <Spinner
@@ -177,7 +190,7 @@
                 android:id="@+id/actual_grade_linearlayout"
                 android:layout_width="0dp"
                 android:layout_height="wrap_content"
-                android:layout_marginStart="16dp"
+                android:layout_marginStart="8dp"
                 android:layout_marginTop="12dp"
                 android:layout_marginEnd="16dp"
                 android:orientation="horizontal"
@@ -190,6 +203,7 @@
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:text="Actual Grade"
+                    android:textColor="@color/color_NUS"
                     android:textSize="18sp" />
 
                 <Spinner
@@ -197,27 +211,40 @@
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:layout_marginStart="135dp"
-                    app:layout_constraintStart_toStartOf="parent" />
+                    app:layout_constraintStart_toStartOf="parent"
+                    app:layout_constraintTop_toTopOf="parent" />
+
             </androidx.constraintlayout.widget.ConstraintLayout>
 
             <androidx.constraintlayout.widget.ConstraintLayout
                 android:id="@+id/commitment_linearlayout"
                 android:layout_width="0dp"
                 android:layout_height="wrap_content"
-                android:layout_marginStart="16dp"
-                android:layout_marginTop="12dp"
+                android:layout_marginStart="8dp"
+                android:layout_marginTop="8dp"
                 android:layout_marginEnd="16dp"
                 android:orientation="horizontal"
                 app:layout_constraintEnd_toEndOf="parent"
                 app:layout_constraintStart_toStartOf="parent"
-                app:layout_constraintTop_toBottomOf="@+id/actual_grade_linearlayout">
+                app:layout_constraintTop_toBottomOf="@+id/workload_linearlayout">
+
+                <TextView
+                    android:id="@+id/commitment_info"
+                    android:layout_width="20dp"
+                    android:layout_height="20dp"
+                    android:layout_marginStart="2dp"
+                    android:background="@drawable/ic_info_outline_black_24dp"
+                    app:layout_constraintBottom_toBottomOf="@+id/individual_review_add_commitment_text"
+                    app:layout_constraintStart_toEndOf="@+id/individual_review_add_commitment_text"
+                    app:layout_constraintTop_toTopOf="@+id/individual_review_add_commitment_text" />
 
                 <TextView
                     android:id="@+id/individual_review_add_commitment_text"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:text="Commitment"
-                    android:textSize="18sp" />
+                    android:text="Actual Workload"
+                    android:textColor="@color/color_NUS"
+                    android:textSize="12sp" />
 
                 <Spinner
                     android:id="@+id/individual_review_add_commitment_spinner"
@@ -231,50 +258,64 @@
                 android:id="@+id/workload_linearlayout"
                 android:layout_width="0dp"
                 android:layout_height="wrap_content"
-                android:layout_marginStart="16dp"
-                android:layout_marginTop="12dp"
+                android:layout_marginStart="8dp"
+                android:layout_marginTop="8dp"
                 android:layout_marginEnd="16dp"
                 android:orientation="horizontal"
                 app:layout_constraintEnd_toEndOf="parent"
                 app:layout_constraintStart_toStartOf="parent"
-                app:layout_constraintTop_toBottomOf="@+id/commitment_linearlayout">
+                app:layout_constraintTop_toBottomOf="@+id/actual_grade_linearlayout">
+
+                <TextView
+                    android:id="@+id/workload_info"
+                    android:layout_width="20dp"
+                    android:layout_height="20dp"
+                    android:layout_marginStart="2dp"
+                    android:background="@drawable/ic_info_outline_black_24dp"
+                    app:layout_constraintBottom_toBottomOf="@+id/individual_review_add_workload_text"
+                    app:layout_constraintStart_toEndOf="@+id/individual_review_add_workload_text"
+                    app:layout_constraintTop_toTopOf="@+id/individual_review_add_workload_text" />
 
                 <TextView
                     android:id="@+id/individual_review_add_workload_text"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:text="Workload:"
-                    android:textSize="18sp"
+                    android:text="Suggested Workload:"
+                    android:textColor="@color/color_NUS"
+                    android:textSize="12sp"
                     app:layout_constraintBottom_toBottomOf="parent"
                     app:layout_constraintStart_toStartOf="parent"
                     app:layout_constraintTop_toTopOf="parent" />
 
                 <Spinner
                     android:id="@+id/individual_review_add_workload_spinner"
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
+                    android:layout_width="244dp"
+                    android:layout_height="21dp"
                     android:layout_marginStart="135dp"
-                    app:layout_constraintStart_toStartOf="@+id/individual_review_add_workload_text" />
+                    app:layout_constraintStart_toStartOf="@+id/individual_review_add_workload_text"
+                    app:layout_constraintTop_toTopOf="parent" />
             </androidx.constraintlayout.widget.ConstraintLayout>
 
             <TextView
                 android:id="@+id/textView9"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:layout_marginStart="16dp"
-                android:layout_marginTop="24dp"
+                android:layout_marginStart="8dp"
+                android:layout_marginTop="8dp"
                 android:text="Professor:"
+                android:textColor="@color/color_NUS"
                 android:textSize="18sp"
                 app:layout_constraintStart_toStartOf="parent"
-                app:layout_constraintTop_toBottomOf="@+id/workload_linearlayout" />
+                app:layout_constraintTop_toBottomOf="@+id/commitment_linearlayout" />
 
             <TextView
                 android:id="@+id/textView10"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:layout_marginStart="16dp"
+                android:layout_marginStart="8dp"
                 android:layout_marginTop="24dp"
                 android:text="Description:"
+                android:textColor="@color/color_NUS"
                 android:textSize="18sp"
                 app:layout_constraintStart_toStartOf="parent"
                 app:layout_constraintTop_toBottomOf="@+id/textView9" />

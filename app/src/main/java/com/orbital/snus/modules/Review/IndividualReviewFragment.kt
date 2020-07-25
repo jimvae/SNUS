@@ -48,11 +48,11 @@ class IndividualReviewFragment : Fragment() {
     private lateinit var expected: String
     private lateinit var actual: String
 
-    val commitmentLevel = arrayOf("", "Low", "Medium", "High")
+    val commitmentLevel = arrayOf("", "1", "2", "3","4", "5", "6", "7", "8", "9", "10", "11", "12", "13","14", "15", "16", "17", "18", "19", "20")
     private lateinit var spinnerCommit: Spinner
     private lateinit var commitment: String
 
-    val workloadLevels = arrayOf("", "Low", "Medium", "High")
+    val workloadLevels = arrayOf("", "1", "2", "3","4", "5", "6", "7", "8", "9", "10", "11", "12", "13","14", "15", "16", "17", "18", "19", "20")
     private lateinit var workloadSpinner: Spinner
     private lateinit var workload: String
 
