@@ -19,6 +19,7 @@ import com.google.firebase.firestore.DocumentReference
 import com.google.firebase.firestore.FirebaseFirestore
 import com.google.gson.GsonBuilder
 import com.orbital.snus.R
+import com.orbital.snus.data.Module
 import com.orbital.snus.databinding.ModuleForumMainPageBinding
 import com.orbital.snus.modules.ModulesActivity
 import okhttp3.*
