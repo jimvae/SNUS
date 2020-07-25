@@ -15,12 +15,24 @@ data class UserData(val userID: String? = null,
                     var insta: String? = null,
                     var git: String? = null,
                     var firstTime: Boolean? = null,
-                    var picUri: String? = null) : Parcelable {
+                    var picUri: String? = null,
+                    var moduleList: String? = null,
+                    var forumName: String? = null) : Parcelable {
+
     // Need to add: Profile Photo, links for Github, Instagram and LinkedIn
 
-    fun updateUserData(fullname: String, faculty: String, course: String, year: Int,
-                       bio: String, linkedIn: String?, insta: String?, git: String?,
-                       firstTime: Boolean, picUri: String?) {
+    fun updateUserData(fullname: String,
+                       faculty: String,
+                       course: String,
+                       year: Int,
+                       bio: String,
+                       linkedIn: String?,
+                       insta: String?,
+                       git: String?,
+                       firstTime: Boolean,
+                       picUri: String?,
+                       moduleList: String?,
+                       forumName: String?) {
         this.fullname = fullname
         this.faculty = faculty
         this.course = course
@@ -31,5 +43,11 @@ data class UserData(val userID: String? = null,
         this.git = git
         this.firstTime = firstTime
         this.picUri = picUri
+        this.moduleList = moduleList
+        this.forumName = forumName
+    }
+
+    fun updateModules(moduleList: String?) {
+        this.moduleList = moduleList
     }
 }

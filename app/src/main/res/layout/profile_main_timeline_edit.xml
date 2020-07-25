@@ -43,6 +43,20 @@
                 app:layout_constraintEnd_toEndOf="parent"
                 app:layout_constraintHorizontal_bias="0.0"
                 app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toBottomOf="@+id/edit_profile_forum_name" />
+
+            <EditText
+                android:id="@+id/edit_profile_forum_name"
+                android:layout_width="303dp"
+                android:layout_height="wrap_content"
+                android:layout_marginStart="100dp"
+                android:layout_marginEnd="8dp"
+                android:ems="10"
+                android:hint="Bio / Introduce Yourself!"
+                android:inputType="textPersonName"
+                android:textColor="@color/color_NUS"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintStart_toStartOf="parent"
                 app:layout_constraintTop_toBottomOf="@+id/edit_profile_name" />
 
             <EditText
@@ -165,6 +179,17 @@
                 android:textColor="@android:color/black"
                 android:textSize="18sp"
                 app:layout_constraintBaseline_toBaselineOf="@+id/edit_profile_name"
+                app:layout_constraintStart_toStartOf="parent" />
+
+            <TextView
+                android:id="@+id/textView27"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginStart="8dp"
+                android:text="Forum Name:"
+                android:textColor="@color/color_NUS"
+                android:textSize="15sp"
+                app:layout_constraintBaseline_toBaselineOf="@+id/edit_profile_forum_name"
                 app:layout_constraintStart_toStartOf="parent" />
 
             <TextView

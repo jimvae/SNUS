@@ -1,21 +1,34 @@
 package com.orbital.snus.opening
 
+import android.Manifest
+import android.app.Activity
 import android.content.Intent
+import android.content.pm.PackageManager
+import android.net.Uri
+import android.os.Build
 import android.os.Bundle
 import android.text.TextUtils
+import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import android.widget.*
+import androidx.core.content.ContextCompat
 import androidx.databinding.DataBindingUtil
 import androidx.fragment.app.Fragment
 import androidx.navigation.findNavController
+import com.google.android.gms.tasks.Continuation
+import com.google.android.gms.tasks.Task
 import com.google.firebase.auth.FirebaseAuth
 import com.google.firebase.firestore.FirebaseFirestore
+import com.google.firebase.storage.FirebaseStorage
+import com.google.firebase.storage.StorageTask
+import com.google.firebase.storage.UploadTask
 import com.orbital.snus.R
 import com.orbital.snus.dashboard.DashboardActivity
 import com.orbital.snus.data.UserData
 import com.orbital.snus.databinding.FragmentOpeningProfileSetupBinding
+import com.orbital.snus.profile.EditProfileFragment
 
 class ProfileSetUpFragment : Fragment() {
 
@@ -23,6 +36,11 @@ class ProfileSetUpFragment : Fragment() {
     private val db = FirebaseFirestore.getInstance()
     private val firestore = FirebaseFirestore.getInstance()
     private lateinit var binding: FragmentOpeningProfileSetupBinding
+    val storage = FirebaseStorage.getInstance().getReference("Users")
+    val userRef = storage.child(firebaseAuth.currentUser!!.uid)
+    val imageRef = userRef.child("profile_picture")
+    var imageUri: Uri? = null
+    var downloadUrl: Uri? =  null
 
     private lateinit var userData: UserData
 
@@ -48,6 +66,7 @@ class ProfileSetUpFragment : Fragment() {
         binding.firstLoginConfirm.setOnClickListener {
             val bio = binding.firstLoginBio.text.toString().trim()
             val name = binding.firstLoginName.text.toString().trim()
+            val forumName = binding.firstLoginForumName.text.toString().trim()
             val gitHub = binding.firstLoginGithub.text.toString().trim()
             val instagram = binding.firstLoginInstagram.text.toString().trim()
             val linkedIn = binding.firstLoginLinkedin.text.toString().trim()
@@ -56,6 +75,11 @@ class ProfileSetUpFragment : Fragment() {
 
             if (TextUtils.isEmpty(name)) {
                 binding.firstLoginName.setError("Name is required")
+                return@setOnClickListener
+            }
+
+            if (TextUtils.isEmpty(forumName)) {
+                binding.firstLoginName.setError("Forum Name is required")
                 return@setOnClickListener
             }
 
@@ -82,7 +106,7 @@ class ProfileSetUpFragment : Fragment() {
             firestore.collection("users").document(user.uid).get()
                 .addOnSuccessListener {
                     userData = it.toObject((UserData::class.java))!!
-                    userData.updateUserData(name, faculty, course, currYear.toInt(), bio, linkedIn, instagram, gitHub, false, null)
+                    userData.updateUserData(name, faculty, course, currYear.toInt(), bio, linkedIn, instagram, gitHub, false, downloadUrl.toString(), null, forumName)
                     updateUser(userData)
                     startActivity(Intent(activity?.applicationContext, DashboardActivity::class.java))
                     activity?.finish()
@@ -91,6 +115,30 @@ class ProfileSetUpFragment : Fragment() {
                 }
             configurePage(true)
 
+        }
+
+        binding.profilePhoto.setOnClickListener {
+            //check runtime permission
+            if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.M){
+                if (ContextCompat.checkSelfPermission(
+                        requireContext(),
+                        Manifest.permission.READ_EXTERNAL_STORAGE
+                    ) ==
+                    PackageManager.PERMISSION_DENIED){
+                    //permission denied
+                    val permissions = arrayOf(Manifest.permission.READ_EXTERNAL_STORAGE);
+                    //show popup to request runtime permission
+                    requestPermissions(permissions, ProfileSetUpFragment.PERMISSION_CODE);
+                }
+                else{
+                    //permission already granted
+                    pickImageFromGallery();
+                }
+            }
+            else{
+                //system OS is < Marshmallow
+                pickImageFromGallery();
+            }
         }
         return binding.root
     }
@@ -155,6 +203,67 @@ class ProfileSetUpFragment : Fragment() {
             .document(user.uid) // current userId
             .set(userData1)
 
+    }
+
+    //Uploading image
+    private fun pickImageFromGallery() {
+        //Intent to pick image
+        val intent = Intent(Intent.ACTION_PICK)
+        intent.type = "image/*"
+        startActivityForResult(intent, IMAGE_PICK_CODE)
+    }
+
+    companion object {
+        //image pick code
+        private val IMAGE_PICK_CODE = 1000;
+        //Permission code
+        private val PERMISSION_CODE = 1001;
+    }
+
+    //handle requested permission result
+    override fun onRequestPermissionsResult(requestCode: Int, permissions: Array<out String>, grantResults: IntArray) {
+        when(requestCode){
+            PERMISSION_CODE -> {
+                if (grantResults.size >0 && grantResults[0] ==
+                    PackageManager.PERMISSION_GRANTED){
+                    //permission from popup granted
+                    pickImageFromGallery()
+                }
+                else{
+                    //permission from popup denied
+                    Toast.makeText(requireContext(), "Permission denied", Toast.LENGTH_SHORT).show()
+                }
+            }
+        }
+    }
+
+    //handle result of picked image
+    override fun onActivityResult(requestCode: Int, resultCode: Int, data: Intent?) {
+        if (resultCode == Activity.RESULT_OK && requestCode == IMAGE_PICK_CODE && data != null){
+            imageUri = data?.data
+            Log.d("DIRECT LINK >>>>>>>>>", imageUri!!.toString())
+
+            binding.profilePhoto.setImageURI(imageUri)
+
+            var uploadTask: StorageTask<*>
+            uploadTask =  imageRef!!.putFile(imageUri!!)
+            uploadTask.continueWithTask(Continuation <UploadTask.TaskSnapshot, Task<Uri>> { task ->
+                if (!task.isSuccessful) {
+                    task.exception?.let {
+                        throw it
+                    }
+                }
+                return@Continuation imageRef.downloadUrl
+            }).addOnCompleteListener { task ->
+                if(task.isSuccessful) {
+                    downloadUrl = task.result
+                    val url = downloadUrl.toString()
+                    Log.d("DIRECT LINK >>>>>>>>>", url)
+                }
+            }
+
+
+        }
     }
 
 }

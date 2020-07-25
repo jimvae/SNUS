@@ -89,6 +89,7 @@ class EditProfileFragment : Fragment() {
         binding.editProfileConfirm.setOnClickListener {
             val bio = binding.editProfileBio.text.toString().trim()
             val name = binding.editProfileName.text.toString().trim()
+            val forumName = binding.editProfileForumName.text.toString().trim()
             val gitHub = binding.editProfileGithub.text.toString().trim()
             val instagram = binding.editProfileInstagram.text.toString().trim()
             val linkedIn = binding.editProfileLinkedin.text.toString().trim()
@@ -99,10 +100,17 @@ class EditProfileFragment : Fragment() {
                 return@setOnClickListener
             }
 
+            if (TextUtils.isEmpty(forumName)) {
+                binding.editProfileBio.setError("Forum Name is required")
+                return@setOnClickListener
+            }
+
             if (TextUtils.isEmpty(bio)) {
                 binding.editProfileBio.setError("Bio is required")
                 return@setOnClickListener
             }
+
+
 
             if (course == "") {
                 Toast.makeText(requireContext(), "Please select your course", Toast.LENGTH_SHORT)
@@ -118,7 +126,7 @@ class EditProfileFragment : Fragment() {
 
             configurePage(false)
 
-            userData.updateUserData(name, faculty, course, currYear.toInt(), bio, linkedIn, instagram, gitHub, false, downloadUrl.toString())
+            userData.updateUserData(name, faculty, course, currYear.toInt(), bio, linkedIn, instagram, gitHub, false, downloadUrl.toString(), userData.moduleList,  forumName)
             db.collection("users") // users collection
                 .document(userData.userID!!) // current userId
                 .set(userData)
@@ -223,11 +231,11 @@ class EditProfileFragment : Fragment() {
         startActivityForResult(intent, IMAGE_PICK_CODE)
     }
 
-    companion object {
+    private companion object {
         //image pick code
         private val IMAGE_PICK_CODE = 1000;
         //Permission code
-        private val PERMISSION_CODE = 1001;
+        val PERMISSION_CODE = 1001;
     }
 
     //handle requested permission result
