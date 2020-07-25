@@ -5,6 +5,7 @@ import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
 import com.google.firebase.firestore.FirebaseFirestore
+import com.orbital.snus.data.Module
 
 class IndividualModuleViewModel(val moduleName: String): ViewModel() {
     private val db = FirebaseFirestore.getInstance()
