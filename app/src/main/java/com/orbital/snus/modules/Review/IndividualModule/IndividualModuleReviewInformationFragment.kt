@@ -59,9 +59,23 @@ class IndividualModuleReviewInformationFragment : Fragment() {
         module = requireArguments().get("module") as String
         moduleInformation = requireArguments().get("moduleInformation") as String
         moduleTitle = requireArguments().get("title") as String
-        modulePreclusions = requireArguments().get("preclusions") as String
-        modulePrerequisites = requireArguments().get("prerequisites") as String
-        departmentFacultyMC = requireArguments().get("department") as String
+        if (requireArguments().get("preclusions") == null) {
+            modulePreclusions = "None"
+        } else {
+            modulePreclusions = requireArguments().get("preclusions") as String
+        }
+
+        if (requireArguments().get("prerequisites") == null) {
+            modulePrerequisites = "None"
+        } else {
+            modulePrerequisites = requireArguments().get("prerequisites") as String
+        }
+
+        if (requireArguments().get("department") == null) {
+            departmentFacultyMC = "To be confirmed"
+        } else {
+            departmentFacultyMC = requireArguments().get("department") as String
+        }
 
         binding.textModuleName2.text = moduleTitle
         binding.textModuleInformation.text = moduleInformation

@@ -4,13 +4,13 @@ import android.os.Parcelable
 import kotlinx.android.parcel.Parcelize
 
 data class Module(val acadYear: String? = null,
-                  val preclusion: String? = null,
+                  val preclusion: String? = "None",
                   val description: String? = null,
                   val title: String? = null,
                   val department: String? = null,
                   val faculty: String? = null,
-                  val workload: List<Int>? = null,
-                  val prerequisite: String? = null,
+                  val workload: List<Double>? = null,
+                  val prerequisite: String? = "None",
                   val moduleCredit: String? = null,
                   val moduleCode: String? = null,
 //                  val semesterData: Any? = null,
