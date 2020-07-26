@@ -31,6 +31,9 @@ class IndividualModuleReviewInformationFragment : Fragment() {
     private lateinit var module: String
     private lateinit var moduleInformation: String
     private lateinit var moduleTitle: String
+    private lateinit var modulePrerequisites: String
+    private lateinit var modulePreclusions: String
+    private lateinit var departmentFacultyMC: String
 
     val db = FirebaseFirestore.getInstance()
     val firebaseAuth = FirebaseAuth.getInstance()
@@ -56,10 +59,17 @@ class IndividualModuleReviewInformationFragment : Fragment() {
         module = requireArguments().get("module") as String
         moduleInformation = requireArguments().get("moduleInformation") as String
         moduleTitle = requireArguments().get("title") as String
+        modulePreclusions = requireArguments().get("preclusions") as String
+        modulePrerequisites = requireArguments().get("prerequisites") as String
+        departmentFacultyMC = requireArguments().get("department") as String
 
         binding.textModuleName2.text = moduleTitle
         binding.textModuleInformation.text = moduleInformation
         binding.textModuleName.text = module
+        binding.textModulePreclusions.text = modulePreclusions
+        binding.textModulePrerequisites.text = modulePrerequisites
+        binding.textModuleDepartmentFaculty.text = departmentFacultyMC
+
         binding.textGotoReview.setOnClickListener {
             backTrack = false
             findNavController().navigate(R.id.action_individualModuleReviewInformationFragment_to_individualModuleFragment2, requireArguments())

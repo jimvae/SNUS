@@ -126,6 +126,9 @@ class MainPageFragment : Fragment() {
                                             module = module1
                                             bundle.putString("moduleInformation", module.description)
                                             bundle.putString("title", module.title)
+                                            bundle.putString("preclusions", module.preclusion)
+                                            bundle.putString("prerequisites", module.prerequisite)
+                                            bundle.putString("department", module.department + " - " + module.faculty + " - " + module.moduleCredit + " MC")
 
                                             findNavController().navigate(R.id.action_mainPageFragment_to_individualModuleReviewInformationFragment, bundle)
 
