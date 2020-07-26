@@ -194,6 +194,7 @@
             android:layout_height="wrap_content"
             android:layout_marginStart="16dp"
             android:stepSize="1"
+            android:progressTint="@color/color_NUS"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toBottomOf="@+id/edit_rating_header" />
 

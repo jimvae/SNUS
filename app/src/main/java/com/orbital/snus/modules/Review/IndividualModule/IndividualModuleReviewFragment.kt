@@ -46,7 +46,7 @@ class IndividualModuleReviewFragment : Fragment() {
 
 
         val moduleName = requireArguments().get("module") as String
-        binding.textModuleName.setText(moduleName)
+        binding.textModuleName.setText(moduleName + " Reviews")
 
         binding.reviewModuleAddReview.setOnClickListener {
             val bundle = Bundle()

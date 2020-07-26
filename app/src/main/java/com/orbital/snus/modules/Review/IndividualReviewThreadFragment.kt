@@ -43,7 +43,7 @@ class IndividualReviewThreadFragment : Fragment() {
         savedInstanceState: Bundle?
     ): View? {
 
-        (activity as ModulesActivity).hideNavBar()
+//        (activity as ModulesActivity).hideNavBar()
 
         binding = DataBindingUtil.inflate(inflater, R.layout.module_review_individual_review_thread, container, false)
 
@@ -132,7 +132,7 @@ class IndividualReviewThreadFragment : Fragment() {
 
     override fun onDestroyView() {
         super.onDestroyView()
-        (activity as ModulesActivity).showNavBar()
+//        (activity as ModulesActivity).showNavBar()
     }
 }
 
