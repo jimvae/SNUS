@@ -130,9 +130,10 @@ class MainPageFragment : Fragment() {
                                             bundle.putString("prerequisites", module.prerequisite)
                                             bundle.putString("department", module.department + " - " + module.faculty + " - " + module.moduleCredit + " MC")
 
-                                            findNavController().navigate(R.id.action_mainPageFragment_to_individualModuleReviewInformationFragment, bundle)
-                                            binding.moduleReviewMainPageSearch.setText("")
-
+                                            (requireActivity().runOnUiThread {
+                                                findNavController().navigate(R.id.action_mainPageFragment_to_individualModuleReviewInformationFragment, bundle)
+                                                binding.moduleReviewMainPageSearch.setText("")
+                                            })
 
                                         }
                                     }
