@@ -67,7 +67,7 @@ class IndividualReviewFragment : Fragment() {
             inflater, R.layout.module_review_individual_review, container, false
         )
 
-        (activity as ModulesActivity).hideNavBar()
+//        (activity as ModulesActivity).hideNavBar()
 
         review = requireArguments().get("review") as UserReview
         factory = ReviewDataViewModelFactory(requireArguments().get("module") as String)
@@ -336,7 +336,7 @@ class IndividualReviewFragment : Fragment() {
 
     override fun onDestroyView() {
         super.onDestroyView()
-        (activity as ModulesActivity).showNavBar()
+//        (activity as ModulesActivity).showNavBar()
     }
 
 }

@@ -93,7 +93,7 @@
             android:layout_height="30dp"
             android:layout_marginStart="16dp"
             android:background="@drawable/list"
-            android:scaleX="0.2"
+            android:scaleX="0.15"
             app:layout_constraintBottom_toBottomOf="@+id/button_back"
             app:layout_constraintEnd_toStartOf="@+id/main_profile_friends"
             app:layout_constraintHorizontal_bias="0.5"
@@ -105,7 +105,7 @@
             android:layout_height="30dp"
             android:layout_marginEnd="16dp"
             android:background="@drawable/ic_people_outline_black_24dp"
-            android:scaleX="0.2"
+            android:scaleX="0.15"
             app:layout_constraintBaseline_toBaselineOf="@+id/main_profile_timeline"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toEndOf="@+id/main_profile_timeline" />

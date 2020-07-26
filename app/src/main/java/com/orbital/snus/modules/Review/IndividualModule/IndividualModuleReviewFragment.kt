@@ -42,7 +42,7 @@ class IndividualModuleReviewFragment : Fragment() {
             inflater, R.layout.module_review_individual_module, container, false
         )
 
-        (requireActivity() as ModulesActivity).hideNavBar()
+//        (requireActivity() as ModulesActivity).hideNavBar()
 
 
         val moduleName = requireArguments().get("module") as String
@@ -90,7 +90,7 @@ class IndividualModuleReviewFragment : Fragment() {
 
     override fun onDestroyView() {
         super.onDestroyView()
-        (activity as ModulesActivity).showNavBar()
+//        (activity as ModulesActivity).showNavBar()
     }
 
 }

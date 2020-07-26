@@ -34,6 +34,9 @@ class UpcomingFragment : Fragment() {
     private lateinit var sunday: String
     private lateinit var saturday: String
 
+    private lateinit var saturdayDate: Date
+    private lateinit var sundayDate: Date
+
     override fun onCreateView(inflater: LayoutInflater,
                               container: ViewGroup?, savedInstanceState: Bundle?): View? {
 
@@ -61,12 +64,12 @@ class UpcomingFragment : Fragment() {
 
             // specify an viewAdapter (see also next example)
             calendar.set(Calendar.DAY_OF_WEEK, Calendar.SUNDAY);
-            val todayDate = calendar.time
-            binding.SundayDayOfWeek.text = dateFormatter.format(todayDate).toPattern().toString()
-            sunday = dateFormatter.format(todayDate).toPattern().toString()
+            sundayDate = calendar.time
+            binding.SundayDayOfWeek.text = dateFormatter.format(sundayDate).toPattern().toString()
+            sunday = dateFormatter.format(sundayDate).toPattern().toString()
             adapter = UpcomingEventAdapter(
                 eventSunday,
-                todayDate
+                sundayDate
             )
         }
         recyclerViewMonday = binding.recyclerViewMonday.apply {
@@ -148,20 +151,25 @@ class UpcomingFragment : Fragment() {
 
             // specify an viewAdapter (see also next example)
             calendar.set(Calendar.DAY_OF_WEEK, Calendar.SATURDAY);
-            val todayDate = calendar.time
-            binding.SaturdayDayOfWeek5.text = dateFormatter.format(todayDate).toPattern().toString()
-            saturday = dateFormatter.format(todayDate).toPattern().toString()
+            saturdayDate = calendar.time
+            binding.SaturdayDayOfWeek5.text = dateFormatter.format(saturdayDate).toPattern().toString()
+            saturday = dateFormatter.format(saturdayDate).toPattern().toString()
 
             adapter = UpcomingEventAdapter(
                 eventSaturday,
-                todayDate
+                saturdayDate
             )
 
         }
 
-        val month = SimpleDateFormat("MMMM").format(Calendar.getInstance().time).toPattern().toString()
+        val sunMonth = SimpleDateFormat("MMMM").format(sundayDate).toPattern().toString()
+        val satMonth = SimpleDateFormat("MMMM").format(saturdayDate).toPattern().toString()
 
-        binding.thisWeek.setText("${sunday} - ${saturday} ${month}")
+        if (sunMonth.equals(satMonth)) {
+            binding.thisWeek.setText("${sunday} - ${saturday} ${satMonth}")
+        } else {
+            binding.thisWeek.setText("${sunday} ${sunMonth} - ${saturday} ${satMonth}")
+        }
 
         viewModel.events.observe(viewLifecycleOwner, Observer<List<UserEvent>> { dbEvents ->
             viewModel.filterEvents()

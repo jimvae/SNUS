@@ -32,10 +32,10 @@ class IndividualModuleReviewInformationFragment : Fragment() {
     private lateinit var moduleInformation: String
     private lateinit var moduleTitle: String
 
-
-
     val db = FirebaseFirestore.getInstance()
     val firebaseAuth = FirebaseAuth.getInstance()
+
+    private var backTrack = true
 
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
@@ -61,6 +61,7 @@ class IndividualModuleReviewInformationFragment : Fragment() {
         binding.textModuleInformation.text = moduleInformation
         binding.textModuleName.text = module
         binding.textGotoReview.setOnClickListener {
+            backTrack = false
             findNavController().navigate(R.id.action_individualModuleReviewInformationFragment_to_individualModuleFragment2, requireArguments())
         }
 
@@ -132,6 +133,11 @@ class IndividualModuleReviewInformationFragment : Fragment() {
 
     override fun onDestroyView() {
         super.onDestroyView()
-        (activity as ModulesActivity).showNavBar()
+        if (backTrack) {
+            (activity as ModulesActivity).showNavBar()
+        } else {
+            (activity as ModulesActivity).hideNavBar()
+        }
+        backTrack = true
     }
 }

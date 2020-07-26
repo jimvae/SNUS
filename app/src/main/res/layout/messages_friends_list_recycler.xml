@@ -48,7 +48,7 @@
         android:layout_marginTop="2dp"
         android:layout_marginBottom="3dp"
         android:maxWidth="250dp"
-        android:text="Last Message"
+        android:text="No Last Message"
         android:textSize="12sp"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintStart_toEndOf="@+id/message_friends_recycler_title"
@@ -59,8 +59,8 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_marginEnd="8dp"
-        android:text="TextView"
         android:textSize="12sp"
         app:layout_constraintBaseline_toBaselineOf="@+id/message_friends_recycler_last_message"
-        app:layout_constraintEnd_toEndOf="parent" />
+        app:layout_constraintEnd_toEndOf="parent"
+        tools:text="No Last Message" />
 </androidx.constraintlayout.widget.ConstraintLayout>

@@ -57,7 +57,7 @@ class AddReviewFragment : Fragment() {
             inflater, R.layout.module_review_add_review, container, false
         )
 
-        (activity as ModulesActivity).hideNavBar()
+//        (activity as ModulesActivity).hideNavBar()
 
         val moduleName = requireArguments().get("module") as String
 
@@ -181,7 +181,7 @@ class AddReviewFragment : Fragment() {
 
     override fun onDestroyView() {
         super.onDestroyView()
-        (activity as ModulesActivity).showNavBar()
+//        (activity as ModulesActivity).showNavBar()
     }
 
     fun spinnerSetup() {
