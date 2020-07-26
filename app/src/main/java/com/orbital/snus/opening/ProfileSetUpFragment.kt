@@ -168,7 +168,6 @@ class ProfileSetUpFragment : Fragment() {
             }
     }
     private fun spinnerSetup() {
-        Toast.makeText(requireContext(), "SetUp", Toast.LENGTH_SHORT).show()
         spinnerCourse = binding.firstLoginCourseSpinner
         spinnerCourse.adapter = ArrayAdapter(requireContext(), R.layout.module_review_spinner_layout, courses)
 
