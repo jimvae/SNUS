@@ -40,7 +40,7 @@ class IndividualModuleFragment: Fragment() {
             inflater, R.layout.module_forum_individual_module, container, false
         )
 
-        binding.moduleForumIndividualModuleTitle.text = moduleName
+        binding.moduleForumIndividualModuleTitle.text = moduleName + " Forums"
 
 
         viewModel = ViewModelProvider(this, factory).get(IndividualModuleViewModel::class.java)
