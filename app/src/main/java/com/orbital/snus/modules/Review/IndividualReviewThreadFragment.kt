@@ -135,6 +135,27 @@ class IndividualReviewThreadFragment : Fragment() {
 //        (activity as ModulesActivity).showNavBar()
     }
 }
+fun showDate(given: Date) : String {
+    val dateFormatDay = SimpleDateFormat("EEEE")
+    val dateFormatDayOfYear = SimpleDateFormat("dd/MM/yyyy")
+    val dateFormatTime = SimpleDateFormat("hh:mma")
+    val weekOfYear = SimpleDateFormat("w")
+
+
+    val today = Calendar.getInstance().time
+    val thisWeek = weekOfYear.format(today).toPattern().toString()
+    val messageWeek = weekOfYear.format(given).toPattern().toString()
+
+    if (dateFormatDayOfYear.format(today).toPattern().toString().equals(dateFormatDayOfYear.format(given).toPattern().toString())) {
+        return dateFormatTime.format(given).toPattern().toString()
+
+    } else if (thisWeek.equals(messageWeek)) {
+        return dateFormatDay.format(given).toPattern().toString()
+    } else {
+        return dateFormatDayOfYear.format(given).toPattern().toString()
+    }
+
+}
 
 class AnonymousComment (val comment: ReviewThreadComment) : Item<GroupieViewHolder>() {
     override fun getLayout(): Int {
@@ -144,7 +165,7 @@ class AnonymousComment (val comment: ReviewThreadComment) : Item<GroupieViewHold
     override fun bind(viewHolder: GroupieViewHolder, position: Int) {
         viewHolder.itemView.messages_messaging_recycler_message_from.text = comment.text.toString()
         viewHolder.itemView.messages_messaging_from_date.text =
-            SimpleDateFormat("dd/MM/yyyy | hh:mm a").format(comment.date!!).toPattern().toString()
+            showDate(comment.date!!)
     }
 
 }
@@ -157,7 +178,10 @@ class MyComment (val comment: ReviewThreadComment) : Item<GroupieViewHolder>() {
     override fun bind(viewHolder: GroupieViewHolder, position: Int) {
         viewHolder.itemView.messages_messaging_recycler_message_to.text = comment.text.toString()
         viewHolder.itemView.messages_messaging_recycler_to_date.text =
-            SimpleDateFormat("dd/MM/yyyy | hh:mm a").format(comment.date!!).toPattern().toString()
+            showDate(comment.date!!)
+
     }
+
+
 
 }
