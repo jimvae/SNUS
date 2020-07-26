@@ -12,6 +12,7 @@ import com.orbital.snus.R
 import com.orbital.snus.data.ForumPost
 import kotlinx.android.synthetic.main.module_forum_recycler_posts.view.*
 import java.text.SimpleDateFormat
+import java.util.*
 
 class PostViewAdapter (val bundle: Bundle, val forumList: List<ForumPost>) :
     RecyclerView.Adapter<PostViewAdapter.PostViewHolder>() {
@@ -40,8 +41,7 @@ class PostViewAdapter (val bundle: Bundle, val forumList: List<ForumPost>) :
         val post = forumList[position]
         val dateFormatter: SimpleDateFormat = SimpleDateFormat("dd/MM/YYYY | hh:mm a")
         holder.textView.recycler_post_name.text = post.title
-        holder.textView.recycler_post_date.text =
-            dateFormatter.format(post.date!!).toPattern().toString()
+        holder.textView.recycler_post_date.text = showDate(post.date!!)
 
         if (post.status == false) {
             holder.textView.recycler_post_resolved.setText("Unresolved")
@@ -73,5 +73,27 @@ class PostViewAdapter (val bundle: Bundle, val forumList: List<ForumPost>) :
             holder.textView.recycler_post_resolved.setText("Unresolved")
             holder.textView.recycler_post_resolved.setTextColor(Color.RED)
         }
+    }
+
+    fun showDate(given: Date) : String {
+        val dateFormatDay = SimpleDateFormat("EEEE")
+        val dateFormatDayOfYear = SimpleDateFormat("dd/MM/yyyy")
+        val dateFormatTime = SimpleDateFormat("hh:mma")
+        val weekOfYear = SimpleDateFormat("w")
+
+
+        val today = Calendar.getInstance().time
+        val thisWeek = weekOfYear.format(today).toPattern().toString()
+        val messageWeek = weekOfYear.format(given).toPattern().toString()
+
+        if (dateFormatDayOfYear.format(today).toPattern().toString().equals(dateFormatDayOfYear.format(given).toPattern().toString())) {
+            return dateFormatTime.format(given).toPattern().toString()
+
+        } else if (thisWeek.equals(messageWeek)) {
+            return dateFormatDay.format(given).toPattern().toString()
+        } else {
+            return dateFormatDayOfYear.format(given).toPattern().toString()
+        }
+
     }
 }
