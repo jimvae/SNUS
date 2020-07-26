@@ -2,6 +2,7 @@ package com.orbital.snus.profile.MainTimeline
 
 import android.os.Bundle
 import android.text.TextUtils
+import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
@@ -78,15 +79,18 @@ class AddTimelinePostFragment : Fragment() {
             viewModel.addTimeline(post)
             viewModel.addSuccess.observe(viewLifecycleOwner, androidx.lifecycle.Observer {
                 if (it != null) {
-                    Toast.makeText(requireContext(), "Post successfully added", Toast.LENGTH_SHORT)
-                        .show()
+                    Log.d("AddTimelinePostFragment", "Post successfully added")
+//                    Toast.makeText(requireContext(), "Post successfully added", Toast.LENGTH_SHORT)
+//                        .show()
                     findNavController().navigate(R.id.action_addTimelinePostFragment_to_mainTimelineFragment2, requireArguments())
                     viewModel.addPostSuccessCompleted()
                 }
             })
             viewModel.addFailure.observe(viewLifecycleOwner, androidx.lifecycle.Observer {
                 if (it != null) {
-                    Toast.makeText(requireContext(), it.toString(), Toast.LENGTH_SHORT).show()
+                    Log.d("AddTimelinePostFragment", "Failed: " + it.message)
+
+//                    Toast.makeText(requireContext(), it.toString(), Toast.LENGTH_SHORT).show()
                     configurePage(true)
                     viewModel.addPostFailureCompleted()
                 }

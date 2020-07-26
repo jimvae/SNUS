@@ -7,6 +7,7 @@ import android.graphics.Color
 import android.graphics.drawable.ColorDrawable
 import android.net.Uri
 import android.os.Bundle
+import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
@@ -115,7 +116,8 @@ class MainTimelineFragment : Fragment() {
                         recyclerView.adapter!!.notifyDataSetChanged()
                     })
                 }.addOnFailureListener {
-                    Toast.makeText(requireContext(), "Missing User Data: " + it.message, Toast.LENGTH_SHORT).show()
+                    Log.d("MainTimelineFragment", "Missing User Data: " +  it.message)
+//                    Toast.makeText(requireContext(), "Missing User Data: " + it.message, Toast.LENGTH_SHORT).show()
                 }
         }
 
@@ -244,7 +246,8 @@ class MainTimelineFragment : Fragment() {
                             })
                             viewModel.sendFailure.observe(viewLifecycleOwner, androidx.lifecycle.Observer {
                                 if (it != null) {
-                                    Toast.makeText(requireContext(), "Failed: " + it.message, Toast.LENGTH_SHORT).show()
+                                    Log.d("MainTimelineFragment", "Failed: " + it.message )
+//                                    Toast.makeText(requireContext(), "Failed: " + it.message, Toast.LENGTH_SHORT).show()
                                 }
                                 viewModel.sendFailureCompleted()
                             })
@@ -267,7 +270,9 @@ class MainTimelineFragment : Fragment() {
                                 })
                                 viewModel.delFailureFriend.observe(viewLifecycleOwner, androidx.lifecycle.Observer {
                                     if (it != null) {
-                                        Toast.makeText(requireContext(), "Failed: " + it.message, Toast.LENGTH_SHORT).show()
+                                        Log.d("MainTimelineFragment", "Failed: " + it.message )
+
+//                                        Toast.makeText(requireContext(), "Failed: " + it.message, Toast.LENGTH_SHORT).show()
                                         viewModel.delFailureFriendCompleted()
                                     }
                                 })
@@ -294,7 +299,9 @@ class MainTimelineFragment : Fragment() {
                                 })
                                 viewModel.delFailureReq.observe(viewLifecycleOwner, androidx.lifecycle.Observer {
                                     if (it != null) {
-                                        Toast.makeText(requireContext(), "Failed: " + it.message, Toast.LENGTH_SHORT).show()
+                                        Log.d("MainTimelineFragment", "Failed: " + it.message )
+
+//                                        Toast.makeText(requireContext(), "Failed: " + it.message, Toast.LENGTH_SHORT).show()
                                         viewModel.delFailureReqCompleted()
                                     }
                                 })
@@ -338,7 +345,9 @@ class MainTimelineFragment : Fragment() {
                     userData = it.toObject((UserData::class.java))!!
                     _setupObserver.value = true
                 }.addOnFailureListener {
-                    Toast.makeText(requireContext(), "Missing User Data: " + it.message, Toast.LENGTH_SHORT).show()
+                    Log.d("MainTimelineFragment", "Missing User Data: " + it.message )
+
+//                    Toast.makeText(requireContext(), "Missing User Data: " + it.message, Toast.LENGTH_SHORT).show()
                 }
         }
 
@@ -351,9 +360,13 @@ class MainTimelineFragment : Fragment() {
                 viewModel.loadPosts()
                 viewModel.timelinePosts.observe(viewLifecycleOwner, androidx.lifecycle.Observer<List<TimeLinePost>> { posts ->
                     if (posts.size != 0) {
-                        Toast.makeText(requireContext(), "Success retrieval", Toast.LENGTH_SHORT).show()
+                        Log.d("MainTimelineFragment", "Success retrieval" )
+
+//                        Toast.makeText(requireContext(), "Success retrieval", Toast.LENGTH_SHORT).show()
                     } else {
-                        Toast.makeText(requireContext(), "Failed retrieval", Toast.LENGTH_SHORT).show()
+                        Log.d("MainTimelineFragment", "Failed retrieval" )
+
+//                        Toast.makeText(requireContext(), "Failed retrieval", Toast.LENGTH_SHORT).show()
                     }
                 })
             }
@@ -403,8 +416,9 @@ class MainTimelineFragment : Fragment() {
                     viewModel.deletePost(post.id!!)
                     viewModel.delSuccess.observe(viewLifecycleOwner, androidx.lifecycle.Observer {
                         if (it != null) {
-                            Toast.makeText(requireContext(), "Post successfully deleted", Toast.LENGTH_SHORT)
-                                .show()
+                            Log.d("MainTimelineFragment", "Post successfully deleted")
+//                            Toast.makeText(requireContext(), "Post successfully deleted", Toast.LENGTH_SHORT)
+//                                .show()
                             val bundle = Bundle()
                             bundle.putParcelable("userdata", userData)
                             bundle.putParcelable("currentUserData", currentUserData)
@@ -414,7 +428,9 @@ class MainTimelineFragment : Fragment() {
                     })
                     viewModel.delFailure.observe(viewLifecycleOwner, androidx.lifecycle.Observer {
                         if (it != null) {
-                            Toast.makeText(requireContext(), it.toString(), Toast.LENGTH_SHORT).show()
+                            Log.d("MainTimelineFragment", it.toString())
+
+//                            Toast.makeText(requireContext(), it.toString(), Toast.LENGTH_SHORT).show()
                             viewModel.delPostFailureCompleted()
                         }
                     })
@@ -422,7 +438,9 @@ class MainTimelineFragment : Fragment() {
 
                     viewAdapter.notifyItemChanged(viewHolder.adapterPosition)
 //                AnswersViewModel.delete(adapter.getNoteAt(viewHolder.adapterPosition))
-                    Toast.makeText(requireContext(), "Post deleted", Toast.LENGTH_SHORT).show()
+                    Log.d("MainTimelineFragment", "Post deleted")
+
+//                    Toast.makeText(requireContext(), "Post deleted", Toast.LENGTH_SHORT).show()
                 }
             }).attachToRecyclerView(recyclerView)
         }

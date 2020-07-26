@@ -237,7 +237,8 @@ class MainFriendsFragment : Fragment() {
                     })
                     viewModel.sendFailure.observe(viewLifecycleOwner, androidx.lifecycle.Observer {
                         if (it != null) {
-                            Toast.makeText(requireContext(), "Failed: " + it.message, Toast.LENGTH_SHORT).show()
+                            Log.d("MainFriendsFragment", "Failed: " + it.message)
+//                            Toast.makeText(requireContext(), "Failed: " + it.message, Toast.LENGTH_SHORT).show()
                         }
                         viewModel.sendFailureCompleted()
                     })
@@ -261,7 +262,9 @@ class MainFriendsFragment : Fragment() {
                         })
                         viewModel.delFailureFriend.observe(viewLifecycleOwner, Observer {
                             if (it != null) {
-                                Toast.makeText(requireContext(), "Failed: " + it.message, Toast.LENGTH_SHORT).show()
+                                Log.d("MainFriendsFragment", "Failed: " + it.message)
+
+//                                Toast.makeText(requireContext(), "Failed: " + it.message, Toast.LENGTH_SHORT).show()
                                 viewModel.delFailureFriendCompleted()
                             }
                         })
@@ -291,7 +294,9 @@ class MainFriendsFragment : Fragment() {
                         viewModel.delFailureReq.observe(viewLifecycleOwner, Observer {
                             if (it != null) {
 
-                                Toast.makeText(requireContext(), "Failed: " + it.message, Toast.LENGTH_SHORT).show()
+                                Log.d("MainFriendsFragment", "Failed: " + it.message)
+
+//                                Toast.makeText(requireContext(), "Failed: " + it.message, Toast.LENGTH_SHORT).show()
                                 viewModel.delFailureReqCompleted()
                             }
                         })
@@ -347,9 +352,13 @@ class MainFriendsFragment : Fragment() {
         viewModel.users.observe(viewLifecycleOwner, androidx.lifecycle.Observer<HashMap<String,UserData>> { users ->
             if (users.size != 0) {
                 viewModel.loadFriends()
-                Toast.makeText(requireContext(), "Success retrieval", Toast.LENGTH_SHORT).show()
+                Log.d("MainFriendsFragment", "Success Retrieval: ")
+
+//                Toast.makeText(requireContext(), "Success retrieval", Toast.LENGTH_SHORT).show()
             } else {
-                Toast.makeText(requireContext(), "Failed retrieval", Toast.LENGTH_SHORT).show()
+//                Toast.makeText(requireContext(), "Failed retrieval", Toast.LENGTH_SHORT).show()
+                Log.d("MainFriendsFragment", "Failed Retrieval")
+
             }
         })
 
