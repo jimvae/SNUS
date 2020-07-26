@@ -4,6 +4,10 @@
     xmlns:tools="http://schemas.android.com/tools"
     tools:context=".dashboard.Upcoming.UpcomingFragment">
 
+    <ScrollView
+        android:layout_width="match_parent"
+        android:layout_height="match_parent">
+
     <androidx.constraintlayout.widget.ConstraintLayout
         android:layout_width="match_parent"
         android:layout_height="match_parent"
@@ -78,7 +82,8 @@
         <androidx.constraintlayout.widget.ConstraintLayout
             android:id="@+id/constraint_Sunday"
             android:layout_width="match_parent"
-            android:layout_height="50dp"
+            android:layout_height="75dp"
+            android:layout_marginTop="2dp"
             android:background="@drawable/grey_outline"
             android:foregroundGravity="center"
             android:paddingBottom="8dp"
@@ -89,10 +94,12 @@
             <androidx.recyclerview.widget.RecyclerView
                 android:id="@+id/recyclerViewSunday"
                 android:layout_width="0dp"
-                android:layout_height="wrap_content"
-                android:layout_marginTop="8dp"
+                android:layout_height="0dp"
+                android:layout_marginTop="2dp"
                 android:layout_marginEnd="8dp"
+                android:layout_marginBottom="2dp"
                 android:scrollbars="horizontal"
+                app:layout_constraintBottom_toBottomOf="parent"
                 app:layout_constraintEnd_toEndOf="parent"
                 app:layout_constraintHorizontal_bias="0.0"
                 app:layout_constraintStart_toEndOf="@+id/Sunday"
@@ -109,33 +116,29 @@
                 android:layout_width="35dp"
                 android:layout_height="wrap_content"
                 android:layout_marginStart="4dp"
-                android:layout_marginTop="8dp"
                 android:text="Sun"
                 android:textAlignment="center"
                 android:textAllCaps="false"
                 android:textColor="@color/color_NUS"
                 android:textSize="12sp"
                 app:layout_constraintStart_toStartOf="parent"
-                app:layout_constraintTop_toTopOf="parent" />
+                app:layout_constraintTop_toTopOf="@+id/recyclerViewSunday" />
 
             <TextView
                 android:id="@+id/Sunday_day_of_week"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:layout_marginTop="3dp"
-                android:layout_marginBottom="1dp"
                 android:text="1"
                 android:textColor="@color/colorPrimaryDark"
-                app:layout_constraintBottom_toBottomOf="parent"
-                app:layout_constraintEnd_toStartOf="@+id/recyclerViewSunday"
-                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintEnd_toEndOf="@+id/Sunday"
+                app:layout_constraintStart_toStartOf="@+id/Sunday"
                 app:layout_constraintTop_toBottomOf="@+id/Sunday" />
         </androidx.constraintlayout.widget.ConstraintLayout>
 
         <androidx.constraintlayout.widget.ConstraintLayout
             android:id="@+id/constraint_Monday"
             android:layout_width="match_parent"
-            android:layout_height="wrap_content"
+            android:layout_height="75dp"
             android:background="@drawable/grey_outline"
             android:foregroundGravity="center"
             android:paddingBottom="8dp"
@@ -146,10 +149,12 @@
             <androidx.recyclerview.widget.RecyclerView
                 android:id="@+id/recyclerViewMonday"
                 android:layout_width="0dp"
-                android:layout_height="wrap_content"
-                android:layout_marginTop="8dp"
+                android:layout_height="0dp"
+                android:layout_marginTop="2dp"
                 android:layout_marginEnd="8dp"
+                android:layout_marginBottom="2dp"
                 android:scrollbars="horizontal"
+                app:layout_constraintBottom_toBottomOf="parent"
                 app:layout_constraintEnd_toEndOf="parent"
                 app:layout_constraintStart_toEndOf="@+id/Monday"
                 app:layout_constraintTop_toTopOf="parent"
@@ -165,32 +170,28 @@
                 android:layout_width="35dp"
                 android:layout_height="wrap_content"
                 android:layout_marginStart="4dp"
-                android:layout_marginTop="8dp"
                 android:text="Mon"
                 android:textAlignment="center"
                 android:textColor="@color/color_NUS"
                 android:textSize="12sp"
                 app:layout_constraintStart_toStartOf="parent"
-                app:layout_constraintTop_toTopOf="parent" />
+                app:layout_constraintTop_toTopOf="@+id/recyclerViewMonday" />
 
             <TextView
                 android:id="@+id/Monday_day_of_week"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:layout_marginTop="3dp"
-                android:layout_marginBottom="1dp"
                 android:text="2"
                 android:textColor="@color/colorPrimaryDark"
-                app:layout_constraintBottom_toBottomOf="parent"
-                app:layout_constraintEnd_toStartOf="@+id/recyclerViewMonday"
-                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintEnd_toEndOf="@+id/Monday"
+                app:layout_constraintStart_toStartOf="@+id/Monday"
                 app:layout_constraintTop_toBottomOf="@+id/Monday" />
         </androidx.constraintlayout.widget.ConstraintLayout>
 
         <androidx.constraintlayout.widget.ConstraintLayout
             android:id="@+id/constraint_Tuesday"
             android:layout_width="match_parent"
-            android:layout_height="wrap_content"
+            android:layout_height="75dp"
             android:background="@drawable/grey_outline"
             android:foregroundGravity="center"
             android:paddingBottom="8dp"
@@ -201,10 +202,12 @@
             <androidx.recyclerview.widget.RecyclerView
                 android:id="@+id/recyclerViewTuesday"
                 android:layout_width="0dp"
-                android:layout_height="wrap_content"
-                android:layout_marginTop="8dp"
+                android:layout_height="0dp"
+                android:layout_marginTop="2dp"
                 android:layout_marginEnd="8dp"
+                android:layout_marginBottom="2dp"
                 android:scrollbars="horizontal"
+                app:layout_constraintBottom_toBottomOf="parent"
                 app:layout_constraintEnd_toEndOf="parent"
                 app:layout_constraintStart_toEndOf="@+id/Tuesday"
                 app:layout_constraintTop_toTopOf="parent"
@@ -220,32 +223,28 @@
                 android:layout_width="35dp"
                 android:layout_height="wrap_content"
                 android:layout_marginStart="4dp"
-                android:layout_marginTop="8dp"
                 android:text="Tue"
                 android:textAlignment="center"
                 android:textColor="@color/color_NUS"
                 android:textSize="12sp"
                 app:layout_constraintStart_toStartOf="parent"
-                app:layout_constraintTop_toTopOf="parent" />
+                app:layout_constraintTop_toTopOf="@+id/recyclerViewTuesday" />
 
             <TextView
                 android:id="@+id/Tuesday_day_of_week"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:layout_marginTop="3dp"
-                android:layout_marginBottom="1dp"
                 android:text="3"
                 android:textColor="@color/colorPrimaryDark"
-                app:layout_constraintBottom_toBottomOf="parent"
-                app:layout_constraintEnd_toStartOf="@+id/recyclerViewTuesday"
-                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintEnd_toEndOf="@+id/Tuesday"
+                app:layout_constraintStart_toStartOf="@+id/Tuesday"
                 app:layout_constraintTop_toBottomOf="@+id/Tuesday" />
         </androidx.constraintlayout.widget.ConstraintLayout>
 
         <androidx.constraintlayout.widget.ConstraintLayout
             android:id="@+id/constraint_Wednesday"
             android:layout_width="match_parent"
-            android:layout_height="wrap_content"
+            android:layout_height="75dp"
             android:background="@drawable/grey_outline"
             android:foregroundGravity="center"
             android:paddingBottom="8dp"
@@ -256,10 +255,12 @@
             <androidx.recyclerview.widget.RecyclerView
                 android:id="@+id/recyclerViewWednesday"
                 android:layout_width="0dp"
-                android:layout_height="wrap_content"
-                android:layout_marginTop="8dp"
+                android:layout_height="0dp"
+                android:layout_marginTop="2dp"
                 android:layout_marginEnd="8dp"
+                android:layout_marginBottom="2dp"
                 android:scrollbars="horizontal"
+                app:layout_constraintBottom_toBottomOf="parent"
                 app:layout_constraintEnd_toEndOf="parent"
                 app:layout_constraintStart_toEndOf="@+id/Wednesday"
                 app:layout_constraintTop_toTopOf="parent"
@@ -275,31 +276,28 @@
                 android:layout_width="35dp"
                 android:layout_height="wrap_content"
                 android:layout_marginStart="4dp"
-                android:layout_marginTop="8dp"
                 android:text="Wed"
                 android:textAlignment="center"
                 android:textColor="@color/color_NUS"
                 android:textSize="12sp"
                 app:layout_constraintStart_toStartOf="parent"
-                app:layout_constraintTop_toTopOf="parent" />
+                app:layout_constraintTop_toTopOf="@+id/recyclerViewWednesday" />
 
             <TextView
                 android:id="@+id/Wednesday_day_of_week2"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:layout_marginBottom="1dp"
                 android:text="4"
                 android:textColor="@color/colorPrimaryDark"
-                app:layout_constraintBottom_toBottomOf="parent"
-                app:layout_constraintEnd_toStartOf="@+id/recyclerViewWednesday"
-                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintEnd_toEndOf="@+id/Wednesday"
+                app:layout_constraintStart_toStartOf="@+id/Wednesday"
                 app:layout_constraintTop_toBottomOf="@+id/Wednesday" />
         </androidx.constraintlayout.widget.ConstraintLayout>
 
         <androidx.constraintlayout.widget.ConstraintLayout
             android:id="@+id/constraint_Thursday"
             android:layout_width="match_parent"
-            android:layout_height="wrap_content"
+            android:layout_height="75dp"
             android:background="@drawable/grey_outline"
             android:foregroundGravity="center"
             android:paddingBottom="8dp"
@@ -310,10 +308,12 @@
             <androidx.recyclerview.widget.RecyclerView
                 android:id="@+id/recyclerViewThursday"
                 android:layout_width="0dp"
-                android:layout_height="wrap_content"
-                android:layout_marginTop="8dp"
+                android:layout_height="0dp"
+                android:layout_marginTop="2dp"
                 android:layout_marginEnd="8dp"
+                android:layout_marginBottom="2dp"
                 android:scrollbars="horizontal"
+                app:layout_constraintBottom_toBottomOf="parent"
                 app:layout_constraintEnd_toEndOf="parent"
                 app:layout_constraintStart_toEndOf="@+id/Thursday"
                 app:layout_constraintTop_toTopOf="parent"
@@ -329,7 +329,6 @@
                 android:layout_width="35dp"
                 android:layout_height="wrap_content"
                 android:layout_marginStart="4dp"
-                android:layout_marginTop="8dp"
                 android:layout_marginBottom="-1dp"
                 android:text="Thu"
                 android:textAlignment="center"
@@ -337,24 +336,23 @@
                 android:textSize="12sp"
                 app:layout_constraintBottom_toTopOf="@+id/Thursday_day_of_week3"
                 app:layout_constraintStart_toStartOf="parent"
-                app:layout_constraintTop_toTopOf="parent" />
+                app:layout_constraintTop_toTopOf="@+id/recyclerViewThursday" />
 
             <TextView
                 android:id="@+id/Thursday_day_of_week3"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:layout_marginTop="3dp"
                 android:text="5"
                 android:textColor="@color/colorPrimaryDark"
                 app:layout_constraintEnd_toEndOf="@+id/Thursday"
-                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintStart_toStartOf="@+id/Thursday"
                 app:layout_constraintTop_toBottomOf="@+id/Thursday" />
         </androidx.constraintlayout.widget.ConstraintLayout>
 
         <androidx.constraintlayout.widget.ConstraintLayout
             android:id="@+id/constraint_Friday"
             android:layout_width="match_parent"
-            android:layout_height="wrap_content"
+            android:layout_height="75dp"
             android:background="@drawable/grey_outline"
             android:foregroundGravity="center"
             android:paddingBottom="8dp"
@@ -365,10 +363,12 @@
             <androidx.recyclerview.widget.RecyclerView
                 android:id="@+id/recyclerViewFriday"
                 android:layout_width="0dp"
-                android:layout_height="wrap_content"
-                android:layout_marginTop="8dp"
+                android:layout_height="0dp"
+                android:layout_marginTop="2dp"
                 android:layout_marginEnd="8dp"
+                android:layout_marginBottom="2dp"
                 android:scrollbars="horizontal"
+                app:layout_constraintBottom_toBottomOf="parent"
                 app:layout_constraintEnd_toEndOf="parent"
                 app:layout_constraintStart_toEndOf="@+id/Friday"
                 app:layout_constraintTop_toTopOf="parent"
@@ -384,32 +384,28 @@
                 android:layout_width="35dp"
                 android:layout_height="wrap_content"
                 android:layout_marginStart="4dp"
-                android:layout_marginTop="8dp"
                 android:text="Fri"
                 android:textAlignment="center"
                 android:textColor="@color/color_NUS"
                 android:textSize="12sp"
                 app:layout_constraintStart_toStartOf="parent"
-                app:layout_constraintTop_toTopOf="parent" />
+                app:layout_constraintTop_toTopOf="@+id/recyclerViewFriday" />
 
             <TextView
                 android:id="@+id/Friday_day_of_week4"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:layout_marginTop="3dp"
-                android:layout_marginBottom="1dp"
                 android:text="6"
                 android:textColor="@color/colorPrimaryDark"
-                app:layout_constraintBottom_toBottomOf="parent"
-                app:layout_constraintEnd_toStartOf="@+id/recyclerViewFriday"
-                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintEnd_toEndOf="@+id/Friday"
+                app:layout_constraintStart_toStartOf="@+id/Friday"
                 app:layout_constraintTop_toBottomOf="@+id/Friday" />
         </androidx.constraintlayout.widget.ConstraintLayout>
 
         <androidx.constraintlayout.widget.ConstraintLayout
             android:id="@+id/constraint_Saturday"
             android:layout_width="match_parent"
-            android:layout_height="wrap_content"
+            android:layout_height="75dp"
             android:background="@android:color/white"
             android:foregroundGravity="center"
             android:paddingBottom="8dp"
@@ -420,10 +416,12 @@
             <androidx.recyclerview.widget.RecyclerView
                 android:id="@+id/recyclerViewSaturday"
                 android:layout_width="0dp"
-                android:layout_height="wrap_content"
-                android:layout_marginTop="8dp"
+                android:layout_height="0dp"
+                android:layout_marginTop="2dp"
                 android:layout_marginEnd="8dp"
+                android:layout_marginBottom="2dp"
                 android:scrollbars="horizontal"
+                app:layout_constraintBottom_toBottomOf="parent"
                 app:layout_constraintEnd_toEndOf="parent"
                 app:layout_constraintStart_toEndOf="@+id/Saturday"
                 app:layout_constraintTop_toTopOf="parent"
@@ -439,24 +437,22 @@
                 android:layout_width="35dp"
                 android:layout_height="wrap_content"
                 android:layout_marginStart="4dp"
-                android:layout_marginTop="8dp"
                 android:text="Sat"
                 android:textAlignment="center"
                 android:textColor="@color/color_NUS"
                 android:textSize="12sp"
                 app:layout_constraintStart_toStartOf="parent"
-                app:layout_constraintTop_toTopOf="parent" />
+                app:layout_constraintTop_toTopOf="@+id/recyclerViewSaturday" />
 
             <TextView
                 android:id="@+id/Saturday_day_of_week5"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:layout_marginBottom="1dp"
                 android:text="7"
                 android:textColor="@color/colorPrimaryDark"
-                app:layout_constraintBottom_toBottomOf="parent"
                 app:layout_constraintEnd_toEndOf="@+id/Saturday"
-                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintHorizontal_bias="0.516"
+                app:layout_constraintStart_toStartOf="@+id/Saturday"
                 app:layout_constraintTop_toBottomOf="@+id/Saturday" />
         </androidx.constraintlayout.widget.ConstraintLayout>
 
@@ -484,7 +480,6 @@
             android:layout_gravity="bottom|right"
             android:layout_margin="16dp"
             android:layout_marginEnd="8dp"
-            android:layout_marginBottom="8dp"
             android:src="@drawable/white_plus"
             app:backgroundTint="@color/color_NUS"
             app:fabCustomSize="44dp"
@@ -493,6 +488,9 @@
 
 
     </androidx.constraintlayout.widget.ConstraintLayout>
+
+    </ScrollView>
+
 
 
 </layout>
