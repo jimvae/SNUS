@@ -59,34 +59,12 @@
             android:layout_height="wrap_content"
             android:layout_marginStart="8dp"
             android:layout_marginTop="3dp"
-            android:text="Course"
-            android:textColor="@android:color/white"
-            app:layout_constraintStart_toEndOf="@+id/main_timeline_photo"
-            app:layout_constraintTop_toBottomOf="@+id/main_timeline_name" />
-
-        <TextView
-            android:id="@+id/main_timeline_year"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_marginStart="16dp"
-            android:text="Year"
-            android:textColor="@android:color/white"
-            app:layout_constraintBaseline_toBaselineOf="@+id/main_timeline_course"
-            app:layout_constraintStart_toEndOf="@+id/main_timeline_course" />
-
-        <TextView
-            android:id="@+id/main_timeline_bio"
-            android:layout_width="0dp"
-            android:layout_height="wrap_content"
-            android:layout_marginStart="8dp"
-            android:layout_marginTop="8dp"
             android:layout_marginEnd="16dp"
-            android:text="Bio"
+            android:text="Course and Year"
             android:textColor="@android:color/white"
             app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintHorizontal_bias="0.0"
             app:layout_constraintStart_toEndOf="@+id/main_timeline_photo"
-            app:layout_constraintTop_toBottomOf="@+id/main_timeline_course" />
+            app:layout_constraintTop_toBottomOf="@+id/main_timeline_name" />
 
         <Button
             android:id="@+id/main_timeline_timeline"
@@ -116,7 +94,7 @@
             android:layout_width="0dp"
             android:layout_height="21dp"
             android:layout_marginStart="16dp"
-            android:layout_marginTop="8dp"
+            android:layout_marginTop="4dp"
             android:layout_marginEnd="16dp"
             android:background="@drawable/white_outline"
             android:scrollbarSize="4dp"
@@ -124,7 +102,7 @@
             android:textColor="@android:color/white"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toBottomOf="@+id/main_timeline_bio" />
+            app:layout_constraintTop_toBottomOf="@+id/main_timeline_photo" />
 
         <androidx.recyclerview.widget.RecyclerView
             android:id="@+id/recyclerview_timeline"
@@ -165,7 +143,7 @@
             android:layout_marginTop="8dp"
             android:layout_marginEnd="16dp"
             android:background="@drawable/white_outline"
-            android:text="Links"
+            android:text="Links and Bio"
             android:textColor="@android:color/white"
             app:layout_constraintEnd_toStartOf="@+id/text_friend_status"
             app:layout_constraintStart_toStartOf="parent"
