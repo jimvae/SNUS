@@ -64,7 +64,7 @@
             android:background="@drawable/grey_outline"
             android:text="Answers"
             android:textColor="@color/color_NUS"
-            app:layout_constraintBottom_toTopOf="@+id/resolved_button"
+            app:layout_constraintBottom_toTopOf="@+id/button_back2"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent" />
 
