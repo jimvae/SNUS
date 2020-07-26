@@ -33,7 +33,7 @@
                 android:layout_width="0dp"
                 android:layout_height="wrap_content"
                 android:background="@drawable/grey_outline"
-                app:itemBackground="@android:color/white"
+                app:itemBackground="@android:color/transparent"
                 app:itemIconTint="@color/color_NUS"
                 app:itemTextColor="@color/color_NUS"
                 app:layout_constraintBottom_toBottomOf="parent"

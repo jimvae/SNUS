@@ -37,59 +37,41 @@
 
 
             <Button
-                android:id="@+id/button_upcoming"
-                android:layout_width="100dp"
-                android:layout_height="40dp"
-                android:layout_marginTop="18dp"
-                android:background="@android:color/transparent"
-                android:text="@string/Upcoming"
-                android:textColor="@android:color/white"
-                app:layout_constraintEnd_toStartOf="@+id/button_calendar"
-                app:layout_constraintHorizontal_bias="0.5"
-                app:layout_constraintStart_toEndOf="@+id/button_today"
-                app:layout_constraintTop_toTopOf="parent" />
-
-            <Button
                 android:id="@+id/button_calendar"
-                android:layout_width="100dp"
+                android:layout_width="120dp"
                 android:layout_height="40dp"
-                android:layout_marginStart="16dp"
                 android:layout_marginEnd="8dp"
                 android:background="@android:color/transparent"
                 android:text="@string/Calendar"
                 android:textColor="@android:color/white"
                 app:layout_constraintBaseline_toBaselineOf="@+id/button_upcoming"
-                app:layout_constraintEnd_toStartOf="@+id/floating_button_add"
-                app:layout_constraintStart_toEndOf="@+id/button_upcoming" />
+                app:layout_constraintEnd_toEndOf="parent" />
+
+            <Button
+                android:id="@+id/button_upcoming"
+                android:layout_width="120dp"
+                android:layout_height="40dp"
+                android:layout_marginStart="8dp"
+                android:layout_marginTop="16dp"
+                android:layout_marginEnd="8dp"
+                android:background="@android:color/transparent"
+                android:text="@string/Upcoming"
+                android:textColor="@android:color/white"
+                app:layout_constraintEnd_toStartOf="@+id/button_calendar"
+                app:layout_constraintStart_toEndOf="@+id/button_today"
+                app:layout_constraintTop_toTopOf="parent" />
 
             <Button
                 android:id="@+id/button_today"
                 style="@style/dashboard_current_button"
-                android:layout_width="0dp"
+                android:layout_width="120dp"
                 android:layout_height="40dp"
                 android:layout_marginStart="8dp"
-                android:layout_marginEnd="16dp"
                 android:background="@android:color/transparent"
                 android:text="@string/Today"
                 android:textColor="@android:color/white"
                 app:layout_constraintBaseline_toBaselineOf="@+id/button_upcoming"
-                app:layout_constraintEnd_toStartOf="@+id/button_upcoming"
-                app:layout_constraintHorizontal_bias="0.5"
                 app:layout_constraintStart_toStartOf="parent" />
-
-            <com.google.android.material.floatingactionbutton.FloatingActionButton
-                android:id="@+id/floating_button_add"
-                android:layout_width="44dp"
-                android:layout_height="44dp"
-                android:layout_gravity="bottom|right"
-                android:layout_margin="16dp"
-                android:layout_marginTop="10dp"
-                android:layout_marginEnd="8dp"
-                android:src="@drawable/white_plus"
-                app:backgroundTint="@color/color_NUS"
-                app:fabCustomSize="44dp"
-                app:layout_constraintEnd_toEndOf="parent"
-                app:layout_constraintTop_toTopOf="parent" />
 
         </androidx.constraintlayout.widget.ConstraintLayout>
 
@@ -494,6 +476,20 @@
             app:layout_constraintBottom_toBottomOf="@+id/button_back"
             app:layout_constraintStart_toStartOf="@+id/button_back"
             tools:text="@string/Today" />
+
+        <com.google.android.material.floatingactionbutton.FloatingActionButton
+            android:id="@+id/floating_button_add"
+            android:layout_width="44dp"
+            android:layout_height="44dp"
+            android:layout_gravity="bottom|right"
+            android:layout_margin="16dp"
+            android:layout_marginEnd="8dp"
+            android:layout_marginBottom="8dp"
+            android:src="@drawable/white_plus"
+            app:backgroundTint="@color/color_NUS"
+            app:fabCustomSize="44dp"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintEnd_toEndOf="parent" />
 
 
     </androidx.constraintlayout.widget.ConstraintLayout>

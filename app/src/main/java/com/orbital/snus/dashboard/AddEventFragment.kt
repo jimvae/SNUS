@@ -64,6 +64,7 @@ class AddEventFragment() : Fragment() {
             if (!hasFocus) {
                 hideKeyboard(v)
             }
+
         }
 
         // Confirm button
@@ -89,14 +90,10 @@ class AddEventFragment() : Fragment() {
                 return@setOnClickListener
             }
 
-            var addToTimeline = false
-            if (binding.buttonAddToTimeline.isChecked) {
-                addToTimeline = true
-            }
             // disabling page
             configurePage(false)
 
-            val event = UserEvent(name, description, startDate!!, endDate!!, location, addToTimeline)
+            val event = UserEvent(name, description, startDate!!, endDate!!, location)
             viewModel.addEvent(event)
             viewModel.addSuccess.observe(viewLifecycleOwner, androidx.lifecycle.Observer {
                 if (it != null) {
@@ -195,7 +192,6 @@ class AddEventFragment() : Fragment() {
         binding.textEditEventName.isEnabled = boolean
         binding.textEditEventLocation.isEnabled = boolean
         binding.textEditEventDescription.isEnabled = boolean
-        binding.buttonAddToTimeline.isEnabled = boolean
         binding.buttonConfirm.isEnabled = boolean
         binding.textStartDate.isEnabled = boolean
         binding.textEndDate.isEnabled = boolean

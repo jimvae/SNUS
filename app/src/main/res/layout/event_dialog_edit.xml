@@ -30,7 +30,7 @@
                 android:layout_height="wrap_content"
                 android:layout_marginStart="16dp"
                 android:text="Title"
-                android:textColor="@color/color_NUS"
+                android:textColor="@android:color/black"
                 android:textSize="18sp"
                 app:layout_constraintEnd_toStartOf="@+id/edit_close"
                 app:layout_constraintStart_toStartOf="parent"
@@ -43,7 +43,7 @@
                 android:layout_marginStart="16dp"
                 android:layout_marginEnd="16dp"
                 android:text="Description"
-                android:textColor="@color/color_NUS"
+                android:textColor="@android:color/black"
                 android:textSize="18sp"
                 app:layout_constraintEnd_toEndOf="parent"
                 app:layout_constraintStart_toStartOf="parent"
@@ -55,7 +55,7 @@
                 android:layout_height="wrap_content"
                 android:layout_marginStart="16dp"
                 android:text="Start Date"
-                android:textColor="@color/color_NUS"
+                android:textColor="@android:color/black"
                 android:textSize="18sp"
                 app:layout_constraintStart_toStartOf="parent"
                 app:layout_constraintTop_toBottomOf="@+id/title2" />
@@ -66,7 +66,7 @@
                 android:layout_height="wrap_content"
                 android:layout_marginEnd="24dp"
                 android:text="End Date"
-                android:textColor="@color/color_NUS"
+                android:textColor="@android:color/black"
                 android:textSize="18sp"
                 app:layout_constraintBaseline_toBaselineOf="@+id/edit_event_start_date"
                 app:layout_constraintEnd_toEndOf="parent" />
@@ -78,7 +78,7 @@
                 android:layout_marginStart="16dp"
                 android:layout_marginEnd="16dp"
                 android:text="Location"
-                android:textColor="@color/color_NUS"
+                android:textColor="@android:color/black"
                 android:textSize="18sp"
                 app:layout_constraintEnd_toEndOf="parent"
                 app:layout_constraintStart_toStartOf="parent"
@@ -117,7 +117,9 @@
                 android:layout_height="wrap_content"
                 android:layout_marginStart="16dp"
                 android:layout_marginTop="8dp"
-                android:text="Title"
+                android:text="Title:"
+                android:textColor="@color/color_NUS"
+                android:textSize="18sp"
                 app:layout_constraintStart_toStartOf="parent"
                 app:layout_constraintTop_toTopOf="parent" />
 
@@ -127,7 +129,9 @@
                 android:layout_height="wrap_content"
                 android:layout_marginStart="16dp"
                 android:layout_marginTop="16dp"
-                android:text="@string/StartDate"
+                android:text="Start Date:"
+                android:textColor="@color/color_NUS"
+                android:textSize="18sp"
                 app:layout_constraintStart_toStartOf="parent"
                 app:layout_constraintTop_toBottomOf="@+id/edit_event_name" />
 
@@ -137,7 +141,9 @@
                 android:layout_height="wrap_content"
                 android:layout_marginStart="16dp"
                 android:layout_marginTop="24dp"
-                android:text="Description"
+                android:text="Description:"
+                android:textColor="@color/color_NUS"
+                android:textSize="18sp"
                 app:layout_constraintStart_toStartOf="parent"
                 app:layout_constraintTop_toBottomOf="@+id/edit_event_start_date" />
 
@@ -147,7 +153,9 @@
                 android:layout_height="wrap_content"
                 android:layout_marginStart="16dp"
                 android:layout_marginTop="16dp"
-                android:text="Location"
+                android:text="Location:"
+                android:textColor="@color/color_NUS"
+                android:textSize="18sp"
                 app:layout_constraintStart_toStartOf="parent"
                 app:layout_constraintTop_toBottomOf="@+id/edit_event_description" />
 
@@ -155,7 +163,9 @@
                 android:id="@+id/title3"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:text="End Date"
+                android:text="End Date:"
+                android:textColor="@color/color_NUS"
+                android:textSize="18sp"
                 app:layout_constraintBaseline_toBaselineOf="@+id/title2"
                 app:layout_constraintStart_toStartOf="@+id/edit_event_end_date" />
 
