@@ -62,6 +62,8 @@ class EditProfileFragment : Fragment() {
     private lateinit var forumNameList: ForumNameList
     private val uid = firebaseAuth.currentUser!!.uid
 
+    private lateinit var userData: UserData
+
     override fun onCreateView(
         inflater: LayoutInflater,
         container: ViewGroup?,
@@ -74,7 +76,7 @@ class EditProfileFragment : Fragment() {
             inflater, R.layout.profile_main_timeline_edit, container, false)
         spinnerSetup()
 
-        var userData : UserData = requireArguments().getParcelable<UserData>("userdata") as UserData
+        userData = requireArguments().getParcelable<UserData>("userdata") as UserData
         fetchForumNameList()
 
         // setup page
@@ -149,7 +151,7 @@ class EditProfileFragment : Fragment() {
 //            }
 
 
-            userData.updateUserData(name, faculty, course, currYear.toInt(), bio, linkedIn, instagram, gitHub, false, downloadUrl.toString(), userData.moduleList,  forumName)
+            userData.updateUserData(name, faculty, course, currYear.toInt(), bio, linkedIn, instagram, gitHub, false, userData.picUri, userData.moduleList,  forumName)
             forumNameList.updateForumName(forumName, firebaseAuth.currentUser!!.uid)
 
 
@@ -334,8 +336,8 @@ class EditProfileFragment : Fragment() {
             }).addOnCompleteListener { task ->
                 if(task.isSuccessful) {
                     downloadUrl = task.result
-                    val url = downloadUrl.toString()
-                    Log.d("DIRECT LINK >>>>>>>>>", url)
+                    userData.picUri = downloadUrl.toString()
+                    Log.d("DIRECT LINK >>>>>>>>>", userData.picUri)
                 }
             }
 
