@@ -274,6 +274,7 @@
                 android:numStars="5"
                 android:rating="0"
                 android:stepSize="1"
+                android:progressTint="@color/color_NUS"
                 app:layout_constraintStart_toStartOf="parent"
                 app:layout_constraintTop_toBottomOf="@+id/individual_review_add_date3" />
 
