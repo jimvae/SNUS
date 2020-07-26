@@ -69,9 +69,9 @@ class IndividualModuleFragment: Fragment() {
         viewModel.loadForums()
         viewModel.subForums.observe(viewLifecycleOwner, androidx.lifecycle.Observer<List<String>> { mods ->
             if (mods.size != 0) {
-                Toast.makeText(requireContext(), "Success retrieval", Toast.LENGTH_SHORT).show()
+//                Toast.makeText(requireContext(), "Success retrieval", Toast.LENGTH_SHORT).show()
             } else {
-                Toast.makeText(requireContext(), "Failed retrieval", Toast.LENGTH_SHORT).show()
+//                Toast.makeText(requireContext(), "Failed retrieval", Toast.LENGTH_SHORT).show()
             }
         })
     }

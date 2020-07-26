@@ -83,9 +83,9 @@ class PostsUnresolvedFragment : Fragment() {
         viewModel.loadUnresolvedPosts()
         viewModel.posts.observe(viewLifecycleOwner, androidx.lifecycle.Observer<List<ForumPost>> { posts ->
             if (posts.size != 0) {
-                Toast.makeText(requireContext(), "Success retrieval", Toast.LENGTH_SHORT).show()
+//                Toast.makeText(requireContext(), "Success retrieval", Toast.LENGTH_SHORT).show()
             } else {
-                Toast.makeText(requireContext(), "Failed retrieval", Toast.LENGTH_SHORT).show()
+//                Toast.makeText(requireContext(), "Failed retrieval", Toast.LENGTH_SHORT).show()
             }
         })
     }

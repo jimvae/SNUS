@@ -1,6 +1,7 @@
 package com.orbital.snus.dashboard.Calendar
 
 import android.os.Bundle
+import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
@@ -83,9 +84,11 @@ class CalendarFragment : Fragment() {
                 events.removeAll(events)
                 events.addAll(todayEvents)
                 recyclerView.adapter!!.notifyDataSetChanged()
-                Toast.makeText(requireContext(), "Success retrieval", Toast.LENGTH_SHORT).show()
+//                Toast.makeText(requireContext(), "Success retrieval", Toast.LENGTH_SHORT).show()
+                Log.d("CalendarFragment", "Success retrieval")
             } else {
-                Toast.makeText(requireContext(), "Failed retrieval", Toast.LENGTH_SHORT).show()
+//                Toast.makeText(requireContext(), "Failed retrieval", Toast.LENGTH_SHORT).show()
+                Log.d("CalendarFragment", "Failed retrieval")
             }
         })
     }
