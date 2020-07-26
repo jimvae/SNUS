@@ -68,7 +68,8 @@ class IndividualModuleReviewInformationFragment : Fragment() {
         binding.textModuleName.text = module
         binding.textModulePreclusions.text = modulePreclusions
         binding.textModulePrerequisites.text = modulePrerequisites
-        binding.textModuleDepartmentFaculty.text = departmentFacultyMC
+        binding.textViewDepartmentMC.text = departmentFacultyMC
+
 
         binding.textGotoReview.setOnClickListener {
             backTrack = false
