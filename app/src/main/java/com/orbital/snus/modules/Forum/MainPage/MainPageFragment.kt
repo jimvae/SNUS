@@ -131,6 +131,7 @@ class MainPageFragment : Fragment() {
                                             bundle.putString("department", module.department + " - " + module.faculty + " - " + module.moduleCredit + " MC")
 
                                             findNavController().navigate(R.id.action_mainPageFragment_to_individualModuleReviewInformationFragment, bundle)
+                                            binding.moduleReviewMainPageSearch.setText("")
 
 
                                         }
