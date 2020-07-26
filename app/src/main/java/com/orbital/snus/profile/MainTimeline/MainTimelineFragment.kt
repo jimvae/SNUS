@@ -32,6 +32,7 @@ import com.orbital.snus.opening.MainActivity
 import com.squareup.picasso.Picasso
 import kotlinx.android.synthetic.main.profile_main_links_dialog.*
 import kotlinx.android.synthetic.main.profile_main_status_dialog.*
+import java.text.SimpleDateFormat
 import java.util.*
 
 class MainTimelineFragment : Fragment() {
@@ -151,6 +152,8 @@ class MainTimelineFragment : Fragment() {
                     val insta: String? = userData.insta
                     val linkedIn: String? = userData.linkedIn
                     val github: String? = userData.git
+
+                    dialog.text_bio_content.text = userData.bio
 
                     if (insta != null) {
                         dialog.profile_dialog_instagram.setOnClickListener {
@@ -391,11 +394,10 @@ class MainTimelineFragment : Fragment() {
     fun pageSetup() {
         setUserPrivilege(userData.userID == firebaseAuth.currentUser!!.uid)
         binding.mainTimelineName.text = userData.fullname
-        val facCourse : String =  userData.faculty + " (" + userData.course + ")"
+        val facCourse : String =  userData.faculty + " (" + userData.course + ")" + " Year " + userData.year.toString()
         binding.mainTimelineCourse.text = facCourse
         val year: String = "Year " + userData.year.toString()
-        binding.mainTimelineYear.text = year
-        binding.mainTimelineBio.text = userData.bio
+        //binding.mainTimelineYear.text = year
         if (userData.picUri != null) {
             Picasso.get().load(userData.picUri).into(binding.mainTimelinePhotoView)
 

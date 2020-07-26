@@ -86,11 +86,10 @@ class MainFriendsFragment : Fragment() {
 
         // page setup
         binding.mainProfileName.text = userData.fullname
-        val facCourse : String =  userData.faculty + " (" + userData.course + ")"
+        val facCourse : String =  userData.faculty + " (" + userData.course + ")" + " Year " + userData.year.toString()
         binding.mainProfileCourse.text = facCourse
         val year: String = "Year " + userData.year.toString()
-        binding.mainProfileYear.text = year
-        binding.mainProfileBio.text = userData.bio
+        //binding.mainProfileYear.text = year
         if (userData.picUri != null) {
             Picasso.get().load(userData.picUri).into(binding.mainFriendPhotoView)
         }
@@ -125,6 +124,8 @@ class MainFriendsFragment : Fragment() {
             val insta: String? = userData.insta
             val linkedIn: String? = userData.linkedIn
             val github: String? = userData.git
+
+            dialog.text_bio_content.text = userData.bio
 
             if (insta != null) {
                 dialog.profile_dialog_instagram.setOnClickListener {

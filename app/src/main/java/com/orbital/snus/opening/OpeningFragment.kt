@@ -24,10 +24,14 @@ class OpeningFragment : Fragment() {
     private lateinit var firebaseAuth: FirebaseAuth
 
     override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?, savedInstanceState: Bundle?): View? {
+        val binding: FragmentOpeningOpeningBinding = DataBindingUtil.inflate(
+            inflater, R.layout.fragment_opening_opening, container, false)
+
+        binding.progressBar.visibility = View.VISIBLE
         firebaseAuth = FirebaseAuth.getInstance()
 
         if (firebaseAuth.currentUser == null) {
-
+            binding.progressBar.visibility = View.GONE
         } else if (firebaseAuth.currentUser != null) {
             val firestore = FirebaseFirestore.getInstance()
             var user: UserData? = null
@@ -60,8 +64,6 @@ class OpeningFragment : Fragment() {
 
         }
 
-        val binding: FragmentOpeningOpeningBinding = DataBindingUtil.inflate(
-            inflater, R.layout.fragment_opening_opening, container, false)
 
         binding.buttonLogin.setOnClickListener {
             view: View -> view.findNavController().navigate(R.id.action_openingFragment_to_loginFragment)
