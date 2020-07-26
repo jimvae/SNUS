@@ -147,7 +147,7 @@
                     android:layout_height="wrap_content"
                     android:layout_marginStart="8dp"
                     android:layout_marginTop="16dp"
-                    android:text="Event Description:"
+                    android:text="Event Location:"
                     android:textColor="@color/color_NUS"
                     android:textSize="18sp"
                     app:layout_constraintStart_toStartOf="parent"

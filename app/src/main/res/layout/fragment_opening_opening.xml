@@ -9,36 +9,39 @@
         android:layout_width="match_parent"
         android:layout_height="match_parent">
 
-        <TextView
-            android:id="@+id/SNUS_logo_NUS"
+        <LinearLayout
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_marginEnd="77dp"
-            android:layout_marginBottom="60dp"
-            android:text="@string/SNUS_logo_NUS"
-            android:textColor="@color/color_NUS"
-            android:textSize="100sp"
+            android:layout_marginBottom="16dp"
+            android:orientation="horizontal"
             app:layout_constraintBottom_toTopOf="@+id/button_login"
-            app:layout_constraintEnd_toEndOf="parent" />
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent">
 
-        <TextView
-            android:id="@+id/SNUS_logo_S1"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_marginStart="77dp"
-            android:text="@string/SNUS_logo_S"
+            <TextView
+                android:id="@+id/SNUS_logo_S1"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="@string/SNUS_logo_S"
 
-            android:textColor="@color/color_S"
-            android:textSize="100sp"
-            app:layout_constraintBaseline_toBaselineOf="@+id/SNUS_logo_NUS"
-            app:layout_constraintEnd_toStartOf="@+id/SNUS_logo_NUS"
-            app:layout_constraintStart_toStartOf="parent" />
+                android:textColor="@color/color_S"
+                android:textSize="100sp" />
+
+            <TextView
+                android:id="@+id/SNUS_logo_NUS"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="@string/SNUS_logo_NUS"
+                android:textColor="@color/color_NUS"
+                android:textSize="100sp" />
+        </LinearLayout>
 
         <Button
             android:id="@+id/button_signup"
             android:layout_width="155dp"
             android:layout_height="wrap_content"
             android:layout_marginStart="32dp"
+            android:layout_marginEnd="4dp"
             android:background="@drawable/blue_button"
             android:text="@string/sing_up"
             android:textColor="@android:color/white"
@@ -51,6 +54,7 @@
             android:id="@+id/button_login"
             android:layout_width="155dp"
             android:layout_height="wrap_content"
+            android:layout_marginStart="4dp"
             android:layout_marginEnd="32dp"
             android:layout_marginBottom="308dp"
             android:background="@drawable/blue_button"

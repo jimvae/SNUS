@@ -249,8 +249,8 @@ class EventFragment() : Fragment() {
         val dateFormatter: SimpleDateFormat = SimpleDateFormat("dd MMM, hh:mm a ")
         binding.popUpEventName.text = event.eventName
         binding.popUpEventDescription.text = event.eventDescription
-        binding.popUpEventStartDate.text = dateFormatter.format(event.startDate).toPattern().toString()
-        binding.popUpEventEndDate.text = dateFormatter.format(event.endDate).toPattern().toString()
+        binding.popUpEventStartDate.text = dateFormatter.format(event.startDate!!).toPattern().toString()
+        binding.popUpEventEndDate.text = dateFormatter.format(event.endDate!!).toPattern().toString()
         binding.popUpEventLocation.text = event.location
     }
 

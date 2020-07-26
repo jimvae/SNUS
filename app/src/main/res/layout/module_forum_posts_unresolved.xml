@@ -67,8 +67,7 @@
             android:background="@android:color/white"
             app:layout_constraintBottom_toBottomOf="@+id/module_forum_posts_resolved"
             app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintStart_toStartOf="@+id/module_forum_posts_resolved"
-            app:layout_constraintTop_toBottomOf="@+id/button_today" />
+            app:layout_constraintStart_toStartOf="@+id/module_forum_posts_resolved"/>
 
         <Button
             android:id="@+id/module_forum_posts_unresolved"

@@ -8,43 +8,44 @@
         android:layout_width="match_parent"
         android:layout_height="match_parent">
 
-        <TextView
-            android:id="@+id/SNUS_logo_NUS"
+        <LinearLayout
+            android:id="@+id/linearLayout"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_marginTop="36dp"
-            android:layout_marginEnd="103dp"
-            android:layout_marginBottom="76dp"
-            android:text="@string/SNUS_logo_NUS"
-            android:textColor="@color/color_NUS"
-            android:textSize="80sp"
+            android:layout_marginTop="32dp"
+            android:orientation="horizontal"
             app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintTop_toTopOf="parent" />
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="parent">
 
-        <TextView
-            android:id="@+id/SNUS_logo_S1"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_marginStart="103dp"
-            android:text="@string/SNUS_logo_S"
+            <TextView
+                android:id="@+id/SNUS_logo_S1"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="@string/SNUS_logo_S"
 
-            android:textColor="@color/color_S"
-            android:textSize="80sp"
-            app:layout_constraintBaseline_toBaselineOf="@+id/SNUS_logo_NUS"
-            app:layout_constraintEnd_toStartOf="@+id/SNUS_logo_NUS"
-            app:layout_constraintHorizontal_bias="1.0"
-            app:layout_constraintStart_toStartOf="parent" />
+                android:textColor="@color/color_S"
+                android:textSize="80sp" />
+
+            <TextView
+                android:id="@+id/SNUS_logo_NUS"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="@string/SNUS_logo_NUS"
+                android:textColor="@color/color_NUS"
+                android:textSize="80sp" />
+        </LinearLayout>
 
         <TextView
             android:id="@+id/login_sub_text"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_marginTop="12dp"
+            android:layout_marginTop="16dp"
             android:text="@string/Login"
             android:textSize="20sp"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toBottomOf="@+id/SNUS_logo_NUS" />
+            app:layout_constraintTop_toBottomOf="@+id/linearLayout" />
 
         <EditText
             android:id="@+id/email_text"

@@ -45,7 +45,7 @@
             app:layout_constraintBottom_toBottomOf="@+id/module_forum_posts_unresolved"
             app:layout_constraintEnd_toStartOf="@+id/module_forum_posts_resolved"
             app:layout_constraintStart_toStartOf="@+id/module_forum_posts_unresolved"
-            app:layout_constraintTop_toBottomOf="@+id/button_today" />
+             />
 
         <androidx.recyclerview.widget.RecyclerView
             android:id="@+id/forum_posts_recyclerview"

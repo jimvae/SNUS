@@ -319,13 +319,13 @@ class EditProfileFragment : Fragment() {
     //handle result of picked image
     override fun onActivityResult(requestCode: Int, resultCode: Int, data: Intent?) {
         if (resultCode == Activity.RESULT_OK && requestCode == IMAGE_PICK_CODE && data != null){
-            imageUri = data?.data
+            imageUri = data.data
             Log.d("DIRECT LINK >>>>>>>>>", imageUri!!.toString())
 
             binding.profilePhoto.setImageURI(imageUri)
 
             var uploadTask: StorageTask<*>
-            uploadTask =  imageRef!!.putFile(imageUri!!)
+            uploadTask =  imageRef.putFile(imageUri!!)
             uploadTask.continueWithTask(Continuation <UploadTask.TaskSnapshot, Task<Uri>> { task ->
                 if (!task.isSuccessful) {
                     task.exception?.let {
@@ -337,7 +337,7 @@ class EditProfileFragment : Fragment() {
                 if(task.isSuccessful) {
                     downloadUrl = task.result
                     userData.picUri = downloadUrl.toString()
-                    Log.d("DIRECT LINK >>>>>>>>>", userData.picUri)
+                    Log.d("DIRECT LINK >>>>>>>>>", userData.picUri!!)
                 }
             }
 
