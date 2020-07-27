@@ -39,7 +39,9 @@ class MainPageViewModel : ViewModel() {
                                     val mod = it.toObject(Module::class.java)!!
 
                                     if (user.moduleList!!.contains(mod.moduleCode)) {
-                                        mods.add(mod)
+                                        if (!mods.contains(mod)) {
+                                            mods.add(mod)
+                                        }
                                     }
                                 }
 
