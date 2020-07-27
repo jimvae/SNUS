@@ -38,10 +38,9 @@ class MainPageViewModel : ViewModel() {
                                 documents.forEach {
                                     val mod = it.toObject(Module::class.java)!!
 
-                                    if (user.moduleList!!.contains(mod.moduleCode)) {
-                                        if (!mods.contains(mod)) {
-                                            mods.add(mod)
-                                        }
+
+                                    if (user.moduleList!!.contains(mod.moduleCode) && !mods.contains(mod)) {
+                                        mods.add(mod)
                                     }
                                 }
 

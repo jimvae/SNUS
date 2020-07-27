@@ -34,4 +34,13 @@ data class Module(val acadYear: String? = null,
                 "fulfillRequirements " + fulfillRequirements + "\n"
     }
 
+    override fun equals(other: Any?): Boolean {
+        if (other === this) {
+            return true
+        } else if (other is Module) {
+            return this.moduleCode.equals((other as Module).moduleCode)
+        }
+        return false
+    }
+
 }
