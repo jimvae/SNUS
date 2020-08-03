@@ -90,7 +90,7 @@ class TodayEventAdapter(val eventList: List<UserEvent>) :
                 dateFormatter3.format(event.endDate!!).toPattern().toString()
         } else {
 
-            holder.textView.start_date.text = "ends on ${dateFormatter1.format(event.endDate!!).toPattern().toString()}"
+            holder.textView.start_date.text = "ends on \n ${dateFormatter1.format(event.endDate!!).toPattern().toString()}"
                         holder.textView.end_date.text = dateFormatter3.format(event.endDate!!).toPattern().toString()
         }
 
