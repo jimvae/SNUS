@@ -10,23 +10,24 @@
 
 
         <TextView
-            android:id="@+id/button_back"
+            android:id="@+id/button_back3"
             android:layout_width="0dp"
-            android:layout_height="220dp"
+            android:layout_height="80dp"
             android:background="@color/color_NUS"
             android:textSize="12sp"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintHorizontal_bias="0.0"
             app:layout_constraintStart_toStartOf="parent"
-            tools:layout_editor_absoluteY="5dp" />
+            app:layout_constraintTop_toTopOf="parent" />
 
         <androidx.cardview.widget.CardView
             android:id="@+id/main_timeline_photo"
-            android:layout_width="80dp"
-            android:layout_height="80dp"
-            android:layout_marginStart="16dp"
+            android:layout_width="120dp"
+            android:layout_height="120dp"
             android:layout_marginTop="16dp"
+            app:cardBackgroundColor="@android:color/white"
             app:cardCornerRadius="64dp"
+            app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toTopOf="parent">
 
@@ -41,29 +42,27 @@
 
         <TextView
             android:id="@+id/main_timeline_name"
-            android:layout_width="0dp"
+            android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_marginStart="8dp"
-            android:layout_marginTop="16dp"
-            android:layout_marginEnd="16dp"
+            android:layout_marginTop="8dp"
             android:text="Name"
-            android:textColor="@android:color/white"
-            android:textSize="18sp"
-            app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintStart_toEndOf="@+id/main_timeline_photo"
-            app:layout_constraintTop_toTopOf="parent" />
+            android:textColor="@color/color_NUS"
+            android:textSize="24sp"
+            app:layout_constraintEnd_toEndOf="@+id/main_timeline_photo"
+            app:layout_constraintStart_toStartOf="@+id/main_timeline_photo"
+            app:layout_constraintTop_toBottomOf="@+id/main_timeline_photo" />
 
         <TextView
             android:id="@+id/main_timeline_course"
             android:layout_width="0dp"
             android:layout_height="wrap_content"
-            android:layout_marginStart="8dp"
             android:layout_marginTop="3dp"
-            android:layout_marginEnd="16dp"
             android:text="Course and Year"
-            android:textColor="@android:color/white"
+            android:textAlignment="center"
+            android:textColor="@color/color_NUS"
+            android:textSize="14sp"
             app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintStart_toEndOf="@+id/main_timeline_photo"
+            app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toBottomOf="@+id/main_timeline_name" />
 
         <Button
@@ -71,12 +70,13 @@
             android:layout_width="0dp"
             android:layout_height="30dp"
             android:layout_marginStart="16dp"
+            android:layout_marginTop="8dp"
             android:background="@drawable/list"
             android:scaleX="0.15"
-            app:layout_constraintBottom_toBottomOf="@+id/button_back"
             app:layout_constraintEnd_toStartOf="@+id/main_timeline_friends"
             app:layout_constraintHorizontal_bias="0.5"
-            app:layout_constraintStart_toStartOf="parent" />
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@+id/main_timeline_Links" />
 
         <Button
             android:id="@+id/main_timeline_friends"
@@ -89,51 +89,21 @@
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toEndOf="@+id/main_timeline_timeline" />
 
-        <Button
-            android:id="@+id/main_timeline_edit_settings"
-            android:layout_width="0dp"
-            android:layout_height="21dp"
-            android:layout_marginStart="16dp"
-            android:layout_marginTop="4dp"
-            android:layout_marginEnd="16dp"
-            android:background="@drawable/white_outline"
-            android:scrollbarSize="4dp"
-            android:text="Edit Profile"
-            android:textColor="@android:color/white"
-            app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toBottomOf="@+id/main_timeline_photo" />
-
         <androidx.recyclerview.widget.RecyclerView
             android:id="@+id/recyclerview_timeline"
             android:layout_width="0dp"
             android:layout_height="0dp"
             android:layout_marginStart="3dp"
-            android:layout_marginTop="3dp"
             android:layout_marginEnd="3dp"
             android:layout_marginBottom="3dp"
             app:layout_constraintBottom_toBottomOf="parent"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintHorizontal_bias="1.0"
             app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toBottomOf="@+id/button_back"
+            app:layout_constraintTop_toBottomOf="@+id/main_timeline_timeline"
             app:layout_constraintVertical_bias="0.0"
             tools:listitem="@layout/profile_main_posts_recycler" />
 
-
-        <Button
-            android:id="@+id/log_out"
-            android:layout_width="0dp"
-            android:layout_height="21dp"
-            android:layout_marginStart="16dp"
-            android:layout_marginTop="8dp"
-            android:layout_marginEnd="16dp"
-            android:background="@drawable/white_outline"
-            android:text="@string/Logout"
-            android:textColor="@android:color/white"
-            app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toBottomOf="@+id/main_timeline_Links" />
 
         <Button
             android:id="@+id/main_timeline_Links"
@@ -144,23 +114,23 @@
             android:layout_marginEnd="16dp"
             android:background="@drawable/white_outline"
             android:text="Links and Bio"
-            android:textColor="@android:color/white"
+            android:textColor="@color/color_NUS"
             app:layout_constraintEnd_toStartOf="@+id/text_friend_status"
             app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toBottomOf="@+id/main_timeline_edit_settings" />
+            app:layout_constraintTop_toBottomOf="@+id/main_timeline_course" />
 
         <Button
             android:id="@+id/text_friend_status"
             android:layout_width="0dp"
             android:layout_height="21dp"
-            android:layout_marginTop="8dp"
             android:layout_marginEnd="16dp"
             android:background="@drawable/white_outline"
             android:text="Status"
-            android:textColor="@android:color/white"
+            android:textColor="@color/color_NUS"
             android:textSize="8sp"
+            app:layout_constraintBottom_toBottomOf="@+id/main_timeline_Links"
             app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintTop_toBottomOf="@+id/main_timeline_edit_settings" />
+            app:layout_constraintTop_toTopOf="@+id/main_timeline_Links" />
 
         <com.google.android.material.floatingactionbutton.FloatingActionButton
             android:id="@+id/main_timeline_add_post"
@@ -179,10 +149,59 @@
             android:layout_width="0dp"
             android:layout_height="2dp"
             android:layout_marginBottom="2dp"
-            android:background="@drawable/white_outline"
+            android:background="@drawable/blue_outline"
             app:layout_constraintBottom_toBottomOf="@+id/main_timeline_timeline"
             app:layout_constraintEnd_toEndOf="@+id/main_timeline_timeline"
             app:layout_constraintStart_toStartOf="@+id/main_timeline_timeline" />
 
+        <TextView
+            android:id="@+id/circleEdit"
+            android:layout_width="30dp"
+            android:layout_height="30dp"
+            android:layout_marginTop="8dp"
+            android:layout_marginEnd="8dp"
+            android:background="@drawable/circle"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintTop_toTopOf="parent" />
+
+        <TextView
+            android:id="@+id/circleLogout"
+            android:layout_width="30dp"
+            android:layout_height="30dp"
+            android:layout_marginTop="8dp"
+            android:layout_marginEnd="8dp"
+            android:background="@drawable/circle"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintTop_toBottomOf="@+id/circleEdit" />
+
+        <TextView
+            android:id="@+id/main_timeline_edit_settings"
+            android:layout_width="16dp"
+            android:layout_height="16dp"
+            android:background="@drawable/ic_edit_blue_24dp"
+            app:layout_constraintBottom_toBottomOf="@+id/circleEdit"
+            app:layout_constraintEnd_toEndOf="@+id/circleEdit"
+            app:layout_constraintStart_toStartOf="@+id/circleEdit"
+            app:layout_constraintTop_toTopOf="@+id/circleEdit" />
+
+        <TextView
+            android:id="@+id/log_out"
+            android:layout_width="16dp"
+            android:layout_height="16dp"
+            android:background="@drawable/ic_exit_to_app_black_24dp"
+            app:layout_constraintBottom_toBottomOf="@+id/circleLogout"
+            app:layout_constraintEnd_toEndOf="@+id/circleLogout"
+            app:layout_constraintStart_toStartOf="@+id/circleLogout"
+            app:layout_constraintTop_toTopOf="@+id/circleLogout" /><![CDATA[
+
+        16dp"
+            android:layout_height="16dp"
+            android:background="@drawable/ic_edit_blue_24dp"
+            app:layout_constraintBottom_toBottomOf="@+id/textView41"
+            app:layout_constraintEnd_toEndOf="@+id/textView41"
+            app:layout_constraintStart_toStartOf="@+id/textView41"
+            app:layout_constraintTop_toTopOf="@+id/textView41" />
+
+    ]]>
     </androidx.constraintlayout.widget.ConstraintLayout>
 </layout>

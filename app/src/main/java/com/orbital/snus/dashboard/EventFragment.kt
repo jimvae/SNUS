@@ -36,6 +36,8 @@ class EventFragment() : Fragment() {
     var endDate: Date? = null
     val START = "start"
     val END = "end"
+    val dateFormatter: SimpleDateFormat = SimpleDateFormat("dd MMM, hh:mm a ")
+
 
     override fun onCreateView(
         inflater: LayoutInflater,
@@ -158,19 +160,19 @@ class EventFragment() : Fragment() {
 
         // set up views
         val eventName = dialog.edit_event_name
-        eventName.setText(binding.popUpEventName.text)
+        eventName.setText(event.eventName)
 
         val editStartDate = dialog.edit_event_start_date
-        editStartDate.setText(binding.popUpEventStartDate.text)
+        editStartDate.setText(dateFormatter.format(event.startDate).toPattern().toString())
 
         val editEndDate = dialog.edit_event_end_date
-        editEndDate.setText(binding.popUpEventEndDate.text)
+        editEndDate.setText(dateFormatter.format(event.endDate).toPattern().toString())
 
         val editDescription = dialog.edit_event_description
-        editDescription.setText(binding.popUpEventDescription.text)
+        editDescription.setText(event.eventDescription)
 
         val editLocation = dialog.edit_event_location
-        editLocation.setText(binding.popUpEventLocation.text)
+        editLocation.setText(event.location)
 
         // by default, the start and end date will take from event
         // override when clicked
@@ -246,12 +248,11 @@ class EventFragment() : Fragment() {
     }
 
     fun initiateViews() {
-        val dateFormatter: SimpleDateFormat = SimpleDateFormat("dd MMM, hh:mm a ")
         binding.popUpEventName.text = event.eventName
         binding.popUpEventDescription.text = event.eventDescription
-        binding.popUpEventStartDate.text = dateFormatter.format(event.startDate!!).toPattern().toString()
-        binding.popUpEventEndDate.text = dateFormatter.format(event.endDate!!).toPattern().toString()
+
         binding.popUpEventLocation.text = event.location
+        binding.popUpEventDate.text = "${dateFormatter.format(event.startDate!!).toPattern().toString()} - ${dateFormatter.format(event.endDate!!).toPattern().toString()}"
     }
 
     fun configureDialog(boolean: Boolean) {

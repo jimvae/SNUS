@@ -16,6 +16,7 @@
             android:layout_height="0dp"
             android:layout_marginTop="8dp"
             android:layout_marginBottom="8dp"
+            android:background="@drawable/grey_outline"
             app:layout_constraintBottom_toTopOf="@+id/messages_messaging_message_here"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"
@@ -28,6 +29,7 @@
             android:layout_marginStart="8dp"
             android:layout_marginEnd="4dp"
             android:layout_marginBottom="8dp"
+            android:background="@drawable/editbox_v2"
             android:ems="10"
             android:hint="Message here..."
             android:inputType="textPersonName"
@@ -56,32 +58,33 @@
             android:layout_width="30dp"
             android:layout_height="30dp"
             android:layout_marginEnd="8dp"
-            android:layout_marginBottom="12dp"
-            android:background="@drawable/circle"
-            app:layout_constraintBottom_toBottomOf="parent"
-            app:layout_constraintEnd_toEndOf="parent" />
+            android:background="@drawable/bluecircle"
+            app:layout_constraintBottom_toBottomOf="@+id/messages_messaging_message_here"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintTop_toTopOf="@+id/messages_messaging_message_here" />
 
         <TextView
             android:id="@+id/messages_messaging_name"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_marginStart="8dp"
             android:layout_marginTop="8dp"
             android:text="Name"
             android:textColor="@color/color_NUS"
             android:textSize="24sp"
-            app:layout_constraintStart_toEndOf="@+id/messages_friends_request_recycler_title"
-            app:layout_constraintTop_toTopOf="parent" />
+            app:layout_constraintBottom_toBottomOf="@+id/messages_friends_request_recycler_title"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="@+id/messages_friends_request_recycler_title" />
 
         <androidx.cardview.widget.CardView
             android:id="@+id/messages_friends_request_recycler_title"
             android:layout_width="50dp"
             android:layout_height="50dp"
-            android:layout_marginStart="8dp"
             android:layout_marginTop="8dp"
+            android:layout_marginEnd="8dp"
             android:background="@drawable/grey_outline"
             app:cardCornerRadius="64dp"
-            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintTop_toTopOf="parent">
 
             <ImageView

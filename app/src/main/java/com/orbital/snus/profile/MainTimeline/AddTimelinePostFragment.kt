@@ -30,7 +30,7 @@ class AddTimelinePostFragment : Fragment() {
     private lateinit var viewModel: MainTimelineViewModel
     private lateinit var factory: MainTimelineViewModelFactory
 
-    val categories = arrayOf("", "Camps", "Competitions", "Modules", "Internships", "Exchange")
+    val categories = arrayOf("", "Camps", "Competitions", "Modules", "Internships", "Exchange", "Projects", "Sports", "Exchange", "Others")
     private lateinit var categorySpinner: Spinner
     private lateinit var category: String
 

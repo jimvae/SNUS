@@ -14,19 +14,28 @@
         android:orientation="vertical">
 
         <TextView
-            android:id="@+id/button_back"
-            android:layout_width="0dp"
-            android:layout_height="110dp"
-            android:background="@color/color_NUS"
-            app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintHorizontal_bias="0.0"
+            android:id="@+id/this_week"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginStart="8dp"
+            android:layout_marginTop="8dp"
+            android:background="@android:color/transparent"
+            android:paddingStart="4dp"
+            android:paddingEnd="4dp"
+            android:text=""
+            android:textAllCaps="false"
+            android:textColor="@color/color_NUS"
+            android:textSize="18sp"
             app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toTopOf="parent" />
+            app:layout_constraintTop_toBottomOf="@+id/TopBar"
+            tools:text="@string/Today" />
 
         <androidx.constraintlayout.widget.ConstraintLayout
             android:id="@+id/TopBar"
             android:layout_width="match_parent"
-            android:layout_height="wrap_content"
+            android:layout_height="70sp"
+            android:background="@color/color_NUS"
+            app:layout_constraintBottom_toTopOf="@+id/this_week"
             app:layout_constraintTop_toTopOf="parent">
 
             <TextView
@@ -58,9 +67,11 @@
                 android:layout_marginStart="8dp"
                 android:layout_marginTop="16dp"
                 android:layout_marginEnd="8dp"
+                android:layout_marginBottom="16dp"
                 android:background="@android:color/transparent"
                 android:text="@string/Upcoming"
                 android:textColor="@android:color/white"
+                app:layout_constraintBottom_toBottomOf="parent"
                 app:layout_constraintEnd_toStartOf="@+id/button_calendar"
                 app:layout_constraintStart_toEndOf="@+id/button_today"
                 app:layout_constraintTop_toTopOf="parent" />
@@ -83,13 +94,13 @@
             android:id="@+id/constraint_Sunday"
             android:layout_width="match_parent"
             android:layout_height="75dp"
-            android:layout_marginTop="2dp"
+            android:layout_marginTop="8dp"
             android:background="@drawable/grey_outline"
             android:foregroundGravity="center"
             android:paddingBottom="8dp"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toBottomOf="@+id/button_back">
+            app:layout_constraintTop_toBottomOf="@+id/this_week">
 
             <androidx.recyclerview.widget.RecyclerView
                 android:id="@+id/recyclerViewSunday"
@@ -458,23 +469,6 @@
                 app:layout_constraintStart_toStartOf="@+id/Saturday"
                 app:layout_constraintTop_toBottomOf="@+id/Saturday" />
         </androidx.constraintlayout.widget.ConstraintLayout>
-
-        <TextView
-            android:id="@+id/this_week"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_marginStart="16dp"
-            android:layout_marginBottom="16dp"
-            android:background="@android:color/transparent"
-            android:paddingStart="4dp"
-            android:paddingEnd="4dp"
-            android:text=""
-            android:textAllCaps="false"
-            android:textColor="@android:color/white"
-            android:textSize="20sp"
-            app:layout_constraintBottom_toBottomOf="@+id/button_back"
-            app:layout_constraintStart_toStartOf="@+id/button_back"
-            tools:text="@string/Today" />
 
         <com.google.android.material.floatingactionbutton.FloatingActionButton
             android:id="@+id/floating_button_add"

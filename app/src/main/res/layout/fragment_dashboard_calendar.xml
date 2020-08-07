@@ -12,63 +12,66 @@
         android:layout_height="match_parent">
 
 
-        <TextView
-            android:id="@+id/button_back"
+        <androidx.constraintlayout.widget.ConstraintLayout
+            android:id="@+id/constraintLayout3"
             android:layout_width="0dp"
-            android:layout_height="110dp"
+            android:layout_height="70sp"
             android:background="@color/color_NUS"
             app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintHorizontal_bias="0.0"
             app:layout_constraintStart_toStartOf="parent"
-            tools:layout_editor_absoluteY="0dp" />
+            app:layout_constraintTop_toTopOf="parent">
 
-        <Button
-            android:id="@+id/button_upcoming"
-            android:layout_width="120dp"
-            android:layout_height="40dp"
-            android:layout_marginStart="8dp"
-            android:layout_marginTop="16dp"
-            android:layout_marginEnd="8dp"
-            android:background="@android:color/transparent"
-            android:text="@string/Upcoming"
-            android:textColor="@android:color/white"
-            app:layout_constraintEnd_toStartOf="@+id/button_calendar"
-            app:layout_constraintStart_toEndOf="@+id/button_today"
-            app:layout_constraintTop_toTopOf="@+id/button_back" />
+            <Button
+                android:id="@+id/button_upcoming"
+                android:layout_width="120dp"
+                android:layout_height="40dp"
+                android:layout_marginStart="8dp"
+                android:layout_marginTop="16dp"
+                android:layout_marginEnd="8dp"
+                android:layout_marginBottom="16dp"
+                android:background="@android:color/transparent"
+                android:text="@string/Upcoming"
+                android:textColor="@android:color/white"
+                app:layout_constraintBottom_toBottomOf="parent"
+                app:layout_constraintEnd_toStartOf="@+id/button_calendar"
+                app:layout_constraintStart_toEndOf="@+id/button_today"
+                app:layout_constraintTop_toTopOf="parent" />
 
-        <Button
-            android:id="@+id/button_calendar"
-            android:layout_width="120dp"
-            android:layout_height="40dp"
-            android:layout_marginEnd="8dp"
-            android:background="@android:color/transparent"
-            android:text="@string/Calendar"
-            android:textColor="@android:color/white"
-            app:layout_constraintBaseline_toBaselineOf="@+id/button_upcoming"
-            app:layout_constraintEnd_toEndOf="parent" />
+            <Button
+                android:id="@+id/button_calendar"
+                android:layout_width="120dp"
+                android:layout_height="40dp"
+                android:layout_marginEnd="8dp"
+                android:background="@android:color/transparent"
+                android:text="@string/Calendar"
+                android:textColor="@android:color/white"
+                app:layout_constraintBaseline_toBaselineOf="@+id/button_upcoming"
+                app:layout_constraintEnd_toEndOf="parent" />
 
-        <TextView
-            android:id="@+id/textView2"
-            android:layout_width="0dp"
-            android:layout_height="2dp"
-            android:layout_marginTop="2dp"
-            android:background="@android:color/white"
-            app:layout_constraintEnd_toEndOf="@+id/button_calendar"
-            app:layout_constraintStart_toStartOf="@+id/button_calendar"
-            app:layout_constraintTop_toBottomOf="@+id/button_today" />
+            <TextView
+                android:id="@+id/textView2"
+                android:layout_width="0dp"
+                android:layout_height="2dp"
+                android:layout_marginTop="2dp"
+                android:background="@android:color/white"
+                app:layout_constraintEnd_toEndOf="@+id/button_calendar"
+                app:layout_constraintStart_toStartOf="@+id/button_calendar"
+                app:layout_constraintTop_toBottomOf="@+id/button_today" />
 
-        <Button
-            android:id="@+id/button_today"
-            style="@style/dashboard_current_button"
-            android:layout_width="120dp"
-            android:layout_height="40dp"
-            android:layout_marginStart="8dp"
-            android:background="@android:color/transparent"
-            android:singleLine="false"
-            android:text="@string/Today"
-            android:textColor="@android:color/white"
-            app:layout_constraintBaseline_toBaselineOf="@+id/button_upcoming"
-            app:layout_constraintStart_toStartOf="parent" />
+            <Button
+                android:id="@+id/button_today"
+                style="@style/dashboard_current_button"
+                android:layout_width="120dp"
+                android:layout_height="40dp"
+                android:layout_marginStart="8dp"
+                android:background="@android:color/transparent"
+                android:singleLine="false"
+                android:text="@string/Today"
+                android:textColor="@android:color/white"
+                app:layout_constraintBaseline_toBaselineOf="@+id/button_upcoming"
+                app:layout_constraintStart_toStartOf="parent" />
+
+        </androidx.constraintlayout.widget.ConstraintLayout>
 
         <com.google.android.material.floatingactionbutton.FloatingActionButton
             android:id="@+id/floating_button_add"
@@ -86,13 +89,15 @@
 
         <CalendarView
             android:id="@+id/calendarView"
+            style="@android:style/Widget.DeviceDefault.Light.CalendarView"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:background="@android:color/white"
+            android:unfocusedMonthDateColor="@color/color_NUS"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintHorizontal_bias="0.482"
             app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toBottomOf="@+id/button_back" />
+            app:layout_constraintTop_toBottomOf="@+id/constraintLayout3" />
 
         <androidx.recyclerview.widget.RecyclerView
             android:id="@+id/calendar_recyclerView"

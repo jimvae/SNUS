@@ -6,22 +6,30 @@
     <androidx.constraintlayout.widget.ConstraintLayout
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-        android:background="@android:color/darker_gray"
+        android:background="@android:color/white"
         tools:context=".profile.MainFriends.MainTimeline.Request.MainFriendsRequestFragment">
 
 
         <TextView
-            android:id="@+id/request_title"
+            android:id="@+id/button_back4"
             android:layout_width="0dp"
+            android:layout_height="80dp"
+            android:background="@color/color_NUS"
+            android:textSize="12sp"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintHorizontal_bias="0.0"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="parent" />
+
+        <TextView
+            android:id="@+id/request_title"
+            android:layout_width="405dp"
             android:layout_height="wrap_content"
-            android:layout_marginStart="3dp"
-            android:layout_marginTop="3dp"
-            android:layout_marginEnd="3dp"
-            android:background="@android:color/white"
             android:text="Friend Requests"
             android:textAlignment="center"
-            android:textColor="@color/color_NUS"
-            android:textSize="32dp"
+            android:textColor="@android:color/white"
+            android:textSize="30sp"
+            app:layout_constraintBottom_toBottomOf="@+id/button_back4"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toTopOf="parent" />
@@ -31,13 +39,12 @@
             android:layout_width="0dp"
             android:layout_height="0dp"
             android:layout_marginStart="3dp"
-            android:layout_marginTop="4dp"
             android:layout_marginEnd="3dp"
             android:layout_marginBottom="3dp"
             app:layout_constraintBottom_toBottomOf="parent"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toBottomOf="@+id/request_title"
+            app:layout_constraintTop_toBottomOf="@+id/button_back4"
             tools:listitem="@layout/profile_main_friends_request_recycler" />
     </androidx.constraintlayout.widget.ConstraintLayout>
 </layout>

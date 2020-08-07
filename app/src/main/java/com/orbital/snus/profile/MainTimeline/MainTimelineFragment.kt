@@ -385,6 +385,12 @@ class MainTimelineFragment : Fragment() {
         binding.logOut.isEnabled = boolean
         binding.logOut.isVisible = boolean
 
+        binding.circleEdit.isEnabled = boolean
+        binding.circleEdit.isVisible = boolean
+
+        binding.circleLogout.isEnabled = boolean
+        binding.circleLogout.isVisible = boolean
+
 
         binding.textFriendStatus.isVisible = !boolean
         binding.textFriendStatus.isEnabled = !boolean

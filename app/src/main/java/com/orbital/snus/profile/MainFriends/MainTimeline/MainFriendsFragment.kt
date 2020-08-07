@@ -100,9 +100,9 @@ class MainFriendsFragment : Fragment() {
 
 
         // on click listeners
-        binding.mainProfileEditSettings.setOnClickListener {
-            findNavController().navigate(R.id.action_mainFriendsFragment_to_editProfileFragment2, bundle)
-        }
+//        binding.mainProfileEditSettings.setOnClickListener {
+//            findNavController().navigate(R.id.action_mainFriendsFragment_to_editProfileFragment2, bundle)
+//        }
 
         binding.mainProfileTimeline.setOnClickListener {
             findNavController().navigate(R.id.action_mainFriendsFragment_to_mainTimelineFragment2, bundle)
@@ -318,7 +318,7 @@ class MainFriendsFragment : Fragment() {
     }
 
     fun configurePage(boolean: Boolean) {
-        binding.mainProfileEditSettings.isEnabled = boolean
+//        binding.mainProfileEditSettings.isEnabled = boolean
         binding.mainFriendsLinks.isEnabled = boolean
         binding.mainProfileTimeline.isEnabled = boolean
         binding.mainProfileFriends.isEnabled = boolean
@@ -333,8 +333,8 @@ class MainFriendsFragment : Fragment() {
     }
 
     fun setUserPrivilege(boolean: Boolean) {
-        binding.mainProfileEditSettings.isVisible = boolean
-        binding.mainProfileEditSettings.isEnabled = boolean
+//        binding.mainProfileEditSettings.isVisible = boolean
+//        binding.mainProfileEditSettings.isEnabled = boolean
 
         binding.textFriendStatus.isVisible = !boolean
         binding.textFriendStatus.isEnabled = !boolean

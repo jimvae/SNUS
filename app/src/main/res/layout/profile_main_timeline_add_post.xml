@@ -28,6 +28,7 @@
         android:layout_marginStart="16dp"
         android:layout_marginTop="24dp"
         android:layout_marginEnd="16dp"
+        android:background="@drawable/editbox_v2"
         android:ems="10"
         android:hint="Write a Caption..."
         android:inputType="textPersonName"
@@ -55,11 +56,11 @@
         android:layout_width="0dp"
         android:layout_height="wrap_content"
         android:layout_marginStart="100dp"
-        android:layout_marginTop="8dp"
         android:layout_marginEnd="16dp"
+        app:layout_constraintBottom_toBottomOf="@+id/textView16"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/main_timeline_add_post_title" />
+        app:layout_constraintTop_toTopOf="@+id/textView16" />
 
     <TextView
         android:id="@+id/textView16"
@@ -68,7 +69,7 @@
         android:layout_marginStart="16dp"
         android:layout_marginTop="8dp"
         android:text="Category:"
-        android:textColor="@android:color/black"
+        android:textColor="@color/color_NUS"
         android:textSize="18sp"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/main_timeline_add_post_title" />

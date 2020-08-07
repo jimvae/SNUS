@@ -9,16 +9,14 @@
         android:id="@+id/messages_messaging_recycler_message_to"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_marginTop="16dp"
+        android:layout_marginTop="4dp"
         android:layout_marginEnd="16dp"
-        android:layout_marginBottom="16dp"
         android:background="@drawable/blue_button"
-        android:padding="10dp"
-        android:text="Answer"
         android:maxWidth="250dp"
 
+        android:padding="10dp"
+        android:text="Answer"
         android:textColor="@android:color/white"
-        app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintTop_toTopOf="parent" />
 
@@ -26,10 +24,13 @@
         android:id="@+id/messages_messaging_recycler_to_date"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_marginStart="16dp"
-        android:layout_marginTop="16dp"
+        android:layout_marginTop="4dp"
+        android:layout_marginEnd="8dp"
+        android:layout_marginBottom="4dp"
         android:text="Date"
         android:textColor="@android:color/darker_gray"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="parent" />
+        android:textSize="10sp"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="@+id/messages_messaging_recycler_message_to"
+        app:layout_constraintTop_toBottomOf="@+id/messages_messaging_recycler_message_to" />
 </androidx.constraintlayout.widget.ConstraintLayout>

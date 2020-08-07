@@ -12,7 +12,7 @@
         <TextView
             android:id="@+id/button_back"
             android:layout_width="0dp"
-            android:layout_height="220dp"
+            android:layout_height="80dp"
             android:background="@color/color_NUS"
             android:textSize="12sp"
             app:layout_constraintEnd_toEndOf="parent"
@@ -23,11 +23,11 @@
 
         <androidx.cardview.widget.CardView
             android:id="@+id/main_profile_photo"
-            android:layout_width="80dp"
-            android:layout_height="80dp"
-            android:layout_marginStart="16dp"
+            android:layout_width="120dp"
+            android:layout_height="120dp"
             android:layout_marginTop="16dp"
             app:cardCornerRadius="64dp"
+            app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toTopOf="parent">
 
@@ -43,27 +43,25 @@
             android:id="@+id/main_profile_name"
             android:layout_width="0dp"
             android:layout_height="wrap_content"
-            android:layout_marginStart="8dp"
-            android:layout_marginTop="16dp"
-            android:layout_marginEnd="16dp"
+            android:layout_marginTop="8dp"
             android:text="Name"
-            android:textColor="@android:color/white"
-            android:textSize="18sp"
+            android:textAlignment="center"
+            android:textColor="@color/color_NUS"
+            android:textSize="24sp"
             app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintStart_toEndOf="@+id/main_profile_photo"
-            app:layout_constraintTop_toTopOf="parent" />
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@+id/main_profile_photo" />
 
         <TextView
             android:id="@+id/main_profile_course"
             android:layout_width="0dp"
             android:layout_height="wrap_content"
-            android:layout_marginStart="8dp"
             android:layout_marginTop="3dp"
-            android:layout_marginEnd="16dp"
             android:text="Course and Year"
-            android:textColor="@android:color/white"
+            android:textAlignment="center"
+            android:textColor="@color/color_NUS"
             app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintStart_toEndOf="@+id/main_profile_photo"
+            app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toBottomOf="@+id/main_profile_name" />
 
         <Button
@@ -71,12 +69,13 @@
             android:layout_width="0dp"
             android:layout_height="30dp"
             android:layout_marginStart="16dp"
+            android:layout_marginTop="8dp"
             android:background="@drawable/list"
             android:scaleX="0.15"
-            app:layout_constraintBottom_toBottomOf="@+id/button_back"
             app:layout_constraintEnd_toStartOf="@+id/main_profile_friends"
             app:layout_constraintHorizontal_bias="0.5"
-            app:layout_constraintStart_toStartOf="parent" />
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@+id/main_friends_links" />
 
         <Button
             android:id="@+id/main_profile_friends"
@@ -88,21 +87,6 @@
             app:layout_constraintBaseline_toBaselineOf="@+id/main_profile_timeline"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toEndOf="@+id/main_profile_timeline" />
-
-        <Button
-            android:id="@+id/main_profile_edit_settings"
-            android:layout_width="0dp"
-            android:layout_height="21dp"
-            android:layout_marginStart="16dp"
-            android:layout_marginTop="4dp"
-            android:layout_marginEnd="16dp"
-            android:background="@drawable/white_outline"
-            android:scrollbarSize="4dp"
-            android:text="Edit Profile"
-            android:textColor="@android:color/white"
-            app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toBottomOf="@+id/main_profile_photo" />
 
         <androidx.recyclerview.widget.RecyclerView
             android:id="@+id/recyclerview_profile"
@@ -129,10 +113,10 @@
             android:layout_marginEnd="16dp"
             android:background="@drawable/white_outline"
             android:text="Links and Bio"
-            android:textColor="@android:color/white"
+            android:textColor="@color/color_NUS"
             app:layout_constraintEnd_toStartOf="@+id/text_friend_status"
             app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toBottomOf="@+id/main_profile_edit_settings" />
+            app:layout_constraintTop_toBottomOf="@+id/main_profile_course" />
 
         <EditText
             android:id="@+id/edit_text_search"
@@ -153,14 +137,14 @@
             android:id="@+id/text_friend_status"
             android:layout_width="0dp"
             android:layout_height="21dp"
-            android:layout_marginTop="8dp"
             android:layout_marginEnd="16dp"
             android:background="@drawable/white_outline"
             android:text="Status"
-            android:textColor="@android:color/white"
+            android:textColor="@color/color_NUS"
             android:textSize="8sp"
+            app:layout_constraintBottom_toBottomOf="@+id/main_friends_links"
             app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintTop_toBottomOf="@+id/main_profile_edit_settings" />
+            app:layout_constraintTop_toTopOf="@+id/main_friends_links" />
 
         <Button
             android:id="@+id/button_requests"
@@ -178,17 +162,16 @@
             android:id="@+id/textView5"
             android:layout_width="40dp"
             android:layout_height="40dp"
-            android:layout_marginTop="3dp"
             android:layout_marginEnd="3dp"
             android:background="#FF5722"
             android:textColor="@color/color_S"
             app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintTop_toBottomOf="@+id/button_back" />
+            app:layout_constraintTop_toBottomOf="@+id/main_profile_timeline" />
 
         <Button
             android:id="@+id/button_search"
-            android:layout_width="25dp"
-            android:layout_height="25dp"
+            android:layout_width="23dp"
+            android:layout_height="27dp"
             android:background="@drawable/search"
             android:textColorLink="@color/color_S"
             app:layout_constraintBottom_toBottomOf="@+id/textView5"
@@ -201,7 +184,7 @@
             android:layout_width="0dp"
             android:layout_height="2dp"
             android:layout_marginBottom="2dp"
-            android:background="@drawable/white_outline"
+            android:background="@drawable/blue_outline"
             app:layout_constraintBottom_toBottomOf="@+id/main_profile_friends"
             app:layout_constraintEnd_toEndOf="@+id/main_profile_friends"
             app:layout_constraintStart_toEndOf="@+id/main_profile_timeline" />
