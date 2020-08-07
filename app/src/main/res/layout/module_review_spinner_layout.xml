@@ -11,5 +11,5 @@
     android:paddingEnd="8dp"
     android:paddingBottom="2dp"
     android:textColor="@color/color_NUS"
-    android:textSize="20sp"
+    android:textSize="14sp"
     tools:text="test" />

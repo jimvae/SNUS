@@ -9,7 +9,6 @@ import androidx.recyclerview.widget.RecyclerView
 import com.orbital.snus.R
 import kotlinx.android.synthetic.main.module_forum_recycler_enrolled_individual.view.*
 import kotlinx.android.synthetic.main.module_forum_recycler_enrolled_individual.view.Sub_forums_enrolled_individual_name
-import kotlinx.android.synthetic.main.module_forum_recycler_enrolled_individual.view.sub_forums_arrow_button
 import kotlinx.android.synthetic.main.module_forum_recycler_sub_forums.view.*
 
 class IndividualModuleAdapter (val moduleName: String, val subForums: List<String>) :
@@ -38,7 +37,7 @@ class IndividualModuleAdapter (val moduleName: String, val subForums: List<Strin
 
         holder.textView.Sub_forums_enrolled_individual_name.setText(subForum)
 
-        holder.textView.sub_forums_arrow_button.setOnClickListener(onClickListener(subForum))
+        holder.textView.setOnClickListener(onClickListener(subForum))
     }
 
     private fun onClickListener(subForum: String): View.OnClickListener? {

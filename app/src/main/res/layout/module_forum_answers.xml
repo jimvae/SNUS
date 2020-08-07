@@ -32,6 +32,7 @@
             android:layout_marginStart="8dp"
             android:layout_marginEnd="4dp"
             android:layout_marginBottom="8dp"
+            android:background="@drawable/editbox_v2"
             android:ems="10"
             android:hint="Message here..."
             android:inputType="textPersonName"
@@ -44,14 +45,9 @@
             android:id="@+id/module_forum_answers_send"
             android:layout_width="20dp"
             android:layout_height="20dp"
-            android:layout_marginStart="8dp"
-            android:layout_marginTop="8dp"
-            android:layout_marginEnd="8dp"
-            android:layout_marginBottom="8dp"
             android:background="@drawable/send"
             app:layout_constraintBottom_toBottomOf="@+id/textView6"
             app:layout_constraintEnd_toEndOf="@+id/textView6"
-            app:layout_constraintHorizontal_bias="0.28"
             app:layout_constraintStart_toStartOf="@+id/textView6"
             app:layout_constraintTop_toTopOf="@+id/textView6" />
 
@@ -60,10 +56,10 @@
             android:layout_width="30dp"
             android:layout_height="30dp"
             android:layout_marginEnd="8dp"
-            android:layout_marginBottom="12dp"
-            android:background="@drawable/circle"
-            app:layout_constraintBottom_toBottomOf="parent"
-            app:layout_constraintEnd_toEndOf="parent" />
+            android:background="@drawable/bluecircle"
+            app:layout_constraintBottom_toBottomOf="@+id/module_forum_answers_message_here"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintTop_toTopOf="@+id/module_forum_answers_message_here" />
 
     </androidx.constraintlayout.widget.ConstraintLayout>
 </layout>

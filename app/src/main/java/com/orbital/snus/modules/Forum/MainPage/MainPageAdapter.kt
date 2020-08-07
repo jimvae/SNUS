@@ -38,7 +38,7 @@ class MainPageAdapter(val moduleList: List<Module>) :
 
         holder.textView.Sub_forums_enrolled_individual_name.setText(module.moduleCode)
 
-        holder.textView.sub_forums_arrow_button.setOnClickListener(onClickListener(module.moduleCode!!))
+        holder.textView.setOnClickListener(onClickListener(module.moduleCode!!))
     }
 
     private fun onClickListener(moduleName: String): View.OnClickListener? {

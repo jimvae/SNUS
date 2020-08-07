@@ -6,33 +6,21 @@
     <androidx.constraintlayout.widget.ConstraintLayout
         android:layout_width="match_parent"
         android:layout_height="match_parent"
+        android:background="@android:color/white"
         tools:context=".modules.Review.IndividualModule.IndividualModuleReviewInformationFragment">
 
-
-        <TextView
-            android:id="@+id/button_back"
-            android:layout_width="0dp"
-            android:layout_height="132dp"
-            android:background="@color/color_NUS"
-            android:textSize="12sp"
-            app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintHorizontal_bias="0.0"
-            app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toTopOf="parent" />
 
         <TextView
             android:id="@+id/text_module_name"
             android:layout_width="0dp"
             android:layout_height="wrap_content"
-            android:layout_marginStart="8dp"
-            android:layout_marginTop="8dp"
-            android:layout_marginEnd="8dp"
+            android:background="@color/color_NUS"
             android:text="Module Code"
             android:textAlignment="center"
             android:textColor="@android:color/white"
             android:textSize="24sp"
-            app:autoSizeTextType="uniform"
 
+            app:autoSizeTextType="uniform"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintHorizontal_bias="1.0"
             app:layout_constraintStart_toStartOf="parent"
@@ -42,14 +30,14 @@
             android:id="@+id/text_module_name2"
             android:layout_width="0dp"
             android:layout_height="wrap_content"
-            android:layout_marginStart="8dp"
-            android:layout_marginEnd="8dp"
+            android:background="@color/color_NUS"
+            android:paddingBottom="4dp"
             android:text="Module Name"
             android:textAlignment="center"
             android:textColor="@android:color/white"
+
             android:textSize="24sp"
             app:autoSizeTextType="uniform"
-
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintHorizontal_bias="0.0"
             app:layout_constraintStart_toStartOf="parent"
@@ -57,36 +45,31 @@
 
         <Button
             android:id="@+id/text_goto_review"
-            android:layout_width="wrap_content"
+            android:layout_width="202dp"
             android:layout_height="wrap_content"
-            android:layout_marginEnd="8dp"
-            android:background="@drawable/grey_outline_with_transparent_fill"
+            android:layout_marginStart="4dp"
+            android:layout_marginEnd="4dp"
+            android:layout_marginBottom="4dp"
+            android:background="@drawable/editbox_v2"
             android:text="Go to Reviews"
-            android:textColor="@android:color/white"
-            app:layout_constraintBottom_toBottomOf="@+id/button_back2"
-            app:layout_constraintEnd_toEndOf="@+id/button_back2"
-            app:layout_constraintTop_toTopOf="@+id/button_back2" />
+            android:textColor="@color/color_NUS"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintHorizontal_bias="0.5"
+            app:layout_constraintStart_toEndOf="@+id/text_moduleStatus" />
 
         <Button
             android:id="@+id/text_moduleStatus"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_marginStart="8dp"
-            android:background="@drawable/grey_outline_with_transparent_fill"
-            android:text="Module Status"
-            android:textColor="@android:color/white"
-            app:layout_constraintBottom_toBottomOf="@+id/button_back2"
-            app:layout_constraintStart_toStartOf="@+id/button_back2"
-            app:layout_constraintTop_toTopOf="@+id/button_back2" />
-
-        <TextView
-            android:id="@+id/button_back2"
             android:layout_width="0dp"
-            android:layout_height="50dp"
-            android:background="@color/color_NUS"
-            app:layout_constraintBottom_toBottomOf="parent"
-            app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintHorizontal_bias="0.0"
+            android:layout_height="wrap_content"
+            android:layout_marginStart="4dp"
+            android:layout_marginEnd="4dp"
+            android:background="@drawable/editbox_v2"
+            android:text="Module Status"
+            android:textColor="@color/color_NUS"
+            app:layout_constraintBaseline_toBaselineOf="@+id/text_goto_review"
+            app:layout_constraintEnd_toStartOf="@+id/text_goto_review"
+            app:layout_constraintHorizontal_bias="0.5"
             app:layout_constraintStart_toStartOf="parent" />
 
         <TextView
@@ -118,7 +101,7 @@
                 android:justificationMode="inter_word"
                 android:text="TextView"
                 android:textColor="@android:color/black"
-                android:textSize="16sp" />
+                android:textSize="14sp" />
         </ScrollView>
 
         <TextView
@@ -142,7 +125,7 @@
             android:justificationMode="inter_word"
             android:text="TextView"
             android:textColor="@android:color/black"
-            android:textSize="16sp"
+            android:textSize="14sp"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toBottomOf="@+id/text_view_preclusions" />
@@ -162,13 +145,15 @@
         <TextView
             android:id="@+id/text_module_prerequisites"
             android:layout_width="0dp"
-            android:layout_height="wrap_content"
+            android:layout_height="0dp"
             android:layout_marginStart="16dp"
             android:layout_marginEnd="16dp"
+            android:layout_marginBottom="8dp"
             android:justificationMode="inter_word"
             android:text="TextView"
             android:textColor="@android:color/black"
-            android:textSize="16sp"
+            android:textSize="14sp"
+            app:layout_constraintBottom_toTopOf="@+id/text_goto_review"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toBottomOf="@+id/text_view_prerequisites" />
@@ -178,13 +163,14 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_marginStart="8dp"
+            android:layout_marginTop="8dp"
             android:text="Department/Faculty/MC:"
             android:textColor="@color/color_NUS"
             android:textSize="18sp"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintHorizontal_bias="0.0"
             app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toBottomOf="@+id/button_back" />
+            app:layout_constraintTop_toBottomOf="@+id/text_module_name2" />
 
         <TextView
             android:id="@+id/text_view_department_MC"
@@ -194,7 +180,7 @@
             android:layout_marginEnd="16dp"
             android:text="TextView"
             android:textColor="@android:color/black"
-            android:textSize="18sp"
+            android:textSize="14sp"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintHorizontal_bias="0.0"
             app:layout_constraintStart_toStartOf="parent"

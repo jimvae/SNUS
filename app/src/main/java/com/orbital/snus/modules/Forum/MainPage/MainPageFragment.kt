@@ -13,6 +13,7 @@ import androidx.fragment.app.Fragment
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModelProvider
 import androidx.navigation.fragment.findNavController
+import androidx.recyclerview.widget.GridLayoutManager
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
 import com.google.firebase.firestore.DocumentReference
@@ -61,7 +62,7 @@ class MainPageFragment : Fragment() {
         viewModel = ViewModelProvider(this, factory).get(MainPageViewModel::class.java)
 
         viewAdapter = MainPageAdapter(mods)
-        viewManager = LinearLayoutManager(activity)
+        viewManager = GridLayoutManager(activity, 2)
 
         recyclerView = binding.forumMainPageRecyclerview.apply {
             layoutManager = viewManager

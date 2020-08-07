@@ -100,7 +100,7 @@ class IndividualModuleReviewInformationFragment : Fragment() {
 
         binding.textModuleStatus.setOnClickListener {
             when (binding.textModuleStatus.text) {
-                "Enroll in Module" -> {
+                "Enroll" -> {
                     // add module to user module list
                     val holder = ArrayList(userData.moduleList!!.toMutableList())
                     holder.add(module)
@@ -108,11 +108,11 @@ class IndividualModuleReviewInformationFragment : Fragment() {
 
                     db.collection("users").document(userData.userID!!).set(userData)
                         .addOnSuccessListener {
-                            binding.textModuleStatus.text = "Module Enrolled"
+                            binding.textModuleStatus.text = "Unenroll"
                         }
                 }
 
-                "Module Enrolled" -> {
+                "Unenroll" -> {
                     // choose to delete module
                     val dialog = Dialog(requireContext())
                     dialog.setContentView(R.layout.profile_main_status_dialog)
@@ -126,7 +126,7 @@ class IndividualModuleReviewInformationFragment : Fragment() {
                         userData.updateModules(holder)
                         db.collection("users").document(userData.userID!!).set(userData)
                             .addOnSuccessListener {
-                                binding.textModuleStatus.text = "Enroll in Module"
+                                binding.textModuleStatus.text = "Enroll"
                                 dialog.dismiss()
                             }
                     }
@@ -148,9 +148,9 @@ class IndividualModuleReviewInformationFragment : Fragment() {
                     userData  = it.toObject(UserData::class.java)!!
 
                     if (userData.moduleList!!.contains(module)) {
-                        modStatus.value = "Module Enrolled"
+                        modStatus.value = "Unenroll"
                     } else {
-                        modStatus.value = "Enroll in Module"
+                        modStatus.value = "Enroll"
                     }
                 }
             }

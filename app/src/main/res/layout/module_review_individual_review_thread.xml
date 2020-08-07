@@ -33,27 +33,25 @@
         android:id="@+id/edit_text_question"
         android:layout_width="0dp"
         android:layout_height="wrap_content"
+        android:layout_marginStart="4dp"
+        android:layout_marginEnd="4dp"
+        android:layout_marginBottom="4dp"
+        android:background="@drawable/editbox_v2"
         android:ems="10"
         android:hint="Add a Comment"
         android:inputType="textPersonName"
         app:layout_constraintBottom_toBottomOf="parent"
-        app:layout_constraintEnd_toStartOf="@+id/button_send"
+        app:layout_constraintEnd_toStartOf="@+id/textView6"
         app:layout_constraintStart_toStartOf="parent" />
-
 
 
     <Button
         android:id="@+id/button_send"
         android:layout_width="20dp"
         android:layout_height="20dp"
-        android:layout_marginStart="8dp"
-        android:layout_marginTop="8dp"
-        android:layout_marginEnd="8dp"
-        android:layout_marginBottom="8dp"
         android:background="@drawable/send"
         app:layout_constraintBottom_toBottomOf="@+id/textView6"
         app:layout_constraintEnd_toEndOf="@+id/textView6"
-        app:layout_constraintHorizontal_bias="0.28"
         app:layout_constraintStart_toStartOf="@+id/textView6"
         app:layout_constraintTop_toTopOf="@+id/textView6" />
 
@@ -62,10 +60,10 @@
         android:layout_width="30dp"
         android:layout_height="30dp"
         android:layout_marginEnd="8dp"
-        android:layout_marginBottom="12dp"
-        android:background="@drawable/circle"
-        app:layout_constraintBottom_toBottomOf="parent"
-        app:layout_constraintEnd_toEndOf="parent" />
+        android:background="@drawable/bluecircle"
+        app:layout_constraintBottom_toBottomOf="@+id/edit_text_question"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintTop_toTopOf="@+id/edit_text_question" />
 
 </androidx.constraintlayout.widget.ConstraintLayout>
 </layout>

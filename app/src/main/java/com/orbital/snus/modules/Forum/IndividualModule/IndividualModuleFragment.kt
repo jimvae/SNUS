@@ -8,6 +8,7 @@ import android.widget.Toast
 import androidx.databinding.DataBindingUtil
 import androidx.fragment.app.Fragment
 import androidx.lifecycle.ViewModelProvider
+import androidx.recyclerview.widget.GridLayoutManager
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
 import com.orbital.snus.R
@@ -46,7 +47,7 @@ class IndividualModuleFragment: Fragment() {
         viewModel = ViewModelProvider(this, factory).get(IndividualModuleViewModel::class.java)
 
         viewAdapter = IndividualModuleAdapter(moduleName, subForums)
-        viewManager = LinearLayoutManager(activity)
+        viewManager = GridLayoutManager(activity, 2)
 
         recyclerView = binding.forumIndividualModuleRecyclerview.apply {
             layoutManager = viewManager

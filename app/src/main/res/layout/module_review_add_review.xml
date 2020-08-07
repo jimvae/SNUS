@@ -31,6 +31,7 @@
                 android:layout_height="wrap_content"
                 android:layout_marginStart="8dp"
                 android:layout_marginEnd="16dp"
+                android:background="@drawable/editbox_v2"
                 android:hint="Title"
                 android:textColor="@android:color/black"
                 android:textSize="18sp"
@@ -95,6 +96,7 @@
                 android:layout_height="wrap_content"
                 android:layout_marginStart="8dp"
                 android:layout_marginEnd="8dp"
+                android:background="@drawable/editbox_v2"
                 android:hint="Professor"
                 android:textColor="@android:color/black"
                 android:textSize="18sp"
@@ -183,7 +185,7 @@
                 android:layout_height="wrap_content"
                 android:layout_marginStart="8dp"
                 android:layout_marginTop="12dp"
-                android:text="Actual Workload"
+                android:text="Actual Commitment"
                 android:textColor="@color/color_NUS"
                 android:textSize="18sp"
                 app:layout_constraintStart_toStartOf="parent"
@@ -213,7 +215,7 @@
                 android:layout_width="0dp"
                 android:layout_height="wrap_content"
                 android:layout_marginStart="8dp"
-                android:layout_marginEnd="16dp"
+                android:layout_marginEnd="8dp"
                 android:layout_marginBottom="16dp"
                 app:layout_constraintBottom_toTopOf="@+id/individual_review_post_review"
                 app:layout_constraintEnd_toEndOf="parent"
@@ -222,18 +224,20 @@
                 app:layout_constraintVertical_bias="0.0">
 
                 <androidx.constraintlayout.widget.ConstraintLayout
-                    android:layout_width="wrap_content"
+                    android:layout_width="match_parent"
                     android:layout_height="wrap_content">
 
                     <EditText
                         android:id="@+id/individual_review_add_description"
                         android:layout_width="0dp"
                         android:layout_height="wrap_content"
+                        android:background="@drawable/editbox_v2"
                         android:hint="Write Description..."
                         android:textColor="@android:color/black"
                         android:textSize="16sp"
                         app:layout_constraintBottom_toBottomOf="parent"
                         app:layout_constraintEnd_toEndOf="parent"
+                        app:layout_constraintStart_toStartOf="parent"
                         app:layout_constraintTop_toTopOf="parent"
                         app:layout_constraintVertical_bias="0.0" />
                 </androidx.constraintlayout.widget.ConstraintLayout>

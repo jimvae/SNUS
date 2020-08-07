@@ -42,10 +42,11 @@ class PostViewAdapter (val bundle: Bundle, val forumList: List<ForumPost>) :
         val dateFormatter: SimpleDateFormat = SimpleDateFormat("dd/MM/YYYY | hh:mm a")
         holder.textView.recycler_post_name.text = post.title
         holder.textView.recycler_post_date.text = showDate(post.date!!)
+        holder.textView.recycler_post_resolved.setText(post.question)
+
 
         if (post.status == false) {
-            holder.textView.recycler_post_resolved.setText("Unresolved")
-            holder.textView.recycler_post_resolved.setTextColor(Color.RED)
+//            holder.textView.recycler_post_resolved.setTextColor(Color.RED)
             holder.textView.setOnClickListener(onClickListenerUnresolved(post))
 
         } else {
