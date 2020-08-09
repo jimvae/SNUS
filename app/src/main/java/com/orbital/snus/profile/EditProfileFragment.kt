@@ -237,7 +237,6 @@ class EditProfileFragment : Fragment() {
     }
 
     private fun spinnerSetup() {
-        Toast.makeText(requireContext(), "SetUp", Toast.LENGTH_SHORT).show()
         spinnerCourse = binding.editProfileCourseSpinner
         spinnerCourse.adapter = ArrayAdapter(requireContext(), R.layout.module_review_spinner_layout, courses)
 

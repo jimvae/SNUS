@@ -6,7 +6,6 @@ import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
 import com.google.firebase.firestore.FirebaseFirestore
 import com.orbital.snus.data.ForumPost
-import com.orbital.snus.data.UserEvent
 
 class PostViewModel(val module:String, val subForum:String) : ViewModel() {
     private val db = FirebaseFirestore.getInstance()
@@ -80,8 +79,9 @@ class PostViewModel(val module:String, val subForum:String) : ViewModel() {
         _delFailure.value = null
     }
 
+    val resolvedForumPosts = ArrayList<ForumPost>()
+
     fun loadResolvedPosts() {
-        val forumPosts = ArrayList<ForumPost>()
         db.collection("modules")
             .document(module)
             .collection("forums")
@@ -97,20 +97,21 @@ class PostViewModel(val module:String, val subForum:String) : ViewModel() {
                     documents.forEach {
                         val event = it.toObject(ForumPost::class.java)
                         if (event != null) {
-                            if (event.status == true) {
-                                forumPosts.add(event)
+                            if (event.status == true && !resolvedForumPosts.contains(event)) {
+                                resolvedForumPosts.add(event)
 
                             }
                         }
                     }
                 }
-                forumPosts.sortByDescending { it.date }
-                _posts.value = forumPosts
+                resolvedForumPosts.sortByDescending { it.date }
+                _posts.value = resolvedForumPosts
             }
     }
 
+    val unresolvedForumPosts = ArrayList<ForumPost>()
+
     fun loadUnresolvedPosts() {
-        val forumPosts = ArrayList<ForumPost>()
         db.collection("modules")
             .document(module)
             .collection("forums")
@@ -126,15 +127,15 @@ class PostViewModel(val module:String, val subForum:String) : ViewModel() {
                     documents.forEach {
                         val event = it.toObject(ForumPost::class.java)
                         if (event != null) {
-                            if (event.status == false) {
-                                forumPosts.add(event)
+                            if (event.status == false && !unresolvedForumPosts.contains(event)) {
+                                unresolvedForumPosts.add(event)
 
                             }
                         }
                     }
                 }
-                forumPosts.sortByDescending { it.date }
-                _posts.value = forumPosts
+                unresolvedForumPosts.sortByDescending { it.date }
+                _posts.value = unresolvedForumPosts
             }
     }
 
