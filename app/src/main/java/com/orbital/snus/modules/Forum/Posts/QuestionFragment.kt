@@ -193,7 +193,6 @@ class QuestionFragment : Fragment() {
         binding.buttonEdit.isVisible = boolean
         binding.buttonEdit.isEnabled = boolean
 
-        binding.buttonBack2.isVisible = boolean
 
         if (post.status!!) {
             binding.resolvedButton.isVisible = false

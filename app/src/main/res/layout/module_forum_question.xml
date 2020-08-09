@@ -18,16 +18,6 @@
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toTopOf="parent" />
 
-        <TextView
-            android:id="@+id/button_back2"
-            android:layout_width="0dp"
-            android:layout_height="50dp"
-            android:background="@color/color_NUS"
-            app:layout_constraintBottom_toBottomOf="parent"
-            app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintHorizontal_bias="0.0"
-            app:layout_constraintStart_toStartOf="parent" />
-
 
         <TextView
             android:id="@+id/text_title"
@@ -47,6 +37,7 @@
             android:layout_width="0dp"
             android:layout_height="wrap_content"
             android:layout_marginStart="8dp"
+            android:layout_marginTop="8dp"
             android:layout_marginEnd="8dp"
             android:text="Question"
             android:textColor="@color/color_NUS"
@@ -62,11 +53,11 @@
             android:layout_height="wrap_content"
             android:layout_marginStart="4dp"
             android:layout_marginEnd="4dp"
-            android:layout_marginBottom="4dp"
+            android:layout_marginBottom="8dp"
             android:background="@drawable/editbox_v2"
             android:text="Answers"
             android:textColor="@color/color_NUS"
-            app:layout_constraintBottom_toTopOf="@+id/button_back2"
+            app:layout_constraintBottom_toTopOf="@+id/button_edit"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent" />
 
@@ -94,39 +85,47 @@
 
         </androidx.cardview.widget.CardView>
 
-        <Button
+        <TextView
             android:id="@+id/button_delete"
-            android:layout_width="25dp"
-            android:layout_height="25dp"
-            android:layout_marginEnd="8dp"
-            android:background="@drawable/delete_button"
-            app:layout_constraintBottom_toBottomOf="@+id/button_back2"
-            app:layout_constraintEnd_toEndOf="@+id/button_back2"
-            app:layout_constraintTop_toTopOf="@+id/button_back2" />
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginEnd="32dp"
+            android:drawableTop="@drawable/ic_delete_black_24dp"
+            android:text="Delete"
+            android:textColor="@color/color_NUS"
+            app:layout_constraintBaseline_toBaselineOf="@+id/button_edit"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintHorizontal_bias="0.5"
+            app:layout_constraintStart_toEndOf="@+id/resolved_button" />
 
-        <Button
+        <TextView
             android:id="@+id/button_edit"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:background="@android:color/transparent"
+            android:layout_marginStart="32dp"
+            android:drawableTop="@drawable/ic_edit_black_24dp"
             android:text="Edit"
-            android:textColor="@android:color/white"
-            app:layout_constraintBottom_toBottomOf="parent"
-            app:layout_constraintStart_toStartOf="@+id/button_back2"
-            app:layout_constraintTop_toTopOf="@+id/button_back2" />
+            android:textColor="@color/color_NUS"
+            app:layout_constraintEnd_toStartOf="@+id/resolved_button"
+            app:layout_constraintHorizontal_bias="0.5"
+            app:layout_constraintStart_toStartOf="parent"
+            tools:layout_editor_absoluteY="699dp" />
 
-        <Button
+        <TextView
             android:id="@+id/resolved_button"
             android:layout_width="wrap_content"
             android:layout_height="0dp"
-            android:background="@drawable/grey_outline_with_transparent_fill"
+            android:layout_marginStart="32dp"
+            android:layout_marginEnd="32dp"
+            android:drawableTop="@drawable/ic_check_circle_black_24dp"
             android:paddingLeft="10dp"
             android:paddingRight="10dp"
             android:text="Mark as Resolved"
-            android:textColor="@android:color/white"
-            app:layout_constraintBottom_toBottomOf="parent"
+            android:textColor="@color/color_NUS"
+            app:layout_constraintBaseline_toBaselineOf="@+id/button_edit"
             app:layout_constraintEnd_toStartOf="@+id/button_delete"
-            app:layout_constraintStart_toEndOf="@+id/button_edit"
-            app:layout_constraintTop_toTopOf="@+id/button_back2" />
+            app:layout_constraintHorizontal_bias="0.5"
+            app:layout_constraintStart_toEndOf="@+id/button_edit" />
+
     </androidx.constraintlayout.widget.ConstraintLayout>
 </layout>
