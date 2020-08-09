@@ -103,13 +103,14 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_marginStart="32dp"
+            android:layout_marginBottom="8dp"
             android:drawableTop="@drawable/ic_edit_black_24dp"
             android:text="Edit"
             android:textColor="@color/color_NUS"
+            app:layout_constraintBottom_toBottomOf="parent"
             app:layout_constraintEnd_toStartOf="@+id/resolved_button"
             app:layout_constraintHorizontal_bias="0.5"
-            app:layout_constraintStart_toStartOf="parent"
-            tools:layout_editor_absoluteY="699dp" />
+            app:layout_constraintStart_toStartOf="parent" />
 
         <TextView
             android:id="@+id/resolved_button"
