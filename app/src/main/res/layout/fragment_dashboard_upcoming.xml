@@ -4,9 +4,12 @@
     xmlns:tools="http://schemas.android.com/tools"
     tools:context=".dashboard.Upcoming.UpcomingFragment">
 
-    <ScrollView
+    <androidx.constraintlayout.widget.ConstraintLayout
         android:layout_width="match_parent"
-        android:layout_height="match_parent">
+        android:layout_height="match_parent"
+        android:orientation="vertical">
+
+
 
     <androidx.constraintlayout.widget.ConstraintLayout
         android:layout_width="match_parent"
@@ -89,6 +92,10 @@
                 app:layout_constraintStart_toStartOf="parent" />
 
         </androidx.constraintlayout.widget.ConstraintLayout>
+
+        <ScrollView
+            android:layout_width="match_parent"
+            android:layout_height="match_parent">
 
         <androidx.constraintlayout.widget.ConstraintLayout
             android:id="@+id/constraint_Sunday"
@@ -485,9 +492,12 @@
             app:layout_constraintEnd_toEndOf="parent" />
 
 
+        </ScrollView>
     </androidx.constraintlayout.widget.ConstraintLayout>
 
-    </ScrollView>
+
+
+    </androidx.constraintlayout.widget.ConstraintLayout>
 
 
 
