@@ -133,7 +133,6 @@ class IndividualReviewFragment : Fragment() {
         binding.buttonEdit.isVisible = boolean
         binding.buttonEdit.isEnabled = boolean
 
-        binding.buttonBack2.isVisible = boolean
     }
 
     fun configurePage(boolean: Boolean) {

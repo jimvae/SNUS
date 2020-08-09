@@ -13,47 +13,41 @@
             android:id="@+id/pop_up_event_date"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
+            android:layout_marginTop="8dp"
             android:drawableLeft="@drawable/ic_date_range_black_24dp"
             android:text="DATE"
             android:textColor="@color/color_NUS"
             android:textSize="18sp"
-            app:layout_constraintBottom_toTopOf="@+id/pop_up_event_location"
-            app:layout_constraintStart_toStartOf="@+id/pop_up_event_name" />
-
-        <TextView
-            android:id="@+id/button_back2"
-            android:layout_width="0dp"
-            android:layout_height="50dp"
-            android:background="@color/color_NUS"
-            app:layout_constraintBottom_toBottomOf="parent"
-            app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintHorizontal_bias="0.0"
-            app:layout_constraintStart_toStartOf="parent" />
+            app:layout_constraintStart_toStartOf="@+id/pop_up_event_name"
+            app:layout_constraintTop_toBottomOf="@+id/pop_up_event_name" />
 
         <TextView
             android:id="@+id/pop_up_event_name"
             android:layout_width="347dp"
             android:layout_height="wrap_content"
             android:layout_marginStart="32dp"
+            android:layout_marginTop="16dp"
             android:layout_marginEnd="32dp"
+            android:drawableLeft="@drawable/ic_title_black_24dp"
             android:text="Name"
             android:textAlignment="viewStart"
             android:textColor="@color/color_NUS"
-            android:textSize="30sp"
-            app:layout_constraintBottom_toTopOf="@+id/pop_up_event_date"
+            android:textSize="18sp"
             app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintStart_toStartOf="parent" />
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@+id/Event" />
 
         <TextView
             android:id="@+id/pop_up_event_description"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_marginBottom="8dp"
+            android:layout_marginTop="8dp"
+            android:drawableLeft="@drawable/ic_clear_all_black_24dp"
             android:text="Description"
             android:textColor="@color/color_NUS"
             android:textSize="14sp"
-            app:layout_constraintBottom_toTopOf="@+id/button_back2"
-            app:layout_constraintStart_toStartOf="@+id/pop_up_event_location" />
+            app:layout_constraintStart_toStartOf="@+id/pop_up_event_location"
+            app:layout_constraintTop_toBottomOf="@+id/pop_up_event_location" />
 
         <TextView
             android:id="@+id/textView40"
@@ -67,46 +61,51 @@
             android:id="@+id/pop_up_event_location"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_marginBottom="16dp"
+            android:layout_marginTop="8dp"
             android:drawableLeft="@drawable/ic_location_on_black_24dp"
             android:text="Location"
             android:textColor="@color/color_NUS"
             android:textSize="18sp"
-            app:layout_constraintBottom_toTopOf="@+id/pop_up_event_description"
-            app:layout_constraintStart_toStartOf="@+id/pop_up_event_date" />
+            app:layout_constraintStart_toStartOf="@+id/pop_up_event_date"
+            app:layout_constraintTop_toBottomOf="@+id/pop_up_event_date" />
 
-        <Button
+        <TextView
+            android:id="@+id/Event"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginStart="32dp"
+            android:layout_marginTop="24dp"
+            android:fontFamily="@font/roboto"
+            android:text="Event"
+            android:textColor="@color/color_NUS"
+            android:textSize="30sp"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="parent" />
+
+        <TextView
             android:id="@+id/pop_up_delete_button"
-            android:layout_width="25dp"
-            android:layout_height="25dp"
-            android:layout_marginEnd="8dp"
-            android:background="@drawable/delete_button"
-            app:layout_constraintBottom_toBottomOf="@+id/button_back2"
-            app:layout_constraintEnd_toEndOf="@+id/button_back2"
-            app:layout_constraintTop_toTopOf="@+id/button_back2" />
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:drawableTop="@drawable/ic_delete_black_24dp"
+            android:text="Delete"
+            android:textColor="@color/color_NUS"
+            app:layout_constraintBaseline_toBaselineOf="@+id/pop_up_edit"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintHorizontal_bias="0.5"
+            app:layout_constraintStart_toEndOf="@+id/pop_up_edit" />
 
-        <Button
+        <TextView
             android:id="@+id/pop_up_edit"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:background="@android:color/transparent"
+            android:layout_marginBottom="8dp"
+            android:drawableTop="@drawable/ic_edit_black_24dp"
             android:text="Edit"
-            android:textColor="@android:color/white"
-            android:textSize="12sp"
-            app:layout_constraintBottom_toBottomOf="parent"
-            app:layout_constraintStart_toStartOf="@+id/button_back2"
-            app:layout_constraintTop_toTopOf="@+id/button_back2" />
-
-        <TextView
-            android:id="@+id/textView39"
-            android:layout_width="0dp"
-            android:layout_height="0dp"
-            android:background="@color/color_NUS"
             android:textColor="@color/color_NUS"
-            app:layout_constraintBottom_toTopOf="@+id/pop_up_event_name"
-            app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toTopOf="parent" />
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintEnd_toStartOf="@+id/pop_up_delete_button"
+            app:layout_constraintHorizontal_bias="0.5"
+            app:layout_constraintStart_toStartOf="parent" />
 
     </androidx.constraintlayout.widget.ConstraintLayout>
 </layout>

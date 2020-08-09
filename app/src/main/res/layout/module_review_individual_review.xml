@@ -26,16 +26,6 @@
             app:layout_constraintTop_toTopOf="parent" />
 
         <TextView
-            android:id="@+id/button_back2"
-            android:layout_width="0dp"
-            android:layout_height="50dp"
-            android:background="@color/color_NUS"
-            app:layout_constraintBottom_toBottomOf="parent"
-            app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintHorizontal_bias="0.0"
-            app:layout_constraintStart_toStartOf="parent" />
-
-        <TextView
             android:id="@+id/individual_review_title"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
@@ -64,6 +54,18 @@
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toBottomOf="@+id/individual_review_title" />
 
+        <Button
+            android:id="@+id/text_questions"
+            android:layout_width="379dp"
+            android:layout_height="wrap_content"
+            android:layout_marginBottom="8dp"
+            android:background="@drawable/editbox_v2"
+            android:text="Show Review Thread"
+            android:textColor="@color/color_NUS"
+            app:layout_constraintBottom_toTopOf="@+id/button_edit"
+            app:layout_constraintStart_toStartOf="@+id/scrollView3" />
+
+
         <ScrollView
             android:id="@+id/scrollView3"
             android:layout_width="0dp"
@@ -71,11 +73,14 @@
             android:layout_marginStart="16dp"
             android:layout_marginTop="12dp"
             android:layout_marginEnd="16dp"
+            android:layout_marginBottom="8dp"
             android:background="@drawable/editbox_v2"
             app:layout_constraintBottom_toTopOf="@+id/text_questions"
             app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintHorizontal_bias="0.0"
             app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toBottomOf="@+id/prof_linearlayout">
+            app:layout_constraintTop_toBottomOf="@+id/prof_linearlayout"
+            app:layout_constraintVertical_bias="0.0">
 
             <LinearLayout
                 android:layout_width="match_parent"
@@ -102,44 +107,6 @@
                     android:textSize="18sp" />
             </LinearLayout>
         </ScrollView>
-
-        <Button
-            android:id="@+id/button_edit"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:background="@drawable/grey_outline_with_transparent_fill"
-            android:text="Edit"
-            android:textColor="@android:color/white"
-            app:layout_constraintBottom_toBottomOf="parent"
-            app:layout_constraintStart_toStartOf="@+id/button_back2" />
-
-
-
-        <Button
-            android:id="@+id/text_questions"
-            android:layout_width="0dp"
-            android:layout_height="wrap_content"
-            android:layout_marginStart="16dp"
-            android:layout_marginTop="4dp"
-            android:layout_marginEnd="16dp"
-            android:layout_marginBottom="4dp"
-            android:background="@drawable/editbox_v2"
-            android:text="Show Review Thread"
-            android:textColor="@color/color_NUS"
-            app:layout_constraintBottom_toTopOf="@+id/button_back2"
-            app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toBottomOf="@+id/scrollView3" />
-
-        <Button
-            android:id="@+id/button_delete"
-            android:layout_width="25dp"
-            android:layout_height="25dp"
-            android:layout_marginEnd="16dp"
-            android:background="@drawable/delete_button"
-            android:textColor="@android:color/white"
-            app:layout_constraintBaseline_toBaselineOf="@+id/button_edit"
-            app:layout_constraintEnd_toEndOf="parent" />
 
         <RatingBar
             android:id="@+id/individual_review_rating_bar"
@@ -346,6 +313,31 @@
                 app:layout_constraintStart_toStartOf="parent"
                 app:layout_constraintTop_toTopOf="parent" />
         </androidx.constraintlayout.widget.ConstraintLayout>
+
+        <TextView
+            android:id="@+id/button_delete"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:drawableTop="@drawable/ic_delete_black_24dp"
+            android:text="Delete"
+            android:textColor="@color/color_NUS"
+            app:layout_constraintBaseline_toBaselineOf="@+id/button_edit"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintHorizontal_bias="0.5"
+            app:layout_constraintStart_toEndOf="@+id/button_edit" />
+
+        <TextView
+            android:id="@+id/button_edit"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginBottom="8dp"
+            android:drawableTop="@drawable/ic_edit_black_24dp"
+            android:text="Edit"
+            android:textColor="@color/color_NUS"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintEnd_toStartOf="@+id/button_delete"
+            app:layout_constraintHorizontal_bias="0.5"
+            app:layout_constraintStart_toStartOf="parent" />
 
     </androidx.constraintlayout.widget.ConstraintLayout>
 <!--    </ScrollView>-->
