@@ -16,17 +16,15 @@
         android:theme="@style/AppTheme">
         <activity android:name=".messages.MessagesActivity" />
         <activity android:name=".profile.ProfileActivity"/>
-        <activity android:name=".opening.MainActivity"/>
-        <activity android:name=".dashboard.DashboardActivity"/>
-            <activity android:name=".modules.ModulesActivity">
-
-
+        <activity android:name=".opening.MainActivity">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
 
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
         </activity>
+        <activity android:name=".dashboard.DashboardActivity"/>
+        <activity android:name=".modules.ModulesActivity"/>
 
         <meta-data
             android:name="preloaded_fonts"

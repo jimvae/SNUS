@@ -14,8 +14,10 @@ class IndividualModuleReviewViewModel(val moduleName: String): ViewModel() {
     val reviewList: LiveData<List<UserReview>>
         get() = _reviewList
 
+    val reviews = ArrayList<UserReview>()
+
     fun loadReview() {
-        val reviews = ArrayList<UserReview>()
+
         db.collection("modules")
             .document(moduleName)
             .collection("reviews")
@@ -28,7 +30,7 @@ class IndividualModuleReviewViewModel(val moduleName: String): ViewModel() {
                     val documents = querySnapshot.documents
                     documents.forEach {
                         val review = it.toObject(UserReview::class.java)
-                        if (review != null) {
+                        if (review != null && !reviews.contains(review)) {
                             reviews.add(review)
                         }
                     }

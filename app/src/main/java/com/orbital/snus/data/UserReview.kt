@@ -36,4 +36,13 @@ data class UserReview (var id: String? = null,
         this.prof = prof
         this.description = description
     }
+
+    override fun equals(other: Any?): Boolean {
+        if (other === this) {
+            return true
+        } else if (other is UserReview) {
+            return other.id!!.equals(this.id!!)
+        }
+        return false
+    }
 }

@@ -26,4 +26,13 @@ data class ForumPost (val userid: String? = null,
     fun resolvedPost() {
         this.status = true
     }
+
+    override fun equals(other: Any?): Boolean {
+        if (other === this) {
+            return true
+        } else if (other is ForumPost) {
+            return other.id!!.equals(this.id)
+        }
+        return false
+    }
 }
