@@ -1,6 +1,6 @@
 # SNUS
 
-[Project Video](https://www.youtube.com/watch?v=DfCUDk3LgPU)
+[Project Video](https://youtu.be/al4dgJirulI)
 
 Orbital Project 2020 by NUS
 
